@@ -1,5 +1,15 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Environments
+- node version: v18.18.2
+- react version: v18
+- [github](https://github.com/Full-Stack-Artisan/tzuchi-info)
+- [figma link](https://www.figma.com/file/Ne4mqQd4A0Nm0t96RssUrb/%E8%B3%87%E8%A8%8A%E7%B6%B2%E7%AB%992.0-%E7%B2%BE%E7%A8%BF?type=design&node-id=304-9326&mode=design&t=1UyEvClV0mwR4qsB-0)
+- [google drive asset](https://drive.google.com/drive/u/0/folders/1XD-ZpddwOLD9VlQEYG6wZSfc-Uot0QP5)
+
+
+First, run the development server:
+
 ## Getting Started
 
 First, run the development server:
