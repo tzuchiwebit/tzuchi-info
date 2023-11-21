@@ -1,0 +1,65 @@
+module.exports = {
+  primary: {
+    linear: "#486053",
+    blue1: "#1B2D58",
+    blue2: "#30559F",
+    blue3: "#4F7BBE",
+    blue4: "#587291",
+    blue5: "#587291",
+    tzuchiBlue: "#132344",
+    tzuchiGray: "#95969B",
+  },
+  secondary: {
+    blueGreen: "#5DC5C4",
+    dark: {
+      blueGreen: "#319897",
+    },
+    light: {
+      blueGreen1: "#F1FAF9",
+      blueGreen2: "#A0CAC2",
+      blueGreen3: "#D1E9E5",
+    },
+  },
+  alert: {
+    red: "#D4494F",
+    green: "#168967",
+    light: {
+      red: "#EB9C9F",
+      green: "#8CC4B3",
+    },
+  },
+  complementary: {
+    blue1: "#D1DEFF",
+    blue2: "#E8EEFE",
+    blue3: "#30559F",
+    yellow1: "#F4CA77",
+    yellow2: "#EDAE34",
+    green1: "#DF6379",
+    green2: "#9A8D96",
+    pinkOrange1: "#7D737A",
+    pinkOrange2: "#CDB9C7",
+    red1: "#FFE1E3",
+    red2: "#EA4C67",
+    purple1: "#A96EC6",
+    purple2: "#874DA3",
+    skyBlue1: "#DFC2ED",
+    skyBlue2: "#DFC2ED",
+    linear: "#F8F8F8",
+  },
+  gray: {
+    black: "#000000",
+    gray1: "#333333",
+    gray2: "#4F4F4F",
+    gray3: "#828282",
+    gray4: "#8D8D8D",
+    gray5: "#95969B",
+    gray6: "#B3B3B3",
+    gray7: "#BDBDBD",
+    gray8: "#E0E0E0",
+    gray9: "#F2F2F2",
+    gray10: "#F8F8F8",
+    white: "#FFFFFF",
+  },
+};
+
+

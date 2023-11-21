@@ -1,3 +1,8 @@
+import Container from "@/shared/layout/Container"
+import Widget from "@/components/home/Widget"
+
 export default function Page() {
-  return <h1 className="text-3xl font-bold underline">Hello, Next.js!</h1>
+  return <Container>
+    <Widget />
+  </Container>
 }
