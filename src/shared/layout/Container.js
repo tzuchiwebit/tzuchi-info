@@ -26,10 +26,11 @@ const Outer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  min-height: 65vh;
 `
 
 const Inner = styled.div`
   width: 100%;
-  max-width: 1180px;
+  max-width: 1200px;
+  padding-left: 10px;
+  padding-right: 10px;
 `

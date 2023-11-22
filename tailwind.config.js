@@ -13,13 +13,13 @@ module.exports = {
       // mobile: '575px',
       tablet: '768px',
       laptop: '1024px',
+      container: '1180px',
       desktop: '1600px',
     },
-    colors: color,
-    fontFamily: {
-      sans: ['Graphik', 'sans-serif'],
-      serif: ['Merriweather', 'serif'],
-    },
+    // fontFamily: {
+      // sans: ['Graphik', 'sans-serif'],
+      // serif: ['Merriweather', 'serif'],
+    // },
     extend: {
       spacing: {
         '128': '32rem',
@@ -27,7 +27,8 @@ module.exports = {
       },
       borderRadius: {
         '4xl': '2rem',
-      }
+      },
+      colors: color,
     }
   },
   plugins: [],

@@ -1,6 +1,6 @@
 module.exports = {
   primary: {
-    linear: "#486053",
+    linear: "#7fb4d0",
     blue1: "#1B2D58",
     blue2: "#30559F",
     blue3: "#4F7BBE",
@@ -58,6 +58,7 @@ module.exports = {
     gray8: "#E0E0E0",
     gray9: "#F2F2F2",
     gray10: "#F8F8F8",
+    text: "#4C5364",
     white: "#FFFFFF",
   },
 };

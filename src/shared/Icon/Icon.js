@@ -1,6 +1,7 @@
 // LOGO FILE
 export { default as LOGO } from "./icon/LOGO.svg";
 //
+export { default as Add } from "./icon/main/add.svg";
 export { default as Author } from "./icon/main/author.svg";
 export { default as Calender } from "./icon/main/calender.svg";
 export { default as DownArrow } from "./icon/main/down-arrow.svg";
