@@ -7,14 +7,14 @@ import styled from 'styled-components';
 //   margin: 0 auto;
 //   `;
 
-export default function Container({ className, children }) {
+export default function Container({ className, children, ...props }) {
   // Tailwind CSS
   // const extendStyles = className || '';
   return (
     // <div className={`w-[90%] mx-auto my-0 md:max-w-[1168px] ${extendStyles}`}>
     //   {children}
     // </div>
-    <Outer>
+    <Outer {...props}>
       <Inner>
         {children}
       </Inner>
