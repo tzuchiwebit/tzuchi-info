@@ -14,7 +14,7 @@ export default function NavbarBottom() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(0)
 
   return (
-    <Container style={{ backgroundColor: color.gray.gray9, boxShadow: `0px 4px 4px 0px #0000001A` }}>
+    <Container className="hidden tablet:flex" style={{ backgroundColor: color.gray.gray9, boxShadow: `0px 4px 4px 0px #0000001A` }}>
       <div className="flex flex-row items-center w-full [&>*:not(:first-child)]:border-l">
         {
           NavLinkItems.map((nav, index) => {

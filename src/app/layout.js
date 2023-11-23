@@ -13,7 +13,6 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-
       <Head>
         <meta charSet="UTF-8" />
         <title>慈濟資訊網</title>

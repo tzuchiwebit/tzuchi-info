@@ -7,14 +7,14 @@ import styled from 'styled-components';
 //   margin: 0 auto;
 //   `;
 
-export default function Container({ className, children, ...props }) {
+export default function Container({children, ...props }) {
   // Tailwind CSS
   // const extendStyles = className || '';
   return (
     // <div className={`w-[90%] mx-auto my-0 md:max-w-[1168px] ${extendStyles}`}>
     //   {children}
     // </div>
-    <Outer {...props}>
+    <Outer className='flex' {...props}>
       <Inner>
         {children}
       </Inner>
@@ -24,7 +24,7 @@ export default function Container({ className, children, ...props }) {
 
 const Outer = styled.div`
   width: 100%;
-  display: flex;
+  // display: flex;
   justify-content: center;
 `
 

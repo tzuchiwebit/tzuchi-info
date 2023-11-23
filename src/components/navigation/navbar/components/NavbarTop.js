@@ -1,10 +1,11 @@
 'use client'
 import { Fragment, useState } from 'react'
 import Container from '@/shared/layout/Container'
-import { Dialog, Disclosure } from '@headlessui/react'
+import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import {
   ArrowPathIcon,
   ChartPieIcon,
+  Bars3Icon,
   CursorArrowRaysIcon,
   FingerPrintIcon,
   SquaresPlusIcon,
@@ -13,6 +14,7 @@ import {
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
 import Icon from '@/shared/Icon'
 import { HeaderLinkItems } from '../config'
+import color from '@/shared/styles/color'
 
 const products = [
   { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
@@ -30,23 +32,96 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
+const DropDownMenu = () => (<Menu as="div" className="relative inline-block text-left">
+  {({ open }) => (
+    <>
+      <div>
+        <Menu.Button className="inline-flex w-full items-center justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 font-semibold text-gray-text shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 whitespace-nowrap">
+          功能選單
+          {/* <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-text transition-all" style={{transform: open ? 'rotate(180deg)' : 'rotate(0)'}} aria-hidden="true" /> */}
+          <Icon.UpArrow className="-mr-1 h-5 w-5 text-gray-text transition-all" style={{transform: open ? 'rotate(0)' : 'rotate(180deg)'}} aria-hidden="true" />
+        </Menu.Button>
+      </div>
+
+      <Transition
+        as={Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
+        <Menu.Items className="absolute right-0 z-10 mt-0 w-full origin-top-right bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div className="py-1">
+            <Menu.Item>
+              {({ active }) => (
+                <a
+                  href="#"
+                  className={classNames(
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'block px-4 py-2 text-sm'
+                  )}
+                >
+                  Account settings
+                </a>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <a
+                  href="#"
+                  className={classNames(
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'block px-4 py-2 text-sm'
+                  )}
+                >
+                  Support
+                </a>
+              )}
+            </Menu.Item>
+            <Menu.Item>
+              {({ active }) => (
+                <a
+                  href="#"
+                  className={classNames(
+                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                    'block px-4 py-2 text-sm'
+                  )}
+                >
+                  License
+                </a>
+              )}
+            </Menu.Item>
+            <form method="POST" action="#">
+              <Menu.Item>
+                {({ active }) => (
+                  <button
+                    type="submit"
+                    className={classNames(
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'block w-full px-4 py-2 text-left text-sm'
+                    )}
+                  >
+                    Sign out
+                  </button>
+                )}
+              </Menu.Item>
+            </form>
+          </div>
+        </Menu.Items>
+      </Transition>
+    </>
+  )}
+
+</Menu>)
+
 export default function NavbarTop() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   return (
     <>
       <Container>
-        <nav className="mx-auto flex max-w-7xl items-center justify-between h-16 desktop:h-20 " aria-label="Global">
-          {/* mobile button */}
-          {/* <div className="flex tablet:hidden">
-              <button
-                type="button"
-                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-                onClick={() => setMobileMenuOpen(true)}
-              >
-                <span className="sr-only">Open main menu</span>
-                <Bars3Icon className="h-6 w-6" aria-hidden="true" />
-              </button>
-            </div> */}
+        <nav className="mx-auto flex max-w-7xl items-center justify-between h-16 desktop:h-19 " aria-label="Global">
           {/* grid layout */}
           <div className="flex flex-row w-full gap-2 items-center justify-between px-4 container:px-0">
             <div className="flex-none w-[110px] tablet:w-[165px] laptop:w-[230px]">
@@ -55,7 +130,7 @@ export default function NavbarTop() {
                 <Icon.LOGO width="100%" />
               </a>
             </div>
-            <div className="flex flex-row gap-2 h-10 items-center w-[670px]">
+            <div className="hidden tablet:flex flex-row gap-2 h-10 items-center w-[670px]">
               <div className="w-2/3 flex justify-end items-center relative">
                 <input
                   placeholder="關鍵字搜尋"
@@ -81,12 +156,29 @@ export default function NavbarTop() {
               </div>
             </div>
           </div>
+          {/* mobile layout */}
+          <div className="flex gap-4 tablet:hidden items-center">
+            <DropDownMenu />
+            <button
+              type="button"
+              className="w-16 h-16 flex flex-row justify-center items-center"
+              style={{
+                marginRight: -10,
+                backgroundColor: mobileMenuOpen ? color.complementary.blue2 : 'transparent',
+                color: mobileMenuOpen ? color.primary.blue1 : color.gray.gray4,
+              }}
+              onClick={() => setMobileMenuOpen(true)}
+            >
+              <span className="sr-only">Open main menu</span>
+              <Icon.Menu width="32px" />
+            </button>
+          </div>
         </nav>
       </Container>
 
       <Dialog as="div" className="tablet:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
         <div className="fixed inset-0 z-10" />
-        <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <Dialog.Panel className="fixed inset-y-16 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
