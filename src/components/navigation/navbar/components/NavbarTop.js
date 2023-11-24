@@ -35,11 +35,16 @@ function classNames(...classes) {
 const DropDownMenu = () => (<Menu as="div" className="relative inline-block text-left">
   {({ open }) => (
     <>
+      {/* ring-1 ring-inset ring-gray-300 */}
       <div>
-        <Menu.Button className="inline-flex w-full items-center justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 font-semibold text-gray-text shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 whitespace-nowrap">
+        <Menu.Button
+          className={classNames(
+            open ? 'bg-complementary-blue2 text-primary-blue1 border-transparent' : 'bg-white text-gray-text border-gray-gray7',
+            "border border-solid inline-flex w-full items-center justify-center gap-x-1.5 rounded-md px-3 py-2 font-semibold whitespace-nowrap"
+          )}>
           功能選單
           {/* <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-text transition-all" style={{transform: open ? 'rotate(180deg)' : 'rotate(0)'}} aria-hidden="true" /> */}
-          <Icon.UpArrow className="-mr-1 h-5 w-5 text-gray-text transition-all" style={{transform: open ? 'rotate(0)' : 'rotate(180deg)'}} aria-hidden="true" />
+          <Icon.UpArrow className="-mr-1 h-5 w-5 text-gray-text transition-all" style={{ transform: open ? 'rotate(0)' : 'rotate(180deg)' }} aria-hidden="true" />
         </Menu.Button>
       </div>
 
@@ -52,63 +57,24 @@ const DropDownMenu = () => (<Menu as="div" className="relative inline-block text
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-0 w-full origin-top-right bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          <div className="py-1">
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                  Account settings
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                  Support
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                  License
-                </a>
-              )}
-            </Menu.Item>
-            <form method="POST" action="#">
+        <Menu.Items className="absolute right-0 z-10 -mt-1 w-full divide-solid divide-y-2 divide-gray-gray8 origin-top-right bg-white shadow-lg ring-2 ring-black ring-opacity-5 focus:outline-none">
+          {
+            HeaderLinkItems.map((item, index) => (<div className="" key={index}>
               <Menu.Item>
                 {({ active }) => (
-                  <button
-                    type="submit"
+                  <a
+                    href={item.link}
                     className={classNames(
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block w-full px-4 py-2 text-left text-sm'
+                      'block px-4 py-2 font-semibold text-primary-blue1 hover:bg-complementary-blue2'
                     )}
                   >
-                    Sign out
-                  </button>
+                    {item.label}
+                  </a>
                 )}
               </Menu.Item>
-            </form>
-          </div>
+            </div>))
+          }
         </Menu.Items>
       </Transition>
     </>
