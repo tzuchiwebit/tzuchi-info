@@ -26,6 +26,7 @@ export { default as Cancel } from "./icon/main/cancel.svg";
 export { default as Filter } from "./icon/main/filter.svg";
 export { default as Views } from "./icon/main/views.svg";
 export { default as LatestUpload } from "./icon/main/latest-upload.svg";
+export { default as CyanTriangle } from "./icon/main/cyan-triangle.svg";
 // pagination
 export { default as PageArrowLeftDouble } from "./icon/main/page-double-left-arrow.svg";
 export { default as PageArrowRightDouble } from "./icon/main/page-double-right-arrow.svg";

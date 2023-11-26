@@ -11,9 +11,6 @@ export default function Container({children, ...props }) {
   // Tailwind CSS
   // const extendStyles = className || '';
   return (
-    // <div className={`w-[90%] mx-auto my-0 md:max-w-[1168px] ${extendStyles}`}>
-    //   {children}
-    // </div>
     <Outer className='flex' {...props}>
       <Inner>
         {children}
@@ -24,13 +21,14 @@ export default function Container({children, ...props }) {
 
 const Outer = styled.div`
   width: 100%;
-  // display: flex;
   justify-content: center;
 `
 
 const Inner = styled.div`
   width: 100%;
   max-width: 1200px;
-  padding-left: 10px;
-  padding-right: 10px;
+  @media(min-width: 1180px) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 `

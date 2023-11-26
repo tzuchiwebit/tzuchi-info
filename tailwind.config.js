@@ -11,8 +11,8 @@ module.exports = {
   theme: {
     screens: screens,
     // fontFamily: {
-      // sans: ['Graphik', 'sans-serif'],
-      // serif: ['Merriweather', 'serif'],
+    // sans: ['Graphik', 'sans-serif'],
+    // serif: ['Merriweather', 'serif'],
     // },
     extend: {
       spacing: {
@@ -23,6 +23,13 @@ module.exports = {
         '4xl': '2rem',
       },
       colors: color,
+      boxShadow: {
+        'elevation-3': '0px 0px 14px 0px #00000021',
+        'elevation-4': '0px 5px 18px 0px #0000004D',
+      },
+      transitionProperty: {
+        'height': 'height'
+      }
     }
   },
   plugins: [],

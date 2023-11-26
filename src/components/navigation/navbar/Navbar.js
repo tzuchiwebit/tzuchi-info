@@ -12,7 +12,6 @@ export default function Navbar() {
     <>
       <header className="bg-white">
         <NavbarTop />
-        <div className="h-1 w-full bg-gradient-to-r from-primary-blue1 to-primary-linear"></div>
         <NavbarBottom />
       </header>
 

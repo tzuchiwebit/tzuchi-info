@@ -13,20 +13,8 @@ import {
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
 import Icon from '@/shared/Icon'
-import { HeaderLinkItems } from '../config'
+import { HeaderLinkItems, NavLinkItems } from '../config'
 import color from '@/shared/styles/color'
-
-const products = [
-  { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
-  { name: 'Engagement', description: 'Speak directly to your customers', href: '#', icon: CursorArrowRaysIcon },
-  { name: 'Security', description: 'Your customers’ data will be safe and secure', href: '#', icon: FingerPrintIcon },
-  { name: 'Integrations', description: 'Connect with third-party tools', href: '#', icon: SquaresPlusIcon },
-  { name: 'Automations', description: 'Build strategic funnels that will convert', href: '#', icon: ArrowPathIcon },
-]
-const callsToAction = [
-  { name: 'Watch demo', href: '#', icon: PlayCircleIcon },
-  { name: 'Contact sales', href: '#', icon: PhoneIcon },
-]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -35,7 +23,6 @@ function classNames(...classes) {
 const DropDownMenu = () => (<Menu as="div" className="relative inline-block text-left">
   {({ open }) => (
     <>
-      {/* ring-1 ring-inset ring-gray-300 */}
       <div>
         <Menu.Button
           className={classNames(
@@ -43,7 +30,6 @@ const DropDownMenu = () => (<Menu as="div" className="relative inline-block text
             "border border-solid inline-flex w-full items-center justify-center gap-x-1.5 rounded-md px-3 py-2 font-semibold whitespace-nowrap"
           )}>
           功能選單
-          {/* <ChevronDownIcon className="-mr-1 h-5 w-5 text-gray-text transition-all" style={{transform: open ? 'rotate(180deg)' : 'rotate(0)'}} aria-hidden="true" /> */}
           <Icon.UpArrow className="-mr-1 h-5 w-5 text-gray-text transition-all" style={{ transform: open ? 'rotate(0)' : 'rotate(180deg)' }} aria-hidden="true" />
         </Menu.Button>
       </div>
@@ -83,14 +69,18 @@ const DropDownMenu = () => (<Menu as="div" className="relative inline-block text
 </Menu>)
 
 export default function NavbarTop() {
+
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [currentDialogIndex, setCurrentDialogIndex] = useState(-1);
+
   return (
     <>
+      <div className="h-1 w-full bg-gradient-to-r from-primary-blue1 to-primary-linear"></div>
       <Container>
         <nav className="mx-auto flex max-w-7xl items-center justify-between h-16 desktop:h-19 " aria-label="Global">
           {/* grid layout */}
           <div className="flex flex-row w-full gap-2 items-center justify-between px-4 container:px-0">
-            <div className="flex-none w-[110px] tablet:w-[165px] laptop:w-[230px]">
+            <div className="flex-none w-[128px] tablet:w-[165px] laptop:w-[230px] pr-2 border-r border-solid border-gray-gray8 tablet:border-none">
               <a href="#" className="">
                 <span className="sr-only">慈濟資訊網</span>
                 <Icon.LOGO width="100%" />
@@ -100,9 +90,9 @@ export default function NavbarTop() {
               <div className="w-2/3 flex justify-end items-center relative">
                 <input
                   placeholder="關鍵字搜尋"
-                  className="border border-gray-400 rounded-lg px-2 py-1.5 w-full laptop:w-[300px] tablet:w-[200px]"
+                  className="border border-gray-400 rounded-sm px-2 py-1.5 w-full laptop:w-[300px] tablet:w-[200px]"
                 />
-                <Icon.Search width="100%" className="absolute mr-2 w-6 text-gray-gray4" />
+                <Icon.Search width="100%" className="absolute mr-2 w-6 text-gray-gray4 cursor-pointer" />
                 {/* <img src="/icons/search.svg" className="absolute mr-2 w-10" alt="Search Icon" /> */}
               </div>
               <div className="w-full flex flex-row items-center">
@@ -129,7 +119,6 @@ export default function NavbarTop() {
               type="button"
               className="w-16 h-16 flex flex-row justify-center items-center"
               style={{
-                marginRight: -10,
                 backgroundColor: mobileMenuOpen ? color.complementary.blue2 : 'transparent',
                 color: mobileMenuOpen ? color.primary.blue1 : color.gray.gray4,
               }}
@@ -141,87 +130,80 @@ export default function NavbarTop() {
           </div>
         </nav>
       </Container>
+      {/* <div className="hidden tablet:block h-1 w-full bg-gradient-to-r from-primary-blue1 to-primary-linear"></div> */}
 
+      {/* shows on mobile */}
+      <div className="w-full flex justify-end items-center relative tablet:hidden">
+        <input
+          placeholder="關鍵字搜尋"
+          className="border-2 border-gray-gray8 px-2 py-1.5 w-full h-[50px] text-lg"
+        />
+        <Icon.Search width="100%" className="absolute mr-2 w-8 text-primary-blue1 cursor-pointer" />
+        {/* <img src="/icons/search.svg" className="absolute mr-2 w-10" alt="Search Icon" /> */}
+      </div>
       <Dialog as="div" className="tablet:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
         <div className="fixed inset-0 z-10" />
-        <Dialog.Panel className="fixed inset-y-16 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-          <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
-              />
-            </a>
-            <button
-              type="button"
-              className="-m-2.5 rounded-md p-2.5 text-gray-700"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              <span className="sr-only">Close menu</span>
-              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-            </button>
-          </div>
-          <div className="mt-6 flow-root">
-            <div className="-my-6 divide-y divide-gray-500/10">
-              <div className="space-y-2 py-6">
-                <Disclosure as="div" className="-mx-3">
-                  {({ open }) => (
+        <Dialog.Panel className="fixed h-fit inset-y-16 right-0 z-10 w-[270px] overflow-y-auto bg-white shadow-elevation-4 ">
+          <div className="flow-root">
+            <div className="divide-y-2 divide-gray-gray8 divide-solid transition-all">
+              {NavLinkItems.map((nav, index) => {
+
+                const isDisclosure = !!(nav?.children);
+
+                return (<div className="" key={index}>
+                  <Disclosure as="div" className="">
                     <>
-                      <Disclosure.Button className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">
-                        Product
-                        <ChevronDownIcon
-                          className={classNames(open ? 'rotate-180' : '', 'h-5 w-5 flex-none')}
-                          aria-hidden="true"
-                        />
+                      <Disclosure.Button
+                        className="flex gap-2 w-full items-center justify-start py-2 pl-5 font-semibold leading-7 text-gray-900 hover:bg-complementary-blue2 "
+                        onClick={() => {
+                          if (!isDisclosure) {
+                            return window.open(nav.link, '_blank');
+                          } else if (currentDialogIndex === index) {
+                            return setCurrentDialogIndex(-1);
+                          }
+                          setCurrentDialogIndex(index);
+                        }}
+                      >
+                        <Icon.CyanTriangle
+                          className="transition-all"
+                          width="12px"
+                          style={{ transform: (isDisclosure && currentDialogIndex === index) ? 'rotate(90deg)' : '' }}
+                        /> {nav.label}
                       </Disclosure.Button>
-                      <Disclosure.Panel className="mt-2 space-y-2">
-                        {[...products, ...callsToAction].map((item) => (
-                          <Disclosure.Button
-                            key={item.name}
-                            as="a"
-                            href={item.href}
-                            className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                          >
-                            {item.name}
-                          </Disclosure.Button>
-                        ))}
-                      </Disclosure.Panel>
+                      <Transition
+                        show={isDisclosure && (currentDialogIndex === index)}
+                        enter="transition-height duration-500 ease-in-out"
+                        enterFrom="h-0"
+                        enterTo="h-auto"
+                        leave="transition-height duration-0 "
+                        leaveFrom="h-auto"
+                        leaveTo="h-0"
+                      >
+                        <Disclosure.Panel className="px-3 py-1 bg-primary-blue3">
+                          <div className="divide-y divide-gray-gray8 divide-solid">
+                            {nav?.children && nav.children.map((item) => (
+                              <Disclosure.Button
+                                key={item.label}
+                                as="a"
+                                href={item.link}
+                                target='_blank'
+                                className="block py-2 pl-1 text-white"
+                              >
+                                {item.label}
+                              </Disclosure.Button>
+                            ))}
+                          </div>
+                        </Disclosure.Panel>
+                      </Transition>
                     </>
-                  )}
-                </Disclosure>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Features
-                </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Marketplace
-                </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Company
-                </a>
-              </div>
-              <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </a>
-              </div>
+                  </Disclosure>
+                </div>)
+              })}
             </div>
           </div>
         </Dialog.Panel>
       </Dialog>
+
     </>
   )
 }
