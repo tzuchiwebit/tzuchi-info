@@ -12,7 +12,7 @@ import MainContent from "./MainContent"
 export default function Home() {
 
     return (
-        <div className="flex flex-col gap-4 laptop:flex-row pt-10">
+        <div className="flex flex-col gap-4 laptop:flex-row laptop:pt-10">
             <MainContainer>
                 <Widgets />
                 <MainContent />

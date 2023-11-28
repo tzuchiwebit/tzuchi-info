@@ -17,14 +17,15 @@ export default function Widgets() {
 
 const Container = styled.div`
     width: 100%;
-    // border: 1px solid black;
     display: flex;
     flex-direction: row;
-    gap: 20px;
-    padding: 20px;
+    gap: 15px;
+    padding: 15px;
+    @media(min-width: ${screens.container}) {
+        padding: 0;
+    }
     @media(min-width: ${screens.desktop}) {
         width: 180px;
-        padding: 0;
         flex-direction: column;
     }
 `

@@ -9,7 +9,7 @@ export default function Calendar() {
 
     return <OuterContainer>
         <InnerContainer style={{ backgroundImage: `url(/bgImage/bg-roof-top.svg)` }}>
-            <div className="flex-1 border-solid border-gray-gray8 laptop:border-r px-2 justify-end flex h-fit">
+            <div className="flex-1 border-solid border-gray-gray8 laptop:border-r px-2 laptop:justify-end justify-center flex h-fit">
                 <div className="flex flex-col justify-center w-fit">
                     <div className="font-semibold text-lg w-fit">
                         {dayjs().format('YYYY.MM')}
@@ -19,7 +19,7 @@ export default function Calendar() {
                     </div>
                 </div>
             </div>
-            <div className="flex-1 flex items-center font-semibold text-center leading-7 tracking-normal p-2 h-fit text-xl whitespace-nowrap">
+            <div className="flex-1 flex items-center font-semibold text-center leading-7 tracking-normal p-2 h-fit text-xl whitespace-nowrap justify-center laptop:justify-start">
                 世代輪轉<br />
                 法脈接續
             </div>
@@ -34,28 +34,34 @@ export default function Calendar() {
 
 const OuterContainer = styled.div`
     flex-basis: 50%;
-`
-
-const InnerContainer = styled.div`
-    background-repeat: no-repeat;
-    width: 100%;
-    border: 4px solid ${color.gray.gray8};
-    display: flex;
-    flex-direction: column;
-    padding-top: 15px;
-    padding-bottom: 25px;
-    color: ${color.primary.blue1};
     @media(min-width: ${screens.tablet}) {
         flex-basis: 25%;
     }
     @media(min-width: ${screens.laptop}) {
         flex-basis: 50%;
-        flex-direction: row;
-        height: 135px;
-        background-size: 70%;
-        background-position: center 100%;
     }
     @media(min-width: ${screens.desktop}) {
         flex-basis: 100%;
+    }
+`
+
+const InnerContainer = styled.div`
+    background-repeat: no-repeat;
+    border: 4px solid ${color.gray.gray8};
+    display: flex;
+    flex-direction: column;
+    color: ${color.primary.blue1};
+    padding-top: 15px;
+    padding-bottom: 75px;
+    background-size: 150%;
+    background-position: -20px 100%;
+    width: 100%;
+    @media(min-width: ${screens.laptop}) {   
+        padding-top: 15px;
+        padding-bottom: 25px;
+        flex-direction: row;
+        height: 135px;
+        background-size: 60%;
+        background-position: center 100%;
     }
 `
