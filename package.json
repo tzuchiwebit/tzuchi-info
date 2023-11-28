@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy.meproz": "ssh root@www.meproz.com 'rm -rf /var/www/tzuchi-info && mkdir /var/www/tzuchi-info' && scp -r out/* root@www.meproz.com:/var/www/tzuchi-info"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
