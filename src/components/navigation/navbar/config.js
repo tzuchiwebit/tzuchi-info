@@ -1,7 +1,7 @@
 export const HeaderLinkItems = [
     {
         label: '社區故事',
-        link: '#',
+        link: 'https://community.tzuchi.org/',
     },
     {
         label: '入口網',

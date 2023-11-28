@@ -96,14 +96,17 @@ export default function NavbarTop() {
                 {/* <img src="/icons/search.svg" className="absolute mr-2 w-10" alt="Search Icon" /> */}
               </div>
               <div className="w-full flex flex-row items-center">
-                <a href="#" className="text-primary-blue1 flex px-1 font-semibold whitespace-nowrap">
+                {/* <a href="#" className="text-primary-blue1 flex px-1 font-semibold whitespace-nowrap">
                   <Icon.Add width="20" /> 進階搜尋
-                </a>
+                </a> */}
                 {
                   HeaderLinkItems.map((item, index) => (
                     <Fragment key={index}>
-                      <div className="border-l border-gray-text border-solid h-[16px]"></div>
-                      <a href={item.link} className="text-gray-text px-1 hover:font-semibold whitespace-nowrap">
+                      <div className={classNames(
+                        index !== 0 ? 'border-l' : '',
+                        'border-gray-text border-solid h-[16px]'
+                      )}></div>
+                      <a href={item.link} className="text-gray-text px-1 hover:font-medium whitespace-nowrap" target='_blank'>
                         {item.label}
                       </a>
                     </Fragment>
