@@ -1,8 +1,8 @@
 import Container from "@/shared/layout/Container"
-import Widget from "@/components/home/Widget"
+import Home from "@/components/home"
 
 export default function Page() {
   return <Container>
-    <Widget />
+    <Home />
   </Container>
 }

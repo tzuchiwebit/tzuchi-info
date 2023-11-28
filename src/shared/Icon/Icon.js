@@ -51,4 +51,3 @@ export { default as ShareWhatsapp } from "./icon/main/share-whatsapp.svg";
 export { default as ShareTelegram } from "./icon/main/share-telegram.svg";
 export { default as ShareTiktok } from "./icon/main/share-tiktok.svg";
 export { default as ShareThreads } from "./icon/main/share-threads.svg";
-
