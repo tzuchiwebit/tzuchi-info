@@ -1,4 +1,5 @@
 'use client'
+import { useState, useEffect } from "react"
 import styled from "styled-components"
 import screens from "@/shared/styles/screens"
 import color from "@/shared/styles/color"
@@ -8,15 +9,24 @@ import { OuterContainer } from "./container"
 
 export default function Calendar() {
 
+    const [date, setDate] = useState({});
+
+    useEffect(() => {
+        setDate({
+            dateUpper: dayjs().format('YYYY.MM'),
+            dateLower: dayjs().format('DD'),
+        })
+    }, []);
+
     return <OuterContainer>
         <InnerContainer style={{ backgroundImage: `url(/bgImage/bg-roof-top.svg)` }}>
             <div className="flex-1 border-solid border-gray-gray8 laptop:border-r px-2 laptop:justify-end justify-center flex h-fit">
-                <div className="flex flex-col justify-center w-fit">
+                <div className="flex flex-col justify-center w-fit ">
                     <div className="font-semibold text-lg w-fit">
-                        {dayjs().format('YYYY.MM')}
+                        {date.dateUpper}
                     </div>
                     <div className="font-semibold text-[40px] leading-none w-auto text-center">
-                        {dayjs().format('DD')}
+                        {date.dateLower}
                     </div>
                 </div>
             </div>

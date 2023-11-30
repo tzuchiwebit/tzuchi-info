@@ -6,9 +6,6 @@ import Reminder from "./Reminder"
 import Journel from "./Journal"
 import Thinking from "./Thinking"
 
-// import Image from 'next/image';
-// import AuthorIcon from '@/asset/icon/main/author.svg';
-
 export default function Widgets() {
 
     return <Container>
