@@ -4,6 +4,7 @@ import screens from "@/shared/styles/screens"
 import color from "@/shared/styles/color"
 import dayjs from "dayjs"
 import Icon from "@/shared/Icon"
+import { OuterContainer } from "./container"
 
 export default function Calendar() {
 
@@ -32,18 +33,6 @@ export default function Calendar() {
     </OuterContainer>
 }
 
-const OuterContainer = styled.div`
-    flex-basis: 50%;
-    @media(min-width: ${screens.tablet}) {
-        flex-basis: 25%;
-    }
-    @media(min-width: ${screens.laptop}) {
-        flex-basis: 50%;
-    }
-    @media(min-width: ${screens.desktop}) {
-        flex-basis: 100%;
-    }
-`
 
 const InnerContainer = styled.div`
     background-repeat: no-repeat;
@@ -56,6 +45,7 @@ const InnerContainer = styled.div`
     background-size: 150%;
     background-position: -20px 100%;
     width: 100%;
+    height: 250px;
     @media(min-width: ${screens.laptop}) {   
         padding-top: 15px;
         padding-bottom: 25px;

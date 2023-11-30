@@ -2,17 +2,18 @@
 import styled from "styled-components"
 import screens from "@/shared/styles/screens"
 import color from "@/shared/styles/color"
+import dayjs from "dayjs"
 import Icon from "@/shared/Icon"
 import Image from "next/image"
 import { OuterContainer } from "./container"
 
-export default function Reminder() {
+export default function Thinking() {
 
     return <OuterContainer>
         <InnerContainer>
             <div className="px-2 laptop:justify-end justify-center flex">
                 <Image
-                    src="/bgImage/widget-default-img1.png"
+                    src="/bgImage/widget-default-img2.png"
                     alt=""
                     width={0}
                     height={0}
@@ -24,8 +25,8 @@ export default function Reminder() {
             <div className="flex flex-col justify-center font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start laptop:max-w-[75%] desktop:max-w-full">
                 證嚴上人<br />
                 每日一叮嚀
-                <div className="pt-0 justify-center laptop:justify-start truncate inline-block text-gray-gray2">
-                世間祥和在於心世間祥和在於心
+                <div className="pt-0 justify-center laptop:justify-start truncate text-gray-gray2">
+                    世間祥和在世間祥和在世間祥和在
                 </div>
             </div>
 

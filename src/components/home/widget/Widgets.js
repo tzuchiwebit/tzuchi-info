@@ -3,6 +3,8 @@ import styled from "styled-components"
 import screens from "@/shared/styles/screens"
 import Calendar from "./Calendar"
 import Reminder from "./Reminder"
+import Journel from "./Journal"
+import Thinking from "./Thinking"
 
 // import Image from 'next/image';
 // import AuthorIcon from '@/asset/icon/main/author.svg';
@@ -12,6 +14,8 @@ export default function Widgets() {
     return <Container>
         <Calendar />
         <Reminder />
+        <Journel />
+        <Thinking />
     </Container>
 }
 
@@ -19,13 +23,22 @@ const Container = styled.div`
     width: 100%;
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 15px;
     padding: 15px;
+    @media(min-width: ${screens.tablet}) {
+        flex-wrap: nowrap;
+    }
+    @media(min-width: ${screens.laptop}) {
+        flex-wrap: wrap;
+    }
     @media(min-width: ${screens.container}) {
-        padding: 0;
+        padding: 15px 0 0 0;
     }
     @media(min-width: ${screens.desktop}) {
         width: 180px;
         flex-direction: column;
+        flex-wrap: nowrap;
     }
 `
