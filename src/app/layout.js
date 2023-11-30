@@ -8,6 +8,9 @@ import Footer from '@/components/navigation/footer/Footer'
 export const metadata = {
   title: '慈濟資訊網',
   description: '慈濟資訊網',
+  // icons: {
+  //   icon: '/icon/icon.svg', // /public path
+  // },
 }
 
 export default function RootLayout({ children }) {
@@ -15,9 +18,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <Head>
         <meta charSet="UTF-8" />
-        <title>慈濟資訊網</title>
-        <meta name="description" content="慈濟資訊網" />
-        <link rel="icon" href="./Favicon.svg" />
+        <link rel="icon" href="./icon.ico" type="image/svg" sizes="any" />
       </Head>
 
       <body>
