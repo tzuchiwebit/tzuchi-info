@@ -1,7 +1,6 @@
 'use client'
-import { useState } from "react"
 import styled from "styled-components"
-import { BannerTitle, SlidesTrack, Tag } from "../components"
+import { BannerTitle, SlidesTrack } from "../components"
 import screens from "@/shared/styles/screens";
 import dayjs from "dayjs"
 import Icon from "@/shared/Icon";

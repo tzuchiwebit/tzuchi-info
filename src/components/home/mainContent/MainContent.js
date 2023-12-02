@@ -1,12 +1,9 @@
-import Icon from "@/shared/Icon"
 import styled from "styled-components"
 import MainCarousel from "./MainCarousel"
 import SiteNews from "./SiteNews"
 import CommunityStory from "./CommunityStory"
+import Article from "./Article"
 import screens from "@/shared/styles/screens"
-
-// import Image from 'next/image';
-// import AuthorIcon from '@/asset/icon/main/author.svg';
 
 export default function MainContent() {
 
@@ -14,6 +11,7 @@ export default function MainContent() {
         <MainCarousel />
         <SiteNews />
         <CommunityStory />
+        <Article />
     </Container>
 }
 

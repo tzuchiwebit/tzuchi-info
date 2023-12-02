@@ -1,9 +1,7 @@
 'use client'
-import { useState } from "react"
 import Icon from "@/shared/Icon"
 import styled from "styled-components"
 import { BannerTitle } from "../components"
-import color from "@/shared/styles/color";
 import screens from "@/shared/styles/screens";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel"

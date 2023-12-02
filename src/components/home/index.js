@@ -5,7 +5,6 @@ import screens from "@/shared/styles/screens"
 import color from "@/shared/styles/color"
 import Widgets from "./widget/Widgets"
 import MainContent from "./mainContent/MainContent"
-import Container from "@/shared/layout/Container"
 
 // import Image from 'next/image';
 // import AuthorIcon from '@/asset/icon/main/author.svg';
