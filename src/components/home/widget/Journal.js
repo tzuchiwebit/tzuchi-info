@@ -13,20 +13,19 @@ export default function Journal() {
         <InnerContainer>
             <div className="px-2 laptop:justify-end justify-center flex">
                 <Image
-                    src="/bgImage/widget-default-img1.png"
+                    src="https://picsum.photos/id/201/200/300"
                     alt=""
                     width={0}
                     height={0}
                     sizes="100vw"
                     className="h-[130px] w-auto laptop:h-auto laptop:w-full"
-                    // style={{ width: '100%' }}
+                // style={{ width: '100%' }}
                 />
             </div>
             <div className="flex flex-col justify-center font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start laptop:max-w-[75%] desktop:max-w-full">
-                證嚴上人<br />
-                每日一叮嚀
+                慈濟週報
                 <div className="pt-0 justify-center laptop:justify-start truncate text-gray-gray2">
-                    世間祥和在世間祥和在世間祥和在
+                慈濟週報第二期慈濟週報第二期
                 </div>
             </div>
 

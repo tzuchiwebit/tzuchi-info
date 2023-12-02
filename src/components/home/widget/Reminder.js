@@ -12,7 +12,7 @@ export default function Reminder() {
         <InnerContainer>
             <div className="px-2 laptop:justify-end justify-center flex">
                 <Image
-                    src="/bgImage/widget-default-img1.png"
+                    src="https://picsum.photos/id/208/200/300"
                     alt=""
                     width={0}
                     height={0}
