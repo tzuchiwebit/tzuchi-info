@@ -1,15 +1,9 @@
 'use client'
 import { useState } from "react"
-import Icon from "@/shared/Icon"
 import styled from "styled-components"
 import { BannerTitle, SlidesTrack, Tag } from "../components"
-import color from "@/shared/styles/color";
 import screens from "@/shared/styles/screens";
 import dayjs from "dayjs"
-
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-}
 
 const tagOptions = [
     '全球',
@@ -39,7 +33,7 @@ const Item = ({ number }) => (
 
 const SiteNewsSection = () => {
     return <div className="pt-3 w-fit laptop:w-full flex">
-        {Array(3).fill({}).map(i => <Item />)}
+        {Array(3).fill({}).map((i, index) => <Item key={index} />)}
     </div>
 }
 
