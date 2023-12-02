@@ -23,7 +23,6 @@ const Container = styled.div`
     justify-content: space-between;
     flex-wrap: wrap;
     row-gap: 15px;
-    padding: 15px;
     @media(min-width: ${screens.tablet}) {
         flex-wrap: nowrap;
     }

@@ -8,6 +8,9 @@ module.exports = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  // plugins: [
+  //   require("flowbite/plugin")
+  // ],
   theme: {
     screens: screens,
     // fontFamily: {
@@ -15,6 +18,10 @@ module.exports = {
     // serif: ['Merriweather', 'serif'],
     // },
     extend: {
+      aspectRatio: {
+        '4/3': '4 / 3',
+        '5/4': '5 / 4',
+      },
       spacing: {
         '128': '32rem',
         '144': '36rem',
@@ -24,8 +31,8 @@ module.exports = {
       },
       colors: color,
       boxShadow: {
-        'elevation-3': '0px 0px 14px 0px #00000021',
-        'elevation-4': '0px 5px 18px 0px #0000004D',
+        'elevation-3': '0px 0px 7px 0px rgba(0, 0, 0, 0.13), 0px 4px 4px 0px rgba(0, 0, 0, 0.13)',
+        'elevation-4': '0px 5px 18px 0px rgba(0, 0, 0, 0.30), 0px 4px 4px 0px rgba(0, 0, 0, 0.13)',
       },
       transitionProperty: {
         'height': 'height'

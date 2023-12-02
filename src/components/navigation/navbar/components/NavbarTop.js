@@ -86,7 +86,7 @@ export default function NavbarTop() {
                 <Icon.LOGO width="100%" />
               </a>
             </div>
-            <div className="hidden tablet:flex flex-row gap-2 h-10 items-center w-[670px]">
+            <div className="hidden tablet:flex flex-row gap-2 h-10 items-center w-[550px]">
               <div className="w-2/3 flex justify-end items-center relative">
                 <input
                   placeholder="關鍵字搜尋"

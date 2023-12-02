@@ -1,6 +1,7 @@
 import Icon from "@/shared/Icon"
 import styled from "styled-components"
-import { BannerTitle } from "../components"
+import MainCarousel from "./MainCarousel"
+import screens from "@/shared/styles/screens"
 
 // import Image from 'next/image';
 // import AuthorIcon from '@/asset/icon/main/author.svg';
@@ -8,14 +9,18 @@ import { BannerTitle } from "../components"
 export default function MainContent() {
 
     return <Container>
-        <div>
-            <BannerTitle title={`近期焦點`} />
-        </div>
+        <MainCarousel />
     </Container>
 }
 
 const Container = styled.div`
     width: 100%;
     flex: 1;
-    padding: 15px;
+    padding-top: 15px;
+    display: flex;
+    flex-direction: column;
+    @media(min-width: ${screens.desktop}) {
+        width: 680px;
+    }
+    
 `
