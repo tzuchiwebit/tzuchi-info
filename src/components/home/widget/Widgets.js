@@ -36,5 +36,6 @@ const Container = styled.div`
         width: 180px;
         flex-direction: column;
         flex-wrap: nowrap;
+        height: fit-content;
     }
 `
