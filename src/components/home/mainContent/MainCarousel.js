@@ -38,9 +38,6 @@ const Item = ({ number }) => (
 
 const CarouselSection = () => {
 
-    const [activeIndex, setActiveIndex] = useState(1);
-
-
     return <CarouselContainer>
         <Carousel
             showArrows={true}

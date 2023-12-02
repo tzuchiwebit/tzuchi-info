@@ -37,7 +37,7 @@ const MainContainer = styled.div`
     @media(min-width: ${screens.desktop}) {
         width: 100%;
         flex-direction: row;
-        padding: 0;
+        padding: 0 15px 0 0;
     }
 `
 

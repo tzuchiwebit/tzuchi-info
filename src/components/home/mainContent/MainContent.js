@@ -1,6 +1,7 @@
 import Icon from "@/shared/Icon"
 import styled from "styled-components"
 import MainCarousel from "./MainCarousel"
+import SiteNews from "./SiteNews"
 import screens from "@/shared/styles/screens"
 
 // import Image from 'next/image';
@@ -10,6 +11,7 @@ export default function MainContent() {
 
     return <Container>
         <MainCarousel />
+        <SiteNews />
     </Container>
 }
 
