@@ -50,7 +50,7 @@ const Item = ({ item }) => (
                     <div className=" p-3 flex gap-4" key={_index}>
                         <div>
                             <img
-                                class="h-12 w-12 rounded-full ring-2 ring-white"
+                                className="h-12 w-12 rounded-full ring-2 ring-white"
                                 src={_i.avatar}
                                 alt="" />
                         </div>
