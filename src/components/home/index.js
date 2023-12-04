@@ -5,6 +5,7 @@ import screens from "@/shared/styles/screens"
 import color from "@/shared/styles/color"
 import Widgets from "./widget/Widgets"
 import MainContent from "./mainContent/MainContent"
+import SecondaryContent from "./secondaryContent/SecondaryContent"
 
 // import Image from 'next/image';
 // import AuthorIcon from '@/asset/icon/main/author.svg';
@@ -18,7 +19,7 @@ export default function Home() {
                 <MainContent />
             </MainContainer>
             <SecondaryContainer>
-                Secondary
+                <SecondaryContent />
             </SecondaryContainer>
         </div>
     )
@@ -31,7 +32,7 @@ const MainContainer = styled.div`
     gap: 20px;
     padding: 15px;
     @media(min-width: ${screens.laptop}) {
-        width: calc(100% - 350px);
+        width: calc(100% - 280px);
     }
     @media(min-width: ${screens.desktop}) {
         width: 100%;
@@ -41,9 +42,10 @@ const MainContainer = styled.div`
 `
 
 const SecondaryContainer = styled.div`
-    background-color: ${color.gray.gray8};
+    background-color: ${color.gray.gray11};
     @media(min-width: ${screens.laptop}) {
-        flex-basis: 350px;
+        flex-basis: 280px;
+        width: 280px;
     }
     @media(min-width: ${screens.desktop}) {
         flex-direction: row;
