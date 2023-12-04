@@ -5,15 +5,15 @@ import dayjs from "dayjs"
 const data = [
     {
         title: '「機智水保酷學堂」互動巡迴展 花蓮靜思堂展至12/17',
-        avatar: 'https://i.pravatar.cc/300',
+        avatar: 'https://picsum.photos/id/101/300/300',
     },
     {
         title: '12經絡人格解密 沈邑穎醫師幸福講座11/18登場 歡迎索票',
-        avatar: 'https://i.pravatar.cc/300',
+        avatar: 'https://picsum.photos/id/101/300/300',
     },
     {
         title: '第八屆慈濟論壇「邁向平等的新世代」即日起開放網路報名',
-        avatar: 'https://i.pravatar.cc/300',
+        avatar: 'https://picsum.photos/id/101/300/300',
     },
 ]
 

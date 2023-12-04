@@ -35,8 +35,8 @@ const AnnouncementSection = () => {
 
 export default function Announcements() {
 
-    return <div className="py-5 flex-1">
-        <BannerTitle title={`熱門活動`} link={'#'} />
+    return <div className="py-3 flex-1">
+        <BannerTitle title={`基金會公告`} link={'#'} />
         <AnnouncementSection />
     </div>
 }

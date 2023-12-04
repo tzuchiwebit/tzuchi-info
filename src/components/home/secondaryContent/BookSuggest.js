@@ -116,7 +116,7 @@ const CarouselSection = () => {
                 }
             },
             {
-                breakpoint: 768,
+                breakpoint: 767,
                 settings: {
                     centerMode: false,
                     slidesToShow: 2,
@@ -141,7 +141,7 @@ export default function BookSuggest() {
 
     const [selctedIndex, setSelectedIndex] = useState(0);
 
-    return <div className="pt-5 w-full">
+    return <div className="pt-3 w-full">
         <BannerTitle title={`好書推薦`} />
         <div className="w-full">
             <div className="py-4 flex gap-2 flex-wrap">

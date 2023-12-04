@@ -3,6 +3,7 @@ import screens from "@/shared/styles/screens"
 import Activities from "./Activities"
 import Announcements from "./Announcements"
 import BookSuggest from "./BookSuggest"
+import Youtube from "./Youtube"
 
 export default function SecondaryContent() {
 
@@ -12,6 +13,7 @@ export default function SecondaryContent() {
             <Announcements />
         </div>
         <BookSuggest />
+        <Youtube />
     </Container>
 }
 

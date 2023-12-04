@@ -43,9 +43,11 @@ const MainContainer = styled.div`
 
 const SecondaryContainer = styled.div`
     background-color: ${color.gray.gray11};
+    margin-bottom: 50px;
     @media(min-width: ${screens.laptop}) {
         flex-basis: 280px;
         width: 280px;
+        margin-bottom: 0;
     }
     @media(min-width: ${screens.desktop}) {
         flex-direction: row;
