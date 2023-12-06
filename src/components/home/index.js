@@ -1,5 +1,5 @@
 'use client'
-import Icon from "@/shared/Icon"
+// import Icon from "@/shared/Icon"
 import styled from "styled-components"
 import screens from "@/shared/styles/screens"
 import color from "@/shared/styles/color"
