@@ -19,10 +19,10 @@ export default function Calendar() {
     }, []);
 
     return <OuterContainer>
-        <InnerContainer style={{ backgroundImage: `url(/bgImage/bg-roof-top.svg)` }}>
-            <div className="flex-1 border-solid border-gray-gray8 laptop:border-r px-2 laptop:justify-end justify-center flex h-fit">
+        <InnerContainer style={{ backgroundImage: `url(/bgImage/bg-roof.svg)` }}>
+            <div className="flex-1 border-solid border-gray-gray8 laptop:border-r justify-center flex h-fit">
                 <div className="flex flex-col justify-center w-fit ">
-                    <div className="font-semibold text-lg w-fit">
+                    <div className="font-semibold text-lg w-fit leading-normal tablet:leading-5">
                         {date.dateUpper}
                     </div>
                     <div className="font-semibold text-[40px] leading-none w-auto text-center">
@@ -30,7 +30,7 @@ export default function Calendar() {
                     </div>
                 </div>
             </div>
-            <div className="flex-1 flex items-center font-semibold text-center leading-7 tracking-normal p-2 h-fit text-xl whitespace-nowrap justify-center laptop:justify-start">
+            <div className="flex-1 flex items-center font-semibold text-center leading-7 tracking-normal p-1 h-fit text-xl whitespace-nowrap justify-center">
                 世代輪轉<br />
                 法脈接續
             </div>
@@ -52,16 +52,24 @@ const InnerContainer = styled.div`
     color: ${color.primary.blue1};
     padding-top: 15px;
     padding-bottom: 75px;
-    background-size: 150%;
-    background-position: -20px 100%;
+    background-size: 200%;
+    background-position: -38px 100%;
     width: 100%;
     height: 250px;
     @media(min-width: ${screens.laptop}) {   
-        padding-top: 15px;
-        padding-bottom: 25px;
+        padding-top: 8px;
+        padding-left: 17%;
+        padding-right: 17%;
         flex-direction: row;
         height: 135px;
-        background-size: 60%;
+        background-size: 100%;
         background-position: center 100%;
+    }
+    @media(min-width: ${screens.desktop}) {  
+        height: 130px;
+        padding-left: unset;
+        padding-right: unset;
+        background-size: 120%;
+        background-position: 5px 100%;
     }
 `

@@ -32,7 +32,8 @@ const MainContainer = styled.div`
     gap: 20px;
     padding: 15px;
     @media(min-width: ${screens.laptop}) {
-        width: calc(100% - 280px);
+        width: calc(100% - 350px);
+        padding: 30px 40px;
     }
     @media(min-width: ${screens.desktop}) {
         width: 100%;
@@ -45,11 +46,13 @@ const SecondaryContainer = styled.div`
     background-color: ${color.gray.gray11};
     margin-bottom: 50px;
     @media(min-width: ${screens.laptop}) {
-        flex-basis: 280px;
-        width: 280px;
+        flex-basis: 350px;
+        width: 350px;
         margin-bottom: 0;
     }
     @media(min-width: ${screens.desktop}) {
+        flex-basis: 280px;
+        width: 280px;
         flex-direction: row;
     }
 `
