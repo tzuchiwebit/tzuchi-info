@@ -25,8 +25,10 @@ const Container = styled.div`
     row-gap: 15px;
     @media(min-width: ${screens.tablet}) {
         flex-wrap: nowrap;
+        padding-top: 20px;
     }
     @media(min-width: ${screens.laptop}) {
+        padding-top: unset;
         flex-wrap: wrap;
         row-gap: 20px;
     }

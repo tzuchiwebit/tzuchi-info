@@ -15,12 +15,12 @@ const tagOptions = [
     '大洋洲',
 ]
 
-const Item = ({ number }) => (
+const Item = () => (
     <div className="relative w-full p-1 min-w-[300px] laptop:min-w-0">
         <div className="w-full shadow-elevation-3 rounded-md overflow-hidden p-2">
             <StyledImage style={{ backgroundImage: `url(${"https://picsum.photos/id/230/300/300"})` }} />
-            <div className="pt-2 text-xl font-bold w-full text-primary-blue1 text-left h-28">
-                結合多機構在烏克蘭發放 慈濟助難民過寒冬 {number}
+            <div className="pt-2 text-xl font-bold w-full text-primary-blue1 text-left h-24 tablet:h-20 laptop:h-32 desktop:h-28 laptop:pb-2">
+                結合多機構在烏克蘭發放 慈濟助難民過寒冬
             </div>
             <div className="pt-2 font-medium text-sm text-gray-gray4 border-t border-solid border-gray-gray8">
                 {
