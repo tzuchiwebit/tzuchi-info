@@ -44,20 +44,20 @@ const CarouselSection = () => {
             emulateTouch
             showThumbs={false}
             statusFormatter={() => { }}
-            renderArrowPrev={(clickHandler) => (<div
+            renderArrowPrev={(clickHandler) => (<button
                 onClick={clickHandler}
-                className="absolute z-10 bottom-5 left-4 border border-solid border-gray-gray7/50 p-1 bg-white rounded-4xl shadow-elevation-3 hover:shadow-elevation-4 text-gray-gray2 hover:text-primary-blue1">
+                className="absolute z-10 bottom-5 left-1 p-1 bg-white rounded-4xl shadow-elevation-3 cursor-pointer text-gray-gray2 hover:bg-complementary-blue2 focus:bg-complementary-blue1">
                 <Icon.PageArrowLeft
                     style={{ width: 24 }}
                 />
-            </div>)}
-            renderArrowNext={(clickHandler) => (<div
+            </button>)}
+            renderArrowNext={(clickHandler) => (<button
                 onClick={clickHandler}
-                className="absolute z-10 bottom-5 right-4 border border-solid border-gray-gray7/50 p-1 bg-white rounded-4xl shadow-elevation-3 hover:shadow-elevation-4 text-gray-gray2 hover:text-primary-blue1">
+                className="absolute z-10 bottom-5 right-1 p-1 bg-white rounded-4xl shadow-elevation-3 cursor-pointer text-gray-gray2 hover:bg-complementary-blue2 focus:bg-complementary-blue1">
                 <Icon.PageArrowRight
                     style={{ width: 24 }}
                 />
-            </div>)}
+            </button>)}
             renderIndicator={(onClickHandler, isSelected, index, label) => {
                 const defStyle = { marginLeft: 20, color: "green", cursor: "pointer", bottom: 10, position: 'relative' };
                 const style = isSelected

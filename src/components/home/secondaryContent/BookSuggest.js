@@ -64,21 +64,21 @@ const Item = ({ number }) => (
 )
 
 
-const PrevBtn = ({ onClick }) => (<div
+const PrevBtn = ({ onClick }) => (<button
     onClick={onClick}
-    className="absolute z-10 bottom-5 left-1 border border-solid border-gray-gray7/50 p-1 bg-white rounded-4xl shadow-elevation-3 hover:shadow-elevation-4 text-gray-gray2 hover:text-primary-blue1">
+    className="absolute z-10 bottom-5 left-1 p-1 bg-white rounded-4xl shadow-elevation-3 text-gray-gray2 hover:bg-complementary-blue2 focus:bg-complementary-blue1">
     <Icon.PageArrowLeft
         style={{ width: 24 }}
     />
-</div>)
+</button>)
 
-const NextBtn = ({ onClick }) => (<div
+const NextBtn = ({ onClick }) => (<button
     onClick={onClick}
-    className="absolute z-10 bottom-5 right-1 border border-solid border-gray-gray7/50 p-1 bg-white rounded-4xl shadow-elevation-3 hover:shadow-elevation-4 text-gray-gray2 hover:text-primary-blue1">
+    className="absolute z-10 bottom-5 right-1 p-1 bg-white rounded-4xl shadow-elevation-3 text-gray-gray2 hover:bg-complementary-blue2 focus:bg-complementary-blue1">
     <Icon.PageArrowRight
         style={{ width: 24 }}
     />
-</div>)
+</button>)
 
 const CarouselSection = () => {
 
