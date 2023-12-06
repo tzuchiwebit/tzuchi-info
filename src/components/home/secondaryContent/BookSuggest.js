@@ -55,7 +55,7 @@ const Item = ({ number }) => (
         <div className={"w-full p-1"}>
             <div className="w-full rounded-md overflow-hidden">
                 <StyledImage style={{ backgroundImage: `url(${"https://picsum.photos/id/230/300/300"})` }} />
-                <div className="px-1 pt-2 text-xl font-bold w-full text-primary-blue1 text-left">
+                <div className="pt-2 text-xl font-bold w-full text-primary-blue1 text-left">
                     結合多機構在烏克蘭發放 慈濟助難民過寒冬 {number}
                 </div>
             </div>
@@ -97,7 +97,7 @@ const CarouselSection = () => {
         dotsClass: "slick-dots",
         infinite: true,
         centerMode: true,
-        centerPadding: '10%',
+        centerPadding: '11%',
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
@@ -113,6 +113,9 @@ const CarouselSection = () => {
                     slidesToScroll: 1,
                     initialSlide: 0,
                     infinite: true,
+                    arrows: false,
+                    dots: false,
+                    swipe: false,
                 }
             },
             {
@@ -176,6 +179,7 @@ const StyledImage = styled.div`
     background-repeat: no-repeat;
     background-position: center;
     aspect-ratio: 1;
+    border-radius: 5px;
 `
 
 const CarouselContainer = styled.div`
