@@ -2,7 +2,6 @@
 import styled from "styled-components"
 import screens from "@/shared/styles/screens"
 import color from "@/shared/styles/color"
-import dayjs from "dayjs"
 import Icon from "@/shared/Icon"
 import Image from "next/image"
 import { OuterContainer } from "./container"
@@ -11,7 +10,7 @@ export default function Journal() {
 
     return <OuterContainer>
         <InnerContainer>
-            <div className="px-2 laptop:justify-end justify-center flex">
+            <div className="flex px-2 laptop:justify-end justify-center shrink-0 laptop:max-w-[50%] desktop:max-w-full">
                 <Image
                     src="https://picsum.photos/id/201/200/300"
                     alt=""
@@ -22,9 +21,9 @@ export default function Journal() {
                 // style={{ width: '100%' }}
                 />
             </div>
-            <div className="flex flex-col justify-center font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start laptop:max-w-[75%] desktop:max-w-full">
-                慈濟週報
-                <div className="pt-0 justify-center laptop:justify-start truncate text-gray-gray2">
+            <div className="flex flex-col justify-center font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink">
+            慈濟週報
+                <div className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink">
                 慈濟週報第二期慈濟週報第二期
                 </div>
             </div>

@@ -11,7 +11,7 @@ export default function Thinking() {
 
     return <OuterContainer>
         <InnerContainer>
-            <div className="px-2 laptop:justify-end justify-center flex">
+            <div className="px-2 laptop:justify-end justify-center flex flex-none laptop:max-w-[50%] desktop:max-w-full ">
                 <Image
                     src="https://picsum.photos/id/206/300/300"
                     alt=""
@@ -22,10 +22,10 @@ export default function Thinking() {
                 // style={{ width: '100%' }}
                 />
             </div>
-            <div className="flex flex-col justify-center font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start laptop:max-w-[75%] desktop:max-w-full">
+            <div className="flex flex-col justify-center font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start desktop:max-w-full shrink ">
                 宗門學思
-                <div className="pt-0 justify-center laptop:justify-start truncate text-gray-gray2">
-                慈濟思想論述學術研究
+                <div className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink">
+                    慈濟思想論述學術研究
                 </div>
             </div>
 

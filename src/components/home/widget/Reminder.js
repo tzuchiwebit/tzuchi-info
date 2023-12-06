@@ -10,7 +10,7 @@ export default function Reminder() {
 
     return <OuterContainer>
         <InnerContainer>
-            <div className="px-2 laptop:justify-end justify-center flex">
+            <div className="flex px-2 laptop:justify-end justify-center shrink-0 laptop:max-w-[50%] desktop:max-w-full">
                 <Image
                     src="https://picsum.photos/id/208/200/300"
                     alt=""
@@ -18,14 +18,14 @@ export default function Reminder() {
                     height={0}
                     sizes="100vw"
                     className="h-[130px] w-auto laptop:h-auto laptop:w-full"
-                    // style={{ width: '100%' }}
+                // style={{ width: '100%' }}
                 />
             </div>
-            <div className="flex flex-col justify-center font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start laptop:max-w-[75%] desktop:max-w-full">
+            <div className="flex flex-col justify-center font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink">
                 證嚴上人<br />
                 每日一叮嚀
-                <div className="pt-0 justify-center laptop:justify-start truncate inline-block text-gray-gray2">
-                世間祥和在於心世間祥和在於心
+                <div className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink">
+                    世間祥和在於心世間祥和在於心
                 </div>
             </div>
 
