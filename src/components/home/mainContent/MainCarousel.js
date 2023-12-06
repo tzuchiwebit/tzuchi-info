@@ -16,17 +16,15 @@ const Item = ({ number }) => (
         {/* <div className="w-full h-[480px] p-1"> */}
         <div className={"w-full p-1"}>
             <div className="w-full shadow-elevation-3 rounded-md overflow-hidden">
-                <StyledImage
-                    style={{ backgroundImage: `url(${"https://picsum.photos/id/230/300/300"})` }}
-                // alt="image 1"
-                // className="w-full desktop:max-w-full"
-                />
-                <div className="px-5 pt-2 text-xl font-bold w-full text-primary-blue1 text-left">
-                    結合多機構在烏克蘭發放 慈濟助難民過寒冬 {number}
-                </div>
-                <div className="flex flex-row justify-end px-5 pb-2">
-                    <div className="border-2 border-solid border-primary-blue2 rounded-md text-primary-blue2 py-1 px-2 flex font-bold">
-                        <Icon.ShareFull style={{ width: 24 }} /> 分享
+                <StyledImage style={{ backgroundImage: `url(${"https://picsum.photos/id/230/300/300"})` }} />
+                <div className="px-4 flex flex-col tablet:flex-row laptop:flex-col items-center py-4 w-full gap-y-1 gap-x-4">
+                    <div className="text-xl font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">
+                        結合多機構在烏克蘭發放 慈濟助難民過寒冬 結合多機構在烏克蘭發放 慈濟助難民過寒冬
+                    </div>
+                    <div className="flex flex-row self-end w-fit flex-none">
+                        <div className="border-2 border-solid border-primary-blue2 rounded-md text-primary-blue2 py-1 px-2 flex font-bold whitespace-nowrap">
+                            <Icon.ShareFull style={{ width: 24 }} /> 分享
+                        </div>
                     </div>
                 </div>
             </div>
