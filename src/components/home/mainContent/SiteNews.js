@@ -4,6 +4,7 @@ import styled from "styled-components"
 import { BannerTitle, SlidesTrack, Tag } from "../components"
 import screens from "@/shared/styles/screens";
 import dayjs from "dayjs"
+import BlurBGImage from "@/shared/image/BlurBGImage";
 
 const tagOptions = [
     '全球',
@@ -18,7 +19,10 @@ const tagOptions = [
 const Item = () => (
     <div className="relative w-full p-1 min-w-[300px] laptop:min-w-0">
         <div className="w-full shadow-elevation-3 rounded-md overflow-hidden p-2">
-            <StyledImage style={{ backgroundImage: `url(${"https://picsum.photos/id/230/300/300"})` }} />
+            {/* <StyledImage style={{ backgroundImage: `url(${"https://picsum.photos/id/230/300/300"})` }} /> */}
+            <ImageContainer>
+                <BlurBGImage url={"https://picsum.photos/id/230/500/300"} />
+            </ImageContainer>
             <div className="pt-2 text-xl font-bold w-full text-primary-blue1 text-left h-24 tablet:h-20 laptop:h-32 desktop:h-28 laptop:pb-2">
                 結合多機構在烏克蘭發放 慈濟助難民過寒冬
             </div>
@@ -62,19 +66,16 @@ export default function SiteNews() {
     </div>
 }
 
-
-const StyledImage = styled.div`
+const ImageContainer = styled.div`
     width: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 200px;
-    border-radius: 8px;
+    height: 215px;
     @media(min-width: ${screens.tablet}) {
-        height: 180px;
+        height: 210px;
     }
     @media(min-width: ${screens.laptop}) {
-        height: 120px;
+        height: 110px;
     }
-    
+    @media(min-width: ${screens.desktop}) {
+        height: 121px;
+    }
 `
