@@ -1,3 +1,4 @@
+'use client'
 import { useState, useEffect } from 'react';
 import Icon from "@/shared/Icon"
 import styled from "styled-components"
@@ -139,7 +140,6 @@ const LinkIcon = (type) => {
 
 const LinkCard = ({ type }) => {
   const screenSize = useScreenSize();
-  console.log("screenSize < 768", screenSize)
   const [isUseDrawer, setIsUseDrawer] = useState(screenSize.width < 768) // true when < 768
   const [isOpen, setIsOpen] = useState(screenSize.width >= 768) // false when < 768
 
