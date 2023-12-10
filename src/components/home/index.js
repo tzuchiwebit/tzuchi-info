@@ -55,4 +55,7 @@ const SecondaryContainer = styled.div`
         width: 280px;
         flex-direction: row;
     }
+    @media(max-width: ${screens["tablet-down"].max}) {
+      margin-bottom: 50px;
+    }
 `

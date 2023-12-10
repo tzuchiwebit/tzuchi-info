@@ -51,3 +51,18 @@ export { default as ShareWhatsapp } from "./icon/main/share-whatsapp.svg";
 export { default as ShareTelegram } from "./icon/main/share-telegram.svg";
 export { default as ShareTiktok } from "./icon/main/share-tiktok.svg";
 export { default as ShareThreads } from "./icon/main/share-threads.svg";
+
+export { default as Facebook } from "./icon/footer/facebook.svg";
+export { default as Instagram } from "./icon/footer/instagram.svg";
+export { default as Youtube } from "./icon/footer/youtube.svg";
+export { default as Tictok } from "./icon/footer/tictok.svg";
+export { default as ArrowUp } from "./icon/footer/arrow-up.svg";
+export { default as FooterLinkOne } from "./icon/footer/link-1.svg";
+export { default as FooterLinkTwo } from "./icon/footer/link-2.svg";
+export { default as FooterLinkThree } from "./icon/footer/link-3.svg";
+export { default as FooterLinkFour } from "./icon/footer/link-4.svg";
+export { default as FooterLinkFive } from "./icon/footer/link-5.svg";
+export { default as FooterLinkSix } from "./icon/footer/link-6.svg";
+export { default as FooterLinkSeven } from "./icon/footer/link-7.svg";
+export { default as Minus } from "./icon/footer/minus.svg";
+export { default as Plus } from "./icon/footer/plus.svg";
