@@ -2,16 +2,6 @@
 import { Fragment, useState } from 'react'
 import Container from '@/shared/layout/Container'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
-import {
-  ArrowPathIcon,
-  ChartPieIcon,
-  Bars3Icon,
-  CursorArrowRaysIcon,
-  FingerPrintIcon,
-  SquaresPlusIcon,
-  XMarkIcon,
-} from '@heroicons/react/24/outline'
-import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
 import Icon from '@/shared/Icon'
 import { HeaderLinkItems, NavLinkItems } from '../config'
 import color from '@/shared/styles/color'
