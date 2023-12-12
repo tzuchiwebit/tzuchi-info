@@ -77,7 +77,7 @@ export default function NavbarTop() {
     <>
       <div className="h-1 w-full bg-gradient-to-r from-primary-blue1 to-primary-linear"></div>
       <Container>
-        <nav className="mx-auto flex max-w-7xl items-center justify-between h-16 desktop:h-19 " aria-label="Global">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between h-16 desktop:h-[88px] " aria-label="Global">
           {/* grid layout */}
           <div className="flex flex-row w-full gap-2 items-center justify-between px-4 container:px-0">
             <div className="flex-none w-[128px] tablet:w-[165px] laptop:w-[230px] pr-2 border-r border-solid border-gray-gray8 tablet:border-none">
@@ -90,7 +90,7 @@ export default function NavbarTop() {
               <div className="w-2/3 flex justify-end items-center relative">
                 <input
                   placeholder="關鍵字搜尋"
-                  className="border border-gray-400 rounded-sm px-2 py-1.5 w-full laptop:w-[300px] tablet:w-[200px]"
+                  className="border border-gray-400 rounded-md px-2 py-1.5 w-full laptop:w-[300px] tablet:w-[200px]"
                 />
                 <Icon.Search width="100%" className="absolute mr-2 w-6 text-gray-gray4 cursor-pointer" />
                 {/* <img src="/icons/search.svg" className="absolute mr-2 w-10" alt="Search Icon" /> */}
