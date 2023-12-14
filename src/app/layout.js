@@ -4,6 +4,7 @@ import StyledComponentsRegistry from '@/lib/registry'
 import Head from 'next/head'
 import Navbar from '@/components/navigation/navbar/Navbar'
 import Footer from '@/components/navigation/footer/Footer'
+import Chat from '@/components/navigation/chat/Chat'
 
 export const metadata = {
   title: '慈濟資訊網',
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           {children}
           <Footer />
+          <Chat />
         </StyledComponentsRegistry>
       </body>
     </html>

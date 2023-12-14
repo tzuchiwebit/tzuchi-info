@@ -66,3 +66,6 @@ export { default as FooterLinkSix } from "./icon/footer/link-6.svg";
 export { default as FooterLinkSeven } from "./icon/footer/link-7.svg";
 export { default as Minus } from "./icon/footer/minus.svg";
 export { default as Plus } from "./icon/footer/plus.svg";
+
+export { default as ChatAvatar } from "./icon/chat/avatar.svg";
+export { default as CloseWhite } from "./icon/close-white.svg";
