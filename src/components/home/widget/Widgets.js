@@ -40,5 +40,6 @@ const Container = styled.div`
         flex-direction: column;
         flex-wrap: nowrap;
         height: fit-content;
+        padding-top: 15px;
     }
 `
