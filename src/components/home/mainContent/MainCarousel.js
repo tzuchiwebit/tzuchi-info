@@ -6,6 +6,7 @@ import screens from "@/shared/styles/screens";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel"
 import BlurBGImage from "@/shared/image/BlurBGImage";
+import SeBtn from "@/shared/button/SeBtn";
 
 const data = [
     {
@@ -39,7 +40,7 @@ function classNames(...classes) {
 // )
 
 
-const Item = ({item}) => (
+const Item = ({ item }) => (
     <div className="relative w-full mb-[60px]">
         {/* <div className="w-full h-[480px] p-1"> */}
         <div className={"w-full p-1"}>
@@ -52,9 +53,12 @@ const Item = ({item}) => (
                         {item.title}
                     </div>
                     <div className="flex flex-row self-end w-fit flex-none">
-                        <div className="border-2 border-solid border-primary-blue2 rounded-md text-primary-blue2 py-1 px-2 flex font-bold whitespace-nowrap">
+                        <SeBtn>
                             <Icon.ShareFull style={{ width: 24 }} /> 分享
-                        </div>
+                        </SeBtn>
+                        {/* <div className="border-2 border-solid border-primary-blue2 rounded-md text-primary-blue2 py-1 px-2 flex font-bold whitespace-nowrap">
+                            
+                        </div> */}
                     </div>
                 </div>
             </div>

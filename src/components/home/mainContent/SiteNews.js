@@ -5,6 +5,7 @@ import { BannerTitle, SlidesTrack, Tag } from "../components"
 import screens from "@/shared/styles/screens";
 import dayjs from "dayjs"
 import BlurBGImage from "@/shared/image/BlurBGImage";
+import LabelBtn from "@/shared/button/LabelBtn";
 
 const tagOptions = [
     '全球',
@@ -49,7 +50,7 @@ export default function SiteNews() {
         <BannerTitle title={`各據點消息`} link={'#'} />
         <div className="pt-5 w-full">
             <div className="flex gap-2 flex-wrap">
-                {
+                {/* {
                     tagOptions.map((tag, index) => (<Tag
                         onClick={() => { setSelectedIndex(index) }}
                         isSelected={(selctedIndex === index)}
@@ -57,7 +58,17 @@ export default function SiteNews() {
                     >
                         {tag}
                     </Tag>))
+                } */}
+                {
+                    tagOptions.map((tag, index) => (<LabelBtn
+                        onClick={() => { setSelectedIndex(index) }}
+                        selected={(selctedIndex === index)}
+                        key={index}
+                    >
+                        {tag}
+                    </LabelBtn>))
                 }
+                
             </div>
             <SlidesTrack>
                 <SiteNewsSection />

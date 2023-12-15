@@ -11,6 +11,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import color from "@/shared/styles/color";
+import LabelBtn from "@/shared/button/LabelBtn";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -148,7 +149,7 @@ export default function BookSuggest() {
         <BannerTitle title={`好書推薦`} />
         <div className="w-full">
             <div className="py-4 flex gap-2 flex-wrap">
-                {
+                {/* {
                     tagOptions.map((tag, index) => (<Tag
                         onClick={() => { setSelectedIndex(index) }}
                         isSelected={(selctedIndex === index)}
@@ -156,6 +157,15 @@ export default function BookSuggest() {
                     >
                         {tag}
                     </Tag>))
+                } */}
+                {
+                    tagOptions.map((tag, index) => (<LabelBtn
+                        onClick={() => { setSelectedIndex(index) }}
+                        selected={(selctedIndex === index)}
+                        key={index}
+                    >
+                        {tag}
+                    </LabelBtn>))
                 }
             </div>
             {/* <CarouselSection /> */}
