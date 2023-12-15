@@ -160,7 +160,7 @@ export default function NavbarTop() {
                         <Icon.CyanTriangle
                           className="transition-all"
                           width="12px"
-                          style={{ transform: (isDisclosure && currentDialogIndex === index) ? 'rotate(90deg)' : '' }}
+                          style={{ visibility: nav?.children?.length ? 'visible' : 'hidden', transform: (isDisclosure && currentDialogIndex === index) ? 'rotate(90deg)' : '' }}
                         /> {nav.label}
                       </Disclosure.Button>
                       <Transition
