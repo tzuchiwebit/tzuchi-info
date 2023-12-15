@@ -8,13 +8,13 @@ import BlurBGImage from "@/shared/image/BlurBGImage";
 import LabelBtn from "@/shared/button/LabelBtn";
 
 const tagOptions = [
-    '全球',
-    '台灣',
+    '臺灣',
     '亞洲',
     '美洲',
     '歐洲',
     '非洲',
     '大洋洲',
+    '全球',
 ]
 
 const Item = () => (
