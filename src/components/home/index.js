@@ -30,7 +30,7 @@ const MainContainer = styled.div`
     width: 100%;
     flex-direction: column;
     gap: 20px;
-    padding: 15px;
+    padding: 30px 15px 15px;
     @media(min-width: ${screens.laptop}) {
         width: calc(100% - 350px);
         padding: 30px 40px;
@@ -38,7 +38,7 @@ const MainContainer = styled.div`
     @media(min-width: ${screens.desktop}) {
         width: 100%;
         flex-direction: row;
-        padding: 0 15px 0 0;
+        padding: 20px 15px 0 0;
     }
 `
 

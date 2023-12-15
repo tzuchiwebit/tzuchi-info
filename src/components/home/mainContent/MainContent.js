@@ -18,7 +18,7 @@ export default function MainContent() {
 const Container = styled.div`
     width: 100%;
     flex: 1;
-    padding-top: 12px;
+    padding-top: 15px;
     display: flex;
     flex-direction: column;
     @media(min-width: ${screens.desktop}) {

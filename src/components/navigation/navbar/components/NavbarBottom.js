@@ -45,7 +45,7 @@ export default function NavbarBottom() {
                   leaveFrom="opacity-100 translate-y-0"
                   leaveTo="opacity-0 translate-y-1"
                 >
-                  <Popover.Panel className="fixed left-1/2 z-10 tablet:mt-[105px] desktop:mt-[121px] flex w-screen -translate-x-1/2">
+                  <Popover.Panel className="fixed left-1/2 z-10 tablet:mt-[102px] desktop:mt-[121px] flex w-screen -translate-x-1/2">
                     <div className="w-full flex-auto overflow-hidden bg-gray-gray9 leading-6 shadow-elevation-4">
                       <div className="flex flex-row gap-5 justify-center h-[60px] items-center">
                         {
@@ -81,6 +81,7 @@ const StyledNavItem = styled.div`
   transition: all .2s;
   height: fit-content;
   &:hover {
-    padding-bottom: 5px;
+    // padding-bottom: 5px;
+    border-bottom: 2px solid ${color.primary.blue2};
   }
 `

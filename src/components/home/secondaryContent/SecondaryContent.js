@@ -20,4 +20,5 @@ export default function SecondaryContent() {
 const Container = styled.div`
     padding-left: 12px;
     padding-right: 12px;
+    padding-top: 23px;
 `

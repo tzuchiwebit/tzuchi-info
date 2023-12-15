@@ -67,7 +67,7 @@ export default function NavbarTop() {
     <>
       <div className="h-1 w-full bg-gradient-to-r from-primary-blue1 to-primary-linear"></div>
       <Container>
-        <nav className="mx-auto flex max-w-7xl items-center justify-between h-16 desktop:h-[88px] " aria-label="Global">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between h-16 laptop:h-[58px] desktop:h-[88px] " aria-label="Global">
           {/* grid layout */}
           <div className="flex flex-row w-full gap-2 items-center justify-between px-4 container:px-0">
             <div className="flex-none w-[128px] tablet:w-[165px] laptop:w-[230px] pr-2 border-r border-solid border-gray-gray8 tablet:border-none">
@@ -135,8 +135,8 @@ export default function NavbarTop() {
         {/* <img src="/icons/search.svg" className="absolute mr-2 w-10" alt="Search Icon" /> */}
       </div>
       <Dialog as="div" className="tablet:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
-        <div className="fixed inset-0 z-10" />
-        <Dialog.Panel className="fixed h-fit inset-y-16 right-0 z-10 w-[270px] overflow-y-auto bg-white shadow-elevation-4 ">
+        <div className="fixed inset-0 z-30" />
+        <Dialog.Panel className="fixed h-fit inset-y-16 right-0 z-30 w-[270px] overflow-y-auto bg-white shadow-elevation-4 ">
           <div className="flow-root">
             <div className="divide-y-2 divide-gray-gray8 divide-solid transition-all">
               {NavLinkItems.map((nav, index) => {

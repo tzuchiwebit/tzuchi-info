@@ -28,12 +28,12 @@ const Container = styled.div`
         padding-top: 20px;
     }
     @media(min-width: ${screens.laptop}) {
-        padding-top: unset;
+        padding-top: 12px;
         flex-wrap: wrap;
         row-gap: 20px;
     }
     @media(min-width: ${screens.container}) {
-        padding: 15px 0 0 0;
+        padding: 12px 0 0 0;
     }
     @media(min-width: ${screens.desktop}) {
         width: 180px;
