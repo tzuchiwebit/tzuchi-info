@@ -13,7 +13,7 @@ export const HeaderLinkItems = [
     },
     {
         label: 'RSS',
-        link: '/feed',
+        link: '/feed.xml',
     },
 ]
 
