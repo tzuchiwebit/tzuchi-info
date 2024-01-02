@@ -21,10 +21,10 @@ export default function Reminder() {
                 // style={{ width: '100%' }}
                 />
             </div>
-            <div className="flex flex-col justify-center font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink">
+            <div className="flex flex-col font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink min-h-[90px]">
                 證嚴上人<br />
                 每日一叮嚀
-                <div className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink">
+                <div className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base">
                     世間祥和在於心世間祥和在於心
                 </div>
             </div>

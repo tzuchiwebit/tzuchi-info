@@ -22,9 +22,9 @@ export default function Thinking() {
                 // style={{ width: '100%' }}
                 />
             </div>
-            <div className="flex flex-col justify-center font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start desktop:max-w-full shrink ">
+            <div className="flex flex-col font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start desktop:max-w-full shrink min-h-[90px]">
                 宗門學思
-                <div className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink">
+                <div className="pt-0 justify-center laptop:justify-start line-clamp-2 text-gray-gray2 w-full shrink text-base">
                     慈濟思想論述學術研究
                 </div>
             </div>
