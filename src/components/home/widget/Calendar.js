@@ -21,7 +21,7 @@ export default function Calendar() {
     return <OuterContainer>
         <InnerContainer>
             <CalendarContainer style={{ backgroundImage: `url(/bgImage/bg-roof.svg)` }}>
-                <div className="w-[45%] border-solid border-gray-gray8 border-r justify-center flex h-fit laptop:justify-end">
+                <div className="w-[48%] border-solid border-gray-gray8 border-r justify-center flex h-fit laptop:justify-end">
                     <div className="flex flex-col justify-center w-fit pr-1 laptop:text-right laptop:pr-2 desktop:text-center desktop:pr-1">
                         <div className="font-semibold text-lg w-fit leading-normal tablet:leading-5">
                             {date.dateUpper}
@@ -31,8 +31,8 @@ export default function Calendar() {
                         </div>
                     </div>
                 </div>
-                <div className="w-[55%] flex flex-col h-fit text-xl whitespace-nowrap justify-center">
-                    <div className="font-semibold text-center laptop:text-left laptop:pl-2 desktop:text-center desktop:pl-0 leading-7 tracking-normal pl-1 pt-1">
+                <div className="w-[52%] flex flex-col h-fit text-lg laptop:text-xl whitespace-nowrap justify-center">
+                    <div className="font-semibold text-center laptop:text-left laptop:pl-2 desktop:text-center desktop:pl-0 leading-7 tracking-normal pt-1">
                         世代輪轉<br />
                         法脈接續
                     </div>
@@ -44,7 +44,7 @@ export default function Calendar() {
                     </div>
                 </div>
             </CalendarContainer>
-            <div className="flex laptop:hidden desktop:flex flex-col font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink min-h-[90px]">
+            <div className="flex laptop:hidden desktop:flex flex-col font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink min-h-[96px]">
                 志工早會
                 <div className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base">
                     證嚴上人智慧法語
@@ -78,21 +78,21 @@ const InnerContainer = styled.div`
 const CalendarContainer = styled.div`
     background-repeat: no-repeat;
     display: flex;
-    padding-top: 20px;
-    background-size: 200%;
-    background-position: -38px 100%;
+    padding-top: 8px;
+    background-size: 150%;
+    background-position: -10px 100%;
     width: 100%;
-    height: 150px;
+    height: 145px;
     @media(min-width: ${screens.laptop}) {   
         padding-top: 8px;
         flex-direction: row;
         height: 135px;
         background-size: 100%;
-        background-position: -50px 110%;
+        background-position: -30px 110%;
     }
     @media(min-width: ${screens.desktop}) {  
         min-height: 165px;
-        padding-top: 20px;
+        padding-top: 16px;
         padding-left: unset;
         padding-right: unset;
         background-size: 200%;
