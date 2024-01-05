@@ -50,9 +50,9 @@ const Wrapper = styled.div`
     padding-right: 40px;
   }
   @media(max-width: ${screens["laptop-down"].max}) {
-    padding: 32px 12px;
+    padding: 32px 0;
   }
   @media(max-width: ${screens["tablet-down"].max}) {
-    padding: 20px 10px;
+    padding: 20px 0;
   }
 `

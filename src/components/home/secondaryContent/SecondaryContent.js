@@ -21,4 +21,10 @@ const Container = styled.div`
     padding-left: 12px;
     padding-right: 12px;
     padding-top: 23px;
+    @media(min-width:${screens.laptop}) {
+        padding-right: 40px;
+    }
+    @media(min-width:${screens.desktop}) {
+        padding-right: 12px;
+    }
 `

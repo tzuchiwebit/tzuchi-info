@@ -30,7 +30,14 @@ const MainContainer = styled.div`
     width: 100%;
     flex-direction: column;
     gap: 20px;
-    padding: 30px 15px 15px;
+    padding-top: 30px;
+    padding-bottom: 15px;
+    padding-right: 10px;
+    padding-left: 10px;
+    @media(min-width: ${screens.tablet}) {
+        padding-right: 13px;
+        padding-left: 13px;
+    }
     @media(min-width: ${screens.laptop}) {
         width: calc(100% - 350px);
         padding: 30px 40px;
@@ -54,6 +61,7 @@ const SecondaryContainer = styled.div`
         flex-basis: 280px;
         width: 280px;
         flex-direction: row;
+        margin-right: 0;
     }
     @media(max-width: ${screens["tablet-down"].max}) {
       margin-bottom: 50px;
