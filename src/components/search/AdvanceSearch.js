@@ -64,7 +64,7 @@ function StyledInputRow({ item, index, register, control, remove }) {
 
 export default function AdvanceSearch({ label, }) {
 
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
 
     const { register, control, handleSubmit, reset, trigger, setError } = useForm({
         // defaultValues: {}; you can populate the fields by this attribute 

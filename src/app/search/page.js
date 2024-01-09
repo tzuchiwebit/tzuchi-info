@@ -7,6 +7,8 @@ import SearchInput from "@/shared/input/SearchInput"
 // import CheckBox from "@/shared/button/CheckBox"
 import DatePicker from "@/components/search/DatePicker"
 import AdvanceSearch from "@/components/search/AdvanceSearch"
+import PrimaryBtn from "@/shared/button/PrimaryBtn"
+import Icon from "@/shared/Icon"
 
 export default function Page() {
 
@@ -23,7 +25,7 @@ export default function Page() {
       value: '模糊',
     }
   ]
-  
+
   return <Container>
     <div className="flex pt-[30px] gap-1 mb-3">
       <div className="border-b border-solid border-gray-gray7 h-[42px] w-full" />
@@ -41,6 +43,11 @@ export default function Page() {
         <AdvanceSearch />
         <DatePicker label='日期自' />
       </div>
+    </div>
+    <div className="mt-5 laptop:mt-10">
+      <PrimaryBtn>
+        <Icon.Search style={{width: 24}} /> 搜尋
+      </PrimaryBtn>
     </div>
   </Container>
 }
