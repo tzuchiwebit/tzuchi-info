@@ -47,11 +47,13 @@ function StyledInputRow({ item, index, register, control, remove }) {
 
 
     return <div key={item.id} className='w-full bg-gray-gray9 p-3 flex gap-2 items-center'>
-        <SearchSelect options={AdvanceSearchTypeOptions} className='w-[260px] flex-0' />
-        <SearchInput className='max-w-[480px] flex-1' />
-        <SearchSelect options={AdvanceSearchLogicOptions} className='w-[260px] flex-0' />
-        <div className='flex-1 max-w-[120px] h-[40px] flex justify-end items-center'>
-            <div className='h-full border-l border-solid border-gray-gray5 mr-2' />
+        <div className='flex flex-col laptop:flex-row gap-2 flex-1'>
+            <SearchSelect options={AdvanceSearchTypeOptions} className='max-w-[480px] laptop:max-w-[260px] flex-0' />
+            <SearchInput className='max-w-[480px] flex-1' placeholder='輸入進階搜尋關鍵字' />
+            <SearchSelect options={AdvanceSearchLogicOptions} className='max-w-[480px] laptop:max-w-[260px] flex-0' />
+        </div>
+        <div className='flex-1 max-w-[110px] h-full laptop:h-[40px] flex justify-end items-center'>
+            <div className='h-[135px] laptop:h-full border-l border-solid border-gray-gray5 mr-2' />
             <StyledRemoveButton onClick={() => remove(index)} >
                 <Icon.Cancel /> 移除
             </StyledRemoveButton>
@@ -110,6 +112,7 @@ const Container = styled.div`
 `
 
 const StyledSecondButton = styled(SeBtn)`
+    height: 40px;
     svg {
         width: 20px;
         margin-right: 6px;

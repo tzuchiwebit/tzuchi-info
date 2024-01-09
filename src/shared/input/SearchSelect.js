@@ -104,7 +104,6 @@ const StyledInput = styled.input`
     border: 2px solid ${color.gray.gray6};
     border-radius: 4px;
     width: 100%;
-    max-width: 480px;
     height: 40px;
     padding: 8px 16px;
     font-size: 20px;

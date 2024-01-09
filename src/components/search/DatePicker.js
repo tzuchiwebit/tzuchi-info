@@ -67,8 +67,8 @@ export default function DatePicker({ label, }) {
             <StyledLabel>
                 {label}
             </StyledLabel>
-            <div className='w-full laptop:w-fit flex items-center gap-2 laptop:gap-4'>
-                <div className='laptop:max-w-[315px] relative flex-1'>
+            <div className='w-full laptop:w-fit flex items-center gap-2 laptop:gap-4 justify-between laptop:justify-start'>
+                <div className='max-w-[480px] relative flex-1'>
                     <StyledDatePicker
                         options={{ ...datePickerOptions }}
                         show={showStartDate}
@@ -86,12 +86,12 @@ export default function DatePicker({ label, }) {
                         placeholder='OOOO年/OO月/OO日'
                     />
                 </div>
-                <StyledLabel>
+                <StyledLabel className='flex-0'>
                     至
                 </StyledLabel>
             </div>
-            <div className='w-full laptop:w-fit flex items-center gap-2 laptop:gap-4'>
-                <div className='laptop:max-w-[315px] relative flex-1'>
+            <div className='w-full laptop:w-fit flex items-center gap-2 laptop:gap-4 justify-between laptop:justify-start'>
+                <div className='max-w-[480px] relative flex-1'>
                     <StyledDatePicker
                         options={{ ...datePickerOptions, minDate: startDate }}
                         show={showEndDate}
@@ -109,7 +109,7 @@ export default function DatePicker({ label, }) {
                         placeholder='OOOO年/OO月/OO日'
                     />
                 </div>
-                <StyledLabel>
+                <StyledLabel className='flex-0'>
                     迄
                 </StyledLabel>
             </div>
