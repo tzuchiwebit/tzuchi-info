@@ -4,8 +4,9 @@ import Container from "@/shared/layout/Container"
 import { useState } from "react"
 import RadioBtn from "@/shared/button/RadioBtn"
 import SearchInput from "@/shared/input/SearchInput"
-import CheckBox from "@/shared/button/CheckBox"
+// import CheckBox from "@/shared/button/CheckBox"
 import DatePicker from "@/components/search/DatePicker"
+import AdvanceSearch from "@/components/search/AdvanceSearch"
 
 export default function Page() {
 
@@ -22,7 +23,7 @@ export default function Page() {
       value: '模糊',
     }
   ]
-
+  
   return <Container>
     <div className="flex pt-[30px] gap-1 mb-3">
       <div className="border-b border-solid border-gray-gray7 h-[42px] w-full" />
@@ -37,7 +38,7 @@ export default function Page() {
         <SearchInput label='檢索詞' onChange={setSearchText} value={searchText} />
       </div>
       <div className="flex flex-col gap-4">
-        <CheckBox label='進階' />
+        <AdvanceSearch />
         <DatePicker label='日期自' />
       </div>
     </div>

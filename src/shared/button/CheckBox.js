@@ -9,7 +9,7 @@ export default function CheckBox({ label, onChange = () => { } }) {
     return (
         <StyledCheckbox>
             <label className='flex items-baseline'>
-                <input type="checkbox" />
+                <input type="checkbox" onChange={(e) => onChange(e.target.checked)} />
                 <StyledLabel>
                     {label}
                 </StyledLabel>

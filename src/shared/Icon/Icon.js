@@ -27,6 +27,7 @@ export { default as Filter } from "./icon/main/filter.svg";
 export { default as Views } from "./icon/main/views.svg";
 export { default as LatestUpload } from "./icon/main/latest-upload.svg";
 export { default as CyanTriangle } from "./icon/main/cyan-triangle.svg";
+export { default as Check } from "./icon/main/check.svg";
 // pagination
 export { default as PageArrowLeftDouble } from "./icon/main/page-double-left-arrow.svg";
 export { default as PageArrowRightDouble } from "./icon/main/page-double-right-arrow.svg";
@@ -51,6 +52,7 @@ export { default as ShareWhatsapp } from "./icon/main/share-whatsapp.svg";
 export { default as ShareTelegram } from "./icon/main/share-telegram.svg";
 export { default as ShareTiktok } from "./icon/main/share-tiktok.svg";
 export { default as ShareThreads } from "./icon/main/share-threads.svg";
+export { default as SelectArrows } from "./icon/main/select-arrows.svg";
 
 export { default as Facebook } from "./icon/footer/facebook.svg";
 export { default as Instagram } from "./icon/footer/instagram.svg";

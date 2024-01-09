@@ -4,12 +4,14 @@ import color from '../styles/color';
 import screens from '../styles/screens';
 
 
-export default function SearchInput({ label, value, onChange = () => { }, placeholder = '' }) {
+export default function SearchInput({ label, value, onChange = () => { }, placeholder = '', ...props }) {
     return (
-        <Container>
-            <StyledLabel>
-                {label}
-            </StyledLabel>
+        <Container {...props}>
+            {
+                label ? <StyledLabel>
+                    {label}
+                </StyledLabel> : <></>
+            }
             <StyledInput type='text' onChange={onChange} placeholder={placeholder} value={value} />
         </Container>
     );

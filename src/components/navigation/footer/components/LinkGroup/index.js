@@ -160,8 +160,8 @@ const LinkCard = ({ type }) => {
           <div className='w-5 h-5 flex justify-center items-center border-2 border-solid border-primary-blue1 rounded-sm cursor-pointer' onClick={() => { setIsOpen(!isOpen) }}>
             {
               isOpen ?
-                <Icon.Minus></Icon.Minus> :
-                <Icon.Plus></Icon.Plus>
+                <Icon.Minus style={{width: 12}}></Icon.Minus> :
+                <Icon.Plus style={{width: 12}}></Icon.Plus>
             }
           </div>
         }
