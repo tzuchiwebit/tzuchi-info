@@ -11,7 +11,7 @@ const defaultOption = [
     { label: '--- 請選擇 ---', value: '--- 請選擇 ---' },
 ]
 
-export default function SearchSelect({ label, options = [], ...props }) {
+export default function SearchSelect({ label, options = [], sm = false, ...props }) {
 
     const [value, setValue] = useState('--- 請選擇 ---')
 
@@ -39,16 +39,16 @@ export default function SearchSelect({ label, options = [], ...props }) {
 
     return (
         <Container ref={ref} {...props}>
-            {label ? <StyledLabel>
+            {label ? <StyledLabel $sm={sm}>
                 {label}
             </StyledLabel> : <></>}
-            <div className='relative' onClick={() => setIsShowing((isShowing) => !isShowing)}>
+            <div className='relative w-full' onClick={() => setIsShowing((isShowing) => !isShowing)}>
                 <span class="absolute inset-y-0 right-0 flex items-center pr-2">
                     <button type="submit" class="p-1 focus:outline-none focus:shadow-outline">
                         <Icon.SelectArrows style={{ width: 24, color: color.primary.blue1 }} />
                     </button>
                 </span>
-                <StyledInput type='text' readOnly value={value} />
+                <StyledInput $sm={sm} type='text' readOnly value={value} />
                 <StyledSelectSection
                     className={'absolute shadow-elevation-4'}
                     show={isShowing}
@@ -62,6 +62,7 @@ export default function SearchSelect({ label, options = [], ...props }) {
                     {
                         selectOptions.map((opt, index) => (
                             <StyledOption
+                                $sm={sm}
                                 key={index}
                                 onClick={() => { setValue(opt?.value) }}
                             >
@@ -78,8 +79,10 @@ export default function SearchSelect({ label, options = [], ...props }) {
 
 const Container = styled.div`
     display: flex;
-    flex-direction: column;
-    gap: 4px;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
     @media(min-width: ${screens.laptop}) {
         flex-direction: row;
         gap: 16px;
@@ -88,15 +91,15 @@ const Container = styled.div`
 `
 
 const StyledLabel = styled.div`
-    color: ${color.primary.blue1};
-    font-size: 20px;
+    // color: ${color.primary.blue1};
+    font-size: ${(props) => props.$sm ? '18px' : '20px' };
     font-weight: 700;
     height: 100%;
     display: flex;
     align-items: center;
     white-space: nowrap;
     @media(min-width: ${screens.laptop}) {
-        font-size: 26px;
+        font-size: ${(props) => props.$sm ? '18px' : '26px' };
     }
 `
 
@@ -111,8 +114,8 @@ const StyledInput = styled.input`
     font-weight: 700;
     cursor: pointer;
     @media(min-width: ${screens.laptop}) {
-        font-size: 26px;
-        height: 50px;
+        font-size: ${(props) => props.$sm ? '18px' : '26px' };
+        height: ${(props) => props.$sm ? '40px' : '50px' };
     }
 
 `
@@ -134,7 +137,7 @@ const StyledSelectSection = styled(Transition)`
 
 const StyledOption = styled.div`
     color: ${color.gray.gray1};
-    font-size: 24px;
+    font-size: ${(props) => props.$sm ? '18px' : '24px' };
     padding-top: 4px;
     padding-bottom: 4px;
     font-weight: 500;
@@ -145,6 +148,6 @@ const StyledOption = styled.div`
     white-space: nowrap;
     &:hover {
         font-weight: 700;
-        font-size: 26px;
+        font-size: ${(props) => props.$sm ? '18px' : '26px' };
     }
 `

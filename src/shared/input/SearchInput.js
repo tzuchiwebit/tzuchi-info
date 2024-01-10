@@ -12,7 +12,13 @@ export default function SearchInput({ label, value, onChange = () => { }, placeh
                     {label}
                 </StyledLabel> : <></>
             }
-            <StyledInput type='text' onChange={onChange} placeholder={placeholder} value={value} />
+            <StyledInput
+                type='text'
+                onChange={(e) => {
+                    onChange(e.target.value)
+                }}
+                placeholder={placeholder}
+                value={value} />
         </Container>
     );
 }

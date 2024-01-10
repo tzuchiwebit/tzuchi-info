@@ -25,6 +25,7 @@ const PrimaryButton = styled.button`
     padding: 8px 16px;
     display: flex;
     justify-content: center;
+    font-size: 20px;
     font-weight: bold;
     white-space: nowrap;
     border-radius: 6px;
@@ -47,5 +48,6 @@ const PrimaryButton = styled.button`
     }
     @media(min-width: ${screens.laptop}) {
         width: auto;
+        font-size: 26px;
     }
 `
