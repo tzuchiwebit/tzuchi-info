@@ -75,7 +75,7 @@ const dataList = {
         subtitle: '慈濟國際人道援助會'
       },
       {
-        subtitle: '慈濟國際人道援助會'
+        subtitle: '慈濟大專青年聯誼會'
       }
     ]
   },
