@@ -18,7 +18,7 @@ export default function Thinking() {
                     width={0}
                     height={0}
                     sizes="100vw"
-                    className="h-[130px] w-auto laptop:h-auto laptop:w-full"
+                    className="aspect-square w-full laptop:h-auto laptop:w-full max-w-[150px] desktop:max-w-[165px]"
                 // style={{ width: '100%' }}
                 />
             </div>
@@ -44,9 +44,9 @@ const InnerContainer = styled.div`
     display: flex;
     flex-direction: column;
     color: ${color.primary.blue1};
-    padding-top: 15px;
+    padding-top: 8px;
     width: 100%;
-    height: 250px;
+    height: 260px;
     @media(min-width: ${screens.laptop}) {   
         padding-top: 10px;
         padding-bottom: 10px;

@@ -65,7 +65,7 @@ const InnerContainer = styled.div`
     flex-direction: column;
     border: 4px solid ${color.gray.gray8};
     color: ${color.primary.blue1};
-    height: 250px;
+    height: 260px;
     @media(min-width: ${screens.laptop}) {   
         height: 135px;
     }
