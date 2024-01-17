@@ -5,6 +5,7 @@ import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import Icon from '@/shared/Icon'
 import { HeaderLinkItems, NavLinkItems } from '../config'
 import color from '@/shared/styles/color'
+import { useRouter } from 'next/navigation'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -63,6 +64,8 @@ export default function NavbarTop() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [currentDialogIndex, setCurrentDialogIndex] = useState(-1);
 
+  const router = useRouter()
+
   return (
     <>
       <div className="h-1 w-full bg-gradient-to-r from-primary-blue1 to-primary-linear"></div>
@@ -71,9 +74,9 @@ export default function NavbarTop() {
           {/* grid layout */}
           <div className="flex flex-row w-full gap-2 items-center justify-between px-4 container:px-0">
             <div className="flex-none w-[128px] tablet:w-[165px] laptop:w-[230px] pr-2 border-r border-solid border-gray-gray8 tablet:border-none">
-              <a href="#" className="">
+              <a href="/" className="">
                 <span className="sr-only">慈濟資訊網</span>
-                <Icon.LOGO width="100%" />
+                <Icon.LOGO width="100%" onClick={() => redirect('/')} />
               </a>
             </div>
             <div className="hidden tablet:flex flex-row gap-2 h-10 items-center w-[550px]">
@@ -82,7 +85,7 @@ export default function NavbarTop() {
                   placeholder="關鍵字搜尋"
                   className="border border-gray-400 rounded-md px-2 py-1.5 w-full laptop:w-[300px] tablet:w-[200px]"
                 />
-                <Icon.Search width="100%" className="absolute mr-2 w-6 text-gray-gray4 cursor-pointer" />
+                <Icon.Search width="100%" className="absolute mr-2 w-6 text-gray-gray4 cursor-pointer" onClick={() => router.push('/search')} />
                 {/* <img src="/icons/search.svg" className="absolute mr-2 w-10" alt="Search Icon" /> */}
               </div>
               <div className="w-full flex flex-row items-center">
@@ -131,7 +134,7 @@ export default function NavbarTop() {
           placeholder="關鍵字搜尋"
           className="border-2 border-gray-gray8 px-2 py-1.5 w-full h-[50px] text-lg"
         />
-        <Icon.Search width="100%" className="absolute mr-2 w-8 text-primary-blue1 cursor-pointer" />
+        <Icon.Search width="100%" className="absolute mr-2 w-8 text-primary-blue1 cursor-pointer" onClick={() => router.push('/search')} />
         {/* <img src="/icons/search.svg" className="absolute mr-2 w-10" alt="Search Icon" /> */}
       </div>
       <Dialog as="div" className="tablet:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>

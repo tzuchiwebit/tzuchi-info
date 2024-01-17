@@ -93,6 +93,7 @@ export default function AdvanceSearch({ label, }) {
                     open ? <div className='mt-4'>
                         {fields.map((item, index) => (
                             <StyledInputRow
+                                key={index}
                                 item={item}
                                 index={index}
                                 register={register}

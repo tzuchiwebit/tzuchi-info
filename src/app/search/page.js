@@ -115,7 +115,7 @@ export default function Page() {
       {/* result list */}
       <div className="mt-5">
         {
-          results.map((item, index) => <ResultCard item={item} index={index} isLast={index === results.length - 1} />)
+          results.map((item, index) => <ResultCard key={index} item={item} index={index} isLast={index === results.length - 1} />)
         }
       </div>
     </div>
