@@ -43,6 +43,10 @@ const Inner = styled.div`
     padding-left: ${(props) => props.$noPaddingTablet ? '0' : '13px'};
     padding-right: ${(props) => props.$noPaddingTablet ? '0' : '13px'};
   }
+  @media(min-width: ${screens.laptop}) {
+    padding-left: ${(props) => props.$noPaddingTablet ? '0' : '42px'};
+    padding-right: ${(props) => props.$noPaddingTablet ? '0' : '42px'};
+  }
   @media(min-width: ${screens.container}) {
     padding-left: ${(props) => props.$noPaddingContainer ? '0' : '10px'};
     padding-right: ${(props) => props.$noPaddingContainer ? '0' : '10px'};
