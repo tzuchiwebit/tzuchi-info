@@ -44,7 +44,7 @@ const datePickerOptions = {
     }
 }
 
-export default function DatePicker({ label, }) {
+export default function DatePicker({ label }) {
 
     const [value, setValue] = useState({
         startDate: new Date(),
@@ -63,57 +63,60 @@ export default function DatePicker({ label, }) {
     }
 
     return (
-        <Container>
-            <StyledLabel>
+        <div className='laptop:flex items-center gap-4'>
+            <StyledLabel className='pb-2 laptop:pb-0'>
                 {label}
             </StyledLabel>
-            <div className='w-full laptop:w-fit flex items-center gap-2 laptop:gap-4 justify-between laptop:justify-start'>
-                <div className='max-w-[480px] relative flex-1'>
-                    <StyledDatePicker
-                        options={{ ...datePickerOptions }}
-                        show={showStartDate}
-                        setShow={setShowStartDate}
-                        onChange={(date) => {
-                            console.log(date)
-                            setStartDate(date);
-                        }}
-                    />
-                    <StyledDateInput
-                        readOnly
-                        type={'text'}
-                        onClick={() => { setShowStartDate(!showStartDate) }}
-                        value={dayjs(startDate, 'YYYY年 / MM月 / DD日').isValid() ? dayjs(startDate).format('YYYY年 / MM月 / DD日') : ''}
-                        placeholder='OOOO年/OO月/OO日'
-                    />
+            <Container>
+                <div className='w-full laptop:w-fit flex items-center gap-2 laptop:gap-2 justify-between laptop:justify-start flex-1'>
+                    <div className='relative flex-1'>
+                        <StyledDatePicker
+                            options={{ ...datePickerOptions }}
+                            show={showStartDate}
+                            setShow={setShowStartDate}
+                            onChange={(date) => {
+                                console.log(date)
+                                setStartDate(date);
+                            }}
+                        />
+                        <StyledDateInput
+                            readOnly
+                            type={'text'}
+                            onClick={() => { setShowStartDate(!showStartDate) }}
+                            value={dayjs(startDate, 'YYYY年 / MM月 / DD日').isValid() ? dayjs(startDate).format('YYYY年 / MM月 / DD日') : ''}
+                            placeholder='OOOO年/OO月/OO日'
+                        />
+                    </div>
+                    <StyledLabel className='flex-0'>
+                        至
+                    </StyledLabel>
                 </div>
-                <StyledLabel className='flex-0'>
-                    至
-                </StyledLabel>
-            </div>
-            <div className='w-full laptop:w-fit flex items-center gap-2 laptop:gap-4 justify-between laptop:justify-start'>
-                <div className='max-w-[480px] relative flex-1'>
-                    <StyledDatePicker
-                        options={{ ...datePickerOptions, minDate: startDate }}
-                        show={showEndDate}
-                        setShow={setShowEndDate}
-                        onChange={(date) => {
-                            console.log(date)
-                            setEndDate(date);
-                        }}
-                    />
-                    <StyledDateInput
-                        readOnly
-                        type={'text'}
-                        onClick={() => { setShowEndDate(!showEndDate) }}
-                        value={dayjs(endDate, 'YYYY年 / MM月 / DD日').isValid() ? dayjs(endDate).format('YYYY年 / MM月 / DD日') : ''}
-                        placeholder='OOOO年/OO月/OO日'
-                    />
+                <div className='w-full laptop:w-fit flex items-center gap-2 laptop:gap-2 justify-between laptop:justify-start flex-1'>
+                    <div className='relative flex-1'>
+                        <StyledDatePicker
+                            options={{ ...datePickerOptions, minDate: startDate }}
+                            show={showEndDate}
+                            setShow={setShowEndDate}
+                            onChange={(date) => {
+                                console.log(date)
+                                setEndDate(date);
+                            }}
+                        />
+                        <StyledDateInput
+                            readOnly
+                            type={'text'}
+                            onClick={() => { setShowEndDate(!showEndDate) }}
+                            value={dayjs(endDate, 'YYYY年 / MM月 / DD日').isValid() ? dayjs(endDate).format('YYYY年 / MM月 / DD日') : ''}
+                            placeholder='OOOO年/OO月/OO日'
+                        />
+                    </div>
+                    <StyledLabel className='flex-0'>
+                        迄
+                    </StyledLabel>
                 </div>
-                <StyledLabel className='flex-0'>
-                    迄
-                </StyledLabel>
-            </div>
-        </Container>
+            </Container>
+        </div>
+
     );
 }
 
@@ -121,11 +124,15 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     gap: 4px;
-    @media(min-width: ${screens.laptop}) {
+    @media(min-width: ${screens.tablet}) {
         flex-direction: row;
-        gap: 16px;
+        gap: 8px;
         align-items: center;
     }
+    @media(min-width: ${screens.desktop}) {
+        max-width: 800px;
+    }
+    
 
 `
 
@@ -150,7 +157,6 @@ const StyledDateInput = styled.input`
     border: 2px solid ${color.gray.gray6};
     border-radius: 4px;
     width: 100%;
-    max-width: 480px;
     height: 40px;
     padding: 8px 16px;
     font-size: 20px;

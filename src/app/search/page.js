@@ -89,7 +89,7 @@ export default function Page() {
     <div className="w-full flex flex-col gap-4 laptop:gap-10">
       <div className="flex flex-col gap-4">
         <RadioBtn options={options} selectedValue={searchType} onChange={setSearchType} />
-        <SearchInput label='檢索詞' onChange={setSearchText} value={searchText} />
+        <SearchInput className="laptop:max-w-[540px]" label='檢索詞' onChange={setSearchText} value={searchText} />
       </div>
       <div className="flex flex-col gap-4">
         <AdvanceSearch />
@@ -104,7 +104,7 @@ export default function Page() {
     {/* result section */}
     <div className="mt-10 w-full">
       {/* result summary */}
-      <div className="flex flex-col laptop:flex-row justify-between items-start laptop:items-center gap-3">
+      <div className="flex flex-col tablet:flex-row justify-between items-start tablet:items-center gap-3">
         <div className="font-bold text-lg w-full">
           搜尋結果 - 共 {results.length} 筆
         </div>
