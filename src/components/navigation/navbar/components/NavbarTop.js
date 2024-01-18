@@ -72,7 +72,7 @@ export default function NavbarTop() {
       <Container>
         <nav className="mx-auto flex max-w-7xl items-center justify-between h-16 laptop:h-[58px] desktop:h-[88px] " aria-label="Global">
           {/* grid layout */}
-          <div className="flex flex-row w-full gap-2 items-center justify-between px-4 container:px-0">
+          <div className="flex flex-row w-full gap-2 items-center justify-between container:px-0">
             <div className="flex-none w-[128px] tablet:w-[165px] laptop:w-[230px] pr-2 border-r border-solid border-gray-gray8 tablet:border-none">
               <a href="/" className="">
                 <span className="sr-only">慈濟資訊網</span>
@@ -88,7 +88,7 @@ export default function NavbarTop() {
                 <Icon.Search width="100%" className="absolute mr-2 w-6 text-gray-gray4 cursor-pointer" onClick={() => router.push('/search')} />
                 {/* <img src="/icons/search.svg" className="absolute mr-2 w-10" alt="Search Icon" /> */}
               </div>
-              <div className="w-full flex flex-row items-center">
+              <div className="w-full flex flex-row items-center justify-end">
                 {/* <a href="#" className="text-primary-blue1 flex px-1 font-semibold whitespace-nowrap">
                   <Icon.Add width="20" /> 進階搜尋
                 </a> */}
