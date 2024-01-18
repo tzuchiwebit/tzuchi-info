@@ -63,7 +63,7 @@ export default function DatePicker({ label }) {
     }
 
     return (
-        <div className='laptop:flex items-center gap-4'>
+        <div className='laptop:flex items-center gap-4 w-full'>
             <StyledLabel className='pb-2 laptop:pb-0'>
                 {label}
             </StyledLabel>
@@ -124,6 +124,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column;
     gap: 4px;
+    flex: 1;
     @media(min-width: ${screens.tablet}) {
         flex-direction: row;
         gap: 8px;
