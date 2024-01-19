@@ -1,11 +1,11 @@
 'use client'
 import { useState } from "react"
 import styled from "styled-components"
-import { BannerTitle, SlidesTrack, Tag } from "../components"
+import { BannerTitle, SlidesTrack } from "../components"
 import screens from "@/shared/styles/screens";
 import dayjs from "dayjs"
 import BlurBGImage from "@/shared/image/BlurBGImage";
-import LabelBtn from "@/shared/button/LabelBtn";
+import PrimaryTag from "@/shared/tag/PrimaryTag";
 
 const tagOptions = [
     '臺灣',
@@ -50,23 +50,14 @@ export default function SiteNews() {
         <BannerTitle title={`各據點消息`} link={'#'} />
         <div className="pt-5 w-full">
             <div className="flex gap-2 flex-wrap">
-                {/* {
-                    tagOptions.map((tag, index) => (<Tag
-                        onClick={() => { setSelectedIndex(index) }}
-                        isSelected={(selctedIndex === index)}
-                        key={index}
-                    >
-                        {tag}
-                    </Tag>))
-                } */}
                 {
-                    tagOptions.map((tag, index) => (<LabelBtn
+                    tagOptions.map((tag, index) => (<PrimaryTag
                         onClick={() => { setSelectedIndex(index) }}
                         selected={(selctedIndex === index)}
                         key={index}
                     >
                         {tag}
-                    </LabelBtn>))
+                    </PrimaryTag>))
                 }
                 
             </div>

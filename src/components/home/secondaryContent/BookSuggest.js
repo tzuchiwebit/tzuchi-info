@@ -1,7 +1,7 @@
 'use client'
 import Icon from "@/shared/Icon"
 import styled from "styled-components"
-import { BannerTitle, Tag } from "../components"
+import { BannerTitle } from "../components"
 import screens from "@/shared/styles/screens";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel"
@@ -11,7 +11,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import color from "@/shared/styles/color";
-import LabelBtn from "@/shared/button/LabelBtn";
+import PrimaryTag from "@/shared/tag/PrimaryTag";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -159,13 +159,13 @@ export default function BookSuggest() {
                     </Tag>))
                 } */}
                 {
-                    tagOptions.map((tag, index) => (<LabelBtn
+                    tagOptions.map((tag, index) => (<PrimaryTag
                         onClick={() => { setSelectedIndex(index) }}
                         selected={(selctedIndex === index)}
                         key={index}
                     >
                         {tag}
-                    </LabelBtn>))
+                    </PrimaryTag>))
                 }
             </div>
             {/* <CarouselSection /> */}

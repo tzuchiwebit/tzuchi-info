@@ -1,12 +1,8 @@
 'use client'
+// this button acts like clickable tag
 import styled from 'styled-components';
 import color from '../styles/color';
 
-// export default styled.div`
-//   width: 90%;
-//   max-width: 1168px;
-//   margin: 0 auto;
-//   `;
 const selectedStyle = {
     color: 'white',
     backgroundColor: color.primary.blue2,
