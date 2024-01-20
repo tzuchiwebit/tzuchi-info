@@ -1,11 +1,12 @@
 'use client'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import Container from '@/shared/layout/Container'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import Icon from '@/shared/Icon'
 import { HeaderLinkItems, NavLinkItems } from '../config'
 import color from '@/shared/styles/color'
 import { useRouter } from 'next/navigation'
+import CloudTag from '@/shared/tag/CloudTag'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -61,51 +62,97 @@ const DropDownMenu = () => (<Menu as="div" className="relative inline-block text
 
 export default function NavbarTop() {
 
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [openCloudTagSearch, setOpenCloudTagSearch] = useState(false);
+
+  const [cloudTags, setCloudTags] = useState(['功德會', '慈善志業', '醫療志業', '教育志業', '人文志業', '兒少', '全家', '長者', '急難', '海外']);
+
   const [currentDialogIndex, setCurrentDialogIndex] = useState(-1);
 
+  const [navbarTopWidth, setNavbarTopWidth] = useState('auto');
+
+  const upperRef = useRef();
+
+  // console.log(`upperRef.current`)
+  // console.log(upperRef.current)
+
   const router = useRouter()
+
+  useEffect(() => {
+    // console.log(`upperRef.current`)
+    // console.log(upperRef.current)
+    // console.log(upperRef.current.clientWidth)
+    setNavbarTopWidth(upperRef.current.clientWidth)
+  }, [])
 
   return (
     <>
       <div className="h-1 w-full bg-gradient-to-r from-primary-blue1 to-primary-linear"></div>
       <Container>
-        <nav className="mx-auto flex max-w-7xl items-center justify-between h-16 laptop:h-[58px] desktop:h-[88px] " aria-label="Global">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between laptop:min-h-[58px] desktop:min-h-[88px] tablet:py-4" aria-label="Global">
           {/* grid layout */}
           <div className="flex flex-row w-full gap-2 items-center justify-between container:px-0">
+            {/* logo */}
             <div className="flex-none w-[128px] tablet:w-[165px] laptop:w-[230px] pr-2 border-r border-solid border-gray-gray8 tablet:border-none">
               <a href="/" className="">
                 <span className="sr-only">慈濟資訊網</span>
                 <Icon.LOGO width="100%" onClick={() => redirect('/')} />
               </a>
             </div>
-            <div className="hidden tablet:flex flex-row gap-2 h-10 items-center w-[550px]">
-              <div className="w-2/3 flex justify-end items-center relative">
-                <input
-                  placeholder="關鍵字搜尋"
-                  className="border border-gray-400 rounded-md px-2 py-1.5 w-full laptop:w-[300px] tablet:w-[200px]"
-                />
-                <Icon.Search width="100%" className="absolute mr-2 w-6 text-gray-gray4 cursor-pointer" onClick={() => router.push('/search')} />
-                {/* <img src="/icons/search.svg" className="absolute mr-2 w-10" alt="Search Icon" /> */}
+            {/* right side nav */}
+            <div className='w-auto hidden tablet:flex flex-col gap-2'>
+              {/* upper section */}
+              <div className="flex flex-row gap-2 h-10 items-center justify-end w-full" ref={upperRef}>
+                {/* cloud tags */}
+                <button
+                  className="w-[110px] flex items-center justify-between relative border-b border-solid border-gray-gray7 py-1 mr-2"
+                  onClick={() => { setOpenCloudTagSearch(!openCloudTagSearch) }}
+                >
+                  <span className='whitespace-nowrap text-lg text-primary-blue1 font-bold'>熱門快搜</span>
+                  <Icon.UpArrow style={{ width: 20, transition: 'all .15s', transform: openCloudTagSearch ? '' : 'rotate(180deg)' }} />
+                </button>
+                {/* search input */}
+                <div className="w-auto flex justify-end items-center relative">
+                  <input
+                    placeholder="關鍵字搜尋"
+                    className="border border-gray-400 rounded-md px-2 py-1.5 w-full laptop:w-[300px] tablet:w-[160px]"
+                  />
+                  <Icon.Search width="100%" className="absolute mr-2 w-6 text-gray-gray4 cursor-pointer" onClick={() => router.push('/search')} />
+                </div>
+                {/* header navs */}
+                <div className="w-auto flex-0 flex flex-row items-center justify-end">
+                  {
+                    HeaderLinkItems.map((item, index) => (
+                      <Fragment key={index}>
+                        <div className={classNames(
+                          index !== 0 ? 'border-l' : '',
+                          'border-gray-text border-solid h-[16px]'
+                        )}></div>
+                        <a href={item.link} className="text-gray-text px-2 hover:font-medium whitespace-nowrap" target='_blank'>
+                          {item.label}
+                        </a>
+                      </Fragment>
+                    ))
+                  }
+                </div>
               </div>
-              <div className="w-full flex flex-row items-center justify-end">
-                {/* <a href="#" className="text-primary-blue1 flex px-1 font-semibold whitespace-nowrap">
-                  <Icon.Add width="20" /> 進階搜尋
-                </a> */}
-                {
-                  HeaderLinkItems.map((item, index) => (
-                    <Fragment key={index}>
-                      <div className={classNames(
-                        index !== 0 ? 'border-l' : '',
-                        'border-gray-text border-solid h-[16px]'
-                      )}></div>
-                      <a href={item.link} className="text-gray-text px-1 hover:font-medium whitespace-nowrap" target='_blank'>
-                        {item.label}
-                      </a>
-                    </Fragment>
-                  ))
-                }
-              </div>
+              {/* cloud tags section */}
+              <Transition
+                // as={Fragment}
+                show={openCloudTagSearch}
+                enter="transition ease-out duration-200"
+                enterFrom="opacity-0 translate-y-1"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition ease-in duration-150"
+                leaveFrom="opacity-100 translate-y-0"
+                leaveTo="opacity-0 translate-y-1"
+              >
+                <div className='flex flex-row flex-wrap gap-1 gap-y-2 w-full overflow-hidden' style={{ width: navbarTopWidth }}>
+                  {
+                    cloudTags.map((item, index) => (<CloudTag label={item} key={index} />))
+                  }
+                </div>
+              </Transition>
             </div>
           </div>
           {/* mobile layout */}
@@ -124,8 +171,8 @@ export default function NavbarTop() {
               <Icon.Menu width="32px" />
             </button>
           </div>
-        </nav>
-      </Container>
+        </nav >
+      </Container >
       {/* <div className="hidden tablet:block h-1 w-full bg-gradient-to-r from-primary-blue1 to-primary-linear"></div> */}
 
       {/* shows on mobile */}

@@ -5,54 +5,56 @@ import color from '../styles/color';
 import cloudTagStyles from '../styles/cloudTagStyles';
 import { useMemo } from 'react';
 import _ from 'lodash';
+import screens from '../styles/screens';
 
-const selectedStyle = {
-    color: 'white',
-    backgroundColor: color.primary.blue2,
-    borderColor: color.primary.blue2,
+const defaultStyle = {
+    bgColor: color.primary.blue2,
+    textColor: 'white',
 }
 
 export default function CloudTag({ label = '', selected = false, ...props }) {
     // Tailwind CSS
     // const extendStyles = className || '';
 
-    const targetCloudStyle = useMemo(() => {
-        return _.find(cloudTagStyles, { keyword: label });
+    const { bgColor, textColor } = useMemo(() => {
+        const target = _.find(cloudTagStyles, (item) => label.indexOf(item.keyword) > -1) || defaultStyle;
+        return target
     }, [label])
 
-    console.log(`targetCloudStyle`);
-    console.log(targetCloudStyle);
+    // console.log(`targetCloudStyle`);
+    // console.log(targetCloudStyle);
 
     return (
-        <CloudTagButton {...props} style={selected ? selectedStyle : {}}>
-            {children}
+        <CloudTagButton {...props} style={selected ? selectedStyle : {}} $bgColor={bgColor} $textColor={textColor} >
+            {label}
         </CloudTagButton>
     );
 }
 
 const CloudTagButton = styled.button`
-    color: ${color.primary.blue2};
-    background-color: white;
-    padding: 0 12px;
+    color: ${props => props.$textColor};
+    background-color: ${props => props.$bgColor};
+    padding: 2px 12px;
     display: flex;
     font-weight: bold;
     white-space: nowrap;
     border-radius: 9999px;
-    border: 1.5px solid ${color.primary.blue2};
-    font-size: large;
     cursor: pointer;
     gap: 4px;
     line-height: 140%;
     align-items: center;
     transition: all .3s;
-    &:hover {
-        color: white;
-        background-color: ${color.primary.blue3};
-        border-color: ${color.primary.blue3};
+    @media(min-width:${screens.laptop}) {
+        font-size: large;
     }
-    &:focus {
-        color: white;
-        background-color: ${color.primary.blue2};
-        border-color: ${color.primary.blue2};
-    }
+    // &:hover {
+    //     color: white;
+    //     background-color: ${color.primary.blue3};
+    //     border-color: ${color.primary.blue3};
+    // }
+    // &:focus {
+    //     color: white;
+    //     background-color: ${color.primary.blue2};
+    //     border-color: ${color.primary.blue2};
+    // }
 `
