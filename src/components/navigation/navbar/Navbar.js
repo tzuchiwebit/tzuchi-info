@@ -22,14 +22,14 @@ export default function Navbar() {
 
 
 const StyledHeaderPadding = styled.div`
-  height: 120px;
+  height: 134px;
   @media(min-width: ${screens.tablet}) {
-    height: 110px;
+    height: 118px;
   }
   @media(min-width: ${screens.laptop}) {
-    height: 102px;
+    height: 130px;
   }
   @media(min-width: ${screens.desktop}) {
-    height: 150px;
+    height: 154px;
   }
 `

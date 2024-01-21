@@ -64,6 +64,8 @@ export default function NavbarTop() {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [openCloudTagSearch, setOpenCloudTagSearch] = useState(false);
+  // console.log(`openCloudTagSearch`)
+  // console.log(openCloudTagSearch)
 
   const [cloudTags, setCloudTags] = useState(['功德會', '慈善志業', '醫療志業', '教育志業', '人文志業', '兒少', '全家', '長者', '急難', '海外']);
 
@@ -73,17 +75,40 @@ export default function NavbarTop() {
 
   const upperRef = useRef();
 
-  // console.log(`upperRef.current`)
-  // console.log(upperRef.current)
-
   const router = useRouter()
 
   useEffect(() => {
-    // console.log(`upperRef.current`)
-    // console.log(upperRef.current)
-    // console.log(upperRef.current.clientWidth)
-    setNavbarTopWidth(upperRef.current.clientWidth)
+    if (upperRef?.current?.clientWidth) {
+      setNavbarTopWidth(upperRef.current.clientWidth)
+    }
   }, [])
+
+  const SearchButton = () => (<button
+    className="w-[110px] flex items-center justify-between relative border-b border-solid border-gray-gray7 py-1 mr-2"
+    onClick={() => { setOpenCloudTagSearch(!openCloudTagSearch) }}
+  >
+    <span className='whitespace-nowrap text-lg text-primary-blue1 font-bold'>熱門快搜</span>
+    <Icon.UpArrow style={{ width: 20, transition: 'all .15s', transform: openCloudTagSearch ? '' : 'rotate(180deg)' }} />
+  </button>)
+
+  const CloudTagSection = () => (
+    <Transition
+      // as={Fragment}
+      show={openCloudTagSearch}
+      enter="transition ease-out duration-200"
+      enterFrom="opacity-0 translate-y-1"
+      enterTo="opacity-100 translate-y-0"
+      leave="transition ease-in duration-150"
+      leaveFrom="opacity-100 translate-y-0"
+      leaveTo="opacity-0 translate-y-1"
+    >
+      <div className={'flex flex-row flex-wrap gap-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0'} style={{ width: navbarTopWidth }}>
+        {
+          cloudTags.map((item, index) => (<CloudTag label={item} key={index} />))
+        }
+      </div>
+    </Transition>
+  )
 
   return (
     <>
@@ -104,20 +129,18 @@ export default function NavbarTop() {
               {/* upper section */}
               <div className="flex flex-row gap-2 h-10 items-center justify-end w-full" ref={upperRef}>
                 {/* cloud tags */}
-                <button
-                  className="w-[110px] flex items-center justify-between relative border-b border-solid border-gray-gray7 py-1 mr-2"
-                  onClick={() => { setOpenCloudTagSearch(!openCloudTagSearch) }}
-                >
-                  <span className='whitespace-nowrap text-lg text-primary-blue1 font-bold'>熱門快搜</span>
-                  <Icon.UpArrow style={{ width: 20, transition: 'all .15s', transform: openCloudTagSearch ? '' : 'rotate(180deg)' }} />
-                </button>
+                <SearchButton />
                 {/* search input */}
                 <div className="w-auto flex justify-end items-center relative">
                   <input
                     placeholder="關鍵字搜尋"
-                    className="border border-gray-400 rounded-md px-2 py-1.5 w-full laptop:w-[300px] tablet:w-[160px]"
+                    className="border-2 border-gray-gray6 rounded-md px-2 py-1.5 w-full laptop:w-[300px] tablet:w-[160px] bg-transparent"
                   />
-                  <Icon.Search width="100%" className="absolute mr-2 w-6 text-gray-gray4 cursor-pointer" onClick={() => router.push('/search')} />
+                  <Icon.Search
+                    width="100%"
+                    className="absolute mr-[2px] p-1 w-9 bg-gray-gray8 text-primary-blue1 cursor-pointer rounded-r"
+                    onClick={() => router.push('/search')}
+                  />
                 </div>
                 {/* header navs */}
                 <div className="w-auto flex-0 flex flex-row items-center justify-end">
@@ -136,23 +159,7 @@ export default function NavbarTop() {
                   }
                 </div>
               </div>
-              {/* cloud tags section */}
-              <Transition
-                // as={Fragment}
-                show={openCloudTagSearch}
-                enter="transition ease-out duration-200"
-                enterFrom="opacity-0 translate-y-1"
-                enterTo="opacity-100 translate-y-0"
-                leave="transition ease-in duration-150"
-                leaveFrom="opacity-100 translate-y-0"
-                leaveTo="opacity-0 translate-y-1"
-              >
-                <div className='flex flex-row flex-wrap gap-1 gap-y-2 w-full overflow-hidden' style={{ width: navbarTopWidth }}>
-                  {
-                    cloudTags.map((item, index) => (<CloudTag label={item} key={index} />))
-                  }
-                </div>
-              </Transition>
+              <CloudTagSection />
             </div>
           </div>
           {/* mobile layout */}
@@ -176,14 +183,24 @@ export default function NavbarTop() {
       {/* <div className="hidden tablet:block h-1 w-full bg-gradient-to-r from-primary-blue1 to-primary-linear"></div> */}
 
       {/* shows on mobile */}
-      <div className="w-full flex justify-end items-center relative tablet:hidden">
-        <input
-          placeholder="關鍵字搜尋"
-          className="border-2 border-gray-gray8 px-2 py-1.5 w-full h-[50px] text-lg"
-        />
-        <Icon.Search width="100%" className="absolute mr-2 w-8 text-primary-blue1 cursor-pointer" onClick={() => router.push('/search')} />
-        {/* <img src="/icons/search.svg" className="absolute mr-2 w-10" alt="Search Icon" /> */}
+      <div className='w-full flex flex-col tablet:hidden p-3 gap-1 border-2 border-b-0 border-gray-gray8 border-solid'>
+        <div className='w-full flex items-end'>
+          <SearchButton />
+          <div className="w-full flex flex-1 justify-end items-center relative tablet:hidden">
+            <input
+              placeholder="關鍵字搜尋"
+              className="border-2 border-gray-gray4 px-2 py-1.5 w-full h-[40px] text-lg rounded bg-transparent"
+            />
+            <Icon.Search
+              width="100%"
+              className="absolute mr-[2px] w-9 p-1 text-primary-blue1 cursor-pointer bg-gray-gray8 rounded-r"
+              onClick={() => router.push('/search')}
+            />
+          </div>
+        </div>
+        <CloudTagSection />
       </div>
+
       <Dialog as="div" className="tablet:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
         <div className="fixed inset-0 z-30" />
         <Dialog.Panel className="fixed h-fit inset-y-16 right-0 z-30 w-[270px] overflow-y-auto bg-white shadow-elevation-4 ">
