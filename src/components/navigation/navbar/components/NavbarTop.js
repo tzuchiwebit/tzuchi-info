@@ -5,7 +5,7 @@ import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import Icon from '@/shared/Icon'
 import { HeaderLinkItems, NavLinkItems } from '../config'
 import color from '@/shared/styles/color'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import CloudTag from '@/shared/tag/CloudTag'
 
 function classNames(...classes) {
