@@ -44,7 +44,7 @@ export default function Calendar() {
                     </div>
                 </div>
             </CalendarContainer>
-            <div className="flex laptop:hidden desktop:flex flex-col font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink min-h-[96px]">
+            <div className="flex laptop:hidden desktop:flex flex-col font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink min-h-[94px]">
                 志工早會
                 <div className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base">
                     證嚴上人智慧法語
@@ -82,7 +82,7 @@ const CalendarContainer = styled.div`
     background-size: 150%;
     background-position: -10px 100%;
     width: 100%;
-    height: 145px;
+    height: 160px;
     @media(min-width: ${screens.laptop}) {   
         padding-top: 8px;
         flex-direction: row;
