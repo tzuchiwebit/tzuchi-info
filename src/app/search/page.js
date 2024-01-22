@@ -1,7 +1,7 @@
 "use client"
 import Container from "@/shared/layout/Container"
 // import { RadioGroup } from '@headlessui/react'
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import RadioBtn from "@/shared/button/RadioBtn"
 import SearchInput from "@/shared/input/SearchInput"
 // import CheckBox from "@/shared/button/CheckBox"
@@ -12,6 +12,8 @@ import Icon from "@/shared/Icon"
 import SearchSelect from "@/shared/input/SearchSelect"
 import Pagination from "@/shared/pagination/Pagination"
 import classNames from "@/utils/classNames"
+import { useSearchParams } from "next/navigation"
+
 
 const ResultCard = ({ item, index, isLast = false }) => {
 
@@ -47,6 +49,11 @@ export default function Page() {
 
   const [currentPage, setCurrentPage] = useState(1);
 
+  const searchParams = useSearchParams();
+  const keyword = searchParams.get('keyword');
+
+  // const keyword = ''
+
   const options = [
     {
       label: '精確',
@@ -76,6 +83,12 @@ export default function Page() {
     image: 'https://picsum.photos/280/180',
   });
 
+  useEffect(() => {
+    if (keyword) {
+      setSearchText(keyword)
+    }
+  }, [])
+
 
   return <Container>
     {/* filter options section */}
@@ -89,7 +102,12 @@ export default function Page() {
     <div className="w-full flex flex-col gap-4 laptop:gap-10">
       <div className="flex flex-col gap-4">
         <RadioBtn options={options} selectedValue={searchType} onChange={setSearchType} />
-        <SearchInput className="laptop:max-w-[540px]" label='檢索詞' onChange={setSearchText} value={searchText} />
+        <SearchInput
+          className="laptop:max-w-[540px]"
+          label='檢索詞'
+          onChange={setSearchText}
+          value={searchText}
+        />
       </div>
       <div className="flex flex-col gap-4">
         <AdvanceSearch />

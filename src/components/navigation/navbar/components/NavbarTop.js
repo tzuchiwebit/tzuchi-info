@@ -5,7 +5,7 @@ import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import Icon from '@/shared/Icon'
 import { HeaderLinkItems, NavLinkItems } from '../config'
 import color from '@/shared/styles/color'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import CloudTag from '@/shared/tag/CloudTag'
 
 function classNames(...classes) {
@@ -66,6 +66,7 @@ export default function NavbarTop() {
   const [openCloudTagSearch, setOpenCloudTagSearch] = useState(false);
   // console.log(`openCloudTagSearch`)
   // console.log(openCloudTagSearch)
+  const [searchText, setSearchText] = useState('');
 
   const [cloudTags, setCloudTags] = useState(['功德會', '慈善志業', '醫療志業', '教育志業', '人文志業', '兒少', '全家', '長者', '急難', '海外']);
 
@@ -104,11 +105,24 @@ export default function NavbarTop() {
     >
       <div className={'flex flex-row flex-wrap gap-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0'} style={{ width: navbarTopWidth }}>
         {
-          cloudTags.map((item, index) => (<CloudTag label={item} key={index} />))
+          cloudTags.map((item, index) => (
+            <CloudTag
+              label={item}
+              key={index}
+              onClick={() => {
+                router.push(`/search?keyword=${item}`)
+                setOpenCloudTagSearch(false)
+              }}
+            />
+          ))
         }
       </div>
     </Transition>
   )
+
+  const onKeywordSearch = () => {
+    return router.push(`/search?keyword=${searchText}`)
+  }
 
   return (
     <>
@@ -135,11 +149,15 @@ export default function NavbarTop() {
                   <input
                     placeholder="關鍵字搜尋"
                     className="border-2 border-gray-gray6 rounded-md px-2 py-1.5 w-full laptop:w-[300px] tablet:w-[160px] bg-transparent"
+                    onChange={(e) => {
+                      setSearchText(e.target.value);
+                    }}
+                    value={searchText}
                   />
                   <Icon.Search
                     width="100%"
                     className="absolute mr-[2px] p-1 w-9 bg-gray-gray8 text-primary-blue1 cursor-pointer rounded-r"
-                    onClick={() => router.push('/search')}
+                    onClick={() => onKeywordSearch()}
                   />
                 </div>
                 {/* header navs */}
@@ -190,11 +208,15 @@ export default function NavbarTop() {
             <input
               placeholder="關鍵字搜尋"
               className="border-2 border-gray-gray4 px-2 py-1.5 w-full h-[40px] text-lg rounded bg-transparent"
+              onChange={(e) => {
+                setSearchText(e.target.value);
+              }}
+              value={searchText}
             />
             <Icon.Search
               width="100%"
               className="absolute mr-[2px] w-9 p-1 text-primary-blue1 cursor-pointer bg-gray-gray8 rounded-r"
-              onClick={() => router.push('/search')}
+              onClick={() => onKeywordSearch()}
             />
           </div>
         </div>
