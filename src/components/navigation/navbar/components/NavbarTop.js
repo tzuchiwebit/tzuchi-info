@@ -84,7 +84,7 @@ export default function NavbarTop() {
     }
   }, [])
 
-  const SearchButton = () => (<button
+  const CloudTagSearchButton = () => (<button
     className="w-[110px] flex items-center justify-between relative border-b border-solid border-gray-gray7 py-1 mr-2"
     onClick={() => { setOpenCloudTagSearch(!openCloudTagSearch) }}
   >
@@ -92,33 +92,33 @@ export default function NavbarTop() {
     <Icon.UpArrow style={{ width: 20, transition: 'all .15s', transform: openCloudTagSearch ? '' : 'rotate(180deg)' }} />
   </button>)
 
-  const CloudTagSection = () => (
-    <Transition
-      // as={Fragment}
-      show={openCloudTagSearch}
-      enter="transition ease-out duration-200"
-      enterFrom="opacity-0 translate-y-1"
-      enterTo="opacity-100 translate-y-0"
-      leave="transition ease-in duration-150"
-      leaveFrom="opacity-100 translate-y-0"
-      leaveTo="opacity-0 translate-y-1"
-    >
-      <div className={'flex flex-row flex-wrap gap-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0'} style={{ width: navbarTopWidth }}>
-        {
-          cloudTags.map((item, index) => (
-            <CloudTag
-              label={item}
-              key={index}
-              onClick={() => {
-                router.push(`/search?keyword=${item}`)
-                setOpenCloudTagSearch(false)
-              }}
-            />
-          ))
-        }
-      </div>
-    </Transition>
-  )
+  // const CloudTagSection = () => (
+  //   <Transition
+  //     // as={Fragment}
+  //     show={openCloudTagSearch}
+  //     enter="transition-all ease-in-out duration-500 delay-[200ms]"
+  //     enterFrom="opacity-0 translate-y-6"
+  //     enterTo="opacity-100 translate-y-0"
+  //     leave="transition-all ease-in-out duration-300"
+  //     leaveFrom="opacity-100"
+  //     leaveTo="opacity-0"
+  //   >
+  //     <div className={'flex flex-row flex-wrap gap-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0'} style={{ width: navbarTopWidth }}>
+  //       {
+  //         cloudTags.map((item, index) => (
+  //           <CloudTag
+  //             label={item}
+  //             key={index}
+  //             onClick={() => {
+  //               router.push(`/search?keyword=${item}`)
+  //               setOpenCloudTagSearch(false)
+  //             }}
+  //           />
+  //         ))
+  //       }
+  //     </div>
+  //   </Transition>
+  // )
 
   const onKeywordSearch = () => {
     return router.push(`/search?keyword=${searchText}`)
@@ -132,7 +132,7 @@ export default function NavbarTop() {
           {/* grid layout */}
           <div className="flex flex-row w-full gap-2 items-center justify-between container:px-0">
             {/* logo */}
-            <div className="flex-none w-[128px] tablet:w-[165px] laptop:w-[230px] pr-2 border-r border-solid border-gray-gray8 tablet:border-none">
+            <div className="flex-none w-[128px] tablet:w-[165px] laptop:w-[230px] pr-2 border-r border-solid border-gray-gray8 tablet:border-none self-start">
               <a href="/" className="">
                 <span className="sr-only">慈濟資訊網</span>
                 <Icon.LOGO width="100%" onClick={() => redirect('/')} />
@@ -143,7 +143,7 @@ export default function NavbarTop() {
               {/* upper section */}
               <div className="flex flex-row gap-2 h-10 items-center justify-end w-full" ref={upperRef}>
                 {/* cloud tags */}
-                <SearchButton />
+                <CloudTagSearchButton />
                 {/* search input */}
                 <div className="w-auto flex justify-end items-center relative">
                   <input
@@ -177,7 +177,30 @@ export default function NavbarTop() {
                   }
                 </div>
               </div>
-              <CloudTagSection />
+              <Transition
+                // as={Fragment}
+                show={openCloudTagSearch}
+                className="transition-all duration-300 overflow-hidden"
+                enterFrom="transform -tranlateY-50 opacity-0 max-h-0"
+                enterTo="transform tranlateY-0 opacity-100 max-h-[1000px]"
+                leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
+                leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
+              >
+                <div className={'flex flex-row flex-wrap gap-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0'} style={{ width: navbarTopWidth }}>
+                  {
+                    cloudTags.map((item, index) => (
+                      <CloudTag
+                        label={item}
+                        key={index}
+                        onClick={() => {
+                          router.push(`/search?keyword=${item}`)
+                          setOpenCloudTagSearch(false)
+                        }}
+                      />
+                    ))
+                  }
+                </div>
+              </Transition>
             </div>
           </div>
           {/* mobile layout */}
@@ -203,7 +226,7 @@ export default function NavbarTop() {
       {/* shows on mobile */}
       <div className='w-full flex flex-col tablet:hidden p-3 gap-1 border-2 border-b-0 border-gray-gray8 border-solid'>
         <div className='w-full flex items-end'>
-          <SearchButton />
+          <CloudTagSearchButton />
           <div className="w-full flex flex-1 justify-end items-center relative tablet:hidden">
             <input
               placeholder="關鍵字搜尋"
@@ -220,7 +243,30 @@ export default function NavbarTop() {
             />
           </div>
         </div>
-        <CloudTagSection />
+        <Transition
+          // as={Fragment}
+          show={openCloudTagSearch}
+          className="transition-all duration-300 overflow-hidden"
+          enterFrom="transform -tranlateY-50 opacity-0 max-h-0"
+          enterTo="transform tranlateY-0 opacity-100 max-h-[1000px]"
+          leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
+          leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
+        >
+          <div className={'flex flex-row flex-wrap gap-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0'} style={{ width: navbarTopWidth }}>
+            {
+              cloudTags.map((item, index) => (
+                <CloudTag
+                  label={item}
+                  key={index}
+                  onClick={() => {
+                    router.push(`/search?keyword=${item}`)
+                    setOpenCloudTagSearch(false)
+                  }}
+                />
+              ))
+            }
+          </div>
+        </Transition>
       </div>
 
       <Dialog as="div" className="tablet:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
