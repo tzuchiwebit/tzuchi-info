@@ -1,7 +1,6 @@
 'use client'
 import styled from 'styled-components';
 import color from '../styles/color';
-import { RadioGroup } from '@headlessui/react'
 import screens from '../styles/screens';
 
 export default function CheckBox({ label, onChange = () => { } }) {

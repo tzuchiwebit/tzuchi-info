@@ -43,8 +43,8 @@ export default function SearchSelect({ label, options = [], sm = false, ...props
                 {label}
             </StyledLabel> : <></>}
             <div className='relative w-full' onClick={() => setIsShowing((isShowing) => !isShowing)}>
-                <span class="absolute inset-y-0 right-0 flex items-center pr-2">
-                    <button type="submit" class="p-1 focus:outline-none focus:shadow-outline">
+                <span className="absolute inset-y-0 right-0 flex items-center pr-2">
+                    <button type="submit" className="p-1 focus:outline-none focus:shadow-outline">
                         <Icon.SelectArrows style={{ width: 24, color: color.primary.blue1 }} />
                     </button>
                 </span>

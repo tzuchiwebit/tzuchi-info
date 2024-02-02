@@ -15,7 +15,7 @@ export default function RadioBtn({ options = [], selectedValue, onChange = () =>
                 options.map((option, index) => {
                     const radioChecked = (selectedValue === option.value);
                     return (<StyledRadioBtn.Option value={option.value} key={index}>
-                        <StyledRadioInput type="radio" className='accent-primary-blue2' checked={radioChecked} />
+                        <StyledRadioInput type="radio" className='accent-primary-blue2' checked={radioChecked} onChange={() => { }} />
                         <StyledRadioLabel>{option.label}</StyledRadioLabel>
                     </StyledRadioBtn.Option>)
                 })
