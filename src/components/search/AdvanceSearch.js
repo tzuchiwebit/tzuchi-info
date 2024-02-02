@@ -46,7 +46,7 @@ const AdvanceSearchLogicOptions = [
 function StyledInputRow({ item, index, register, control, remove }) {
 
 
-    return <div key={item.id} className='w-full bg-gray-gray9 p-3 flex gap-2 items-center laptop:justify-between'>
+    return <div key={item.id} className='w-full bg-gray-gray9 p-3 flex gap-2 items-center laptop:justify-between mb-1'>
         <div className='flex flex-col laptop:flex-row gap-2 flex-1 laptop:max-w-[900px]'>
             <SearchSelect options={AdvanceSearchTypeOptions} className='laptop:max-w-[260px] flex-0' />
             <SearchInput className='tablet:min-w-[300px] flex-1' placeholder='輸入進階搜尋關鍵字' />
