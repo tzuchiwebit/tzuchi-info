@@ -21,7 +21,7 @@ const data = [
         ]
     },
     {
-        title: '外部觀點：旅外名人視角',
+        title: '外部觀點：名人視角',
         children: [
             {
                 avatar: 'https://i.pravatar.cc/300',

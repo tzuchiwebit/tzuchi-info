@@ -21,10 +21,12 @@ export default function Journal() {
                 // style={{ width: '100%' }}
                 />
             </div>
-            <div className="flex flex-col font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink min-h-[90px]">
-                慈濟週報
-                <div className="pt-0 justify-center laptop:justify-start line-clamp-2 text-gray-gray2 w-full shrink text-base">
-                    慈濟週報第二期慈濟週報第二期
+            <div className="flex flex-col p-2 text-xl laptop:justify-start shrink min-h-[90px]">
+                <div className="flex font-semibold leading-7 tracking-normal justify-between items-center tablet:flex-col tablet:items-start desktop:flex-row">
+                    慈濟週報 <SubscribeTag>訂閱 <Icon.Bell style={{ width: 13 }} /></SubscribeTag>
+                </div>
+                <div className="pt-1 justify-center laptop:justify-start line-clamp-2 text-gray-gray2 w-full shrink text-base">
+                    慈濟一週重點訊息
                 </div>
             </div>
 
@@ -58,4 +60,18 @@ const InnerContainer = styled.div`
         flex-direction: column;
         height: fit-content;
     }
+`
+
+const SubscribeTag = styled.button`
+    background-color: ${color.complementary.pink};
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    gap: 5px;
+    border-radius: 100px;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 25px;
 `

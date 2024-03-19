@@ -40,7 +40,7 @@ export default function Widgets() {
                 <Calendar />
                 <Reminder />
                 <Journel />
-                <Thinking />
+                {/* <Thinking /> */}
             </Container>
         </Transition>
         <div className="w-full flex laptop:hidden desktop:flex">
@@ -48,7 +48,7 @@ export default function Widgets() {
                 <Calendar />
                 <Reminder />
                 <Journel />
-                <Thinking />
+                {/* <Thinking /> */}
             </Container>
         </div>
     </div>
@@ -64,8 +64,11 @@ const Container = styled.div`
     @media(min-width: ${screens.tablet}) {
         flex-wrap: nowrap;
         padding-top: 20px;
+        justify-content: start;
+        gap: 10px;
     }
     @media(min-width: ${screens.laptop}) {
+        justify-content: space-between;
         padding-top: 12px;
         flex-wrap: wrap;
         row-gap: 20px;
