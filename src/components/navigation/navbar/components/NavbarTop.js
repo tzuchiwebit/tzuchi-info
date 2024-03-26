@@ -132,10 +132,11 @@ export default function NavbarTop() {
           {/* grid layout */}
           <div className="flex flex-row w-full gap-2 items-center justify-between container:px-0">
             {/* logo */}
-            <div className="flex-none w-[128px] tablet:w-[165px] laptop:w-[230px] pr-2 border-r border-solid border-gray-gray8 tablet:border-none self-start">
+            <div className="flex-none w-[128px] tablet:w-[165px] laptop:w-[225px] desktop:w-[380px] pr-2 desktop:self-start">
               <a href="/" className="">
                 <span className="sr-only">慈濟資訊網</span>
-                <Icon.LOGO width="100%" onClick={() => redirect('/')} />
+                <Icon.LOGO className="hidden desktop:block" width="100%" onClick={() => redirect('/')} />
+                <Icon.LOGOMobile className="desktop:hidden" width="100%" onClick={() => redirect('/')} />
               </a>
             </div>
             {/* right side nav */}

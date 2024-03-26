@@ -1,5 +1,6 @@
 // LOGO FILE
-export { default as LOGO } from "./icon/LOGO.svg";
+export { default as LOGO } from "./icon/new-logo.svg";
+export { default as LOGOMobile } from "./icon/new-logo-m.svg";
 //
 export { default as Add } from "./icon/main/add.svg";
 export { default as Author } from "./icon/main/author.svg";
