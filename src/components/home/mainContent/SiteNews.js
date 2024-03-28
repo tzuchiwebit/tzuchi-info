@@ -28,9 +28,8 @@ const Item = () => (
                 結合多機構在烏克蘭發放 慈濟助難民過寒冬
             </div>
             <div className="pt-2 font-medium text-sm text-gray-gray4 border-t border-solid border-gray-gray8">
-                {
-                    dayjs().format('YYYY-MM-DD')
-                }
+                { dayjs().format('YYYY-MM-DD') } <br />
+                報導地點
             </div>
         </div>
     </div>

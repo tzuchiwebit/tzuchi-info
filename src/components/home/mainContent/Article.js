@@ -4,7 +4,7 @@ import dayjs from "dayjs"
 
 const data = [
     {
-        title: '內部觀點：領航慈濟',
+        title: '領航慈濟',
         children: [
             {
                 avatar: 'https://i.pravatar.cc/300',
@@ -21,7 +21,7 @@ const data = [
         ]
     },
     {
-        title: '外部觀點：名人視角',
+        title: '名人視角',
         children: [
             {
                 avatar: 'https://i.pravatar.cc/300',

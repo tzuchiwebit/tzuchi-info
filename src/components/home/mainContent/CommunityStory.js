@@ -22,9 +22,10 @@ const Item = () => (
                 </div>
                 <div className="w-full absolute bottom-0 pt-2 font-medium text-sm text-gray-gray4 border-t-2 border-solid border-gray-gray8 flex justify-between items-center">
                     <div>
-                        {dayjs().format('YYYY-MM-DD')}
+                        {dayjs().format('YYYY-MM-DD')}<br />
+                        報導地點
                     </div>
-                    <div className="flex gap-1 text-lg">
+                    <div className="gap-1 text-lg hidden">
                         <Icon.Like style={{ width: 16 }} />
                         <span>讚</span>
                         <Icon.Views style={{ width: 16 }} />

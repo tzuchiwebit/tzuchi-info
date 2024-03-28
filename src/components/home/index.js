@@ -35,6 +35,7 @@ const MainContainer = styled.div`
     padding-right: 10px;
     padding-left: 10px;
     @media(min-width: ${screens.tablet}) {
+        padding-top: 10px;
         padding-right: 13px;
         padding-left: 13px;
     }
