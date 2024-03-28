@@ -96,7 +96,7 @@ const StyledPaginationContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 7px;
-  margin-top: 30px;
+  margin-bottom: 16px;
 `;
 
 const StyledPaginationItemContainer = styled.div`

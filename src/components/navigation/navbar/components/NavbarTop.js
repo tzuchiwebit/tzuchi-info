@@ -7,10 +7,11 @@ import { HeaderLinkItems, NavLinkItems } from '../config'
 import color from '@/shared/styles/color'
 import { useRouter } from 'next/navigation'
 import CloudTag from '@/shared/tag/CloudTag'
+import routes from '@/app/config/routes'
 
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+  }
 
 const DropDownMenu = () => (<Menu as="div" className="relative inline-block text-left">
   {({ open }) => (
@@ -76,7 +77,7 @@ export default function NavbarTop() {
 
   const upperRef = useRef();
 
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
     if (upperRef?.current?.clientWidth) {
@@ -110,7 +111,7 @@ export default function NavbarTop() {
   //             label={item}
   //             key={index}
   //             onClick={() => {
-  //               router.push(`/search?keyword=${item}`)
+  //               router.push(`${routes.SEARCH}?keyword=${item}`)
   //               setOpenCloudTagSearch(false)
   //             }}
   //           />
@@ -121,7 +122,7 @@ export default function NavbarTop() {
   // )
 
   const onKeywordSearch = () => {
-    return router.push(`/search?keyword=${searchText}`)
+    return router.push(`${routes.SEARCH}?keyword=${searchText}`)
   }
 
   return (
@@ -194,7 +195,7 @@ export default function NavbarTop() {
                         label={item}
                         key={index}
                         onClick={() => {
-                          router.push(`/search?keyword=${item}`)
+                          router.push(`${routes.SEARCH}?keyword=${item}`)
                           setOpenCloudTagSearch(false)
                         }}
                       />
@@ -260,7 +261,7 @@ export default function NavbarTop() {
                   label={item}
                   key={index}
                   onClick={() => {
-                    router.push(`/search?keyword=${item}`)
+                    router.push(`${routes.SEARCH}?keyword=${item}`)
                     setOpenCloudTagSearch(false)
                   }}
                 />

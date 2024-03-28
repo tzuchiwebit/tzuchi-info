@@ -6,8 +6,12 @@ import color from "@/shared/styles/color"
 import dayjs from "dayjs"
 import Icon from "@/shared/Icon"
 import { OuterContainer } from "./container"
+import { useRouter } from 'next/navigation'
+import routes from "@/app/config/routes"
 
 export default function Calendar() {
+
+    const router = useRouter();
 
     const [date, setDate] = useState({});
 
@@ -52,7 +56,11 @@ export default function Calendar() {
             </div>
         </InnerContainer>
         <div className="bg-gray-gray8 p-1.5 w-full">
-            <span className="cursor-pointer font-medium flex items-center justify-end text-lg text-primary-blue3 hover:text-primary-blue2">
+            <span
+                className="cursor-pointer font-medium flex items-center justify-end text-lg text-primary-blue3 hover:text-primary-blue2"
+                onClick={() => {
+                    router.push(`${routes.VOLUNTEER_MORNING_MEETING}`)
+                }}>
                 更多 <Icon.RightArrow2 width="18px" />
             </span>
         </div>
