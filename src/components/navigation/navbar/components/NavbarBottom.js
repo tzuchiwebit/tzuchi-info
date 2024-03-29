@@ -21,6 +21,7 @@ export default function NavbarBottom() {
           NavLinkItems.map((nav, index) => {
             const hasChildren = !!nav.children;
             return <Fragment key={index}>
+              <div className='w-[1px] tablet:h-[25px] desktop:h-[35px] border-l border-gray-gray7 border-solid' />
               <Popover
                 onMouseOver={() => setMobileMenuOpen(index + 1)}
                 onMouseOut={() => setMobileMenuOpen(0)}
@@ -63,7 +64,7 @@ export default function NavbarBottom() {
                   </Popover.Panel>
                 </Transition>
               </Popover>
-              {(NavLinkItems.length !== index + 1) ? <div className='w-[1px] tablet:h-[25px] desktop:h-[35px] border-l border-gray-gray7 border-solid' /> : <></>}
+              {(index !== 0) ? <div className='w-[1px] tablet:h-[25px] desktop:h-[35px] border-l border-gray-gray7 border-solid' /> : <></>}
             </Fragment>
           })
         }

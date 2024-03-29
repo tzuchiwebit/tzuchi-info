@@ -9,9 +9,9 @@ import { useRouter } from 'next/navigation'
 import CloudTag from '@/shared/tag/CloudTag'
 import routes from '@/app/config/routes'
 
-  function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
-  }
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ')
+}
 
 const DropDownMenu = () => (<Menu as="div" className="relative inline-block text-left">
   {({ open }) => (
@@ -226,7 +226,7 @@ export default function NavbarTop() {
       {/* <div className="hidden tablet:block h-1 w-full bg-gradient-to-r from-primary-blue1 to-primary-linear"></div> */}
 
       {/* shows on mobile */}
-      <div className='w-full flex flex-col tablet:hidden p-3 gap-1 border-2 border-b-0 border-gray-gray8 border-solid'>
+      <div className='w-full relative flex flex-col tablet:hidden p-3 gap-1 border-2 border-b-0 border-gray-gray8 border-solid'>
         <div className='w-full flex items-end'>
           <CloudTagSearchButton />
           <div className="w-full flex flex-1 justify-end items-center relative tablet:hidden">
@@ -245,31 +245,31 @@ export default function NavbarTop() {
             />
           </div>
         </div>
-        <Transition
-          // as={Fragment}
-          show={openCloudTagSearch}
-          className="transition-all duration-300 overflow-hidden"
-          enterFrom="transform -tranlateY-50 opacity-0 max-h-0"
-          enterTo="transform tranlateY-0 opacity-100 max-h-[1000px]"
-          leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
-          leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
-        >
-          <div className={'flex flex-row flex-wrap gap-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0'} style={{ width: navbarTopWidth }}>
-            {
-              cloudTags.map((item, index) => (
-                <CloudTag
-                  label={item}
-                  key={index}
-                  onClick={() => {
-                    router.push(`${routes.SEARCH}?keyword=${item}`)
-                    setOpenCloudTagSearch(false)
-                  }}
-                />
-              ))
-            }
-          </div>
-        </Transition>
       </div>
+      <Transition
+        // as={Fragment}
+        show={openCloudTagSearch}
+        className="absolute tablet:hidden left-0 bg-white transition-all duration-300 overflow-hidden border-2 border-t-0 border-gray-gray8 border-solid px-3 pb-3 z-10"
+        enterFrom="transform -tranlateY-50 opacity-0 max-h-0"
+        enterTo="transform tranlateY-0 opacity-100 max-h-[1000px]"
+        leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
+        leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
+      >
+        <div className={'flex flex-row flex-wrap gap-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0'} style={{ width: navbarTopWidth }}>
+          {
+            cloudTags.map((item, index) => (
+              <CloudTag
+                label={item}
+                key={index}
+                onClick={() => {
+                  router.push(`${routes.SEARCH}?keyword=${item}`)
+                  setOpenCloudTagSearch(false)
+                }}
+              />
+            ))
+          }
+        </div>
+      </Transition>
 
       <Dialog as="div" className="tablet:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
         <div className="fixed inset-0 z-30" />
