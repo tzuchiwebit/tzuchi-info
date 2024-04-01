@@ -1,9 +1,12 @@
 'use client'
 import Icon from "@/shared/Icon"
+import { useRouter } from "next/navigation"
 // import Image from 'next/image';
 // import AuthorIcon from '@/asset/icon/main/author.svg';
 
 export default function BannerTitle({ title = "", link = false }) {
+
+    const router = useRouter();
 
     return (
         <div className="flex flex-row w-full gap-2 items-center">
@@ -13,8 +16,13 @@ export default function BannerTitle({ title = "", link = false }) {
             <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
             {
                 link ? (<div className="flex-0 font-medium justify-end items-end text-lg text-primary-blue3">
-                        <a href={link} target="_blank" className="flex flex-row whitespace-nowrap">更多<Icon.RightArrow2 width={20} /></a>
-                    </div>) : <></>
+                    <div
+                        onClick={() => router.push(link)}
+                        target="_blank"
+                        className="cursor-pointer flex flex-row whitespace-nowrap">
+                        更多<Icon.RightArrow2 width={20} />
+                    </div>
+                </div>) : <></>
             }
 
         </div>

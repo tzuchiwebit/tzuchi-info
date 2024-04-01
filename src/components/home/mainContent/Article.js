@@ -1,6 +1,8 @@
 'use client'
+import { useRouter } from "next/navigation"
 import { BannerTitle } from "../components"
 import dayjs from "dayjs"
+import routes from "@/app/config/routes"
 
 const data = [
     {
@@ -79,8 +81,10 @@ const ArticleSection = () => {
 
 export default function Article() {
 
+    const router = useRouter();
+
     return <div className="pt-5">
-        <BannerTitle title={`專欄文章`} link={'#'} />
+        <BannerTitle title={`專欄文章`} link={routes.COLUMN_ARTICLE} />
         <ArticleSection />
     </div>
 }
