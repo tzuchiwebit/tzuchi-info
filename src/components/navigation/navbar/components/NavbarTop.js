@@ -8,6 +8,7 @@ import color from '@/shared/styles/color'
 import { useRouter } from 'next/navigation'
 import CloudTag from '@/shared/tag/CloudTag'
 import routes from '@/app/config/routes'
+import OutsideClickHandler from '@/utils/OutsideClickHandler'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -215,7 +216,11 @@ export default function NavbarTop() {
                 backgroundColor: mobileMenuOpen ? color.complementary.blue2 : 'transparent',
                 color: mobileMenuOpen ? color.primary.blue1 : color.gray.gray4,
               }}
-              onClick={() => setMobileMenuOpen(true)}
+              onClick={() => {
+                console.log(`mobileMenuOpen`)
+                console.log(mobileMenuOpen)
+                setMobileMenuOpen(!mobileMenuOpen);
+              }}
             >
               <span className="sr-only">Open main menu</span>
               <Icon.Menu width="32px" />
@@ -271,67 +276,69 @@ export default function NavbarTop() {
         </div>
       </Transition>
 
-      <Dialog as="div" className="tablet:hidden" open={mobileMenuOpen} onClose={setMobileMenuOpen}>
-        <div className="fixed inset-0 z-30" />
-        <Dialog.Panel className="fixed h-fit inset-y-16 right-0 z-30 w-[270px] overflow-y-auto bg-white shadow-elevation-4 ">
-          <div className="flow-root">
-            <div className="divide-y-2 divide-gray-gray8 divide-solid transition-all">
-              {NavLinkItems.map((nav, index) => {
+      <Dialog as="div" className="tablet:hidden" open={mobileMenuOpen} onClose={() => { }}>
+        {/* <div className="fixed inset-0 z-30" /> */}
+        <OutsideClickHandler onOutsideClick={() => setMobileMenuOpen(false)}>
+          <Dialog.Panel className="fixed h-fit inset-y-16 right-0 z-30 w-[270px] overflow-y-auto bg-white shadow-elevation-4 ">
+            <div className="flow-root">
+              <div className="divide-y-2 divide-gray-gray8 divide-solid transition-all">
+                {NavLinkItems.map((nav, index) => {
 
-                const isDisclosure = !!(nav?.children);
+                  const isDisclosure = !!(nav?.children);
 
-                return (<div className="" key={index}>
-                  <Disclosure as="div" className="">
-                    <>
-                      <Disclosure.Button
-                        className="flex gap-2 w-full items-center justify-start py-2 pl-5 font-semibold leading-7 text-gray-900 hover:bg-complementary-blue2 "
-                        onClick={() => {
-                          if (!isDisclosure) {
-                            return window.open(nav.link, '_blank');
-                          } else if (currentDialogIndex === index) {
-                            return setCurrentDialogIndex(-1);
-                          }
-                          setCurrentDialogIndex(index);
-                        }}
-                      >
-                        <Icon.CyanTriangle
-                          className="transition-all"
-                          width="12px"
-                          style={{ visibility: nav?.children?.length ? 'visible' : 'hidden', transform: (isDisclosure && currentDialogIndex === index) ? 'rotate(90deg)' : '' }}
-                        /> {nav.label}
-                      </Disclosure.Button>
-                      <Transition
-                        show={isDisclosure && (currentDialogIndex === index)}
-                        enter="transition-height duration-500 ease-in-out"
-                        enterFrom="h-0"
-                        enterTo="h-auto"
-                        leave="transition-height duration-0 "
-                        leaveFrom="h-auto"
-                        leaveTo="h-0"
-                      >
-                        <Disclosure.Panel className="px-3 py-1 bg-primary-blue3">
-                          <div className="divide-y divide-gray-gray8 divide-solid">
-                            {nav?.children && nav.children.map((item) => (
-                              <Disclosure.Button
-                                key={item.label}
-                                as="a"
-                                href={item.link}
-                                target='_blank'
-                                className="block py-2 pl-1 text-white"
-                              >
-                                {item.label}
-                              </Disclosure.Button>
-                            ))}
-                          </div>
-                        </Disclosure.Panel>
-                      </Transition>
-                    </>
-                  </Disclosure>
-                </div>)
-              })}
+                  return (<div className="" key={index}>
+                    <Disclosure as="div" className="">
+                      <>
+                        <Disclosure.Button
+                          className="flex gap-2 w-full items-center justify-start py-2 pl-5 font-semibold leading-7 text-gray-900 hover:bg-complementary-blue2 "
+                          onClick={() => {
+                            if (!isDisclosure) {
+                              return window.open(nav.link, '_blank');
+                            } else if (currentDialogIndex === index) {
+                              return setCurrentDialogIndex(-1);
+                            }
+                            setCurrentDialogIndex(index);
+                          }}
+                        >
+                          <Icon.CyanTriangle
+                            className="transition-all"
+                            width="12px"
+                            style={{ visibility: nav?.children?.length ? 'visible' : 'hidden', transform: (isDisclosure && currentDialogIndex === index) ? 'rotate(90deg)' : '' }}
+                          /> {nav.label}
+                        </Disclosure.Button>
+                        <Transition
+                          show={isDisclosure && (currentDialogIndex === index)}
+                          enter="transition-height duration-500 ease-in-out"
+                          enterFrom="h-0"
+                          enterTo="h-auto"
+                          leave="transition-height duration-0 "
+                          leaveFrom="h-auto"
+                          leaveTo="h-0"
+                        >
+                          <Disclosure.Panel className="px-3 py-1 bg-primary-blue3">
+                            <div className="divide-y divide-gray-gray8 divide-solid">
+                              {nav?.children && nav.children.map((item) => (
+                                <Disclosure.Button
+                                  key={item.label}
+                                  as="a"
+                                  href={item.link}
+                                  target='_blank'
+                                  className="block py-2 pl-1 text-white"
+                                >
+                                  {item.label}
+                                </Disclosure.Button>
+                              ))}
+                            </div>
+                          </Disclosure.Panel>
+                        </Transition>
+                      </>
+                    </Disclosure>
+                  </div>)
+                })}
+              </div>
             </div>
-          </div>
-        </Dialog.Panel>
+          </Dialog.Panel>
+        </OutsideClickHandler>
       </Dialog>
 
     </>

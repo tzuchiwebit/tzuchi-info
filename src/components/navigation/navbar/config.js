@@ -5,7 +5,7 @@ export const HeaderLinkItems = [
     },
     {
         label: '社區故事',
-        link: 'https://www.tzuchi.org.tw/',
+        link: 'https://comm2.tzuchi-org.tw/',
     },
     {
         label: '捐款網',

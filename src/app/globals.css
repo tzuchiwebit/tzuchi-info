@@ -64,6 +64,11 @@ footer, header, nav, section {
   vertical-align: baseline;
   font-weight: 400;
 }
+
+html {
+  padding-right: 0px !important;
+}
+
 /* 
 body {
   color: rgb(var(--foreground-rgb));
