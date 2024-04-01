@@ -43,13 +43,14 @@ export default PrimaryCard
 
 const ImageContainer = styled.div`
     width: 100%;
-    height: 215px;
+    height: auto;
+    // min-height: 160px;
     overflow: hidden;
     border-radius: 4px;
     @media(min-width: ${screens.tablet}) {
-        height: 210px;
+        // height: 210px;
     }
     @media(min-width: ${screens.laptop}) {
-        height: 218px;
+        // height: 218px;
     }
 `
