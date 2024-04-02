@@ -37,7 +37,7 @@ const FloatScrollTopButton = ({ }) => {
         };
     }, []);
 
-    return <div className="fixed right-3 top-[60vh]">
+    return <div className="fixed z-50 right-3 top-[60vh]">
         {
             isVisible ? <button
                 onClick={() => scrollToTop()}

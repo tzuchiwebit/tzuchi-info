@@ -6,6 +6,7 @@ import screens from "@/shared/styles/screens";
 import dayjs from "dayjs"
 import BlurBGImage from "@/shared/image/BlurBGImage";
 import PrimaryTag from "@/shared/tag/PrimaryTag";
+import routes from "@/app/config/routes";
 
 const tagOptions = [
     '臺灣',
@@ -46,7 +47,7 @@ export default function SiteNews() {
     const [selctedIndex, setSelectedIndex] = useState(0);
 
     return <div className="pt-5">
-        <BannerTitle title={`各據點消息`} link={'#'} />
+        <BannerTitle title={`各據點消息`} link={routes.THE_BASE_MESSAGE} />
         <div className="pt-5 w-full">
             <div className="flex gap-2 flex-wrap">
                 {
