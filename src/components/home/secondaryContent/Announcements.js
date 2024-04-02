@@ -1,6 +1,7 @@
 'use client'
 import { BannerTitle } from "../components"
 import dayjs from "dayjs"
+import routes from "@/app/config/routes"
 
 const data = [
     {
@@ -36,7 +37,7 @@ const AnnouncementSection = () => {
 export default function Announcements() {
 
     return <div className="py-3 flex-1">
-        <BannerTitle title={`基金會公告`} link={'#'} />
+        <BannerTitle title={`基金會公告`} link={routes.FOUNDATION_ANNOUNCEMENT} />
         <AnnouncementSection />
     </div>
 }
