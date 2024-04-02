@@ -27,8 +27,8 @@ export default function Page() {
     content: '112年「大愛共善 救拔苦難」募得款及使用情形成果報告'
   })
 
-  console.log(`testData`)
-  console.log(testData)
+  // console.log(`testData`)
+  // console.log(testData)
 
 
   return <Container>
@@ -67,7 +67,7 @@ export default function Page() {
           </thead>
           <tbody>
             {
-              testData.map((item, index) => <tr key={index}>
+              testData.map((item, index) => <tr key={index} className="font-medium text-gray-gray2">
                 <td className="border border-gray-gray4 border-solid py-2 px-1 whitespace-nowrap">
                   {item.date}
                 </td>
