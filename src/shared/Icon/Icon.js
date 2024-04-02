@@ -32,6 +32,9 @@ export { default as Check } from "./icon/main/check.svg";
 export { default as Bell } from "./icon/main/bell.svg";
 export { default as Global } from "./icon/main/global.svg";
 export { default as Lotus } from "./icon/main/lotus.svg";
+// scrolltop
+export { default as UpArrowMain } from "./icon/main/up-arrow-main.svg";
+
 // pagination
 export { default as PageArrowLeftDouble } from "./icon/main/page-double-left-arrow.svg";
 export { default as PageArrowRightDouble } from "./icon/main/page-double-right-arrow.svg";

@@ -7,6 +7,7 @@ import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import BannerImage from '@/asset/image/volunteer-morning-meeting.jpeg'
 import Image from 'next/image'
 import PrimaryCard from "@/shared/card/PrimaryCard"
+import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
 
 export default function Page() {
 
@@ -23,6 +24,7 @@ export default function Page() {
 
 
   return <Container>
+    <FloatScrollTopButton />
     {/* filter options section */}
     <div className="flex w-full flex-col gap-5">
       {/* breadcrumbs */}
