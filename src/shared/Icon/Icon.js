@@ -78,3 +78,9 @@ export { default as Plus } from "./icon/footer/plus.svg";
 
 export { default as ChatAvatar } from "./icon/chat/avatar.svg";
 export { default as CloseWhite } from "./icon/close-white.svg";
+
+export { default as Triangle } from "./icon/article/triangle.svg";
+export { default as BookBlue } from "./icon/article/book-blue.svg";
+export { default as BookGray } from "./icon/article/book-gray.svg";
+export { default as Download } from "./icon/article/download.svg";
+export { default as Video } from "./icon/article/video.svg";
