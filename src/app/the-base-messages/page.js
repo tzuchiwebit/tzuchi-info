@@ -63,7 +63,7 @@ export default function Page() {
         <div className="flex flex-col">
           {
             item.map((i, _index) => (<div key={_index} className="border-b border-solid border-gray-gray8 py-2 cursor-pointer flex items-center">
-              <div className="text-primary-blue1 text-xl font-bold line-clamp-3 ">
+              <div className="text-primary-blue1 text-xl font-bold line-clamp-2 ">
                 {i.title}
               </div>
 
