@@ -38,7 +38,7 @@ export default function Page() {
     <Container>
       <FloatScrollTopButton />
       {/* breadcrumb */}
-      <Breadcrumb className="laptop:mt-[30px] mt-2"></Breadcrumb>
+      <Breadcrumb className="tablet:mt-4 mt-2"></Breadcrumb>
 
       {/* title */}
       <div className="tablet:mt-6 mt-4 text-[30px] font-bold text-primary-blue1">

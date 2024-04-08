@@ -117,10 +117,11 @@ const Badge = ({isHappy}) => {
 }
 export default function ReportCard({isHappy}) {
   const screenSize = useScreenSize();
-  const [isDesktop, setIsDesktop] = useState(screenSize.width >= 1600)
+  // const [isDesktop, setIsDesktop] = useState(screenSize.width >= 1600)
+  const [isTablet, setIsTablet] = useState(screenSize.width >= 768)
 
   useEffect(() => {
-    setIsDesktop(screenSize.width >= 1600)
+    setIsTablet(screenSize.width >= 768)
   }, [screenSize.width])
 
   return (
@@ -134,14 +135,14 @@ export default function ReportCard({isHappy}) {
       <div className="flex flex-row items-center mt-1">
         <div className="flex flex-1 text-lg border-solid border-b border-gray-gray8" />
         <div className="flex flex-row gap-x-1 ml-2">
-          <div className="desktop:w-8 desktop:h-8 w-6 h-6 bg-secondary-light-blueGreen3 rounded-full flex justify-center items-center cursor-pointer">
-            <Icon.Video style={{ width: (isDesktop ? 24 : 18) }}/>
+          <div className="tablet:w-8 tablet:h-8 w-6 h-6 bg-secondary-light-blueGreen3 rounded-full flex justify-center items-center cursor-pointer">
+            <Icon.Video style={{ width: (isTablet ? 24 : 18) }}/>
           </div>
-          <div className="desktop:w-8 desktop:h-8 w-6 h-6 bg-secondary-light-blueGreen3 rounded-full flex justify-center items-center cursor-pointer">
-            <Icon.Download style={{ width: (isDesktop ? 24 : 18) }} />
+          <div className="tablet:w-8 tablet:h-8 w-6 h-6 bg-secondary-light-blueGreen3 rounded-full flex justify-center items-center cursor-pointer">
+            <Icon.Download style={{ width: (isTablet ? 24 : 18) }} />
           </div>
-          <div className="desktop:w-8 desktop:h-8 w-6 h-6 bg-secondary-light-blueGreen3 rounded-full flex justify-center items-center cursor-pointer">
-            <Icon.BookBlue style={{ width: isDesktop ? 24 : 18 }} />
+          <div className="tablet:w-8 tablet:h-8 w-6 h-6 bg-secondary-light-blueGreen3 rounded-full flex justify-center items-center cursor-pointer">
+            <Icon.BookBlue style={{ width: isTablet ? 24 : 18 }} />
           </div>
         </div>
       </div>
