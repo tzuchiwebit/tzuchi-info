@@ -151,7 +151,7 @@ export default function Page() {
     <Container>
       <FloatScrollTopButton />
       {/* breadcrumb */}
-      <Breadcrumb className="laptop:mt-[30px] mt-2"></Breadcrumb>
+      <Breadcrumb className="tablet:mt-4 mt-2"></Breadcrumb>
       <ArticleContainer className="mt-6">
         <Article></Article>
         <RecommandArticles></RecommandArticles>

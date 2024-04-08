@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
 import Icon from '@/shared/Icon';
+import screens from "@/shared/styles/screens";
 
 export default function Chat({ }) {
   const [isOpenChat, setIsOpenChat] = useState(false)
@@ -70,7 +71,13 @@ const ChatContainer = styled.div`
   align-items: center;
   width: 72px;
   position: fixed;
-  bottom: 28px;
+  bottom: 80px;
   right: 28px;
   cursor: pointer;
+  @media(min-width: ${screens.tablet}) {
+    bottom: 90px;
+  }
+  @media(min-width: ${screens.laptop}) {
+    bottom: 28px;
+  }
 `
