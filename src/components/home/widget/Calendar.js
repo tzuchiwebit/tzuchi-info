@@ -8,12 +8,38 @@ import Icon from "@/shared/Icon"
 import { OuterContainer } from "./container"
 import { useRouter } from 'next/navigation'
 import routes from "@/app/config/routes"
+import { getArticlesByCategory } from "@/api/joomlaApi"
 
 export default function Calendar() {
 
     const router = useRouter();
 
     const [date, setDate] = useState({});
+
+
+    const [article, setArticle] = useState({});
+    const [loading, setLoading] = useState(false);
+
+    const getJournal = async () => {
+        setLoading(true);
+        try {
+            const res = await getArticlesByCategory('志工早會', 1);
+            if (res.data) {
+                setArticle(res.data[0]);
+            }
+
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        getJournal();
+    }, [])
+
+
 
     useEffect(() => {
         setDate({
@@ -43,7 +69,7 @@ export default function Calendar() {
                     <div className="hidden laptop:flex desktop:hidden laptop:text-left laptop:pl-2 desktop:text-center desktop:pl-0 flex-col justify-center font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink desktop:min-h-[90px]">
                         志工早會
                         <div className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base">
-                            證嚴上人智慧法語
+                            {article?.attributes?.title || '證嚴上人智慧法語'}
                         </div>
                     </div>
                 </div>
@@ -51,7 +77,7 @@ export default function Calendar() {
             <div className="flex laptop:hidden desktop:flex flex-col font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink min-h-[94px]">
                 志工早會
                 <div className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base">
-                    證嚴上人智慧法語
+                    {article?.attributes?.title || '證嚴上人智慧法語'}
                 </div>
             </div>
         </InnerContainer>
