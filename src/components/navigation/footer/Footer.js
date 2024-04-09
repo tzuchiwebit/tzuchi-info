@@ -39,20 +39,12 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   row-gap: 32px;
-  padding: 50px 10px;
+  padding: 20px 0;
 
-  @media(min-width: ${screens.tablet}) {}
-  @media(min-width: ${screens.laptop}) {}
-  @media(min-width: ${screens.desktop}) {}
-
-  @media(max-width: ${screens["desktop-down"].max}) {
-    padding-left: 40px;
-    padding-right: 40px;
-  }
-  @media(max-width: ${screens["laptop-down"].max}) {
+  @media(min-width: ${screens.tablet}) {
     padding: 32px 0;
   }
-  @media(max-width: ${screens["tablet-down"].max}) {
-    padding: 20px 0;
+  @media(min-width: ${screens.laptop}) {
+    padding: 50px 0;
   }
 `
