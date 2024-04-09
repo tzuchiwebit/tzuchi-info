@@ -7,14 +7,14 @@ import joomlaContentCategory from './joomlaContentCategory'
 const API_ENDPOINT = `https://webtest.tzuchi-org.tw/api/index.php/v1/content`
 const token = process.env.NEXT_PUBLIC_JOOMLA_API_TOKEN
 
-const getArticlesByCategory = async (category = '志工早會', limit = 10) => {
+const getArticlesByCategory = async (category = '志工早會', limit = 10, offset = 0) => {
     try {
         const targetCategory = _.find(joomlaContentCategory, (i) => i.name === category);
         if (!targetCategory) {
             throw new Error(`Invalid category : ${category}`);
         }
 
-        const res = await axios.get(`${API_ENDPOINT}/articles?filter[category]=${targetCategory.id}&page%5Blimit%5D=${limit}`, {
+        const res = await axios.get(`${API_ENDPOINT}/articles?filter[category]=${targetCategory.id}&page[limit]=${limit}&page[offset]=${offset}`, {
             headers: {
                 'Authorization': 'Bearer ' + token
             }

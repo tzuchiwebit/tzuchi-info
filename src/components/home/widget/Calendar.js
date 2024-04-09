@@ -16,7 +16,6 @@ export default function Calendar() {
 
     const [date, setDate] = useState({});
 
-
     const [article, setArticle] = useState({});
     const [loading, setLoading] = useState(false);
 
@@ -37,11 +36,6 @@ export default function Calendar() {
 
     useEffect(() => {
         getJournal();
-    }, [])
-
-
-
-    useEffect(() => {
         setDate({
             dateUpper: dayjs().format('YYYY.MM'),
             dateLower: dayjs().format('DD'),
