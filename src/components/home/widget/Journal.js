@@ -5,9 +5,11 @@ import color from "@/shared/styles/color"
 import Icon from "@/shared/Icon"
 import Image from "next/image"
 import { OuterContainer } from "./container"
+import { useRouter } from 'next/navigation'
+import routes from "@/app/config/routes"
 
 export default function Journal() {
-
+    const router = useRouter();
     return <OuterContainer>
         <InnerContainer>
             <div className="flex px-2 laptop:justify-end justify-center shrink-0 laptop:max-w-[50%] desktop:max-w-full">
@@ -32,7 +34,11 @@ export default function Journal() {
 
         </InnerContainer>
         <div className="bg-gray-gray8 p-1.5 w-full">
-            <span className="cursor-pointer font-medium flex items-center justify-end text-lg text-primary-blue3 hover:text-primary-blue2">
+            <span
+              className="cursor-pointer font-medium flex items-center justify-end text-lg text-primary-blue3 hover:text-primary-blue2"
+              onClick={() => {
+                router.push(`${routes.WEEKLY_REPORT}`)
+              }}>
                 更多 <Icon.RightArrow2 width="18px" />
             </span>
         </div>
@@ -48,13 +54,13 @@ const InnerContainer = styled.div`
     padding-top: 8px;
     width: 100%;
     height: 260px;
-    @media(min-width: ${screens.laptop}) {   
+    @media(min-width: ${screens.laptop}) {
         padding-top: 10px;
         padding-bottom: 10px;
         flex-direction: row;
         height: 135px;
     }
-    @media(min-width: ${screens.desktop}) {   
+    @media(min-width: ${screens.desktop}) {
         padding-top: 10px;
         padding-bottom: 0;
         flex-direction: column;

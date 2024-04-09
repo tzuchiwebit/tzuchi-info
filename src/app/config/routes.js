@@ -5,6 +5,7 @@ export default {
     FOUNDATION_ANNOUNCEMENT: "/foundation-announcement", // 專欄文章
     THE_BASE_MESSAGE: "/the-base-messages", // 各據點消息
     ARITCLE: "/article", // 文章內容頁
+    WEEKLY_REPORT: "/weekly-report", // 週報
     // SEARCH: "search", // 搜尋頁
     // SEARCH: "search", // 搜尋頁
     // SEARCH: "search", // 搜尋頁
