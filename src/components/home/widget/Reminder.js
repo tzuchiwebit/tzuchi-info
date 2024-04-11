@@ -1,12 +1,26 @@
 'use client'
+import { useMemo } from "react"
 import styled from "styled-components"
 import screens from "@/shared/styles/screens"
 import color from "@/shared/styles/color"
 import Icon from "@/shared/Icon"
 import Image from "next/image"
 import { OuterContainer } from "./container"
+import useDataProvider from "../useDataProvider"
+import Skeleton from 'react-loading-skeleton'
 
 export default function Reminder() {
+
+    const { pageData, loading } = useDataProvider()
+
+    const reminderTitle = useMemo(() => {
+        const target = _.find(pageData, { name: '證嚴上人每日一叮嚀' });
+        if (target?.data) {
+            const title = target?.data[0]?.attributes?.title || ''
+            return title
+        }
+        return ''
+    }, [pageData])
 
     return <OuterContainer>
         <InnerContainer>
@@ -25,7 +39,7 @@ export default function Reminder() {
                 證嚴上人<br />
                 每日一叮嚀
                 <div className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base">
-                    世間祥和在於心世間祥和在於心
+                    {loading ? <Skeleton /> : reminderTitle}
                 </div>
             </div>
 

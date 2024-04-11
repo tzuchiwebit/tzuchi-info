@@ -15,6 +15,10 @@ const requiredPageData = [
     name: '熱門活動',
     count: 3,
   },
+  {
+    name: '證嚴上人每日一叮嚀',
+    count: 1,
+  },
 
 ]
 export default function DataProvider({ children }) {
