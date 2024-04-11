@@ -45,7 +45,7 @@ const SiteNewsSection = () => {
 
 export default function SiteNews() {
 
-    const [selctedIndex, setSelectedIndex] = useState(3);
+    const [selctedIndex, setSelectedIndex] = useState(0);
 
     const { pageData, loading } = useDataProvider();
 
