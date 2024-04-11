@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react"
+import { useState, useMemo } from "react"
 import styled from "styled-components"
 import { BannerTitle, SlidesTrack } from "../components"
 import screens from "@/shared/styles/screens";
@@ -7,6 +7,7 @@ import dayjs from "dayjs"
 import BlurBGImage from "@/shared/image/BlurBGImage";
 import PrimaryTag from "@/shared/tag/PrimaryTag";
 import routes from "@/app/config/routes";
+import useDataProvider from "../useDataProvider";
 
 const tagOptions = [
     '臺灣',
@@ -29,7 +30,7 @@ const Item = () => (
                 結合多機構在烏克蘭發放 慈濟助難民過寒冬
             </div>
             <div className="pt-2 font-medium text-sm text-gray-gray4 border-t border-solid border-gray-gray8">
-                { dayjs().format('YYYY-MM-DD') } <br />
+                {dayjs().format('YYYY-MM-DD')} <br />
                 報導地點
             </div>
         </div>
@@ -44,7 +45,21 @@ const SiteNewsSection = () => {
 
 export default function SiteNews() {
 
-    const [selctedIndex, setSelectedIndex] = useState(0);
+    const [selctedIndex, setSelectedIndex] = useState(3);
+
+    const { pageData, loading } = useDataProvider();
+
+    const baseInfos = useMemo(() => {
+        const target = _.find(pageData, { name: '各據點消息' });
+        return target?.data?.length ? _.filter(target?.data,
+            (i) => Object.keys(i.attributes?.tags)
+                .map(key => i.attributes?.tags[key])
+                .includes(tagOptions[selctedIndex])
+        ) : []
+    }, [pageData, selctedIndex])
+    // console.log(`baseInfos`)
+    // console.log(baseInfos)
+
 
     return <div className="pt-5">
         <BannerTitle title={`各據點消息`} link={routes.THE_BASE_MESSAGE} />
@@ -59,7 +74,6 @@ export default function SiteNews() {
                         {tag}
                     </PrimaryTag>))
                 }
-                
             </div>
             <SlidesTrack>
                 <SiteNewsSection />
