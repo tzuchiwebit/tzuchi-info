@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import Icon from "@/shared/Icon"
 import styled from "styled-components"
 import styles from './LinkGroup.module.css'
@@ -12,88 +12,25 @@ import LinkFive from '@/shared/Icon/icon/footer/link-5.svg'
 import LinkSix from '@/shared/Icon/icon/footer/link-6.svg'
 import LinkSeven from '@/shared/Icon/icon/footer/link-7.svg'
 import useScreenSize from '@/shared/hook/useScreenSize';
+import jsonApi from '@/api/jsonApi';
+import { useRequest } from 'ahooks';
 const classNames = require('classnames');
 
 const dataList = {
   one: {
     title: "公益慈善",
-    links: [
-      {
-        subtitle: '臺灣慈善網',
-        description: '在台灣的公益深耕'
-      },
-      {
-        subtitle: '國際慈善網',
-        description: '在全球的慈善足跡'
-      },
-      {
-        subtitle: '全球資訊網',
-        description: '即時多元的行動與資訊'
-      }
-    ]
   },
   two: {
     title: "生活倡議",
-    links: [
-      {
-        subtitle: '齋戒網',
-        description: '愛護動物  植感生活'
-      },
-      {
-        subtitle: '宗門學思網',
-        description: '佛學生活'
-      }
-    ]
   },
   three: {
     title: '全球聯絡點',
-    links: [
-      {
-        subtitle: '慈濟全球聯絡點地圖',
-        description: '找到在你附近的慈濟'
-      }
-    ]
   },
   four: {
     title: '其他連結',
-    links: [
-      {
-        subtitle: '慈濟全球社區網',
-        description: '深入社區的志工紀實報導'
-      },
-      {
-        subtitle: '慈濟數位典藏資源網',
-        description: '圖資開放下載平臺'
-      },
-      {
-        subtitle: '慈濟長照推展中心'
-      },
-      {
-        subtitle: '國際慈濟人醫會'
-      },
-      {
-        subtitle: '慈濟國際人道援助會'
-      },
-      {
-        subtitle: '慈濟大專青年聯誼會'
-      }
-    ]
   },
   five: {
     title: '醫療志業',
-    links: [
-      { subtitle: '慈濟醫療基金會' },
-      { subtitle: '花蓮慈濟醫學中心' },
-      { subtitle: '玉里慈濟醫院' },
-      { subtitle: '關山慈濟醫院' },
-      { subtitle: '臺北慈濟醫院' },
-      { subtitle: '臺中慈濟醫院' },
-      { subtitle: '斗六慈濟醫院' },
-      { subtitle: '大林慈濟醫院' },
-      { subtitle: '嘉義慈濟診所' },
-      { subtitle: '慈濟骨髓幹細胞中心' },
-      { subtitle: '蘇州慈濟門診部' }
-    ]
   },
   six: {
     title: '教育志業',
@@ -109,12 +46,6 @@ const dataList = {
   },
   seven: {
     title: '人文志業',
-    links: [
-      { subtitle: '慈濟人文志業中心' },
-      { subtitle: '大愛電視臺' },
-      { subtitle: '慈濟廣播' },
-      { subtitle: '靜思人文' },
-    ]
   }
 }
 
@@ -138,7 +69,7 @@ const LinkIcon = (type) => {
   }
 }
 
-const LinkCard = ({ type }) => {
+const LinkCard = ({ type, list }) => {
   const screenSize = useScreenSize();
   const [isUseDrawer, setIsUseDrawer] = useState(screenSize.width < 768) // true when < 768
   const [isOpen, setIsOpen] = useState(screenSize.width >= 768) // false when < 768
@@ -147,6 +78,12 @@ const LinkCard = ({ type }) => {
     setIsUseDrawer(screenSize.width < 768)
     setIsOpen(screenSize.width >= 768)
   }, [screenSize.width])
+
+  const openTab = (url) => {
+    if (!!url) {
+      window.open(url, "_blank");
+    }
+  }
 
   return (
     <div>
@@ -168,30 +105,49 @@ const LinkCard = ({ type }) => {
       </div>
       <div className={styles.horizon_line}></div>
       <div className={classNames(isOpen ? styles.link_wrapper : 'hidden', isOpen ? styles.animate_fadein : '')}>
-        {dataList[type].links.map((item, index) => (
-          <div key={index}>
-            <div className={styles.subtitle}>{item.subtitle}</div>
-            {
-              !!item.description &&
-              <div className={styles.description}>{item.description}</div>
-            }
-          </div>
-        ))}
+        {
+          (list||[]).map((item, index) => (
+            <div key={index} className="cursor-pointer" onClick={() => openTab(item[1])}>
+              <div className={styles.subtitle}>{item[0]}</div>
+              {
+                !!item[2] &&
+                <div className={styles.description}>{item[2]}</div>
+              }
+            </div>
+          ))
+        }
       </div>
     </div>
   )
 }
 
 export default function LinkGroup() {
+  const { data: footerData } = useRequest(jsonApi.getFooter);
+
+  const footerList = useMemo(() => {
+    const result = {}
+    if (footerData?.data?.length) {
+      for (const item of footerData.data) {
+        if (!!result[item[0]]) {
+          result[item[0]].push([item[1], item[2], item[3] || null])
+        } else {
+          result[item[0]] = [[item[1], item[2], item[3] || null]]
+        }
+      }
+    }
+    console.log('footerData', footerData)
+    return result
+  }, [footerData])
+
   return (
     <Wrapper>
-      <LinkCard type="one"></LinkCard>
-      <LinkCard type="two"></LinkCard>
-      <LinkCard type="three"></LinkCard>
-      <LinkCard type="four"></LinkCard>
-      <LinkCard type="five"></LinkCard>
-      <LinkCard type="six"></LinkCard>
-      <LinkCard type="seven"></LinkCard>
+      <LinkCard type="one" list={footerList['公益慈善']}></LinkCard>
+      <LinkCard type="two" list={footerList['生活倡議']}></LinkCard>
+      <LinkCard type="three" list={footerList['全球聯絡點']}></LinkCard>
+      <LinkCard type="four" list={footerList['其他連結']}></LinkCard>
+      <LinkCard type="five" list={footerList['醫療志業']}></LinkCard>
+      <LinkCard type="six" list={footerList['教育志業']}></LinkCard>
+      <LinkCard type="seven" list={footerList['人文志業']}></LinkCard>
     </Wrapper>
   )
 }
