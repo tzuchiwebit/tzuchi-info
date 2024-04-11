@@ -19,6 +19,10 @@ const requiredPageData = [
     name: '證嚴上人每日一叮嚀',
     count: 1,
   },
+  {
+    name: '各據點消息',
+    count: 10,
+  },
 
 ]
 export default function DataProvider({ children }) {
@@ -34,8 +38,6 @@ export default function DataProvider({ children }) {
         ...i,
         data: (await getArticlesByCategory(i.name, i.count)).data
       }))))
-      // console.log(`res`);
-      // console.log(res);
 
       setPageData(res);
 

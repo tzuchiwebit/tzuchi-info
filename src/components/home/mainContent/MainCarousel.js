@@ -7,6 +7,12 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel"
 import BlurBGImage from "@/shared/image/BlurBGImage";
 import SeBtn from "@/shared/button/SeBtn";
+import { useMemo } from "react";
+import useDataProvider from "../useDataProvider";
+import _ from 'lodash'
+import Skeleton from 'react-loading-skeleton'
+import { useRouter } from "next/navigation";
+import routes from "@/app/config/routes";
 
 const data = [
     {
@@ -44,41 +50,59 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-// const StyledImage = ({ url }) => (
-//     <ImageContainer>
-//         <img className="img-item" src={url} />
-//         <img className="background-img-item" style={{ backgroundImage: `url(${url})` }} />
-//     </ImageContainer>
-// )
 
+const Item = ({ item, loading = false }) => {
 
-const Item = ({ item }) => (
-    <div className="relative w-full mb-[60px]">
-        {/* <div className="w-full h-[480px] p-1"> */}
-        <div className={"w-full p-1"}>
-            <div className="w-full shadow-elevation-3 rounded-md overflow-hidden">
-                <ImageContainer>
-                    <BlurBGImage url={item.image} />
-                </ImageContainer>
-                <div className="px-4 flex flex-col tablet:flex-row laptop:flex-col items-center py-4 w-full gap-y-1 gap-x-4">
-                    <div className="text-xl font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">
-                        {item.title}
-                    </div>
-                    <div className="flex flex-row self-end w-fit flex-none">
-                        <SeBtn>
-                            <Icon.ShareFull style={{ width: 24 }} /> 分享
-                        </SeBtn>
-                        {/* <div className="border-2 border-solid border-primary-blue2 rounded-md text-primary-blue2 py-1 px-2 flex font-bold whitespace-nowrap">
-                            
-                        </div> */}
+    const router = useRouter();
+
+    return (
+        <div className="relative w-full mb-[60px]">
+            {/* <div className="w-full h-[480px] p-1"> */}
+            <div className={"w-full p-1"}>
+                <div className="w-full shadow-elevation-3 rounded-md overflow-hidden">
+                    {
+                        loading ? <div className="">
+                            <Skeleton className="aspect-video" />
+                        </div> : <ImageContainer className='cursor-pointer' onClick={() => {
+                            router.push(`${routes.ARITCLE}`)
+                        }}>
+                            <BlurBGImage url={item?.attributes?.images?.image_intro || "https://picsum.photos/id/232/400/300"} />
+                        </ImageContainer>
+                    }
+                    <div className="px-4 flex flex-col tablet:flex-row laptop:flex-col items-center py-4 w-full gap-y-1 gap-x-4">
+                        <div className="text-xl font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2 cursor-pointer" onClick={() => {
+                            router.push(`${routes.ARITCLE}`)
+                        }}>
+                            {
+                                loading ? <Skeleton /> : item?.attributes?.title
+                            }
+                        </div>
+                        <div className="flex flex-row self-end w-fit flex-none">
+                            <SeBtn>
+                                <Icon.ShareFull style={{ width: 24 }} /> 分享
+                            </SeBtn>
+                            {/* <div className="border-2 border-solid border-primary-blue2 rounded-md text-primary-blue2 py-1 px-2 flex font-bold whitespace-nowrap">
+                                
+                            </div> */}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-)
+    )
+}
 
 const CarouselSection = () => {
+
+    const { pageData, loading } = useDataProvider();
+
+    const baseInfos = useMemo(() => {
+        const target = _.find(pageData, { name: '各據點消息' });
+        return target?.data || [{}]
+    }, [pageData])
+
+    // console.log(`baseInfos`)
+    // console.log(baseInfos)
 
     return <CarouselContainer>
         <Carousel
@@ -119,9 +143,9 @@ const CarouselSection = () => {
             }}
         >
             {
-                data.map((_i, _index) => (
+                baseInfos.map((_i, _index) => (
                     <div key={_index}>
-                        <Item item={_i} />
+                        <Item loading={loading} item={_i} />
                     </div>
                 ))
             }
