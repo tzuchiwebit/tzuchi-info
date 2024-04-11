@@ -21,7 +21,7 @@ const requiredPageData = [
   },
   {
     name: '各據點消息',
-    count: 10,
+    count: 7,
   },
 
 ]
