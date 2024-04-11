@@ -17,7 +17,7 @@ export default function Calendar() {
     const router = useRouter();
 
     const { pageData, loading } = useDataProvider();
-    console.log(pageData, loading)
+    // console.log(pageData, loading)
 
     const morningDataTitle = useMemo(() => {
         const target = _.find(pageData, { name: '志工早會' });

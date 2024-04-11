@@ -1,6 +1,8 @@
 'use client'
+import { useMemo } from "react"
 import { BannerTitle } from "../components"
-import dayjs from "dayjs"
+import useDataProvider from "../useDataProvider"
+import Skeleton from 'react-loading-skeleton'
 
 const data = [
     {
@@ -21,7 +23,7 @@ const Item = ({ item }) => (
     <div className="flex gap-5 py-4">
         <div className="h-[72px] w-[72px] flex-0">
             <img
-                className="w-full rounded-full ring-2 ring-white"
+                className="w-full rounded-full ring-2 ring-white aspect-square"
                 src={item.avatar}
                 alt="" />
         </div>
@@ -31,16 +33,28 @@ const Item = ({ item }) => (
     </div>
 )
 
-const ActivitiesSection = () => {
+const ActivitiesSection = ({ activityData = [] }) => {
+
     return <div className="w-full flex flex-col divide-y divide-solid divide-gray-gray8">
-        {data.map((item, index) => <Item item={item} key={index} />)}
+        {activityData.map((item, index) => <Item item={item} key={index} />)}
     </div>
 }
 
 export default function Activities() {
 
+    const { pageData, loading } = useDataProvider();
+
+    const activityData = useMemo(() => {
+        const target = _.find(pageData, { name: '熱門活動' });
+        return target?.data?.map(i => ({
+            title: i.attributes?.title,
+            avatar: i.attributes?.images?.image_intro || "https://picsum.photos/id/101/300/300"
+        })) || []
+    }, [pageData])
+
+
     return <div className="pt-3 flex-1">
         <BannerTitle title={`熱門活動`} link={'#'} />
-        <ActivitiesSection />
+        <ActivitiesSection activityData={activityData} loading={loading} />
     </div>
 }
