@@ -1,5 +1,6 @@
 // These styles apply to every route in the application
 import './globals.css'
+import 'react-loading-skeleton/dist/skeleton.css'
 import StyledComponentsRegistry from '@/lib/registry'
 import Head from 'next/head'
 import { ThemeProvider } from '@/lib/ThemeProvider'

@@ -1,6 +1,7 @@
 'use client'
 import Container from "@/shared/layout/Container"
 import Home from "@/components/home"
+import { useEffect } from "react";
 
 const error = console.error;
 console.error = (...args) => {

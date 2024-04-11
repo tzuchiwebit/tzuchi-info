@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo, Suspense } from "react"
 import styled from "styled-components"
 import screens from "@/shared/styles/screens"
 import color from "@/shared/styles/color"
@@ -8,34 +8,29 @@ import Icon from "@/shared/Icon"
 import { OuterContainer } from "./container"
 import { useRouter } from 'next/navigation'
 import routes from "@/app/config/routes"
-import { getArticlesByCategory } from "@/api/joomlaApi"
+import useDataProvider from "../useDataProvider"
+import _ from 'lodash'
+import Skeleton from 'react-loading-skeleton'
 
 export default function Calendar() {
 
     const router = useRouter();
 
+    const { pageData, loading } = useDataProvider();
+    console.log(pageData, loading)
+
+    const morningDataTitle = useMemo(() => {
+        const target = _.find(pageData, { name: '志工早會' });
+        if (target?.data) {
+            const title = target?.data[0]?.attributes?.title || '證嚴上人智慧法語'
+            return title
+        }
+        return '證嚴上人智慧法語'
+    }, [pageData])
+
     const [date, setDate] = useState({});
 
-    const [article, setArticle] = useState({});
-    const [loading, setLoading] = useState(false);
-
-    const getJournal = async () => {
-        setLoading(true);
-        try {
-            const res = await getArticlesByCategory('志工早會', 1);
-            if (res.data) {
-                setArticle(res.data[0]);
-            }
-
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setLoading(false);
-        }
-    }
-
     useEffect(() => {
-        getJournal();
         setDate({
             dateUpper: dayjs().format('YYYY.MM'),
             dateLower: dayjs().format('DD'),
@@ -63,7 +58,7 @@ export default function Calendar() {
                     <div className="hidden laptop:flex desktop:hidden laptop:text-left laptop:pl-2 desktop:text-center desktop:pl-0 flex-col justify-center font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink desktop:min-h-[90px]">
                         志工早會
                         <div className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base">
-                            {article?.attributes?.title || '證嚴上人智慧法語'}
+                            {loading ? <Skeleton /> : morningDataTitle}
                         </div>
                     </div>
                 </div>
@@ -71,7 +66,7 @@ export default function Calendar() {
             <div className="flex laptop:hidden desktop:flex flex-col font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink min-h-[94px]">
                 志工早會
                 <div className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base">
-                    {article?.attributes?.title || '證嚴上人智慧法語'}
+                    {loading ? <Skeleton /> : morningDataTitle}
                 </div>
             </div>
         </InnerContainer>

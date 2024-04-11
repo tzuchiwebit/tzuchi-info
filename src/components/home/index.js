@@ -1,27 +1,28 @@
 'use client'
 // import Icon from "@/shared/Icon"
+import { useState, useEffect } from "react"
 import styled from "styled-components"
 import screens from "@/shared/styles/screens"
 import color from "@/shared/styles/color"
 import Widgets from "./widget/Widgets"
 import MainContent from "./mainContent/MainContent"
 import SecondaryContent from "./secondaryContent/SecondaryContent"
-
-// import Image from 'next/image';
-// import AuthorIcon from '@/asset/icon/main/author.svg';
+import DataProvider from "./DataProvider"
 
 export default function Home() {
 
     return (
-        <div className="flex flex-col laptop:flex-row w-full">
-            <MainContainer>
-                <Widgets />
-                <MainContent />
-            </MainContainer>
-            <SecondaryContainer>
-                <SecondaryContent />
-            </SecondaryContainer>
-        </div>
+        <DataProvider>
+            <div className="flex flex-col laptop:flex-row w-full">
+                <MainContainer>
+                    <Widgets />
+                    <MainContent />
+                </MainContainer>
+                <SecondaryContainer>
+                    <SecondaryContent />
+                </SecondaryContainer>
+            </div>
+        </DataProvider>
     )
 }
 
