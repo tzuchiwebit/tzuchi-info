@@ -4,14 +4,17 @@ import styled from "styled-components"
 import { BannerTitle } from "../components"
 import screens from "@/shared/styles/screens";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Carousel } from "react-responsive-carousel"
-import { useState } from "react";
+// import { Carousel } from "react-responsive-carousel"
+import { useState, useMemo } from "react";
 import _ from "lodash";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import color from "@/shared/styles/color";
 import PrimaryTag from "@/shared/tag/PrimaryTag";
+import useDataProvider from "../useDataProvider";
+import routes from "@/app/config/routes";
+import { useRouter } from "next/navigation";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -22,42 +25,42 @@ const tagOptions = [
     '慈濟書庫',
 ]
 
-const data = [
-    {
-        title: '《印順導師年譜》開放線上預購 慈善購書兩不誤',
-        image: 'https://picsum.photos/id/229/300/300',
-    },
-    {
-        title: '環保輔具平台缺你一分力 擴大招募志工中',
-        image: 'https://picsum.photos/id/229/300/300',
-    },
-    {
-        title: '澤爸親子講座 打開親子溝通的黃金之鑰',
-        image: 'https://picsum.photos/id/229/300/300',
-    },
-    {
-        title: '《印順導師年譜》開放線上預購 慈善購書兩不誤',
-        image: 'https://picsum.photos/id/229/300/300',
-    },
-    {
-        title: '環保輔具平台缺你一分力 擴大招募志工中',
-        image: 'https://picsum.photos/id/229/300/300',
-    },
-    {
-        title: '澤爸親子講座 打開親子溝通的黃金之鑰',
-        image: 'https://picsum.photos/id/229/300/300',
-    },
-]
+// const data = [
+//     {
+//         title: '《印順導師年譜》開放線上預購 慈善購書兩不誤',
+//         image: 'https://picsum.photos/id/229/300/300',
+//     },
+//     {
+//         title: '環保輔具平台缺你一分力 擴大招募志工中',
+//         image: 'https://picsum.photos/id/229/300/300',
+//     },
+//     {
+//         title: '澤爸親子講座 打開親子溝通的黃金之鑰',
+//         image: 'https://picsum.photos/id/229/300/300',
+//     },
+//     {
+//         title: '《印順導師年譜》開放線上預購 慈善購書兩不誤',
+//         image: 'https://picsum.photos/id/229/300/300',
+//     },
+//     {
+//         title: '環保輔具平台缺你一分力 擴大招募志工中',
+//         image: 'https://picsum.photos/id/229/300/300',
+//     },
+//     {
+//         title: '澤爸親子講座 打開親子溝通的黃金之鑰',
+//         image: 'https://picsum.photos/id/229/300/300',
+//     },
+// ]
 
 
-const Item = ({ number }) => (
+const Item = ({ item }) => (
     <div className="relative w-full">
         {/* <div className="w-full h-[480px] p-1"> */}
         <div className={"w-full p-1"}>
             <div className="w-full rounded-md overflow-hidden">
-                <StyledImage style={{ backgroundImage: `url(${"https://picsum.photos/id/230/300/300"})` }} />
-                <div className="pt-2 text-xl font-bold w-full text-primary-blue1 text-left">
-                    結合多機構在烏克蘭發放 慈濟助難民過寒冬 {number}
+                <StyledImage style={{ backgroundImage: `url(${item?.images?.image_intro ? item.images?.image_intro : "https://picsum.photos/id/230/300/300"})` }} />
+                <div className="pt-2 pl-2 pr-0 text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2">
+                    {item?.title}
                 </div>
             </div>
         </div>
@@ -81,7 +84,7 @@ const NextBtn = ({ onClick }) => (<button
     />
 </button>)
 
-const CarouselSection = () => {
+const CarouselSection = ({ data }) => {
 
     const settings = {
         customPaging: function (i) {
@@ -134,7 +137,7 @@ const CarouselSection = () => {
         <Slider style={{ paddingBottom: 60 }} {...settings}>
             {
                 data.map((item, index) => (<div key={index}>
-                    <Item item={item} />
+                    <Item item={item.attributes} />
                 </div>))
             }
         </Slider>
@@ -145,19 +148,17 @@ export default function BookSuggest() {
 
     const [selctedIndex, setSelectedIndex] = useState(0);
 
+    const { pageData, loading } = useDataProvider();
+
+    const booksData = useMemo(() => {
+        const target = _.find(pageData, { name: '好書推薦' });
+        return target?.data || [{}]
+    }, [pageData])
+
     return <div className="pt-3 w-full">
         <BannerTitle title={`好書推薦`} />
         <div className="w-full">
             <div className="py-4 flex gap-2 flex-wrap">
-                {/* {
-                    tagOptions.map((tag, index) => (<Tag
-                        onClick={() => { setSelectedIndex(index) }}
-                        isSelected={(selctedIndex === index)}
-                        key={index}
-                    >
-                        {tag}
-                    </Tag>))
-                } */}
                 {
                     tagOptions.map((tag, index) => (<PrimaryTag
                         onClick={() => { setSelectedIndex(index) }}
@@ -170,7 +171,7 @@ export default function BookSuggest() {
             </div>
             {/* <CarouselSection /> */}
             <CarouselContainer>
-                <CarouselSection />
+                <CarouselSection data={booksData} />
             </CarouselContainer>
         </div>
         <div className="w-full flex flex-row gap-1 items-center">
