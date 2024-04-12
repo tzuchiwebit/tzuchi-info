@@ -6,47 +6,47 @@ import routes from "@/app/config/routes"
 import useDataProvider from "../useDataProvider"
 import { useMemo } from "react"
 
-const data = [
-    {
-        title: '領航慈濟',
-        children: [
-            {
-                avatar: 'https://i.pravatar.cc/300',
-                title: '目前做的事情原因與做法',
-                date: dayjs().format('YYYY-MM-DD'),
-                jobTitle: '顏博文 執行長',
-            },
-            {
-                avatar: 'https://i.pravatar.cc/300',
-                title: '目前做的事情原因與做法',
-                date: dayjs().format('YYYY-MM-DD'),
-                jobTitle: '何日生 副執行長',
-            },
-        ]
-    },
-    {
-        title: '名人視角',
-        children: [
-            {
-                avatar: 'https://i.pravatar.cc/300',
-                title: '目前做的事情原因與做法',
-                date: dayjs().format('YYYY-MM-DD'),
-                jobTitle: 'OOO 作家',
-            },
-            {
-                avatar: 'https://i.pravatar.cc/300',
-                title: '目前做的事情原因與做法',
-                date: dayjs().format('YYYY-MM-DD'),
-                jobTitle: 'OOO 作家',
-            },
-        ]
-    }
-]
+// const data = [
+//     {
+//         title: '領航慈濟',
+//         children: [
+//             {
+//                 avatar: 'https://i.pravatar.cc/300',
+//                 title: '目前做的事情原因與做法',
+//                 date: dayjs().format('YYYY-MM-DD'),
+//                 jobTitle: '顏博文 執行長',
+//             },
+//             {
+//                 avatar: 'https://i.pravatar.cc/300',
+//                 title: '目前做的事情原因與做法',
+//                 date: dayjs().format('YYYY-MM-DD'),
+//                 jobTitle: '何日生 副執行長',
+//             },
+//         ]
+//     },
+//     {
+//         title: '名人視角',
+//         children: [
+//             {
+//                 avatar: 'https://i.pravatar.cc/300',
+//                 title: '目前做的事情原因與做法',
+//                 date: dayjs().format('YYYY-MM-DD'),
+//                 jobTitle: 'OOO 作家',
+//             },
+//             {
+//                 avatar: 'https://i.pravatar.cc/300',
+//                 title: '目前做的事情原因與做法',
+//                 date: dayjs().format('YYYY-MM-DD'),
+//                 jobTitle: 'OOO 作家',
+//             },
+//         ]
+//     }
+// ]
 
 const Item = ({ item }) => {
 
     const router = useRouter();
-    
+
     return (
         <div
             className="w-full block shadow-elevation-3 rounded-md overflow-hidden cursor-pointer"
@@ -114,7 +114,7 @@ export default function Article() {
         return target?.data || []
     }, [pageData])
 
-    console.log(articlesData)
+    // console.log(articlesData)
 
     return <div className="pt-5">
         <BannerTitle title={`專欄文章`} link={routes.COLUMN_ARTICLE} />

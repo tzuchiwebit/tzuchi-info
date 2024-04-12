@@ -12,14 +12,14 @@ const defaultStyle = {
     textColor: 'white',
 }
 
-export default function CloudTag({ label = '', selected = false, ...props }) {
+export default function CloudTag({ label = '', bgColor = "#000", textColor = "#fff", selected = false, ...props }) {
     // Tailwind CSS
     // const extendStyles = className || '';
 
-    const { bgColor, textColor } = useMemo(() => {
-        const target = _.find(cloudTagStyles, (item) => label.indexOf(item.keyword) > -1) || defaultStyle;
-        return target
-    }, [label])
+    // const { bgColor, textColor } = useMemo(() => {
+    //     const target = _.find(cloudTagStyles, (item) => label.indexOf(item.keyword) > -1) || defaultStyle;
+    //     return target
+    // }, [label])
 
     // console.log(`targetCloudStyle`);
     // console.log(targetCloudStyle);

@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation'
 import CloudTag from '@/shared/tag/CloudTag'
 import routes from '@/app/config/routes'
 import OutsideClickHandler from '@/utils/OutsideClickHandler'
+import jsonApi from '@/api/jsonApi'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -70,7 +71,10 @@ export default function NavbarTop() {
   // console.log(openCloudTagSearch)
   const [searchText, setSearchText] = useState('');
 
-  const [cloudTags, setCloudTags] = useState(['功德會', '慈善志業', '醫療志業', '教育志業', '人文志業', '兒少', '全家', '長者', '急難', '海外']);
+  const [loadingCloudTags, setLoadingCloudTags] = useState(false);
+  const [cloudTags, setCloudTags] = useState([]);
+  // console.log(`cloudTags`)
+  // console.log(cloudTags)
 
   const [currentDialogIndex, setCurrentDialogIndex] = useState(-1);
 
@@ -80,10 +84,23 @@ export default function NavbarTop() {
 
   const router = useRouter();
 
+  const getCloudTags = async () => {
+    setLoadingCloudTags(true)
+    try {
+      const res = await jsonApi.getCloudTags();
+      setCloudTags(res?.data)
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingCloudTags(false)
+    }
+  }
+
   useEffect(() => {
     if (upperRef?.current?.clientWidth) {
       setNavbarTopWidth(upperRef.current.clientWidth)
     }
+    getCloudTags();
   }, [])
 
   const CloudTagSearchButton = () => (<button
@@ -93,34 +110,6 @@ export default function NavbarTop() {
     <span className='whitespace-nowrap text-lg text-primary-blue1 font-bold'>熱門快搜</span>
     <Icon.UpArrow style={{ width: 20, transition: 'all .15s', transform: openCloudTagSearch ? '' : 'rotate(180deg)' }} />
   </button>)
-
-  // const CloudTagSection = () => (
-  //   <Transition
-  //     // as={Fragment}
-  //     show={openCloudTagSearch}
-  //     enter="transition-all ease-in-out duration-500 delay-[200ms]"
-  //     enterFrom="opacity-0 translate-y-6"
-  //     enterTo="opacity-100 translate-y-0"
-  //     leave="transition-all ease-in-out duration-300"
-  //     leaveFrom="opacity-100"
-  //     leaveTo="opacity-0"
-  //   >
-  //     <div className={'flex flex-row flex-wrap gap-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0'} style={{ width: navbarTopWidth }}>
-  //       {
-  //         cloudTags.map((item, index) => (
-  //           <CloudTag
-  //             label={item}
-  //             key={index}
-  //             onClick={() => {
-  //               router.push(`${routes.SEARCH}?keyword=${item}`)
-  //               setOpenCloudTagSearch(false)
-  //             }}
-  //           />
-  //         ))
-  //       }
-  //     </div>
-  //   </Transition>
-  // )
 
   const onKeywordSearch = () => {
     return router.push(`${routes.SEARCH}?keyword=${searchText}`)
@@ -193,7 +182,9 @@ export default function NavbarTop() {
                   {
                     cloudTags.map((item, index) => (
                       <CloudTag
-                        label={item}
+                        label={item["關鍵字"]}
+                        bgColor={item["底色"]}
+                        textColor={item["字色"]}
                         key={index}
                         onClick={() => {
                           router.push(`${routes.SEARCH}?keyword=${item}`)
@@ -217,8 +208,8 @@ export default function NavbarTop() {
                 color: mobileMenuOpen ? color.primary.blue1 : color.gray.gray4,
               }}
               onClick={() => {
-                console.log(`mobileMenuOpen`)
-                console.log(mobileMenuOpen)
+                // console.log(`mobileMenuOpen`)
+                // console.log(mobileMenuOpen)
                 setMobileMenuOpen(!mobileMenuOpen);
               }}
             >
@@ -264,7 +255,9 @@ export default function NavbarTop() {
           {
             cloudTags.map((item, index) => (
               <CloudTag
-                label={item}
+                label={item["關鍵字"]}
+                bgColor={item["底色"]}
+                textColor={item["字色"]}
                 key={index}
                 onClick={() => {
                   router.push(`${routes.SEARCH}?keyword=${item}`)
