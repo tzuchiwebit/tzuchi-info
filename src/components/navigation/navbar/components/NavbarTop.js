@@ -187,7 +187,7 @@ export default function NavbarTop() {
                         textColor={item["字色"]}
                         key={index}
                         onClick={() => {
-                          router.push(`${routes.SEARCH}?keyword=${item}`)
+                          router.push(`${routes.SEARCH}?keyword=${item["關鍵字"]}`)
                           setOpenCloudTagSearch(false)
                         }}
                       />
@@ -260,7 +260,7 @@ export default function NavbarTop() {
                 textColor={item["字色"]}
                 key={index}
                 onClick={() => {
-                  router.push(`${routes.SEARCH}?keyword=${item}`)
+                  router.push(`${routes.SEARCH}?keyword=${item["關鍵字"]}`)
                   setOpenCloudTagSearch(false)
                 }}
               />
