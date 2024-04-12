@@ -17,10 +17,10 @@ export default function Widgets() {
         setOpen(!open);
     }
 
-    return <div className="w-full">
+    return <div className="w-full" style={{ flex: 0 }}>
         <div className="w-full border-b border-solid border-gray-gray7 justify-between pb-2 mb-2 hidden laptop:flex desktop:hidden">
             <div className="font-bold text-lg text-primary-blue1">
-                {open ? '' : '志工早會 • 證嚴上人每日一叮嚀 • 慈濟週報 • 宗門學思'}
+                {open ? '' : '志工早會 • 證嚴上人每日一叮嚀 • 慈濟週報'}
             </div>
             <div
                 className="font-medium text-lg text-primary-blue1 flex gap-1 cursor-pointer"

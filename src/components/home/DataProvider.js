@@ -27,6 +27,10 @@ const requiredPageData = [
     name: '基金會公告',
     count: 3,
   },
+  {
+    name: '社區故事',
+    count: 3,
+  },
 
 ]
 export default function DataProvider({ children }) {
