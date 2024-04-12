@@ -35,7 +35,7 @@ const Item = ({ item }) => {
                     src={item.avatar}
                     alt="" />
             </div>
-            <div className="text-primary-blue1 text-xl font-bold mb-2 flex-1">
+            <div className="text-primary-blue1 text-xl font-bold mb-2 flex-1 line-clamp-4">
                 {item.title}
             </div>
         </div>

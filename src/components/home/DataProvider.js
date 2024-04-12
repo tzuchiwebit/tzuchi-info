@@ -35,6 +35,10 @@ const requiredPageData = [
     name: '好書推薦',
     count: 4,
   },
+  {
+    name: '專欄文章',
+    count: 4,
+  },
 ]
 export default function DataProvider({ children }) {
 
