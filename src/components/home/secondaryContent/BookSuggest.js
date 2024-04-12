@@ -86,6 +86,15 @@ const NextBtn = ({ onClick }) => (<button
 
 const CarouselSection = ({ data }) => {
 
+    const sliderData = useMemo(() => {
+        if (data.length === 1) {
+            return Array(4).fill(data[0])
+        } else if (data.length === 2) {
+            return _.concat(data, data);
+        }
+        return data
+    }, [data])
+
     const settings = {
         customPaging: function (i) {
             return (
@@ -133,10 +142,11 @@ const CarouselSection = ({ data }) => {
             }
         ]
     };
+
     return (
         <Slider style={{ paddingBottom: 60 }} {...settings}>
             {
-                data.map((item, index) => (<div key={index}>
+                sliderData.map((item, index) => (<div key={index}>
                     <Item item={item.attributes} />
                 </div>))
             }

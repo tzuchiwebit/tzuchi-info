@@ -46,8 +46,7 @@ const data = [
 const Item = ({ item }) => {
 
     const router = useRouter();
-
-
+    
     return (
         <div
             className="w-full block shadow-elevation-3 rounded-md overflow-hidden cursor-pointer"
