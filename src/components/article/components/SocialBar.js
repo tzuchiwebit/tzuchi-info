@@ -5,7 +5,7 @@ import useScreenSize from '@/shared/hook/useScreenSize';
 import SocialShareModal from "@/components/SocialShareModal"
 import * as classnames from "classnames"
 
-export default function SocialShare({ isMobileType }) {
+export default function SocialShare({ isMobileType, likes, shares }) {
   const screenSize = useScreenSize();
   const [isMobileDevice, setIsMobileDevice] = useState(screenSize.width < 1024)
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +21,11 @@ export default function SocialShare({ isMobileType }) {
   useEffect(() => {
     setIsMobileDevice(screenSize.width < 1024)
   }, [screenSize.width])
+
+  useEffect(()=> {
+    setClickedNum(Number(likes) || 0)
+    setSharedNum(Number(shares) || 0)
+  }, [likes, shares])
 
   return (
     <>

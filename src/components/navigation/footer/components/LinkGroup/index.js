@@ -135,7 +135,6 @@ export default function LinkGroup() {
         }
       }
     }
-    console.log('footerData', footerData)
     return result
   }, [footerData])
 
