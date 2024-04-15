@@ -6,6 +6,7 @@ export default function Page({ }) {
 
   const params = useParams();
   return <>
+  <p className="pt-10">PostPostPostPostPost</p>
     <p className="pt-10">Post: {router.query.slug}</p>
     <p className="pt-10">React router dom: {params?.slug}</p>
   </>
