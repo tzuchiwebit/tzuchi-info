@@ -27,7 +27,7 @@ const Item = ({ item }) => {
 
     return (
         <div className="flex gap-5 py-4 cursor-pointer" onClick={() => {
-            router.push(`${routes.ARITCLE}`)
+            router.push(`${routes.ARITCLE}?id=${item.id}`)
         }}>
             <div className="h-[72px] w-[72px] flex-0">
                 <img
@@ -56,6 +56,7 @@ export default function Activities() {
     const activityData = useMemo(() => {
         const target = _.find(pageData, { name: '熱門活動' });
         return target?.data?.map(i => ({
+            id: i.attributes.id,
             title: i.attributes?.title,
             avatar: i.attributes?.images?.image_intro || "https://picsum.photos/id/101/300/300"
         })) || []
