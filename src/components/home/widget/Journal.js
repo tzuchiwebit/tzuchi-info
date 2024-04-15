@@ -6,7 +6,7 @@ import Icon from "@/shared/Icon"
 import Image from "next/image"
 import { OuterContainer } from "./container"
 import { useRouter } from 'next/navigation'
-import routes from "@/app/config/routes"
+import routes from "@/config/routes"
 
 export default function Journal() {
     const router = useRouter();

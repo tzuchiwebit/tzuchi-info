@@ -1,4 +1,3 @@
-'use client'
 import { useState, useEffect, useMemo } from 'react';
 import Icon from "@/shared/Icon"
 import styled from "styled-components"
@@ -13,7 +12,10 @@ import LinkSix from '@/shared/Icon/icon/footer/link-6.svg'
 import LinkSeven from '@/shared/Icon/icon/footer/link-7.svg'
 import useScreenSize from '@/shared/hook/useScreenSize';
 import jsonApi from '@/api/jsonApi';
-import { useRequest } from 'ahooks';
+const { useRequest}  = require('ahooks')
+// import { useRequest } from 'ahooks';
+// import ahooks from 'ahooks';
+// const { useRequest } = ahooks;
 const classNames = require('classnames');
 
 const dataList = {
@@ -97,8 +99,8 @@ const LinkCard = ({ type, list }) => {
           <div className='w-5 h-5 flex justify-center items-center border-2 border-solid border-primary-blue1 rounded-sm cursor-pointer' onClick={() => { setIsOpen(!isOpen) }}>
             {
               isOpen ?
-                <Icon.Minus style={{width: 12}}></Icon.Minus> :
-                <Icon.Plus style={{width: 12}}></Icon.Plus>
+                <Icon.Minus style={{ width: 12 }}></Icon.Minus> :
+                <Icon.Plus style={{ width: 12 }}></Icon.Plus>
             }
           </div>
         }
@@ -106,7 +108,7 @@ const LinkCard = ({ type, list }) => {
       <div className={styles.horizon_line}></div>
       <div className={classNames(isOpen ? styles.link_wrapper : 'hidden', isOpen ? styles.animate_fadein : '')}>
         {
-          (list||[]).map((item, index) => (
+          (list || []).map((item, index) => (
             <div key={index} className="cursor-pointer" onClick={() => openTab(item[1])}>
               <div className={styles.subtitle}>{item[0]}</div>
               {

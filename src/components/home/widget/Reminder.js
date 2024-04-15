@@ -8,6 +8,7 @@ import Image from "next/image"
 import { OuterContainer } from "./container"
 import useDataProvider from "../useDataProvider"
 import Skeleton from 'react-loading-skeleton'
+import _ from 'lodash'
 
 export default function Reminder() {
 

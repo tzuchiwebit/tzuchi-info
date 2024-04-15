@@ -6,8 +6,9 @@ import screens from "@/shared/styles/screens";
 import dayjs from "dayjs"
 import BlurBGImage from "@/shared/image/BlurBGImage";
 import PrimaryTag from "@/shared/tag/PrimaryTag";
-import routes from "@/app/config/routes";
+import routes from "@/config/routes";
 import useDataProvider from "../useDataProvider";
+import _ from 'lodash'
 
 const tagOptions = [
     '臺灣',

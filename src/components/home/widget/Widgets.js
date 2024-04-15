@@ -25,7 +25,7 @@ export default function Widgets() {
             <div
                 className="font-medium text-lg text-primary-blue1 flex gap-1 cursor-pointer"
                 onClick={toggle}>
-                {open ? '收合' : '展開'} <Icon.DownArrow style={{ width: 20, transform: open ? 'rotate(180deg)' : '', transition: 'all .3s' }} />
+                {open ? '收合' : '展開'} <Icon.DownArrow style={{ width: 20, transform: open ? 'rotate(180deg)' : 'rotate(0)', transition: 'all .3s' }} />
             </div>
         </div>
         <Transition
