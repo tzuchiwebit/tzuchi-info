@@ -65,6 +65,7 @@ const StyledIframe = styled.iframe`
 `;
 
 const ChatContainer = styled.div`
+  z-index: 999;
   display: flex;
   flex-direction: column;
   justify-content: center;
