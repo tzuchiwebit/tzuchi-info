@@ -3,29 +3,37 @@ import styled from "styled-components"
 import screens from "../styles/screens"
 import dayjs from "dayjs"
 import Icon from "../Icon"
+import Skeleton from "react-loading-skeleton"
 
-const PrimaryCard = ({ item, index }) => {
+const PrimaryCard = ({ item = {}, onClick = () => { } }) => {
 
     return <div className="w-full tablet:w-1/2 laptop:w-1/3 px-3 mb-6">
-        <div className="bg-white border rounded-[4px] p-3 shadow-elevation-3 flex flex-col gap-2">
+        <div
+            className="bg-white border rounded-[4px] p-3 shadow-elevation-3 flex flex-col gap-2 cursor-pointer"
+            onClick={onClick}
+        >
             <ImageContainer>
-                <img src={`${item.image}`} width="100%" />
+                {
+                    item.images?.image_intro ?
+                        <img src={item.images?.image_intro} alt={item.images?.image_intro_alt} width="100%" /> :
+                        <Skeleton className="aspect-[14/9]" />
+                }
             </ImageContainer>
             <div className="text-primary-blue1 font-bold text-xl">
                 {item.title}
             </div>
             <div className="pb-5">
                 <div className="text-gray-gray2 line-clamp-4">
-                    {item.content}
+                    {item.metadesc}
                 </div>
             </div>
             <div className="w-full pt-2 font-medium text-sm text-gray-gray4 border-t-2 border-solid border-gray-gray8 flex flex-col">
                 <div className="w-full">
-                    {dayjs().format('YYYY-MM-DD')}
+                    {dayjs(item.publish_up).format('YYYY-MM-DD')}
                 </div>
                 <div className="w-full flex justify-between items-center">
                     <div className="border-l border-gray-gray4 border-solid pl-1 leading-[16px] h-[16px]">
-                        {item.author}
+                        {item.created_by_alias || "作者"}
                     </div>
                     <div className="flex gap-1">
                         <Icon.Like style={{ width: 16 }} />
