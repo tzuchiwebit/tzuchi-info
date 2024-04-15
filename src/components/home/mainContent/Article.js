@@ -2,10 +2,10 @@
 import { useRouter } from "next/navigation"
 import { BannerTitle } from "../components"
 import dayjs from "dayjs"
-import routes from "@/app/config/routes"
+import routes from "@/config/routes"
 import useDataProvider from "../useDataProvider"
 import { useMemo } from "react"
-
+import _ from 'lodash'
 // const data = [
 //     {
 //         title: '領航慈濟',

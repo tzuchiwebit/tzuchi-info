@@ -6,8 +6,9 @@ import Icon from '@/shared/Icon'
 import { HeaderLinkItems, NavLinkItems } from '../config'
 import color from '@/shared/styles/color'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import CloudTag from '@/shared/tag/CloudTag'
-import routes from '@/app/config/routes'
+import routes from '@/config/routes'
 import OutsideClickHandler from '@/utils/OutsideClickHandler'
 import jsonApi from '@/api/jsonApi'
 
@@ -124,11 +125,11 @@ export default function NavbarTop() {
           <div className="flex flex-row w-full gap-2 items-center justify-between container:px-0">
             {/* logo */}
             <div className="flex-none w-[165px] tablet:w-[165px] laptop:w-[225px] desktop:w-[380px] pr-2 desktop:self-start">
-              <a href="/" className="">
+              <Link href="/" className="">
                 <span className="sr-only">慈濟資訊網</span>
-                <Icon.LOGO className="hidden desktop:block" width="100%" onClick={() => redirect('/')} />
-                <Icon.LOGOMobile className="desktop:hidden" width="100%" onClick={() => redirect('/')} />
-              </a>
+                <Icon.LOGO className="hidden desktop:block" width="100%" onClick={() => router.push('/')} />
+                <Icon.LOGOMobile className="desktop:hidden" width="100%" onClick={() => router.push('/')} />
+              </Link>
             </div>
             {/* right side nav */}
             <div className='w-auto hidden tablet:flex flex-col gap-2'>

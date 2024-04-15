@@ -1,11 +1,11 @@
 'use client'
 import { BannerTitle } from "../components"
 import dayjs from "dayjs"
-import routes from "@/app/config/routes"
+import routes from "@/config/routes"
 import useDataProvider from "../useDataProvider"
 import { useMemo } from "react"
 import { useRouter } from "next/navigation"
-
+import _ from 'lodash'
 // const data = [
 //     {
 //         title: '《印順導師年譜》開放線上預購 慈善購書兩不誤',

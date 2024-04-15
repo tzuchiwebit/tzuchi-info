@@ -7,7 +7,7 @@ import dayjs from "dayjs"
 import Icon from "@/shared/Icon"
 import { OuterContainer } from "./container"
 import { useRouter } from 'next/navigation'
-import routes from "@/app/config/routes"
+import routes from "@/config/routes"
 import useDataProvider from "../useDataProvider"
 import _ from 'lodash'
 import Skeleton from 'react-loading-skeleton'

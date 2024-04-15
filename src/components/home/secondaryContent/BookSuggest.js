@@ -13,8 +13,8 @@ import Slider from "react-slick";
 import color from "@/shared/styles/color";
 import PrimaryTag from "@/shared/tag/PrimaryTag";
 import useDataProvider from "../useDataProvider";
-import routes from "@/app/config/routes";
-import { useRouter } from "next/navigation";
+// import routes from "@/app/config/routes";
+// import { useRouter } from "next/navigation";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')

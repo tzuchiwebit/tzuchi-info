@@ -2,9 +2,10 @@
 import { useMemo } from "react"
 import { BannerTitle } from "../components"
 import useDataProvider from "../useDataProvider"
-import Skeleton from 'react-loading-skeleton'
+// import Skeleton from 'react-loading-skeleton'
 import { useRouter } from "next/navigation"
-import routes from "@/app/config/routes"
+import routes from "@/config/routes"
+import _ from 'lodash'
 
 const data = [
     {

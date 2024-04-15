@@ -12,7 +12,7 @@ import useDataProvider from "../useDataProvider";
 import _ from 'lodash'
 import Skeleton from 'react-loading-skeleton'
 import { useRouter } from "next/navigation";
-import routes from "@/app/config/routes";
+import routes from "@/config/routes";
 
 const data = [
     {

@@ -7,6 +7,7 @@ import Icon from "@/shared/Icon";
 import BlurBGImage from "@/shared/image/BlurBGImage";
 import useDataProvider from "../useDataProvider";
 import { useMemo } from "react";
+import _ from 'lodash'
 
 const Item = ({ item }) => (
     <div className="relative w-full p-1 min-w-[300px] laptop:min-w-0">
