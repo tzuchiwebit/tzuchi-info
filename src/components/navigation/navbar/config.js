@@ -4,17 +4,17 @@ export const HeaderLinkItems = [
         link: 'https://www.tzuchi.org.tw/',
     },
     {
-        label: '社區故事',
+        label: '社區網',
         link: 'https://comm2.tzuchi-org.tw/',
     },
     {
         label: '捐款網',
         link: 'https://tcit3.tzuchi.net/OCCD/',
     },
-    {
-        label: 'RSS',
-        link: '/feed',
-    },
+    // {
+    //     label: 'RSS',
+    //     link: '/feed',
+    // },
 ]
 
 export const NavLinkItems = [
