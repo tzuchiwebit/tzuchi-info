@@ -6,6 +6,8 @@ import routes from "@/config/routes"
 import useDataProvider from "../useDataProvider"
 import { useMemo } from "react"
 import _ from 'lodash'
+import Icon from "@/shared/Icon"
+
 // const data = [
 //     {
 //         title: '領航慈濟',
@@ -61,20 +63,30 @@ const Item = ({ item }) => {
                 {
                     item.children.map((_i, _index) => (
                         <div className="p-3 flex gap-4" key={_index}>
-                            <div className="aspect-square">
+                            {/* <div className="aspect-square">
                                 <img
                                     className="aspect-square w-12 rounded-full ring-2 ring-white"
                                     src={_i?.images?.image_intro || "https://i.pravatar.cc/300"}
                                     alt="" />
-                            </div>
+                            </div> */}
                             <div className="flex-1">
                                 <div className="text-primary-blue1 text-xl font-bold mb-2">
                                     {_i.title}
                                 </div>
-                                <div className="flex text-gray-gray4 gap-3 items-center font-medium">
+                                <div className="flex flex-col text-gray-gray4 gap-1 items-start font-medium">
                                     <div className="font-medium text-sm">{dayjs(_i.date).format('YYYY-MM-DD')}</div>
-                                    <div className="border-r border-solid border-gray-gray4 h-4" />
-                                    {_i.created_by_alias}
+                                    <div className="flex justify-between w-full">
+                                        <div className="flex gap-1 items-center font-medium">
+                                            <div className="border-l border-solid border-gray-gray4 h-4" />
+                                            {_i.created_by_alias}
+                                        </div>
+                                        <div className="flex gap-1">
+                                            <Icon.Like style={{ width: 16 }} />
+                                            <span>讚</span>
+                                            <Icon.Share style={{ width: 16 }} />
+                                            <span>分享</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
