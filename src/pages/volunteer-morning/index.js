@@ -12,6 +12,7 @@ import { getArticlesByCategory } from "@/api/joomlaApi"
 // import Skeleton from "react-loading-skeleton"
 import { useRouter } from "next/navigation"
 import routes from "@/config/routes"
+import { addHits } from "@/api/api"
 const { useRequest } = require('ahooks')
 
 const loadingData = Array(12).fill({
@@ -42,6 +43,10 @@ export default function Page() {
   const listData = useMemo(() => loading ? loadingData : listDataRef?.data || [], [listDataRef, loading]);
 
   // console.log(listData)
+  const onPageHit = (id) => {
+    router.push(`${routes.ARITCLE}/${id}`)
+    // addHits(id);
+  }
 
   return <Container>
     <FloatScrollTopButton />
@@ -81,7 +86,7 @@ export default function Page() {
             key={index}
             index={index}
             onClick={() => {
-              router.push(`${routes.ARITCLE}/${item.id}`)
+              onPageHit(item.id)
             }}
           />)
         }
