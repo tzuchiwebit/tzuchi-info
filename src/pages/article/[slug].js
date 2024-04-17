@@ -24,35 +24,21 @@ const StyledImage = styled.div`
 const Breadcrumb = ({className}) => {
   const { pageData } = useDataProvider();
 
-  // {
-  //   label: '首頁',
-  //   link: '/'
-  // },
-  // {
-  //   label: '證嚴上人',
-  //   link: ''
-  // },
-  // {
-  //   label: '法音宣流',
-  //   link: ''
-  // },
-  // {
-  //   label: '志工早會開示',
-  //   link: ''
-  // },
-  const articleData = useMemo(() => {
-    const target = _.find(pageData, { name: 'article' });
-    return target?.data
-  }, [pageData])
-
   const items = useMemo(()=> {
     const target = _.find(pageData, { name: 'article' });
+    const targetCategory = _.find(joomlaContentCategory, (i) => i.id.toString() === target?.relationships?.category?.data?.id);
     const list = [
       {
         label: '首頁',
         link: '/'
       },
     ]
+    if (targetCategory) {
+      list.push({
+        label: targetCategory.label_name,
+        link: `/${targetCategory.category_name}/article/${target.id}`
+      })
+    }
     return list
   }, [pageData])
 
