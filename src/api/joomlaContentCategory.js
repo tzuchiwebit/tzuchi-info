@@ -1,58 +1,72 @@
 export default [
     {
         id: 2,
-        name: 'Uncategorised'
+        label_name: 'Uncategorised',
+        category_name: "",
     },
     {
         id: 8,
-        name: 'Headline'
+        label_name: 'Headline',
+        category_name: "",
     },
     {
         id: 9,
-        name: '選單'
+        label_name: '選單',
+        category_name: "",
     },
     {
         id: 10,
-        name: '志工早會'
+        label_name: '志工早會',
+        category_name: "volunteer-morning",
     },
     {
         id: 11,
-        name: '證嚴上人每日一叮嚀'
+        label_name: '證嚴上人每日一叮嚀',
+        category_name: "",
     },
     {
         id: 14,
-        name: '各據點消息'
+        label_name: '各據點消息',
+        category_name: "the-base-messages",
     },
     {
         id: 15,
-        name: '社區故事'
+        label_name: '社區故事',
+        category_name: "",
     },
     {
         id: 16,
-        name: '專欄文章'
+        label_name: '專欄文章',
+        category_name: "column-article",
     },
     {
         id: 17,
-        name: '熱門活動'
+        label_name: '熱門活動',
+        category_name: "",
     },
     {
         id: 18,
-        name: '基金會公告'
+        label_name: '基金會公告',
+        category_name: "foundation-announcement",
     },
     {
         id: 19,
-        name: '好書推薦'
+        label_name: '好書推薦',
+        category_name: "",
     },
     {
         id: 20,
-        name: 'Youtube小編精選'
+        label_name: 'Youtube小編精選',
+        category_name: "",
     },
     {
         id: 21,
-        name: 'footer'
+        label_name: 'footer',
+        category_name: "",
     },
     {
         id: 22,
-        name: '入口網'
+        label_name: '入口網',
+        category_name: "",
     },
 ]
