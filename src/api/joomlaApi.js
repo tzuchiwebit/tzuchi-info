@@ -61,9 +61,9 @@ const getExtendArticles = async (tags = []) => {
   }
 }
 
-const getArticlesByCategory = async (category = '志工早會', limit = 10, offset = 0, state = 1) => {
+const getArticlesByCategory = async (label_name = '志工早會', limit = 10, offset = 0, state = 1) => {
     try {
-        const targetCategory = _.find(joomlaContentCategory, (i) => i.name === category);
+        const targetCategory = _.find(joomlaContentCategory, (i) => i.label_name === label_name);
         if (!targetCategory) {
             throw new Error(`Invalid category : ${category}`);
         }

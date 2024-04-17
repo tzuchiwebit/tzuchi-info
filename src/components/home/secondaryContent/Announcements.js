@@ -6,17 +6,6 @@ import useDataProvider from "../useDataProvider"
 import { useMemo } from "react"
 import { useRouter } from "next/navigation"
 import _ from 'lodash'
-// const data = [
-//     {
-//         title: '《印順導師年譜》開放線上預購 慈善購書兩不誤',
-//     },
-//     {
-//         title: '環保輔具平台缺你一分力 擴大招募志工中',
-//     },
-//     {
-//         title: '澤爸親子講座 打開親子溝通的黃金之鑰',
-//     },
-// ]
 
 const Item = ({ item }) => {
 

@@ -19,13 +19,17 @@ export default function Calendar() {
     const { pageData, loading } = useDataProvider();
     // console.log(pageData, loading)
 
-    const morningDataTitle = useMemo(() => {
+    const morningData = useMemo(() => {
         const target = _.find(pageData, { name: '志工早會' });
         if (target?.data) {
-            const title = target?.data[0]?.attributes?.title || '證嚴上人智慧法語'
-            return title
+            return {
+                title: target?.data[0]?.attributes?.title || '證嚴上人智慧法語',
+                id: target?.data[0]?.id,
+            }
         }
-        return '證嚴上人智慧法語'
+        return {
+
+        }
     }, [pageData])
 
     const [date, setDate] = useState({});
@@ -57,16 +61,28 @@ export default function Calendar() {
                     </div>
                     <div className="hidden laptop:flex desktop:hidden laptop:text-left laptop:pl-2 desktop:text-center desktop:pl-0 flex-col justify-center font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink desktop:min-h-[90px]">
                         志工早會
-                        <div className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base">
-                            {loading ? <Skeleton /> : morningDataTitle}
+                        <div
+                            className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base cursor-pointer"
+                            onClick={() => {
+                                if (morningData.id) {
+                                    router.push(`${routes.ARITCLE}/${morningData.id}`)
+                                }
+                            }}>
+                            {loading ? <Skeleton /> : morningData.title}
                         </div>
                     </div>
                 </div>
             </CalendarContainer>
             <div className="flex laptop:hidden desktop:flex flex-col font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink min-h-[94px]">
                 志工早會
-                <div className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base">
-                    {loading ? <Skeleton /> : morningDataTitle}
+                <div
+                    className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base cursor-pointer"
+                    onClick={() => {
+                        if (morningData.id) {
+                            router.push(`${routes.ARITCLE}/${morningData.id}`)
+                        }
+                    }}>
+                    {loading ? <Skeleton /> : morningData.title}
                 </div>
             </div>
         </InnerContainer>
