@@ -24,7 +24,7 @@ const Item = ({ item }) => {
 
     return (
         <div className="gap-5 py-4" onClick={() => {
-            router.push(`${routes.FOUNDATION_ANNOUNCEMENT}`)
+            router.push(`${routes.ARITCLE}/${item.id}`)
         }}>
             <div className="text-primary-blue1 text-xl font-bold mb-2">
                 {item.title}
@@ -33,7 +33,7 @@ const Item = ({ item }) => {
                 {dayjs(item.publish_up).format("YYYY-MM-DD")}
             </div>
         </div>
-    ) 
+    )
 }
 
 const AnnouncementSection = ({ data }) => {

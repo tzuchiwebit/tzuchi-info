@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useMemo } from "react"
+import { Fragment, useEffect, useMemo, useState } from "react"
 import Container from "@/shared/layout/Container"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import styled from "styled-components"
@@ -22,28 +22,45 @@ const StyledImage = styled.div`
 `
 
 const Breadcrumb = ({className}) => {
+  const { pageData } = useDataProvider();
+
+  // {
+  //   label: '首頁',
+  //   link: '/'
+  // },
+  // {
+  //   label: '證嚴上人',
+  //   link: ''
+  // },
+  // {
+  //   label: '法音宣流',
+  //   link: ''
+  // },
+  // {
+  //   label: '志工早會開示',
+  //   link: ''
+  // },
+  const articleData = useMemo(() => {
+    const target = _.find(pageData, { name: 'article' });
+    return target?.data
+  }, [pageData])
+
+  const items = useMemo(()=> {
+    const target = _.find(pageData, { name: 'article' });
+    const list = [
+      {
+        label: '首頁',
+        link: '/'
+      },
+    ]
+    return list
+  }, [pageData])
+
   return (
     <div className={className}>
       <div className="flex gap-1 w-full">
         <PrimaryBreadcrumb
-          items={[
-            {
-              label: '首頁',
-              link: '/'
-            },
-            {
-              label: '證嚴上人',
-              link: ''
-            },
-            {
-              label: '法音宣流',
-              link: ''
-            },
-            {
-              label: '志工早會開示',
-              link: ''
-            },
-          ]} />
+          items={items} />
       </div>
     </div>
   )
@@ -67,15 +84,27 @@ const Article = () => {
   return (
     <div style={{gridArea: 'a'}}>
       <div className="text-[30px] font-bold text-primary-blue1">
-          單篇文章 單篇文章
+          {articleData?.attributes?.title}
       </div>
       <div className="flex flex-row items-center gap-x-2 mt-2">
         {/* metadata: date, arthur, location */}
         <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(articleData?.attributes?.publish_up).format('YYYY-MM-DD')}</span>
-        <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
-        <span className="text-[14px] text-gray-gray4 font-medium">{articleData?.attributes?.created_by_alias}</span>
-        <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
-        <span className="text-[14px] text-gray-gray4 font-medium">{articleData?.attributes?.place}</span>
+        {
+          articleData?.attributes?.created_by_alias &&
+          <Fragment>
+            <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
+            <span className="text-[14px] text-gray-gray4 font-medium">{articleData?.attributes?.created_by_alias}</span>
+          </Fragment>
+        }
+        {
+          articleData?.attributes?.place &&
+          articleData?.attributes?.place.toUpperCase() != 'NULL' &&
+          <Fragment>
+            <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
+            <span className="text-[14px] text-gray-gray4 font-medium">{articleData?.attributes?.place}</span>
+          </Fragment>
+        }
+
         <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
         <SocialBar isMobileType={false} likes={articleData?.attributes?.like} shares={articleData?.attributes?.share}></SocialBar>
       </div>
@@ -106,7 +135,7 @@ const ExtendArticles = () => {
         {
           (extendArticles||[]).map((item, index) => (
             <div className="cursor-pointer" key={index} onClick={() => {
-              router.push(`/article?id=${item.id}`)
+              router.push(`/article/${item.id}`)
             }}>
               <div className="text-[24px] font-bold text-primary-blue1">{item.attributes.title}</div>
               <div className="flex flex-row items-center gap-x-2 laptop:mt-2 mt-1">
@@ -138,7 +167,7 @@ const RecommandArticles = () => {
         {
           (recommandArticles||[]).map((item, index) => (
             <div className="cursor-pointer" key={index} onClick={() => {
-              router.push(`/article?id=${item.id}`)
+              router.push(`/article/${item.id}`)
             }}>
               <div className="text-[24px] font-bold text-primary-blue1">{item.attributes.title}</div>
               <div className="flex flex-row items-center gap-x-2 laptop:mt-2 mt-1">

@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react"
 import { createContext } from 'react';
 import { getArticleById, getRecommandArticles, getExtendArticles } from "@/api/joomlaApi";
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useParams } from 'next/navigation'
 
 export const DataContext = createContext(null);
 
 export default function DataProvider({ children }) {
-  const searchParams = useSearchParams()
+  const params = useParams();
 
   const [pageData, setPageData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -50,8 +50,10 @@ export default function DataProvider({ children }) {
   }
 
   useEffect(() => {
-    getArticle(searchParams.get('id'));
-  }, [searchParams])
+    if (params?.slug) {
+      getArticle(params?.slug);
+    }
+  }, [params?.slug])
 
 
   return (

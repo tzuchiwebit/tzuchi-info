@@ -42,3 +42,4 @@ package-lock.json
 /public/rss.xml
 
 log/
+src/__app/

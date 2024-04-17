@@ -89,10 +89,10 @@ const InnerContainer = styled.div`
     border: 4px solid ${color.gray.gray8};
     color: ${color.primary.blue1};
     height: 260px;
-    @media(min-width: ${screens.laptop}) {   
+    @media(min-width: ${screens.laptop}) {
         height: 135px;
     }
-    @media(min-width: ${screens.desktop}) {   
+    @media(min-width: ${screens.desktop}) {
         height: 275px;
     }
 `
@@ -106,14 +106,14 @@ const CalendarContainer = styled.div`
     background-position: -10px 100%;
     width: 100%;
     height: 160px;
-    @media(min-width: ${screens.laptop}) {   
+    @media(min-width: ${screens.laptop}) {
         padding-top: 8px;
         flex-direction: row;
         height: 135px;
         background-size: 100%;
         background-position: -30px 110%;
     }
-    @media(min-width: ${screens.desktop}) {  
+    @media(min-width: ${screens.desktop}) {
         min-height: 165px;
         padding-top: 16px;
         padding-left: unset;

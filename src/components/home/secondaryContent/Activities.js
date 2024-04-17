@@ -28,7 +28,7 @@ const Item = ({ item }) => {
 
     return (
         <div className="flex gap-5 py-4 cursor-pointer" onClick={() => {
-            router.push(`${routes.ARITCLE}?id=${item.id}`)
+            router.push(`${routes.ARITCLE}/${item.id}`)
         }}>
             <div className="h-[72px] w-[72px] flex-0">
                 <img
