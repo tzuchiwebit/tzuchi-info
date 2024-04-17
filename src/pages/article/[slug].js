@@ -12,6 +12,7 @@ import useDataProvider from "@/components/article/useDataProvider"
 import _ from 'lodash'
 import dayjs from "dayjs"
 import { useRouter } from 'next/navigation'
+import joomlaContentCategory from '@/api/joomlaContentCategory'
 
 const StyledImage = styled.div`
   width: 100%;
