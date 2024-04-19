@@ -13,6 +13,7 @@ import _ from 'lodash'
 import dayjs from "dayjs"
 import { useRouter } from 'next/navigation'
 import joomlaContentCategory from '@/api/joomlaContentCategory'
+import Spinner from "@/components/Spinner"
 
 const StyledImage = styled.div`
   width: 100%;
@@ -27,14 +28,14 @@ const Breadcrumb = ({className}) => {
 
   const items = useMemo(()=> {
     const target = _.find(pageData, { name: 'article' });
-    const targetCategory = _.find(joomlaContentCategory, (i) => i.id.toString() === target?.relationships?.category?.data?.id);
+    const targetCategory = _.find(joomlaContentCategory, (i) => i.id.toString() === target?.data?.relationships?.category?.data?.id);
     const list = [
       {
         label: '首頁',
         link: '/'
       },
     ]
-    if (targetCategory) {
+    if (targetCategory?.category_name) {
       list.push({
         label: targetCategory.label_name,
         link: `/${targetCategory.category_name}/article/${target.id}`
@@ -170,18 +171,32 @@ const RecommandArticles = () => {
   )
 }
 
+const MainContent = () => {
+  const { loading } = useDataProvider();
+  return (
+    <Fragment>
+      {
+        loading ? <div class="h-96 flex justify-center items-center"><Spinner></Spinner></div> :
+        <>
+          <FloatScrollTopButton />
+          {/* breadcrumb */}
+          <Breadcrumb className="tablet:mt-4 mt-2"></Breadcrumb>
+          <ArticleContainer className="mt-6">
+            <Article></Article>
+            <RecommandArticles></RecommandArticles>
+            <ExtendArticles></ExtendArticles>
+          </ArticleContainer>
+        </>
+      }
+    </Fragment>
+  )
+}
+
 export default function Page() {
   return (
     <DataProvider>
       <Container>
-        <FloatScrollTopButton />
-        {/* breadcrumb */}
-        <Breadcrumb className="tablet:mt-4 mt-2"></Breadcrumb>
-        <ArticleContainer className="mt-6">
-          <Article></Article>
-          <RecommandArticles></RecommandArticles>
-          <ExtendArticles></ExtendArticles>
-        </ArticleContainer>
+        <MainContent></MainContent>
       </Container>
       <SocialBar isMobileType={true}></SocialBar>
     </DataProvider>
