@@ -28,6 +28,7 @@ const Breadcrumb = ({className}) => {
 
   const items = useMemo(()=> {
     const target = _.find(pageData, { name: 'article' });
+    console.log('target', target)
     const targetCategory = _.find(joomlaContentCategory, (i) => i.id.toString() === target?.data?.relationships?.category?.data?.id);
     const list = [
       {
@@ -38,7 +39,7 @@ const Breadcrumb = ({className}) => {
     if (targetCategory?.category_name) {
       list.push({
         label: targetCategory.label_name,
-        link: `/${targetCategory.category_name}/article/${target.id}`
+        link: `/${targetCategory.category_name}/article/${target?.data?.id}`
       })
     }
     return list
@@ -176,7 +177,7 @@ const MainContent = () => {
   return (
     <Fragment>
       {
-        loading ? <div class="h-96 flex justify-center items-center"><Spinner></Spinner></div> :
+        loading ? <div className="h-96 flex justify-center items-center"><Spinner></Spinner></div> :
         <>
           <FloatScrollTopButton />
           {/* breadcrumb */}
