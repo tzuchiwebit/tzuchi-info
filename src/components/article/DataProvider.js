@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { createContext } from 'react';
 import { getArticleById, getRecommandArticles, getExtendArticles } from "@/api/joomlaApi";
-import { useSearchParams, useParams } from 'next/navigation'
+import { useParams } from 'next/navigation'
 
 export const DataContext = createContext(null);
 
@@ -25,7 +25,7 @@ export default function DataProvider({ children }) {
       )
 
       // 2) fetch recommand article list
-      const recommandArticles = (await getRecommandArticles(article.relationships.category.data.id)).data
+      const recommandArticles = (await getRecommandArticles(article.relationships.category.data.id, 4)).data
       res.push(
         {
           name: 'recommandArticles',
@@ -34,7 +34,7 @@ export default function DataProvider({ children }) {
       )
 
       // 3) fetch extend article lists
-      const extendArticles = (await getExtendArticles(Object.keys(article.attributes.tags))).data
+      const extendArticles = (await getExtendArticles(Object.keys(article.attributes.tags), 4)).data
       res.push(
         {
           name: 'extendArticles',

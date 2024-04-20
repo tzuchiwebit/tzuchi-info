@@ -1,5 +1,5 @@
 "use client"
-import { Fragment, useEffect, useMemo, useState } from "react"
+import { Fragment, useMemo } from "react"
 import Container from "@/shared/layout/Container"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import styled from "styled-components"
@@ -11,7 +11,7 @@ import DataProvider from "@/components/article/DataProvider"
 import useDataProvider from "@/components/article/useDataProvider"
 import _ from 'lodash'
 import dayjs from "dayjs"
-import { useRouter } from 'next/navigation'
+import { useRouter, useParams } from 'next/navigation'
 import joomlaContentCategory from '@/api/joomlaContentCategory'
 import Spinner from "@/components/Spinner"
 
@@ -28,7 +28,6 @@ const Breadcrumb = ({className}) => {
 
   const items = useMemo(()=> {
     const target = _.find(pageData, { name: 'article' });
-    console.log('target', target)
     const targetCategory = _.find(joomlaContentCategory, (i) => i.id.toString() === target?.data?.relationships?.category?.data?.id);
     const list = [
       {
@@ -111,10 +110,19 @@ const Article = () => {
 const ExtendArticles = () => {
   const router = useRouter();
   const { pageData } = useDataProvider();
+  const params = useParams();
 
   const extendArticles = useMemo(() => {
     const target = _.find(pageData, { name: 'extendArticles' });
-    return target?.data
+    const list = (target?.data||[]).filter((article)=> {
+      if (article.id.toString() !== params.slug.toString()) {
+        return article
+      }
+    })
+    if (list.length === 4) {
+      list.pop()
+    }
+    return list
   }, [pageData])
 
   return (
@@ -129,8 +137,13 @@ const ExtendArticles = () => {
               <div className="text-[24px] font-bold text-primary-blue1">{item.attributes.title}</div>
               <div className="flex flex-row items-center gap-x-2 laptop:mt-2 mt-1">
                 <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(item.attributes?.publish_up).format('YYYY-MM-DD')}</span>
-                <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
-                <span className="text-[14px] text-gray-gray4 font-medium">{item.attributes.created_by_alias}</span>
+                {
+                  item.attributes.created_by_alias&&
+                  <>
+                    <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
+                    <span className="text-[14px] text-gray-gray4 font-medium">{item.attributes.created_by_alias}</span>
+                  </>
+                }
               </div>
             </div>
           ))
@@ -143,10 +156,19 @@ const ExtendArticles = () => {
 const RecommandArticles = () => {
   const router = useRouter();
   const { pageData } = useDataProvider();
+  const params = useParams();
 
   const recommandArticles = useMemo(() => {
     const target = _.find(pageData, { name: 'recommandArticles' });
-    return target?.data
+    const list = (target?.data||[]).filter((article)=> {
+      if (article.id.toString() !== params.slug.toString()) {
+        return article
+      }
+    })
+    if (list.length === 4) {
+      list.pop()
+    }
+    return list
   }, [pageData])
 
   return (
@@ -161,8 +183,13 @@ const RecommandArticles = () => {
               <div className="text-[24px] font-bold text-primary-blue1">{item.attributes.title}</div>
               <div className="flex flex-row items-center gap-x-2 laptop:mt-2 mt-1">
                 <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(item.attributes?.publish_up).format('YYYY-MM-DD')}</span>
-                <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
-                <span className="text-[14px] text-gray-gray4 font-medium">{item.attributes.created_by_alias}</span>
+                {
+                  item.attributes.created_by_alias &&
+                    <>
+                      <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
+                      <span className="text-[14px] text-gray-gray4 font-medium">{item.attributes.created_by_alias}</span>
+                    </>
+                }
               </div>
             </div>
           ))

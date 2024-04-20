@@ -12,7 +12,7 @@ const Item = ({ item }) => {
     const router = useRouter();
 
     return (
-        <div className="gap-5 py-4" onClick={() => {
+        <div className="gap-5 py-4 cursor-pointer" onClick={() => {
             router.push(`${routes.ARITCLE}/${item.id}`)
         }}>
             <div className="text-primary-blue1 text-xl font-bold mb-2">
