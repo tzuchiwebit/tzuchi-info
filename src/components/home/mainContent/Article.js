@@ -51,11 +51,7 @@ const Item = ({ item }) => {
 
     return (
         <div className="w-full block shadow-elevation-3 rounded-md overflow-hidden" >
-            <div
-                className="text-white bg-primary-blue1 p-3 text-[24px] font-bold cursor-pointer"
-                onClick={() => {
-                    router.push(`${routes.COLUMN_ARTICLE}`)
-                }}>
+            <div className="text-white bg-primary-blue1 p-3 text-[24px] font-bold" >
                 {item.title}
             </div>
             <div className="divide-y divide-solid divide-gray-gray7/50">

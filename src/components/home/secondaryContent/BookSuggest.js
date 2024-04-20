@@ -13,6 +13,10 @@ import Slider from "react-slick";
 import color from "@/shared/styles/color";
 import PrimaryTag from "@/shared/tag/PrimaryTag";
 import useDataProvider from "../useDataProvider";
+import Skeleton from "react-loading-skeleton";
+import { useRouter } from "next/navigation";
+import routes from "@/config/routes";
+import Link from "next/link";
 // import routes from "@/app/config/routes";
 // import { useRouter } from "next/navigation";
 
@@ -53,19 +57,30 @@ const tagOptions = [
 // ]
 
 
-const Item = ({ item }) => (
-    <div className="relative w-full">
-        {/* <div className="w-full h-[480px] p-1"> */}
-        <div className={"w-full p-1"}>
-            <div className="w-full rounded-md overflow-hidden">
-                <StyledImage style={{ backgroundImage: `url(${item?.images?.image_intro ? item.images?.image_intro : "https://picsum.photos/id/230/300/300"})` }} />
-                <div className="pt-2 pl-2 pr-0 text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2">
-                    {item?.title}
+const Item = ({ item }) => {
+
+    const router = useRouter();
+
+    return (
+        <div className="relative w-full">
+            {/* <div className="w-full h-[480px] p-1"> */}
+            <div className={"w-full p-1"}>
+                <div
+                    className="w-full rounded-md overflow-hidden cursor-pointer"
+                    onClick={() => router.push(`${routes.ARITCLE}/${item.id}`)}>
+                    {
+                        item?.images?.image_intro ? <StyledImage style={{ backgroundImage: `url(${item?.images?.image_intro ? item.images?.image_intro : "https://picsum.photos/id/230/300/300"})` }} /> :
+                            <Skeleton className="aspect-square" />
+                    }
+
+                    <div className="pt-2 pl-2 pr-0 text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2">
+                        {item?.title}
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-)
+    )
+}
 
 
 const PrevBtn = ({ onClick }) => (<button
@@ -187,7 +202,7 @@ export default function BookSuggest() {
         <div className="w-full flex flex-row gap-1 items-center">
             <div className="border-t border-solid border-gray-gray7 w-full" />
             <div className="flex font-medium justify-end items-end flex-1 text-lg text-primary-blue3">
-                <a href="#" target="_blank" className="flex flex-row whitespace-nowrap">更多<Icon.RightArrow2 width={20} /></a>
+                <Link href={`#`} target="_blank" className="flex flex-row whitespace-nowrap">更多<Icon.RightArrow2 width={20} /></Link>
             </div>
         </div>
     </div>
