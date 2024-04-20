@@ -35,11 +35,14 @@ const Breadcrumb = ({className}) => {
         link: '/'
       },
     ]
-    if (targetCategory?.category_name) {
-      list.push({
+    if (targetCategory?.label_name) {
+      const item = {
         label: targetCategory.label_name,
-        link: `/${targetCategory.category_name}/article/${target?.data?.id}`
-      })
+      }
+      if (targetCategory?.category_name) {
+        item.link = `/${targetCategory.category_name}`
+      }
+      list.push(item)
     }
     return list
   }, [pageData])
@@ -95,10 +98,6 @@ const Article = () => {
 
         <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
         <SocialBar isMobileType={false} likes={articleData?.attributes?.like} shares={articleData?.attributes?.share}></SocialBar>
-      </div>
-      <StyledImage style={{backgroundImage: `url("${articleData?.attributes?.images?.image_intro}")`}} className="tablet:mt-6 mt-4 rounded"></StyledImage>
-      <div className="mt-2 font-medium text-gray-gray2 border-b border-solid border-gray-gray7 pb-1">
-        {articleData?.attributes?.metadesc}
       </div>
       <div className="laptop:mt-6 mt-4 font-bold text-black leading-[22px]">
         <div id={'content-holder'} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />

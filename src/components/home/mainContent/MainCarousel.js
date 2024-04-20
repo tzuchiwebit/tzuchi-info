@@ -64,7 +64,7 @@ const Item = ({ item, loading = false }) => {
                         loading ? <div className="">
                             <Skeleton className="aspect-video" />
                         </div> : <ImageContainer className='cursor-pointer' onClick={() => {
-                            router.push(`${routes.ARITCLE}`)
+                            router.push(`/${routes.ARITCLE}/${item?.attributes.id}`)
                         }}>
                             <BlurBGImage url={item?.attributes?.images?.image_intro || "https://picsum.photos/id/232/400/300"} />
                         </ImageContainer>
@@ -82,7 +82,7 @@ const Item = ({ item, loading = false }) => {
                                 <Icon.ShareFull style={{ width: 24 }} /> 分享
                             </SeBtn>
                             {/* <div className="border-2 border-solid border-primary-blue2 rounded-md text-primary-blue2 py-1 px-2 flex font-bold whitespace-nowrap">
-                                
+
                             </div> */}
                         </div>
                     </div>
