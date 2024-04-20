@@ -8,40 +8,49 @@ import BlurBGImage from "@/shared/image/BlurBGImage";
 import useDataProvider from "../useDataProvider";
 import { useMemo } from "react";
 import _ from 'lodash'
+import { useRouter } from "next/navigation";
+import routes from "@/config/routes";
 
-const Item = ({ item }) => (
-    <div className="relative w-full p-1 min-w-[300px] laptop:min-w-0">
-        <div className="w-full shadow-elevation-3 rounded-md overflow-hidden p-3 flex flex-col laptop:flex-row gap-4 items-center">
-            {/* <StyledImage style={{ backgroundImage: `url(${"https://picsum.photos/id/230/300/300"})` }} /> */}
-            <ImageContainer>
-                <BlurBGImage
-                    url={item.images?.image_intro || "https://picsum.photos/id/230/300/300"}
-                    alt={item.images?.image_intro_alt}
-                />
-            </ImageContainer>
-            <div className="relative h-[210px] laptop:h-[220px] laptop:max-w-[45%]">
-                <div className="text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2 h-14">
-                    {item.title}
-                </div>
-                <div className="pt-2 font-md w-full text-gray-gray2 text-left line-clamp-4">
-                    {item.metadesc}
-                </div>
-                <div className="w-full absolute bottom-0 pt-2 font-medium text-sm text-gray-gray4 border-t-2 border-solid border-gray-gray8 flex justify-between items-center">
-                    <div>
-                        {dayjs(item.publish_up).format('YYYY-MM-DD')}<br />
-                        {item.place !== "NULL" ? item.place : <><br /></>}
+const Item = ({ item }) => {
+
+    const router = useRouter();
+
+    return (
+        <div
+            className="relative w-full p-1 min-w-[300px] laptop:min-w-0 cursor-pointer"
+            onClick={() => router.push(`${routes.ARITCLE}/${item.id}`)}
+        >
+            <div className="w-full shadow-elevation-3 rounded-md overflow-hidden p-3 flex flex-col laptop:flex-row gap-4 items-center">
+                <ImageContainer>
+                    <BlurBGImage
+                        url={item.images?.image_intro || "https://picsum.photos/id/230/300/300"}
+                        alt={item.images?.image_intro_alt}
+                    />
+                </ImageContainer>
+                <div className="relative h-[210px] laptop:h-[220px] laptop:max-w-[45%]">
+                    <div className="text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2 h-14">
+                        {item.title}
                     </div>
-                    <div className="gap-1 text-lg hidden">
-                        <Icon.Like style={{ width: 16 }} />
-                        <span>讚</span>
-                        <Icon.Views style={{ width: 16 }} />
-                        <span>200 次點閱</span>
+                    <div className="pt-2 font-md w-full text-gray-gray2 text-left line-clamp-4">
+                        {item.metadesc}
+                    </div>
+                    <div className="w-full absolute bottom-0 pt-2 font-medium text-sm text-gray-gray4 border-t-2 border-solid border-gray-gray8 flex justify-between items-center">
+                        <div>
+                            {dayjs(item.publish_up).format('YYYY-MM-DD')}<br />
+                            {item.place !== "NULL" ? item.place : <><br /></>}
+                        </div>
+                        <div className="gap-1 text-lg hidden">
+                            <Icon.Like style={{ width: 16 }} />
+                            <span>讚</span>
+                            <Icon.Views style={{ width: 16 }} />
+                            <span>200 次點閱</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-)
+    )
+}
 
 const CommunityStorySection = ({ data }) => {
     return <div className="pt-3 w-fit flex laptop:w-full laptop:flex-col">
@@ -57,7 +66,7 @@ export default function CommunityStory() {
         const target = _.find(pageData, { name: '社區故事' });
         return target?.data || []
     }, [pageData])
-    
+
     // console.log(storyData)
     return <div className="pt-5">
         <BannerTitle title={`社區故事`} link={'#'} />

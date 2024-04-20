@@ -50,27 +50,23 @@ const Item = ({ item }) => {
     const router = useRouter();
 
     return (
-        <div
-            className="w-full block shadow-elevation-3 rounded-md overflow-hidden cursor-pointer"
-            onClick={() => {
-                router.push(`${routes.COLUMN_ARTICLE}`)
-            }}
-        >
-            <div className="text-white bg-primary-blue1 p-3 text-[24px] font-bold">
+        <div className="w-full block shadow-elevation-3 rounded-md overflow-hidden" >
+            <div
+                className="text-white bg-primary-blue1 p-3 text-[24px] font-bold cursor-pointer"
+                onClick={() => {
+                    router.push(`${routes.COLUMN_ARTICLE}`)
+                }}>
                 {item.title}
             </div>
             <div className="divide-y divide-solid divide-gray-gray7/50">
                 {
                     item.children.map((_i, _index) => (
                         <div className="p-3 flex gap-4" key={_index}>
-                            {/* <div className="aspect-square">
-                                <img
-                                    className="aspect-square w-12 rounded-full ring-2 ring-white"
-                                    src={_i?.images?.image_intro || "https://i.pravatar.cc/300"}
-                                    alt="" />
-                            </div> */}
                             <div className="flex-1">
-                                <div className="text-primary-blue1 text-xl font-bold mb-2">
+                                <div
+                                    className="text-primary-blue1 text-xl font-bold mb-2 cursor-pointer"
+                                    onClick={() => router.push(`${routes.ARITCLE}/${_i.id}`)}
+                                >
                                     {_i.title}
                                 </div>
                                 <div className="flex flex-col text-gray-gray4 gap-1 items-start font-medium">

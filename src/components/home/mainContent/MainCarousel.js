@@ -64,14 +64,14 @@ const Item = ({ item, loading = false }) => {
                         loading ? <div className="">
                             <Skeleton className="aspect-video" />
                         </div> : <ImageContainer className='cursor-pointer' onClick={() => {
-                            router.push(`/${routes.ARITCLE}/${item?.attributes.id}`)
+                            router.push(`${routes.ARITCLE}/${item.id}`)
                         }}>
                             <BlurBGImage url={item?.attributes?.images?.image_intro || "https://picsum.photos/id/232/400/300"} />
                         </ImageContainer>
                     }
                     <div className="px-4 flex flex-col tablet:flex-row laptop:flex-col items-center py-4 w-full gap-y-1 gap-x-4">
                         <div className="text-xl font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2 cursor-pointer" onClick={() => {
-                            router.push(`${routes.ARITCLE}`)
+                            router.push(`${routes.ARITCLE}/${item.id}`)
                         }}>
                             {
                                 loading ? <Skeleton /> : item?.attributes?.title
