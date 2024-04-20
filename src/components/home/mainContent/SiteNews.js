@@ -9,6 +9,8 @@ import PrimaryTag from "@/shared/tag/PrimaryTag";
 import routes from "@/config/routes";
 import useDataProvider from "../useDataProvider";
 import _ from 'lodash'
+import Skeleton from "react-loading-skeleton";
+import { useRouter } from "next/navigation";
 
 const tagOptions = [
     '臺灣',
@@ -20,27 +22,39 @@ const tagOptions = [
     '全球',
 ]
 
-const Item = () => (
-    <div className="relative w-full p-1 min-w-[300px] laptop:min-w-0">
-        <div className="w-full shadow-elevation-3 rounded-md overflow-hidden p-2">
-            {/* <StyledImage style={{ backgroundImage: `url(${"https://picsum.photos/id/230/300/300"})` }} /> */}
-            <ImageContainer>
-                <BlurBGImage url={"https://picsum.photos/id/230/500/300"} />
-            </ImageContainer>
-            <div className="pt-2 text-xl font-bold w-full text-primary-blue1 text-left h-24 tablet:h-20 laptop:h-32 desktop:h-28 laptop:pb-2">
-                結合多機構在烏克蘭發放 慈濟助難民過寒冬
-            </div>
-            <div className="pt-2 font-medium text-sm text-gray-gray4 border-t border-solid border-gray-gray8">
-                {dayjs().format('YYYY-MM-DD')} <br />
-                報導地點
+const Item = ({ item = {} }) => {
+
+    const router = useRouter();
+
+    return (
+        <div
+            className="relative w-full p-1 min-w-[300px] laptop:min-w-0 cursor-pointer"
+            onClick={() => router.push(`${routes.ARITCLE}/${item.id}`) }>
+            <div className="w-full shadow-elevation-3 rounded-md overflow-hidden p-2">
+                {/* <StyledImage style={{ backgroundImage: `url(${"https://picsum.photos/id/230/300/300"})` }} /> */}
+                <ImageContainer>
+                    {
+                        item?.images?.image_intro ?
+                            <BlurBGImage url={item?.images?.image_intro} /> :
+                            <Skeleton className="aspect-video" />
+                    }
+
+                </ImageContainer>
+                <div className="pt-2 text-xl font-bold w-full text-primary-blue1 text-left h-24 tablet:h-20 laptop:h-32 desktop:h-28 laptop:pb-2">
+                    {item.title}
+                </div>
+                <div className="pt-2 font-medium text-sm text-gray-gray4 border-t border-solid border-gray-gray8">
+                    {dayjs(item.publish_up).format('YYYY-MM-DD')} <br />
+                    {item.place}
+                </div>
             </div>
         </div>
-    </div>
-)
+    )
+}
 
-const SiteNewsSection = () => {
+const SiteNewsSection = ({ items = [] }) => {
     return <div className="pt-3 w-fit laptop:w-full flex">
-        {Array(3).fill({}).map((i, index) => <Item key={index} />)}
+        {items.map((i, index) => <Item item={i.attributes} key={index} />)}
     </div>
 }
 
@@ -52,14 +66,15 @@ export default function SiteNews() {
 
     const baseInfos = useMemo(() => {
         const target = _.find(pageData, { name: '各據點消息' });
-        return target?.data?.length ? _.filter(target?.data,
-            (i) => Object.keys(i.attributes?.tags)
-                .map(key => i.attributes?.tags[key])
-                .includes(tagOptions[selctedIndex])
-        ) : []
+        return target?.data
+        // return target?.data?.length ? _.filter(target?.data,
+        //     (i) => Object.keys(i.attributes?.tags)
+        //         .map(key => i.attributes?.tags[key])
+        //         .includes(tagOptions[selctedIndex])
+        // ) : []
     }, [pageData, selctedIndex])
-    // console.log(`baseInfos`)
-    // console.log(baseInfos)
+    console.log(`baseInfos`)
+    console.log(baseInfos)
 
 
     return <div className="pt-5">
@@ -77,7 +92,7 @@ export default function SiteNews() {
                 }
             </div>
             <SlidesTrack>
-                <SiteNewsSection />
+                <SiteNewsSection items={baseInfos} />
             </SlidesTrack>
         </div>
     </div>
@@ -86,6 +101,7 @@ export default function SiteNews() {
 const ImageContainer = styled.div`
     width: 100%;
     height: 215px;
+    overflow: hidden;
     @media(min-width: ${screens.tablet}) {
         height: 210px;
     }

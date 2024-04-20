@@ -9,18 +9,26 @@ import { OuterContainer } from "./container"
 import useDataProvider from "../useDataProvider"
 import Skeleton from 'react-loading-skeleton'
 import _ from 'lodash'
+import { useRouter } from "next/navigation"
+import routes from "@/config/routes"
 
 export default function Reminder() {
 
     const { pageData, loading } = useDataProvider()
+    const router = useRouter();
 
-    const reminderTitle = useMemo(() => {
+    const reminderItem = useMemo(() => {
         const target = _.find(pageData, { name: '證嚴上人每日一叮嚀' });
         if (target?.data) {
-            const title = target?.data[0]?.attributes?.title || ''
-            return title
+            return {
+                title: target?.data[0]?.attributes?.title || '',
+                id: target?.data[0]?.id
+            }
         }
-        return ''
+        return {
+            title: '',
+            id: ''
+        }
     }, [pageData])
 
     return <OuterContainer>
@@ -36,11 +44,17 @@ export default function Reminder() {
                 // style={{ width: '100%' }}
                 />
             </div>
-            <div className="flex flex-col font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink min-h-[90px]">
+            <div
+                className="flex flex-col font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink min-h-[90px] cursor-pointer"
+                onClick={() => {
+                    if (reminderItem.id) {
+                        router.push(`${routes.ARITCLE}/${reminderItem.id}`);
+                    }
+                }}>
                 證嚴上人<br />
                 每日一叮嚀
                 <div className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base">
-                    {loading ? <Skeleton /> : reminderTitle}
+                    {loading ? <Skeleton /> : reminderItem.title}
                 </div>
             </div>
 
