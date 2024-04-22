@@ -29,7 +29,7 @@ const Item = ({ item = {} }) => {
     return (
         <div
             className="relative w-full p-1 min-w-[300px] laptop:min-w-0 cursor-pointer"
-            onClick={() => router.push(`${routes.ARITCLE}/${item.id}`) }>
+            onClick={() => router.push(`${routes.ARITCLE}/${item.id}`)}>
             <div className="w-full shadow-elevation-3 rounded-md overflow-hidden p-2">
                 {/* <StyledImage style={{ backgroundImage: `url(${"https://picsum.photos/id/230/300/300"})` }} /> */}
                 <ImageContainer>
@@ -54,7 +54,7 @@ const Item = ({ item = {} }) => {
 
 const SiteNewsSection = ({ items = [] }) => {
     return <div className="pt-3 w-fit laptop:w-full flex">
-        {items.map((i, index) => <Item item={i.attributes} key={index} />)}
+        {items.slice(0, 3).map((i, index) => <Item item={i.attributes} key={index} />)}
     </div>
 }
 
@@ -73,8 +73,8 @@ export default function SiteNews() {
         //         .includes(tagOptions[selctedIndex])
         // ) : []
     }, [pageData, selctedIndex])
-    console.log(`baseInfos`)
-    console.log(baseInfos)
+    // console.log(`baseInfos`)
+    // console.log(baseInfos)
 
 
     return <div className="pt-5">

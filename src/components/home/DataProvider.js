@@ -21,7 +21,7 @@ const requiredPageData = [
   },
   {
     name: '各據點消息',
-    count: 3,
+    count: 7,
   },
   {
     name: '基金會公告',
