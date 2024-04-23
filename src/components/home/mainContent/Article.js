@@ -7,43 +7,7 @@ import useDataProvider from "../useDataProvider"
 import { useMemo } from "react"
 import _ from 'lodash'
 import Icon from "@/shared/Icon"
-
-// const data = [
-//     {
-//         title: '領航慈濟',
-//         children: [
-//             {
-//                 avatar: 'https://i.pravatar.cc/300',
-//                 title: '目前做的事情原因與做法',
-//                 date: dayjs().format('YYYY-MM-DD'),
-//                 jobTitle: '顏博文 執行長',
-//             },
-//             {
-//                 avatar: 'https://i.pravatar.cc/300',
-//                 title: '目前做的事情原因與做法',
-//                 date: dayjs().format('YYYY-MM-DD'),
-//                 jobTitle: '何日生 副執行長',
-//             },
-//         ]
-//     },
-//     {
-//         title: '名人視角',
-//         children: [
-//             {
-//                 avatar: 'https://i.pravatar.cc/300',
-//                 title: '目前做的事情原因與做法',
-//                 date: dayjs().format('YYYY-MM-DD'),
-//                 jobTitle: 'OOO 作家',
-//             },
-//             {
-//                 avatar: 'https://i.pravatar.cc/300',
-//                 title: '目前做的事情原因與做法',
-//                 date: dayjs().format('YYYY-MM-DD'),
-//                 jobTitle: 'OOO 作家',
-//             },
-//         ]
-//     }
-// ]
+import { LikeAndShare } from "../components"
 
 const Item = ({ item }) => {
 
@@ -72,12 +36,11 @@ const Item = ({ item }) => {
                                             <div className="border-l border-solid border-gray-gray4 h-4" />
                                             {_i.created_by_alias}
                                         </div>
-                                        <div className="flex gap-1">
-                                            <Icon.Like style={{ width: 16 }} />
-                                            <span>讚</span>
-                                            <Icon.Share style={{ width: 16 }} />
-                                            <span>分享</span>
-                                        </div>
+                                        <LikeAndShare
+                                            likes={_i.like}
+                                            shares={_i.share}
+                                            articleId={_i.id}
+                                        />
                                     </div>
                                 </div>
                             </div>

@@ -114,7 +114,10 @@ function SocailShareModal({
       {/* mobile layout */}
       <div
         ref={refMobile}
-        className={classnames(isOpen ? '' : 'h-0 overflow-hidden w-0', "laptop:hidden fixed bottom-0 w-full bg-complementary-blue2 z-50 shadow-elevation-4")}
+        className={
+          classnames(isOpen ? '' : 'h-0 overflow-hidden translate-y-6',
+            "laptop:hidden fixed bottom-0 w-full bg-complementary-blue2 z-50 shadow-elevation-4 transition-all"
+          )}
       >
         <ModalContent setOpen={setOpen} />
       </div>

@@ -14,38 +14,6 @@ import Skeleton from 'react-loading-skeleton'
 import { useRouter } from "next/navigation";
 import routes from "@/config/routes";
 
-const data = [
-    {
-        title: '結合多機構在烏克蘭發放 慈濟助難民過寒冬 結合多機構在烏克蘭發放 慈濟助難民過寒冬',
-        image: "https://picsum.photos/id/230/200/300",
-    },
-    {
-        title: '結合多機構在烏克蘭發放 慈濟助難民過寒冬 結合多機構在烏克蘭發放 慈濟助難民過寒冬',
-        image: "https://picsum.photos/id/232/400/300",
-    },
-    {
-        title: '結合多機構在烏克蘭發放 慈濟助難民過寒冬 結合多機構在烏克蘭發放 慈濟助難民過寒冬',
-        image: "https://picsum.photos/id/233/500/300",
-    },
-    {
-        title: '結合多機構在烏克蘭發放 慈濟助難民過寒冬 結合多機構在烏克蘭發放 慈濟助難民過寒冬',
-        image: "https://picsum.photos/id/234/100/300",
-    },
-    {
-        title: '結合多機構在烏克蘭發放 慈濟助難民過寒冬 結合多機構在烏克蘭發放 慈濟助難民過寒冬',
-        image: "https://picsum.photos/id/234/100/300",
-    },
-    {
-        title: '結合多機構在烏克蘭發放 慈濟助難民過寒冬 結合多機構在烏克蘭發放 慈濟助難民過寒冬',
-        image: "https://picsum.photos/id/234/100/300",
-    },
-    {
-        title: '結合多機構在烏克蘭發放 慈濟助難民過寒冬 結合多機構在烏克蘭發放 慈濟助難民過寒冬',
-        image: "https://picsum.photos/id/234/100/300",
-    },
-]
-
-
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
