@@ -11,6 +11,7 @@ import useDataProvider from "../useDataProvider";
 import _ from 'lodash'
 import Skeleton from "react-loading-skeleton";
 import { useRouter } from "next/navigation";
+import { LikeAndShare } from "../components";
 
 const tagOptions = [
     '臺灣',
@@ -27,12 +28,10 @@ const Item = ({ item = {} }) => {
     const router = useRouter();
 
     return (
-        <div
-            className="relative w-full p-1 min-w-[300px] laptop:min-w-0 cursor-pointer"
-            onClick={() => router.push(`${routes.ARITCLE}/${item.id}`)}>
+        <div className="relative w-full p-1 min-w-[300px] laptop:min-w-0 cursor-pointer">
             <div className="w-full shadow-elevation-3 rounded-md overflow-hidden p-2">
                 {/* <StyledImage style={{ backgroundImage: `url(${"https://picsum.photos/id/230/300/300"})` }} /> */}
-                <ImageContainer>
+                <ImageContainer onClick={() => router.push(`${routes.ARITCLE}/${item.id}`)}>
                     {
                         item?.images?.image_intro ?
                             <BlurBGImage url={item?.images?.image_intro} /> :
@@ -40,12 +39,18 @@ const Item = ({ item = {} }) => {
                     }
 
                 </ImageContainer>
-                <div className="pt-2 text-xl font-bold w-full text-primary-blue1 text-left h-24 tablet:h-20 laptop:h-32 desktop:h-28 laptop:pb-2">
+                <div
+                    className="pt-2 text-xl font-bold w-full text-primary-blue1 text-left h-24 tablet:h-20 laptop:h-32 desktop:h-28 laptop:pb-2"
+                    onClick={() => router.push(`${routes.ARITCLE}/${item.id}`)}
+                >
                     {item.title}
                 </div>
                 <div className="pt-2 font-medium text-sm text-gray-gray4 border-t border-solid border-gray-gray8">
                     {dayjs(item.publish_up).format('YYYY-MM-DD')} <br />
                     {item.place}
+                </div>
+                <div className="flex justify-end">
+                    <LikeAndShare likes={item.like} shares={item.share} articleId={item.id} />
                 </div>
             </div>
         </div>
