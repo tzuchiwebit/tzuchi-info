@@ -8,20 +8,23 @@ import Widgets from "./widget/Widgets"
 import MainContent from "./mainContent/MainContent"
 import SecondaryContent from "./secondaryContent/SecondaryContent"
 import DataProvider from "./DataProvider"
+import LikeAndShareProvider from "./SocialShareProvider"
 
 export default function Home() {
 
     return (
         <DataProvider>
-            <div className="flex flex-col laptop:flex-row w-full">
-                <MainContainer>
-                    <Widgets />
-                    <MainContent />
-                </MainContainer>
-                <SecondaryContainer>
-                    <SecondaryContent />
-                </SecondaryContainer>
-            </div>
+            <LikeAndShareProvider>
+                <div className="flex flex-col laptop:flex-row w-full">
+                    <MainContainer>
+                        <Widgets />
+                        <MainContent />
+                    </MainContainer>
+                    <SecondaryContainer>
+                        <SecondaryContent />
+                    </SecondaryContainer>
+                </div>
+            </LikeAndShareProvider>
         </DataProvider>
     )
 }

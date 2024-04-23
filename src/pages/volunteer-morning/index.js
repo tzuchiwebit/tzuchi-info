@@ -45,7 +45,7 @@ export default function Page() {
   // console.log(listData)
   const onPageHit = (id) => {
     router.push(`${routes.ARITCLE}/${id}`)
-    // addHits(id);
+    addHits(id);
   }
 
   return <Container>

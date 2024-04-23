@@ -1,7 +1,7 @@
 'use client'
 import Icon from "@/shared/Icon"
 import styled from "styled-components"
-import { BannerTitle } from "../components"
+import { BannerTitle, LikeAndShare } from "../components"
 import screens from "@/shared/styles/screens";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel"
@@ -69,18 +69,25 @@ const Item = ({ item, loading = false }) => {
                             <BlurBGImage url={item?.attributes?.images?.image_intro || "https://picsum.photos/id/232/400/300"} />
                         </ImageContainer>
                     }
-                    <div className="px-4 flex flex-col tablet:flex-row laptop:flex-col items-center py-4 w-full gap-y-1 gap-x-4">
-                        <div className="text-xl font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2 cursor-pointer" onClick={() => {
-                            router.push(`${routes.ARITCLE}/${item.id}`)
-                        }}>
+                    <div className="px-4 flex flex-col items-center pt-4 pb-2 w-full gap-y-1 gap-x-4">
+                        <div
+                            className="text-xl font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2 cursor-pointer"
+                            onClick={() => {
+                                router.push(`${routes.ARITCLE}/${item.id}`)
+                            }}>
                             {
                                 loading ? <Skeleton /> : item?.attributes?.title
                             }
                         </div>
-                        <div className="flex flex-row self-end w-fit flex-none">
-                            <SeBtn>
+                        <div className="flex flex-row flex-none border-t border-solid border-gray-gray8 w-full justify-end pt-2 pr-5">
+                            <LikeAndShare
+                                articleId={item.id}
+                                likes={item?.attributes?.like}
+                                shares={item?.attributes?.share}
+                            />
+                            {/* <SeBtn>
                                 <Icon.ShareFull style={{ width: 24 }} /> 分享
-                            </SeBtn>
+                            </SeBtn> */}
                             {/* <div className="border-2 border-solid border-primary-blue2 rounded-md text-primary-blue2 py-1 px-2 flex font-bold whitespace-nowrap">
 
                             </div> */}
