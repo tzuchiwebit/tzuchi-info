@@ -9,14 +9,12 @@ import { useState, useMemo } from "react";
 import _ from "lodash";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
 import color from "@/shared/styles/color";
-import PrimaryTag from "@/shared/tag/PrimaryTag";
 import useDataProvider from "../useDataProvider";
 import Skeleton from "react-loading-skeleton";
 import { useRouter } from "next/navigation";
 import routes from "@/config/routes";
-import Link from "next/link";
+import { SlidesTrack } from "../components";
 // import routes from "@/app/config/routes";
 // import { useRouter } from "next/navigation";
 
@@ -62,7 +60,7 @@ const Item = ({ item }) => {
     const router = useRouter();
 
     return (
-        <div className="relative w-full">
+        <div className="relative laptop:w-[180px] w-[165px] tablet:w-full">
             {/* <div className="w-full h-[480px] p-1"> */}
             <div className={"w-full p-1"}>
                 <div
@@ -99,77 +97,79 @@ const NextBtn = ({ onClick }) => (<button
     />
 </button>)
 
-const CarouselSection = ({ data }) => {
+// const CarouselSection = ({ data }) => {
 
-    const sliderData = useMemo(() => {
-        if (data.length === 1) {
-            return Array(4).fill(data[0])
-        } else if (data.length === 2) {
-            return _.concat(data, data);
-        }
-        return data
-    }, [data])
+//     const sliderData = useMemo(() => {
+//         if (data.length === 1) {
+//             return Array(4).fill(data[0])
+//         } else if (data.length === 2) {
+//             return _.concat(data, data);
+//         }
+//         return data
+//     }, [data])
 
-    const settings = {
-        customPaging: function (i) {
-            return (
-                <div
-                    tabIndex={0}
-                    role="button"
-                    // className={classNames((selectedIndex === i) ? 'bg-primary-blue2' : 'bg-gray-gray7', 'w-3 h-3 bottom-5 relative rounded-full')}
-                    className='w-3 h-3 bottom-5 relative rounded-full translate-x-1'
-                />
-            );
-        },
-        dots: true,
-        dotsClass: "slick-dots",
-        infinite: true,
-        centerMode: true,
-        centerPadding: '11%',
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        initialSlide: 0,
-        nextArrow: <NextBtn />,
-        prevArrow: <PrevBtn />,
-        responsive: [
-            {
-                breakpoint: 1024,
-                settings: {
-                    centerMode: false,
-                    slidesToShow: 4,
-                    slidesToScroll: 1,
-                    initialSlide: 0,
-                    infinite: true,
-                    arrows: false,
-                    dots: false,
-                    swipe: false,
-                }
-            },
-            {
-                breakpoint: 767,
-                settings: {
-                    centerMode: false,
-                    slidesToShow: 2,
-                    slidesToScroll: 1,
-                    infinite: true,
-                }
-            }
-        ]
-    };
+//     const settings = {
+//         customPaging: function (i) {
+//             return (
+//                 <div
+//                     tabIndex={0}
+//                     role="button"
+//                     // className={classNames((selectedIndex === i) ? 'bg-primary-blue2' : 'bg-gray-gray7', 'w-3 h-3 bottom-5 relative rounded-full')}
+//                     className='w-3 h-3 bottom-5 relative rounded-full translate-x-1'
+//                 />
+//             );
+//         },
+//         dots: true,
+//         dotsClass: "slick-dots",
+//         infinite: true,
+//         centerMode: true,
+//         centerPadding: '11%',
+//         speed: 500,
+//         slidesToShow: 1,
+//         slidesToScroll: 1,
+//         initialSlide: 0,
+//         nextArrow: <NextBtn />,
+//         prevArrow: <PrevBtn />,
+//         responsive: [
+//             {
+//                 breakpoint: 1024,
+//                 settings: {
+//                     centerMode: false,
+//                     slidesToShow: 4,
+//                     slidesToScroll: 1,
+//                     initialSlide: 0,
+//                     infinite: true,
+//                     arrows: false,
+//                     dots: false,
+//                     swipe: false,
+//                 }
+//             },
+//             {
+//                 breakpoint: 767,
+//                 settings: {
+//                     centerMode: false,
+//                     slidesToShow: 2,
+//                     slidesToScroll: 1,
+//                     infinite: true,
+//                 }
+//             }
+//         ]
+//     };
 
-    return (
-        <Slider style={{ paddingBottom: 60 }} {...settings}>
-            {
-                sliderData.map((item, index) => (<div key={index}>
-                    <Item item={item.attributes} />
-                </div>))
-            }
-        </Slider>
-    );
-}
+//     return (
+//         <Slider style={{ paddingBottom: 60 }} {...settings}>
+//             {
+//                 sliderData.map((item, index) => (<div key={index}>
+//                     <Item item={item.attributes} />
+//                 </div>))
+//             }
+//         </Slider>
+//     );
+// }
 
 export default function BookSuggest() {
+
+    const router = useRouter();
 
     const [selctedIndex, setSelectedIndex] = useState(0);
 
@@ -180,30 +180,67 @@ export default function BookSuggest() {
         return target?.data || [{}]
     }, [pageData])
 
+    const sliderData = useMemo(() => {
+        if (booksData.length === 1) {
+            return Array(4).fill(booksData[0])
+        } else if (booksData.length === 2) {
+            return _.concat(booksData, booksData);
+        }
+        return booksData
+    }, [booksData])
+
     return <div className="pt-3 w-full">
         <BannerTitle title={`好書推薦`} />
-        <div className="w-full">
-            <div className="py-4 flex gap-2 flex-wrap">
-                {
-                    tagOptions.map((tag, index) => (<PrimaryTag
-                        onClick={() => { setSelectedIndex(index) }}
-                        selected={(selctedIndex === index)}
-                        key={index}
-                    >
-                        {tag}
-                    </PrimaryTag>))
-                }
+        <div className="flex flex-row w-full gap-2 items-center pt-4">
+            <div className="flex-0 text-[24px] font-bold text-primary-blue1">
+                靜思人文
             </div>
-            {/* <CarouselSection /> */}
-            <CarouselContainer>
-                <CarouselSection data={booksData} />
-            </CarouselContainer>
+            <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
+            <div className="flex-0 font-medium justify-end items-end text-lg text-primary-blue3">
+                <div
+                    onClick={() => router.push('#')}
+                    target="_blank"
+                    className="cursor-pointer flex flex-row whitespace-nowrap">
+                    更多<Icon.RightArrow2 width={20} />
+                </div>
+            </div>
         </div>
-        <div className="w-full flex flex-row gap-1 items-center">
-            <div className="border-t border-solid border-gray-gray7 w-full" />
-            <div className="flex font-medium justify-end items-end flex-1 text-lg text-primary-blue3">
-                <Link href={`#`} target="_blank" className="flex flex-row whitespace-nowrap">更多<Icon.RightArrow2 width={20} /></Link>
+
+        <div className="w-full overflow-hidden">
+            <SlidesTrack>
+                {
+                    sliderData.map((item, index) => (<div className='w-fit' key={index}>
+                        <Item item={item.attributes} />
+                    </div>))
+                }
+            </SlidesTrack>
+
+            {/* <CarouselContainer>
+                <CarouselSection data={booksData} />
+            </CarouselContainer> */}
+        </div>
+        <div className="flex flex-row w-full gap-2 items-center  pt-4">
+            <div className="flex-0 text-[24px] font-bold text-primary-blue1">
+                慈濟書庫
             </div>
+            <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
+            <div className="flex-0 font-medium justify-end items-end text-lg text-primary-blue3">
+                <div
+                    onClick={() => router.push('#')}
+                    target="_blank"
+                    className="cursor-pointer flex flex-row whitespace-nowrap">
+                    更多<Icon.RightArrow2 width={20} />
+                </div>
+            </div>
+        </div>
+        <div className="w-full overflow-hidden">
+            <SlidesTrack>
+                {
+                    sliderData.map((item, index) => (<div className='w-fit' key={index}>
+                        <Item item={item.attributes} />
+                    </div>))
+                }
+            </SlidesTrack>
         </div>
     </div>
 }

@@ -18,7 +18,7 @@ const YoutubeSection = () => {
 
     const [videoSrc, setVideoSrc] = useState(true);
     // console.log(videoSrc);
-    return <div className="py-5 w-full">
+    return <div className="py-7 w-full">
         <div className="rounded-md overflow-hidden">
             {/* <video width="100%" height="240" controls src={'/test.mp4'} /> */}
             {/* http://www.w3schools.com/html/mov_bbb.mp4 */}
@@ -56,7 +56,7 @@ const YoutubeSection = () => {
 
 export default function Youtube() {
 
-    return <div className="py-3 flex-1">
+    return <div className="pt-5 flex-1">
         <BannerTitle title={<div className="inherit">
             <div className="text-[26px] font-bold text-primary-blue1">Youtube</div>
             <div className="text-[26px] font-bold text-primary-blue1">小編精選</div>

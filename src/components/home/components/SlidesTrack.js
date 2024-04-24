@@ -16,7 +16,6 @@ export default function SlidesTrack({ children }) {
 const SlideTrackContainer = styled.div`
     display: flex;
     flex-direction: row;
-    // width: 100%;
     margin-right: -15px;
     padding-right: 15px;
     overflow-x: scroll;
