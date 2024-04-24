@@ -137,27 +137,18 @@ export default function SocialShareProvider({ children }) {
   });
 
   const toggleSocialShareModal = (e) => {
-    console.log(`showSocialShareModal`);
-    console.log(showSocialShareModal)
     const windowSize = {
       x: e.view?.innerWidth,
       y: e.view?.innerHeight,
     }
-    console.log(`windowSize`)
-    console.log(windowSize)
     const pos = {
       x: e.clientX,
       y: ((windowSize.y - e.clientY) > (windowSize.y / 2)) ? e.clientY + 20 : e.clientY - 250,
     }
 
-    console.log(pos);
     setShowSocialShareModal(!showSocialShareModal);
     setSocialShareModalPosition(pos)
   };
-
-  useEffect(() => {
-    // handleGetRowData();
-  }, []);
 
   return (
     <SocialShareContext.Provider value={{
