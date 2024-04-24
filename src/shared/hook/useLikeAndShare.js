@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { addLikes, addShares } from "@/api/api";
 const { useLocalStorageState } = require('ahooks')
 
 
@@ -53,24 +54,22 @@ const useLikeAndShare = ({ id }) => {
     // await handleGetRowData();
   };
 
-  const handleLike = async () => {
+  const handleLike = async (id) => {
     if (hasLike) {
       return;
     }
-    setIsLikeUpdating(true);
+    addLikes(id);
     setHasLike(true);
     setLike(parseInt(like) + 1);
-    setIsLikeUpdating(false);
   };
 
-  const handleShare = async () => {
+  const handleShare = async (id) => {
     if (hasShare) {
       return;
     }
-    setIsShareUpdating(true);
+    addShares(id);
     setHasShare(true);
     setShare(parseInt(share) + 1);
-    setIsShareUpdating(false);
   };
 
   useEffect(() => {
