@@ -4,11 +4,13 @@ import SiteNews from "./SiteNews"
 import CommunityStory from "./CommunityStory"
 import Article from "./Article"
 import screens from "@/shared/styles/screens"
+import Widgets from "../widget/Widgets"
 
 export default function MainContent() {
 
     return <Container>
         <MainCarousel />
+        <Widgets className="desktop:hidden pb-2" />
         <SiteNews />
         <CommunityStory />
         <Article />

@@ -7,12 +7,35 @@ import Image from "next/image"
 import { OuterContainer } from "./container"
 import { useRouter } from 'next/navigation'
 import routes from "@/config/routes"
+import Skeleton from "react-loading-skeleton"
 
 export default function Journal() {
+
     const router = useRouter();
+
+    const reminderItem = {};
+
+
     return <OuterContainer>
         <InnerContainer>
             <div className="flex px-2 laptop:justify-end justify-center shrink-0 laptop:max-w-[50%] desktop:max-w-full">
+                {reminderItem.image ?
+                    <div className="aspect-square relative">
+                        <Image
+                            src={reminderItem.image}
+                            alt={reminderItem.imageAlt}
+                            width={0}
+                            height={0}
+                            sizes="100vw"
+                            layout='fill'
+                            objectFit='contain'
+                            className="w-full laptop:h-auto laptop:w-full max-w-[150px] desktop:max-w-[165px]"
+                        // style={{ width: '100%' }}
+                        />
+                    </div> :
+                    <></>
+                    // <Skeleton className="aspect-square w-full laptop:h-auto laptop:w-full max-w-[150px] desktop:max-w-[165px]" />
+                }
                 <Image
                     src="https://picsum.photos/id/201/200/300"
                     alt=""
@@ -20,7 +43,6 @@ export default function Journal() {
                     height={0}
                     sizes="100vw"
                     className="aspect-square w-full laptop:h-auto laptop:w-full max-w-[150px] desktop:max-w-[165px]"
-                // style={{ width: '100%' }}
                 />
             </div>
             <div className="flex flex-col p-2 text-xl laptop:justify-start shrink min-h-[90px]">
@@ -35,10 +57,10 @@ export default function Journal() {
         </InnerContainer>
         <div className="bg-gray-gray8 p-1.5 w-full">
             <span
-              className="cursor-pointer font-medium flex items-center justify-end text-lg text-primary-blue3 hover:text-primary-blue2"
-              onClick={() => {
-                router.push(`${routes.WEEKLY_REPORT}`)
-              }}>
+                className="cursor-pointer font-medium flex items-center justify-end text-lg text-primary-blue3 hover:text-primary-blue2"
+                onClick={() => {
+                    router.push(`${routes.WEEKLY_REPORT}`)
+                }}>
                 更多 <Icon.RightArrow2 width="18px" />
             </span>
         </div>

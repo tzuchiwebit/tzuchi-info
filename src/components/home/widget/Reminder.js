@@ -21,6 +21,8 @@ export default function Reminder() {
         const target = _.find(pageData, { name: '證嚴上人每日一叮嚀' });
         if (target?.data) {
             return {
+                image: target?.data[0]?.attributes?.images?.image_intro || '',
+                imageAlt: target?.data[0]?.attributes?.images?.image_intro_alt || '',
                 title: target?.data[0]?.attributes?.title || '',
                 id: target?.data[0]?.id
             }
@@ -34,15 +36,22 @@ export default function Reminder() {
     return <OuterContainer>
         <InnerContainer>
             <div className="flex px-2 laptop:justify-end justify-center shrink-0 laptop:max-w-[50%] desktop:max-w-full">
-                <Image
-                    src="https://picsum.photos/id/208/200/300"
-                    alt=""
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    className="aspect-square w-full laptop:h-auto laptop:w-full max-w-[150px] desktop:max-w-[165px]"
-                // style={{ width: '100%' }}
-                />
+                {reminderItem.image ?
+                    <div className="aspect-square relative">
+                        <Image
+                            src={reminderItem.image}
+                            alt={reminderItem.imageAlt}
+                            width={0}
+                            height={0}
+                            sizes="100vw"
+                            layout='fill'
+                            objectFit='contain'
+                            className="w-full laptop:h-auto laptop:w-full max-w-[150px] desktop:max-w-[165px]"
+                        // style={{ width: '100%' }}
+                        />
+                    </div> :
+                    <Skeleton className="aspect-square" />
+                }
             </div>
             <div
                 className="flex flex-col font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink min-h-[90px] cursor-pointer"

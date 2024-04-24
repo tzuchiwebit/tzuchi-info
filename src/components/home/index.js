@@ -17,7 +17,7 @@ export default function Home() {
             <LikeAndShareProvider>
                 <div className="flex flex-col laptop:flex-row w-full">
                     <MainContainer>
-                        <Widgets />
+                        <Widgets className="hidden desktop:block" />
                         <MainContent />
                     </MainContainer>
                     <SecondaryContainer>

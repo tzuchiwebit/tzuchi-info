@@ -8,8 +8,9 @@ import Thinking from "./Thinking"
 import { Transition } from '@headlessui/react'
 import { useState } from "react"
 import Icon from "@/shared/Icon"
+import classNames from "@/utils/classNames"
 
-export default function Widgets() {
+export default function Widgets({ ...props }) {
 
     const [open, setOpen] = useState(false);
 
@@ -17,8 +18,8 @@ export default function Widgets() {
         setOpen(!open);
     }
 
-    return <div className="w-full" style={{ flex: 0 }}>
-        <div className="w-full border-b border-solid border-gray-gray7 justify-between pb-2 mb-2 hidden laptop:flex desktop:hidden">
+    return <div className={classNames(props.className, "w-full")} style={{ flex: 0 }} >
+        {/* <div className="w-full border-b border-solid border-gray-gray7 justify-between pb-2 mb-2 hidden laptop:flex desktop:hidden">
             <div className="font-bold text-lg text-primary-blue1">
                 {open ? '' : '志工早會 • 證嚴上人每日一叮嚀 • 慈濟週報'}
             </div>
@@ -40,15 +41,13 @@ export default function Widgets() {
                 <Calendar />
                 <Reminder />
                 <Journel />
-                {/* <Thinking /> */}
             </Container>
-        </Transition>
-        <div className="w-full flex laptop:hidden desktop:flex">
+        </Transition> */}
+        <div className="w-full flex">
             <Container>
                 <Calendar />
                 <Reminder />
                 <Journel />
-                {/* <Thinking /> */}
             </Container>
         </div>
     </div>
