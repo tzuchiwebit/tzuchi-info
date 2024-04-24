@@ -59,7 +59,7 @@ const useLikeAndShare = ({ id }) => {
     }
     setIsLikeUpdating(true);
     setHasLike(true);
-    setLike(like + 1);
+    setLike(parseInt(like) + 1);
     setIsLikeUpdating(false);
   };
 
@@ -69,7 +69,7 @@ const useLikeAndShare = ({ id }) => {
     }
     setIsShareUpdating(true);
     setHasShare(true);
-    setShare(share + 1);
+    setShare(parseInt(share) + 1);
     setIsShareUpdating(false);
   };
 
