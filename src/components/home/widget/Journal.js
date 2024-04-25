@@ -18,7 +18,7 @@ export default function Journal() {
 
     return <OuterContainer>
         <InnerContainer>
-            <div className="flex px-2 laptop:justify-end justify-center shrink-0 laptop:max-w-[50%] desktop:max-w-full">
+            <div className="flex px-2 laptop:justify-end justify-center shrink-0 laptop:max-w-[50%] desktop:max-w-full max-h-[150px]">
                 {reminderItem.image ?
                     <div className="aspect-square relative">
                         <Image
@@ -29,7 +29,7 @@ export default function Journal() {
                             sizes="100vw"
                             layout='fill'
                             objectFit='contain'
-                            className="w-full laptop:h-auto laptop:w-full max-w-[150px] desktop:max-w-[165px]"
+                            className="w-full laptop:h-auto laptop:w-full desktop:max-w-[165px]"
                         // style={{ width: '100%' }}
                         />
                     </div> :
