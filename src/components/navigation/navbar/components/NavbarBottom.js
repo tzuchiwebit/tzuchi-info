@@ -53,7 +53,7 @@ export default function NavbarBottom() {
                           !!nav.children && nav.children.map((child, cIndex) => {
                             return (<StyledNavItem
                               key={child.label + cIndex}
-                              onClick={() => window.open(child.link)}
+                              onClick={() => push(child.link)}
                               className='desktop:text-xl tablet:min-w-[100px] laptop:min-w-[140px] desktop:min-w-[180px] hover:text-primary-blue2'>
                               {child.label}
                             </StyledNavItem>)

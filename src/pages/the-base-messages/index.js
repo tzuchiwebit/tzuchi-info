@@ -14,6 +14,7 @@ import Icon from "@/shared/Icon"
 import { BannerTitle } from "@/components/home/components"
 import color from "@/shared/styles/color"
 import styled from "styled-components"
+import joomlaGlobal from '@/api/joomlaGlobal'
 
 export default function Page() {
 
@@ -23,40 +24,45 @@ export default function Page() {
   const resultsTW = Array(5).fill({
     title: '文字文字文字文字文字文字文文字文字文字文字文字文字文文字文字文字文字文字文字文字文文字文字文字文字文字文字文文字文字文字文字文字文字文字文文字文字文字文字文字文字文文字',
     link: '',
-    category: '臺灣',
+    place: 'taiwan',
   });
 
   const resultsAsia = Array(5).fill({
     title: '文字文字文字文字文字文字文文字文字文字文字文字文字文文字',
     link: '',
-    category: '亞洲',
+    place: 'asia',
   });
   const resultsAmerica = Array(5).fill({
     title: '文字文字文字文字文字文字文文字文字文字文字文字文字文文字',
     link: '',
-    category: '美洲',
+    place: 'america',
   });
   const resultsEurope = Array(5).fill({
     title: '文字文字文字文字文字文字文文字文字文字文字文字文字文文字',
     link: '',
-    category: '歐洲',
+    place: 'europe',
   });
   const resultsAfrica = Array(5).fill({
     title: '文字文字文字文字文字文字文文字文字文字文字文字文字文文字',
     link: '',
-    category: '非洲',
+    place: 'africa',
+  });
+  const resultsOceania = Array(5).fill({
+    title: '文字文字文字文字文字文字文文字文字文字文字文字文字文文字',
+    link: '',
+    place: 'oceania',
   });
 
-  const testData = _.chain(resultsTW).concat(resultsAmerica, resultsAsia, resultsEurope, resultsAfrica).groupBy('category').value()
+  const testData = _.chain(resultsTW).concat(resultsAmerica, resultsAsia, resultsEurope, resultsAfrica, resultsOceania).groupBy('place').value()
 
   // console.log(`testData`)
   // console.log(testData)
 
-  const SiteCard = ({ item, category }) => {
+  const SiteCard = ({ item, place }) => {
 
     return <div className="w-full tablet:w-1/2 laptop:w-1/3 px-3 mb-6">
       <div className="bg-white border rounded-[4px] p-5 shadow-elevation-3 flex flex-col gap-2">
-        <BannerTitle title={category} link={'#'} />
+        <BannerTitle title={joomlaGlobal[place]?.label} link={joomlaGlobal[place]?.link} />
         <div className="text-primary-blue1 font-bold text-xl">
           {item.title}
         </div>
@@ -114,7 +120,7 @@ export default function Page() {
       {/* result cards */}
       <div className="w-auto flex flex-wrap -mx-3">
         {
-          Object.keys(testData).map((item, index) => <SiteCard category={item} item={testData[item]} key={index} />)
+          Object.keys(testData).map((item, index) => <SiteCard place={item} item={testData[item]} key={index} />)
         }
       </div>
     </div>

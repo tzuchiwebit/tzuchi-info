@@ -46,27 +46,27 @@ export const NavLinkItems = [
         children: [
             {
                 label: '臺灣',
-                link: 'https://tw.tzuchi.org/%E5%85%A8%E7%90%83%E5%BF%97%E6%A5%AD/%E8%87%BA%E7%81%A3'
+                link: '/global/taiwan'
             },
             {
                 label: '亞洲',
-                link: 'https://tw.tzuchi.org/%E5%85%A8%E7%90%83%E5%BF%97%E6%A5%AD/%E4%BA%9E%E6%B4%B2'
+                link: '/global/asia'
             },
             {
                 label: '歐洲',
-                link: 'https://tw.tzuchi.org/%E5%85%A8%E7%90%83%E5%BF%97%E6%A5%AD/%E6%AD%90%E6%B4%B2'
+                link: '/global/europe'
             },
             {
                 label: '美洲',
-                link: 'https://tw.tzuchi.org/%E5%85%A8%E7%90%83%E5%BF%97%E6%A5%AD/%E7%BE%8E%E6%B4%B2'
+                link: '/global/america'
             },
             {
                 label: '非洲',
-                link: 'https://tw.tzuchi.org/%E5%85%A8%E7%90%83%E5%BF%97%E6%A5%AD/%E9%9D%9E%E6%B4%B2'
+                link: '/global/africa'
             },
             {
                 label: '大洋洲',
-                link: 'https://tw.tzuchi.org/%E5%85%A8%E7%90%83%E5%BF%97%E6%A5%AD/%E5%A4%A7%E6%B4%8B%E6%B4%B2'
+                link: '/global/oceania'
             },
         ]
     },
