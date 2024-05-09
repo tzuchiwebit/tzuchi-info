@@ -13,7 +13,8 @@ import SearchSelect from "@/shared/input/SearchSelect"
 import Pagination from "@/shared/pagination/Pagination"
 import classNames from "@/utils/classNames"
 import { useSearchParams } from "next/navigation"
-
+import Highlighter from "react-highlight-words";
+import styles from './search.module.css'
 
 const ResultCard = ({ item, index, isLast = false }) => {
 
@@ -31,8 +32,15 @@ const ResultCard = ({ item, index, isLast = false }) => {
       <div className="text-lg laptop:text-2xl font-bold text-primary-blue1 line-clamp-1">
         {index + 1}. {item.title}
       </div>
-      <div className="font-medium text-gray-gray2 mt-1 laptop:mt-4 line-clamp-2 laptop:line-clamp-4">
-        {item.content}
+      <div className="mt-1 laptop:mt-4 line-clamp-2 laptop:line-clamp-4">
+        {/* {item.content} */}
+        <Highlighter
+          highlightClassName={styles.mark}
+          unhighlightClassName={styles.content}
+          searchWords={["組建而成"]}
+          autoEscape={true}
+          textToHighlight={item.content}
+        />
       </div>
       <div className="text-gray-gray2 mt-1 laptop:mt-4">
         發表日期：{item.date}
