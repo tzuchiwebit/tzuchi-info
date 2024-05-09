@@ -118,6 +118,12 @@ const StyledPaginationIconButton = styled.div`
   height: 32px;
   cursor: pointer;
   color: ${color.secondary.light.blueGreen3};
+  &:hover {
+    color: ${color.secondary.light.blueGreen2};
+  }
+  &:active {
+    color: ${color.secondary.dark.blueGreen};
+  }
 `;
 
 const StyledPaginationText = styled.div`
@@ -125,10 +131,12 @@ const StyledPaginationText = styled.div`
   color: ${(props) => (props.$active ? color.primary.blue2 : color.gray.gray4)};
   font-weight: ${(props) => (props.$active ? 700 : 500)};
   font-size: 20px;
+  user-select: none;
 `;
 
 const StyledPaginationDesc = styled.div`
   color: ${color.gray.gray2};
   font-size: 18px;
   font-weight: 500;
+  user-select: none;
 `;
