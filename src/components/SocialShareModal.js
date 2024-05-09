@@ -18,7 +18,7 @@ const ModalContainer = styled.div`
     @media(max-width: ${screens["laptop-down"].max}) {
       width: 100vw;
       position: fixed;
-      z-index: 999;
+      z-index: 1000;
       bottom: 0;
       left: 0;
       transition: all .3s ease-out;
