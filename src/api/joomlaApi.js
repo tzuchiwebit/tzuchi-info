@@ -23,7 +23,6 @@ const getArticleById = async (id) => {
 const getRecommandArticles = async (categoryId, limit = 3) => {
   // 推薦閱讀：抓取 相同分類、點擊最高的3篇文章
   try {
-    // TODO: add sorting
     const res = await axios.get(`${API_ENDPOINT}/articles`, {
         headers: {
             'Authorization': 'Bearer ' + token
@@ -32,7 +31,8 @@ const getRecommandArticles = async (categoryId, limit = 3) => {
           'page[limit]': limit,
           'filter[state]': 1,
           'filter[category]': categoryId,
-          'list[fullordering]': 'a.hits DESC', // not work
+          'list[ordering]': 'hits',
+          'list[direction]': 'desc',
         },
     })
     return res?.data
@@ -43,11 +43,11 @@ const getRecommandArticles = async (categoryId, limit = 3) => {
 const getExtendArticles = async (tags = [], limit = 3) => {
   // 抓取 相同文章標籤、點擊最高的3篇文章
   try {
-    // TODO: add sorting
     const params = {
       'page[limit]': limit,
       'filter[state]': 1,
-      'list[fullordering]': 'a.hits DESC', // not work
+      'list[ordering]': 'hits',
+      'list[direction]': 'desc',
     }
     if (tags.length) params['filter[tag]'] = tags
 
