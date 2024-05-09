@@ -15,14 +15,6 @@ import { useRouter, useParams } from 'next/navigation'
 import joomlaContentCategory from '@/api/joomlaContentCategory'
 import Spinner from "@/components/Spinner"
 
-const StyledImage = styled.div`
-  width: 100%;
-  height: 560px;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-`
-
 const Breadcrumb = ({className}) => {
   const { pageData } = useDataProvider();
 

@@ -9,6 +9,7 @@ import MainContent from "./mainContent/MainContent"
 import SecondaryContent from "./secondaryContent/SecondaryContent"
 import DataProvider from "./DataProvider"
 import LikeAndShareProvider from "./SocialShareProvider"
+import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
 
 export default function Home() {
 
@@ -16,6 +17,7 @@ export default function Home() {
         <DataProvider>
             <LikeAndShareProvider>
                 <div className="flex flex-col laptop:flex-row w-full">
+                    <FloatScrollTopButton />
                     <MainContainer>
                         <Widgets className="hidden desktop:block" />
                         <MainContent />

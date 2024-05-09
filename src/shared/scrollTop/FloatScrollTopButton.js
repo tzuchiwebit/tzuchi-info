@@ -1,10 +1,21 @@
 'use client'
 import { useState, useEffect } from "react"
 import styled from "styled-components"
-import screens from "../styles/screens"
-import dayjs from "dayjs"
 import Icon from "../Icon"
-import color from "../styles/color"
+import screens from "@/shared/styles/screens";
+
+const StyledContainer = styled.div`
+  position: fixed;
+  z-index: 50;
+  bottom: calc(80px + 72px + 16px);
+  right: 32px;
+  @media(min-width: ${screens.tablet}) {
+    bottom: calc(90px + 72px + 16px);
+  }
+  @media(min-width: ${screens.laptop}) {
+    bottom: calc(28px + 72px + 16px);
+  }
+`
 
 const FloatScrollTopButton = ({ }) => {
 
@@ -37,7 +48,7 @@ const FloatScrollTopButton = ({ }) => {
         };
     }, []);
 
-    return <div className="fixed z-50 right-3 top-[60vh]">
+    return <StyledContainer>
         {
             isVisible ? <button
                 onClick={() => scrollToTop()}
@@ -45,7 +56,7 @@ const FloatScrollTopButton = ({ }) => {
                 <Icon.UpArrowMain style={{ width: 32 }} />
             </button> : <></>
         }
-    </div>
+    </StyledContainer>
 }
 
 export default FloatScrollTopButton

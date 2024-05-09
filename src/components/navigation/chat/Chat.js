@@ -73,7 +73,7 @@ const ChatContainer = styled.div`
   width: 72px;
   position: fixed;
   bottom: 80px;
-  right: 28px;
+  right: 20px;
   cursor: pointer;
   @media(min-width: ${screens.tablet}) {
     bottom: 90px;
