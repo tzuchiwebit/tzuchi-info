@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;600;700;800;900&display=swap');
 
-:root {  
+:root {
   --white: #fff;
   --white-dark: #f0f0f0; /* 寬容慈悲 */
   --white-darker: #ccc;
@@ -43,7 +43,7 @@
   --card-height: 100%;
   --no-article-message: 'Coming Soon......';
   /* for ghost post */
-  --ghost-accent-color: var(--primary-color-blue); 
+  --ghost-accent-color: var(--primary-color-blue);
 }
 
 * {
@@ -60,16 +60,16 @@ footer, header, nav, section {
   padding: 0;
   border: 0;
   font-family: 'Noto Sans TC', sans-serif;
-  font-size: inherit;
+  /* font-size: inherit; */
   vertical-align: baseline;
-  font-weight: 400;
+  /* font-weight: 400; */
 }
 
 html {
   padding-right: 0px !important;
 }
 
-/* 
+/*
 body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));

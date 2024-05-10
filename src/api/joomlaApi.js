@@ -41,7 +41,7 @@ const getRecommandArticles = async (categoryId, limit = 3) => {
   }
 }
 const getExtendArticles = async (tags = [], limit = 3) => {
-  // 抓取 相同文章標籤、點擊最高的3篇文章
+  // 抓取 相同文章標籤(or)、點擊最高的3篇文章
   try {
     const params = {
       'page[limit]': limit,

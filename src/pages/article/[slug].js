@@ -1,5 +1,5 @@
 "use client"
-import { Fragment, useMemo } from "react"
+import { Fragment, useMemo, useState } from "react"
 import Container from "@/shared/layout/Container"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import styled from "styled-components"
@@ -14,6 +14,9 @@ import dayjs from "dayjs"
 import { useRouter, useParams } from 'next/navigation'
 import joomlaContentCategory from '@/api/joomlaContentCategory'
 import Spinner from "@/components/Spinner"
+import Image from "next/image"
+import styles from './article.module.css'
+import * as classnames from "classnames"
 
 const Breadcrumb = ({className}) => {
   const { pageData } = useDataProvider();
@@ -51,6 +54,7 @@ const Breadcrumb = ({className}) => {
 
 const Article = () => {
   const { pageData } = useDataProvider();
+  const [selectedFontSize, setSelectedFontSize] = useState('small')
 
   const articleData = useMemo(() => {
     const target = _.find(pageData, { name: 'article' });
@@ -91,8 +95,38 @@ const Article = () => {
         <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
         <SocialBar isMobileType={false} likes={articleData?.attributes?.like} shares={articleData?.attributes?.share}></SocialBar>
       </div>
-      <div className="laptop:mt-6 mt-4 font-bold text-black leading-[22px]">
-        <div id={'content-holder'} style={{wordBreak: 'break-all'}} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
+      <div className="laptop:mt-6 mt-4 text-lg leading-[22px]">
+        {
+          articleData?.attributes?.images?.image_intro &&
+          <Image
+            src={articleData?.attributes?.images?.image_intro}
+            alt={articleData?.attributes?.images?.image_intro_alt}
+            width={0}
+            height={0}
+            sizes="100vw"
+            style={{
+              width: '100%',
+              height: 'auto',
+            }}
+          />
+        }
+        {
+          articleData?.attributes?.metadesc &&
+          <div className="mt-2 text-gray-gray2 font-medium leading-[22.4px]">{articleData?.attributes?.metadesc}</div>
+        }
+        {
+          (articleData?.attributes?.images?.image_intro || articleData?.attributes?.metadesc) &&
+          <div className="mt-1 mb-4 flex flex-1 text-lg border-solid border-b-[1px] border-gray-gray7" />
+        }
+        <div className="mb-4 flex flex-row items-center justify-center w-full bg-gray-gray8 py-1 gap-x-2 rounded">
+          <div className="text-base font-medium">文字大小</div>
+          <div className="flex flex-row gap-x-1">
+            <div className={classnames(styles.itemButton, selectedFontSize === 'small' ? styles.focus : styles.default, styles.small)} onClick={()=> setSelectedFontSize('small')}>小</div>
+            <div className={classnames(styles.itemButton, selectedFontSize === 'medium' ? styles.focus : styles.default, styles.medium)} onClick={()=> setSelectedFontSize('medium')}>中</div>
+            <div className={classnames(styles.itemButton, selectedFontSize === 'large' ? styles.focus : styles.default, styles.large)} onClick={()=> setSelectedFontSize('large')}>大</div>
+          </div>
+        </div>
+        <div id={'content-holder'} style={{wordBreak: 'break-all'}} className={styles[selectedFontSize]} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
       </div>
     </div>
   )
