@@ -2,7 +2,12 @@
   @apply h-[31px] w-[31px] flex justify-center items-center rounded cursor-pointer font-black select-none;
 
   &.focus {
-    @apply text-white bg-primary-blue2;
+    @apply text-primary-blue2 bg-gray-gray10;
+  }
+  @media all and (min-width: 1024px) {
+    &.focus {
+      @apply text-white bg-primary-blue2;
+    }
   }
 
   &.default {
