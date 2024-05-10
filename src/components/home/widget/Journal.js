@@ -47,7 +47,7 @@ export default function Journal() {
             </div>
             <div className="flex flex-col p-2 text-xl laptop:justify-start shrink min-h-[90px]">
                 <div className="flex font-semibold leading-7 tracking-normal justify-between items-center tablet:flex-col tablet:items-start desktop:flex-row">
-                    慈濟週報 <SubscribeTag>訂閱 <Icon.Bell style={{ width: 13 }} /></SubscribeTag>
+                    慈濟週報 <SubscribeTag onClick={()=> window.open('https://docs.google.com/forms/d/e/1FAIpQLSeRATEdx4-mOyykXIptMyXvbsJvw7XwzDWHWnqG1cMQTexZRA/viewform')}>訂閱 <Icon.Bell style={{ width: 13 }} /></SubscribeTag>
                 </div>
                 <div className="pt-1 justify-center laptop:justify-start line-clamp-2 text-gray-gray2 w-full shrink text-base">
                     慈濟一週重點訊息
