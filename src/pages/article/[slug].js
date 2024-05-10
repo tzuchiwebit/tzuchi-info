@@ -92,7 +92,7 @@ const Article = () => {
         <SocialBar isMobileType={false} likes={articleData?.attributes?.like} shares={articleData?.attributes?.share}></SocialBar>
       </div>
       <div className="laptop:mt-6 mt-4 font-bold text-black leading-[22px]">
-        <div id={'content-holder'} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
+        <div id={'content-holder'} style={{wordBreak: 'break-all'}} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
       </div>
     </div>
   )
