@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { createContext } from 'react';
 import { getArticlesByCategory } from "@/api/joomlaApi";
-
+import { getBookSuggest } from "@/api/api";
 
 export const DataContext = createContext(null);
 
@@ -44,7 +44,9 @@ export default function DataProvider({ children }) {
 
 
   const [pageData, setPageData] = useState([]);
+  const [suggestBooks, setSuggestBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [loadingBooks, setLoadingBooks] = useState(true);
 
   const getJournal = async () => {
     setLoading(true);
@@ -63,13 +65,28 @@ export default function DataProvider({ children }) {
     }
   }
 
+  const getBooksSuggested = async () => {
+    setLoadingBooks(true);
+    try {
+      const res = await getBookSuggest();
+
+      setSuggestBooks(res);
+
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingBooks(false);
+    }
+  }
+
   useEffect(() => {
     getJournal();
+    getBooksSuggested()
   }, [])
 
 
   return (
-    <DataContext.Provider value={{pageData, loading}}>
+    <DataContext.Provider value={{ pageData, loading, loadingBooks, suggestBooks }}>
       {children}
     </DataContext.Provider>
   );

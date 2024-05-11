@@ -54,10 +54,22 @@ const addShares = async (id) => {
   }
 }
 
+const getBookSuggest = async () => {
+  try {
 
+    const res = await axios.get(`${API_ENDPOINT}/book.php`)
+    // console.log(`res`)
+    // console.log(res)
+    return res?.data
+
+  } catch (err) {
+    throw err
+  }
+}
 
 export {
   addHits,
   addShares,
-  addLikes
+  addLikes,
+  getBookSuggest
 }

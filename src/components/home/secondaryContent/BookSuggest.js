@@ -4,7 +4,7 @@ import styled from "styled-components"
 import { BannerTitle } from "../components"
 import screens from "@/shared/styles/screens";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-// import { Carousel } from "react-responsive-carousel"
+import { Carousel } from "react-responsive-carousel"
 import { useState, useMemo } from "react";
 import _ from "lodash";
 import "slick-carousel/slick/slick.css";
@@ -65,9 +65,11 @@ const Item = ({ item }) => {
             <div className={"w-full p-1"}>
                 <div
                     className="w-full rounded-md overflow-hidden cursor-pointer"
-                    onClick={() => router.push(`${routes.ARITCLE}/${item.id}`)}>
+                    onClick={() => {
+                        // router.push(`${routes.ARITCLE}/${item.id}`)
+                    }}>
                     {
-                        item?.images?.image_intro ? <StyledImage style={{ backgroundImage: `url(${item?.images?.image_intro ? item.images?.image_intro : "https://picsum.photos/id/230/300/300"})` }} /> :
+                        item?.image ? <StyledImage style={{ backgroundImage: `url(${item?.image ? item.image : "https://picsum.photos/id/230/300/300"})` }} /> :
                             <Skeleton className="aspect-square" />
                     }
 
@@ -173,12 +175,14 @@ export default function BookSuggest() {
 
     const [selctedIndex, setSelectedIndex] = useState(0);
 
-    const { pageData, loading } = useDataProvider();
+    const { pageData, loading, loadingBooks, suggestBooks: booksData } = useDataProvider();
+    // console.log(`booksData`)
+    // console.log(booksData)
 
-    const booksData = useMemo(() => {
-        const target = _.find(pageData, { name: '好書推薦' });
-        return target?.data || [{}]
-    }, [pageData])
+    // const booksData = useMemo(() => {
+    //     const target = _.find(pageData, { name: '好書推薦' });
+    //     return target?.data || [{}]
+    // }, [pageData])
 
     const sliderData = useMemo(() => {
         if (booksData.length === 1) {
@@ -186,7 +190,7 @@ export default function BookSuggest() {
         } else if (booksData.length === 2) {
             return _.concat(booksData, booksData);
         }
-        return booksData
+        return booksData.slice(0, 4)
     }, [booksData])
 
     return <div className="pt-3 w-full">
@@ -210,7 +214,7 @@ export default function BookSuggest() {
             <SlidesTrack>
                 {
                     sliderData.map((item, index) => (<div className='w-fit' key={index}>
-                        <Item item={item.attributes} />
+                        <Item item={item} />
                     </div>))
                 }
             </SlidesTrack>
@@ -237,7 +241,7 @@ export default function BookSuggest() {
             <SlidesTrack>
                 {
                     sliderData.map((item, index) => (<div className='w-fit' key={index}>
-                        <Item item={item.attributes} />
+                        <Item item={item} />
                     </div>))
                 }
             </SlidesTrack>
