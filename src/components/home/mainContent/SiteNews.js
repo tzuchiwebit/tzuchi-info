@@ -33,11 +33,10 @@ const Item = ({ item = {} }) => {
                 {/* <StyledImage style={{ backgroundImage: `url(${"https://picsum.photos/id/230/300/300"})` }} /> */}
                 <ImageContainer onClick={() => router.push(`${routes.ARITCLE}/${item.id}`)}>
                     {
-                        item?.images?.image_intro ?
-                            <BlurBGImage url={item?.images?.image_intro} /> :
-                            <Skeleton className="aspect-video" />
+                        item?.id ?
+                        <BlurBGImage url={item?.images?.image_intro} /> :
+                        <Skeleton className="aspect-video" />
                     }
-
                 </ImageContainer>
                 <div
                     className="pt-2 text-xl font-bold w-full text-primary-blue1 text-left h-24 tablet:h-20 laptop:h-32 desktop:h-28 laptop:pb-2"

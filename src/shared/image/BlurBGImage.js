@@ -1,5 +1,7 @@
 'use client'
 import styled from 'styled-components';
+import DefaultImage from '@/asset/image/default-article-intro.png'
+import Image from 'next/image'
 
 // export default styled.div`
 //   width: 90%;
@@ -12,8 +14,41 @@ export default function BlurBGImage({ width, height, url, ...props }) {
   // const extendStyles = className || '';
   return (
     <ImageContainer>
-      <img className="img-item" src={url} />
-      <img className="background-img-item" style={{ backgroundImage: `url(${url})` }} />
+      {
+        url ?
+        <>
+          <img className="img-item" src={url} />
+          <img className="background-img-item" style={{ backgroundImage: `url(${url})` }} />
+        </>:
+        <>
+        <Image
+        className="img-item"
+          src={DefaultImage}
+          alt={""}
+          width={0}
+          height={0}
+          sizes="100vw"
+          style={{
+            width: '100%',
+            height: 'auto',
+          }}
+        />
+        <Image
+        className="background-img-item"
+          src={DefaultImage}
+          alt={""}
+          width={0}
+          height={0}
+          sizes="100vw"
+          style={{
+            width: '100%',
+            height: 'auto',
+          }}
+        />
+        </>
+
+      }
+
     </ImageContainer>
   );
 }

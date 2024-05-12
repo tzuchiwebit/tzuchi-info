@@ -10,6 +10,7 @@ import { useMemo } from "react";
 import _ from 'lodash'
 import { useRouter } from "next/navigation";
 import routes from "@/config/routes";
+import Skeleton from "react-loading-skeleton";
 
 const Item = ({ item }) => {
 
@@ -22,10 +23,14 @@ const Item = ({ item }) => {
         >
             <div className="w-full shadow-elevation-3 rounded-md overflow-hidden p-3 flex flex-col laptop:flex-row gap-4 items-center">
                 <ImageContainer>
+                  {
+                    item?.id ?
                     <BlurBGImage
-                        url={item.images?.image_intro || "https://picsum.photos/id/230/300/300"}
+                        url={item.images?.image_intro}
                         alt={item.images?.image_intro_alt}
-                    />
+                    />:
+                    <Skeleton className="aspect-video" />
+                  }
                 </ImageContainer>
                 <div className="relative h-[210px] laptop:h-[220px] laptop:max-w-[45%]">
                     <div className="text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2 h-14">
