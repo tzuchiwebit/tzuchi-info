@@ -169,21 +169,16 @@ const NextBtn = ({ onClick }) => (<button
 //     );
 // }
 
+const onReadMore = () => {
+    window.open(`https://tzuchi-ebooks.web.app`)
+}
+
 export default function BookSuggest() {
 
     const router = useRouter();
 
-    const [selctedIndex, setSelectedIndex] = useState(0);
-
-    const { pageData, loading, loadingBooks, suggestBooks: booksData } = useDataProvider();
-    // console.log(`booksData`)
-    // console.log(booksData)
-
-    // const booksData = useMemo(() => {
-    //     const target = _.find(pageData, { name: '好書推薦' });
-    //     return target?.data || [{}]
-    // }, [pageData])
-
+    const { loadingBooks, suggestBooks: booksData } = useDataProvider();
+    
     const sliderData = useMemo(() => {
         if (booksData.length === 1) {
             return Array(4).fill(booksData[0])
@@ -202,7 +197,7 @@ export default function BookSuggest() {
             <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
             <div className="flex-0 font-medium justify-end items-end text-lg text-primary-blue3">
                 <div
-                    onClick={() => router.push('#')}
+                    onClick={onReadMore}
                     target="_blank"
                     className="cursor-pointer flex flex-row whitespace-nowrap">
                     更多<Icon.RightArrow2 width={20} />
@@ -230,7 +225,7 @@ export default function BookSuggest() {
             <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
             <div className="flex-0 font-medium justify-end items-end text-lg text-primary-blue3">
                 <div
-                    onClick={() => router.push('#')}
+                    onClick={onReadMore}
                     target="_blank"
                     className="cursor-pointer flex flex-row whitespace-nowrap">
                     更多<Icon.RightArrow2 width={20} />
@@ -259,22 +254,22 @@ const StyledImage = styled.div`
     border-radius: 5px;
 `
 
-const CarouselContainer = styled.div`
-    @media(min-width: ${screens.laptop}) {
-        .slick-track {
-            left: -33px;
-        }
-    }
-    .slick-dots {
-        bottom: -6px;
-        > li {
-            * {
-                background-color: ${color.gray.gray7};
-            }
-            &.slick-active > *{
-                background-color: ${color.primary.blue2};
-            }
-        }
-    }
+// const CarouselContainer = styled.div`
+//     @media(min-width: ${screens.laptop}) {
+//         .slick-track {
+//             left: -33px;
+//         }
+//     }
+//     .slick-dots {
+//         bottom: -6px;
+//         > li {
+//             * {
+//                 background-color: ${color.gray.gray7};
+//             }
+//             &.slick-active > *{
+//                 background-color: ${color.primary.blue2};
+//             }
+//         }
+//     }
    
-`
+// `
