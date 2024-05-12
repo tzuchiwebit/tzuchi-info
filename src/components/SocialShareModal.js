@@ -56,7 +56,7 @@ export default function SocailShareModal({ isOpen, toggleOpen })  {
   }, [isOpen])
 
   return (
-    <ModalContainer className={classnames(isShow && 'show')}>
+    <ModalContainer className={classnames(isShow && 'show', 'select-none')}>
       <div className="flex flex-row items-center w-full">
         <div className="grow text-center text-xl font-bold">分享好文給您的朋友</div>
         <div onClick={toggleShow} className="cursor-pointer">

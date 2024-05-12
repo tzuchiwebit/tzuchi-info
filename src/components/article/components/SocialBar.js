@@ -62,12 +62,11 @@ export default function SocialShare({ isMobileType, likes, shares }) {
             </div>
             <div className="relative">
               <div onClick={toggleOpen}
-              className={classnames({
-                'flex flex-row items-center gap-x-1 border-[1.5px] rounded border-solid py-2 px-4 cursor-pointer select-none': true,
-                'text-complementary-blue3 border-complementary-blue3': sharedNum > 0,
-                'text-gray-gray4 border-gray-gray4': sharedNum === 0,
-              })
-
+                className={classnames({
+                  'flex flex-row items-center gap-x-1 border-[1.5px] rounded border-solid py-2 px-4 cursor-pointer select-none': true,
+                  'text-complementary-blue3 border-complementary-blue3': sharedNum > 0,
+                  'text-gray-gray4 border-gray-gray4': sharedNum === 0,
+                })
               }>
                 <Icon.ShareFull style={{ width: 20 }} />
                 <span className="text-[18px] font-bold leading-[20px]">{sharedNum > 0 ? sharedNum + '個' : ''}分享</span>
