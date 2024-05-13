@@ -12,15 +12,38 @@ import _ from 'lodash'
 import Skeleton from "react-loading-skeleton";
 import { useRouter } from "next/navigation";
 import { LikeAndShare } from "../components";
+import { getArticlesByCategory } from "@/api/joomlaApi";
+const { useRequest } = require('ahooks');
 
 const tagOptions = [
-    '臺灣',
-    '亞洲',
-    '美洲',
-    '歐洲',
-    '非洲',
-    '大洋洲',
-    '全球',
+    {
+        title: '臺灣',
+        id: 15
+    },
+    {
+        title: '亞洲',
+        id: 25
+    },
+    {
+        title: '美洲',
+        id: 33
+    },
+    {
+        title: '歐洲',
+        id: 170
+    },
+    {
+        title: '非洲',
+        id: 188
+    },
+    {
+        title: '大洋洲',
+        id: 60
+    },
+    {
+        title: '全球',
+        id: ""
+    },
 ]
 
 const Item = ({ item = {} }) => {
@@ -34,8 +57,8 @@ const Item = ({ item = {} }) => {
                 <ImageContainer onClick={() => router.push(`${routes.ARITCLE}/${item.id}`)}>
                     {
                         item?.id ?
-                        <BlurBGImage url={item?.images?.image_intro} /> :
-                        <Skeleton className="aspect-video" />
+                            <BlurBGImage url={item?.images?.image_intro} /> :
+                            <Skeleton className="aspect-video" />
                     }
                 </ImageContainer>
                 <div
@@ -58,28 +81,25 @@ const Item = ({ item = {} }) => {
 
 const SiteNewsSection = ({ items = [] }) => {
     return <div className="pt-3 w-fit laptop:w-full flex">
-        {items.slice(0, 3).map((i, index) => <Item item={i.attributes} key={index} />)}
+        {items.map((i, index) => <Item item={i.attributes} key={index} />)}
     </div>
 }
 
 export default function SiteNews() {
 
-    const [selctedIndex, setSelectedIndex] = useState(0);
+    const [selctedTagId, setSelectedTagId] = useState(tagOptions[0].id);
 
-    const { pageData, loading } = useDataProvider();
+    const { data: pageData, loading } = useRequest(() => getArticlesByCategory({
+        label_name: '各據點消息',
+        limit: 3,
+        tag: selctedTagId
+    }), {
+        refreshDeps: [selctedTagId]
+    })
 
     const baseInfos = useMemo(() => {
-        const target = _.find(pageData, { name: '各據點消息' });
-        return target?.data
-        // return target?.data?.length ? _.filter(target?.data,
-        //     (i) => Object.keys(i.attributes?.tags)
-        //         .map(key => i.attributes?.tags[key])
-        //         .includes(tagOptions[selctedIndex])
-        // ) : []
-    }, [pageData, selctedIndex])
-    // console.log(`baseInfos`)
-    // console.log(baseInfos)
-
+        return pageData?.data || []
+    }, [selctedTagId, pageData])
 
     return <div className="pt-5">
         <BannerTitle title={`各據點消息`} link={routes.THE_BASE_MESSAGE} />
@@ -87,11 +107,11 @@ export default function SiteNews() {
             <div className="flex gap-2 flex-wrap">
                 {
                     tagOptions.map((tag, index) => (<PrimaryTag
-                        onClick={() => { setSelectedIndex(index) }}
-                        selected={(selctedIndex === index)}
+                        onClick={() => { setSelectedTagId(tag.id) }}
+                        selected={(tag.id === selctedTagId)}
                         key={index}
                     >
-                        {tag}
+                        {tag.title}
                     </PrimaryTag>))
                 }
             </div>

@@ -20,7 +20,7 @@ const requiredPageData = [
     count: 1,
   },
   {
-    name: '各據點消息',
+    name: '各據點消息', // for homepage carousel
     count: 7,
   },
   {
