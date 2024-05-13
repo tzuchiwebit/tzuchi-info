@@ -2,7 +2,7 @@
 import Container from "@/shared/layout/Container"
 import _ from 'lodash'
 // import { RadioGroup } from '@headlessui/react'
-import { useEffect, useState } from "react"
+import { useMemo, useState } from "react"
 import Pagination from "@/shared/pagination/Pagination"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import BannerImage from '@/asset/image/the-base-messages.png'
@@ -15,64 +15,87 @@ import { BannerTitle } from "@/components/home/components"
 import color from "@/shared/styles/color"
 import styled from "styled-components"
 import joomlaGlobal from '@/api/joomlaGlobal'
+import { getArticlesByCategory } from "@/api/joomlaApi"
+import { useRouter } from "next/router"
+
+const { useRequest } = require('ahooks');
 
 export default function Page() {
 
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
 
 
-  const resultsTW = Array(5).fill({
-    title: '文字文字文字文字文字文字文文字文字文字文字文字文字文文字文字文字文字文字文字文字文文字文字文字文字文字文字文文字文字文字文字文字文字文字文文字文字文字文字文字文字文文字',
-    link: '',
-    place: 'taiwan',
-  });
+  // const tagOptions = [
+  //   {
+  //     title: '臺灣',
+  //     id: 15
+  //   },
+  //   {
+  //     title: '亞洲',
+  //     id: 25
+  //   },
+  //   {
+  //     title: '美洲',
+  //     id: 33
+  //   },
+  //   {
+  //     title: '歐洲',
+  //     id: 170
+  //   },
+  //   {
+  //     title: '非洲',
+  //     id: 188
+  //   },
+  //   {
+  //     title: '大洋洲',
+  //     id: 60
+  //   },
+  // ]
 
-  const resultsAsia = Array(5).fill({
-    title: '文字文字文字文字文字文字文文字文字文字文字文字文字文文字',
-    link: '',
-    place: 'asia',
-  });
-  const resultsAmerica = Array(5).fill({
-    title: '文字文字文字文字文字文字文文字文字文字文字文字文字文文字',
-    link: '',
-    place: 'america',
-  });
-  const resultsEurope = Array(5).fill({
-    title: '文字文字文字文字文字文字文文字文字文字文字文字文字文文字',
-    link: '',
-    place: 'europe',
-  });
-  const resultsAfrica = Array(5).fill({
-    title: '文字文字文字文字文字文字文文字文字文字文字文字文字文文字',
-    link: '',
-    place: 'africa',
-  });
-  const resultsOceania = Array(5).fill({
-    title: '文字文字文字文字文字文字文文字文字文字文字文字文字文文字',
-    link: '',
-    place: 'oceania',
-  });
+  const { data: baseDataList, loading } = useRequest(() => {
+    return Promise.all([
+      getArticlesByCategory({ label_name: "各據點消息", tag: 15, limit: 5 }), // 台灣
+      getArticlesByCategory({ label_name: "各據點消息", tag: 25, limit: 5 }), // 亞洲
+      getArticlesByCategory({ label_name: "各據點消息", tag: 33, limit: 5 }), // 美洲
+      getArticlesByCategory({ label_name: "各據點消息", tag: 170, limit: 5 }), // 歐洲
+      getArticlesByCategory({ label_name: "各據點消息", tag: 188, limit: 5 }), // 非洲
+      getArticlesByCategory({ label_name: "各據點消息", tag: 60, limit: 5 }), // 大洋洲
+    ])
+  })
 
-  const testData = _.chain(resultsTW).concat(resultsAmerica, resultsAsia, resultsEurope, resultsAfrica, resultsOceania).groupBy('place').value()
+  const baseData = useMemo(() => {
+    return {
+      taiwan: baseDataList?.[0].data || [],
+      asia: baseDataList?.[1].data || [],
+      america: baseDataList?.[2].data || [],
+      europe: baseDataList?.[3].data || [],
+      africa: baseDataList?.[4].data || [],
+      oceania: baseDataList?.[5].data || [],
+    }
+  }, [baseDataList])
 
-  // console.log(`testData`)
-  // console.log(testData)
+  const SiteCard = ({ items, place }) => {
 
-  const SiteCard = ({ item, place }) => {
+    const router = useRouter();
 
     return <div className="w-full tablet:w-1/2 laptop:w-1/3 px-3 mb-6">
       <div className="bg-white border rounded-[4px] p-5 shadow-elevation-3 flex flex-col gap-2">
         <BannerTitle title={joomlaGlobal[place]?.label} link={joomlaGlobal[place]?.link} />
         <div className="text-primary-blue1 font-bold text-xl">
-          {item.title}
+          {items.title}
         </div>
         <div className="flex flex-col">
           {
-            item.map((i, _index) => (<div key={_index} className="border-b border-solid border-gray-gray8 py-2 cursor-pointer flex items-center">
+            items.map((i, _index) => (<div
+              key={_index}
+              className="border-b border-solid border-gray-gray8 py-2 cursor-pointer flex items-center"
+              onClick={() => {
+                router.push(`/article/${i.id}`)
+              }}
+            >
               <div className="text-primary-blue1 text-xl font-bold line-clamp-2 ">
-                {i.title}
+                {i.attributes.title}
               </div>
-
 
               {
                 _index === 0 ? <div className="pl-5">
@@ -120,7 +143,7 @@ export default function Page() {
       {/* result cards */}
       <div className="w-auto flex flex-wrap -mx-3">
         {
-          Object.keys(testData).map((item, index) => <SiteCard place={item} item={testData[item]} key={index} />)
+          Object.keys(baseData).map((key, index) => <SiteCard place={key} items={baseData[key]} key={index} />)
         }
       </div>
     </div>
