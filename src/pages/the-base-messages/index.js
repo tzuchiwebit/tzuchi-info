@@ -77,6 +77,7 @@ export default function Page() {
   const SiteCard = ({ items, place }) => {
 
     const router = useRouter();
+    console.log(items)
 
     return <div className="w-full tablet:w-1/2 laptop:w-1/3 px-3 mb-6">
       <div className="bg-white border rounded-[4px] p-5 shadow-elevation-3 flex flex-col gap-2">
@@ -88,7 +89,7 @@ export default function Page() {
           {
             items.map((i, _index) => (<div
               key={_index}
-              className="border-b border-solid border-gray-gray8 py-2 cursor-pointer flex items-center"
+              className="border-b border-solid border-gray-gray8 py-2 cursor-pointer flex items-center justify-between"
               onClick={() => {
                 router.push(`/article/${i.id}`)
               }}
@@ -98,7 +99,7 @@ export default function Page() {
               </div>
 
               {
-                _index === 0 ? <div className="pl-5">
+                dayjs(i.attributes.publish_up).isAfter(dayjs().subtract(2, 'M')) ? <div className="pl-5">
                   <IsNewTag><span className="absolute -left-[5px] text-complementary-pink z-0">◄</span>NEW</IsNewTag>
                 </div> : <></>
               }

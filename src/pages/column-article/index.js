@@ -13,6 +13,8 @@ import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
 import { getArticlesByCategory } from "@/api/joomlaApi"
 import useScreenSize from '@/shared/hook/useScreenSize';
 import Skeleton from "react-loading-skeleton"
+import { useRouter } from "next/router"
+import routes from "@/config/routes"
 const { useRequest } = require('ahooks')
 
 const tabs = [
@@ -33,6 +35,7 @@ export default function Page() {
   const screenSize = useScreenSize();
   const [isMobileDevice, setIsMobileDevice] = useState(screenSize.width < 1024)
   // const loading = true;
+  const router = useRouter();
 
   const { data: columnArticlesData, loading } = useRequest(() => getArticlesByCategory({
     label_name: `專欄文章-${tabs[activeTab].label}`,
@@ -98,7 +101,9 @@ export default function Page() {
           <Skeleton count={3} className="w-full" />
         </div>) : (<div className="w-fit flex flex-wrap -mx-3">
           {
-            listData.map((item, index) => <PrimaryCard item={item?.attributes} key={index} index={index} />)
+            listData.map((item, index) => <PrimaryCard item={item?.attributes} key={index} index={index} onClick={() => {
+              router.push(`${routes.ARITCLE}/${item.id}`)
+            }} />)
           }
         </div>)
       }
