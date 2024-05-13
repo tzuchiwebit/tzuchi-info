@@ -34,7 +34,7 @@ const Item = ({ item, loading = false }) => {
                         </div> : <ImageContainer className='cursor-pointer' onClick={() => {
                             router.push(`${routes.ARITCLE}/${item.id}`)
                         }}>
-                            <BlurBGImage url={item?.attributes?.images?.image_intro || "https://picsum.photos/id/232/400/300"} />
+                            <BlurBGImage url={item?.attributes?.images?.image_intro} />
                         </ImageContainer>
                     }
                     <div className="px-4 flex flex-col items-center pt-4 pb-2 w-full gap-y-1 gap-x-4">

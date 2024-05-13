@@ -2,10 +2,11 @@
 import { useMemo } from "react"
 import { BannerTitle } from "../components"
 import useDataProvider from "../useDataProvider"
-// import Skeleton from 'react-loading-skeleton'
+import Skeleton from 'react-loading-skeleton'
 import { useRouter } from "next/navigation"
 import routes from "@/config/routes"
 import _ from 'lodash'
+import DefaultImage from '@/asset/image/default-article-intro.png'
 
 const Item = ({ item }) => {
 
@@ -16,10 +17,14 @@ const Item = ({ item }) => {
             router.push(`${routes.ARITCLE}/${item.id}`)
         }}>
             <div className="h-[72px] w-[72px] flex-0">
+              {
+                item?.id ?
                 <img
-                    className="w-full rounded-full ring-2 ring-white aspect-square"
-                    src={item.avatar}
-                    alt="" />
+                  className="w-full rounded-full ring-2 ring-white aspect-square"
+                  src={item.avatar}
+                  alt="" />:
+                <Skeleton className="ring-2 ring-white aspect-square" borderRadius="999px"/>
+              }
             </div>
             <div className="text-primary-blue1 text-xl font-bold mb-2 flex-1 line-clamp-4">
                 {item.title}
@@ -44,7 +49,7 @@ export default function Activities() {
         return target?.data?.map(i => ({
             id: i.attributes.id,
             title: i.attributes?.title,
-            avatar: i.attributes?.images?.image_intro || "https://picsum.photos/id/101/300/300"
+            avatar: i.attributes?.images?.image_intro
         })) || []
     }, [pageData])
 

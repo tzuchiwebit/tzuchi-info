@@ -17,6 +17,8 @@ import routes from "@/config/routes";
 import { SlidesTrack } from "../components";
 // import routes from "@/app/config/routes";
 // import { useRouter } from "next/navigation";
+import Image from 'next/image'
+import DefaultImage from '@/asset/image/default-article-intro-square.png'
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -69,8 +71,20 @@ const Item = ({ item }) => {
                         // router.push(`${routes.ARITCLE}/${item.id}`)
                     }}>
                     {
-                        item?.image ? <StyledImage style={{ backgroundImage: `url(${item?.image ? item.image : "https://picsum.photos/id/230/300/300"})` }} /> :
-                            <Skeleton className="aspect-square" />
+                      item?.title ?
+                      <Image
+                        src={item?.image ? item?.image: DefaultImage}
+                        alt={""}
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        style={{
+                          width: '100%',
+                          height: 'auto',
+                        }}
+                        className="rounded-md"
+                      />:
+                      <Skeleton className="aspect-square" />
                     }
 
                     <div className="pt-2 pl-2 pr-0 text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2">
@@ -178,7 +192,7 @@ export default function BookSuggest() {
     const router = useRouter();
 
     const { loadingBooks, suggestBooks: booksData } = useDataProvider();
-    
+
     const sliderData = useMemo(() => {
         if (booksData.length === 1) {
             return Array(4).fill(booksData[0])
@@ -271,5 +285,5 @@ const StyledImage = styled.div`
 //             }
 //         }
 //     }
-   
+
 // `

@@ -17,6 +17,7 @@ import Spinner from "@/components/Spinner"
 import Image from "next/image"
 import styles from './article.module.css'
 import * as classnames from "classnames"
+import DefaultImage from '@/asset/image/default-article-intro.png'
 
 const Breadcrumb = ({className}) => {
   const { pageData } = useDataProvider();
@@ -96,28 +97,22 @@ const Article = () => {
         <SocialBar isMobileType={false} likes={articleData?.attributes?.like} shares={articleData?.attributes?.share}></SocialBar>
       </div>
       <div className="laptop:mt-6 mt-4 text-lg leading-[22px]">
-        {
-          articleData?.attributes?.images?.image_intro &&
-          <Image
-            src={articleData?.attributes?.images?.image_intro}
-            alt={articleData?.attributes?.images?.image_intro_alt}
-            width={0}
-            height={0}
-            sizes="100vw"
-            style={{
-              width: '100%',
-              height: 'auto',
-            }}
-          />
-        }
+        <Image
+          src={articleData?.attributes?.images?.image_intro ? articleData?.attributes?.images?.image_intro: DefaultImage}
+          alt={articleData?.attributes?.images?.image_intro_alt}
+          width={0}
+          height={0}
+          sizes="100vw"
+          style={{
+            width: '100%',
+            height: 'auto',
+          }}
+        />
         {
           articleData?.attributes?.metadesc &&
           <div className="mt-2 text-gray-gray2 font-medium leading-[22.4px]">{articleData?.attributes?.metadesc}</div>
         }
-        {
-          (articleData?.attributes?.images?.image_intro || articleData?.attributes?.metadesc) &&
-          <div className="mt-1 mb-4 flex flex-1 text-lg border-solid border-b-[1px] border-gray-gray7" />
-        }
+        <div className="mt-1 mb-4 flex flex-1 text-lg border-solid border-b-[1px] border-gray-gray7" />
         <div className="mb-4 flex flex-row items-center justify-center w-full bg-gray-gray8 py-1 gap-x-2 rounded">
           <div className="text-base font-medium">文字大小</div>
           <div className="flex flex-row gap-x-1">
