@@ -10,9 +10,9 @@ const token = process.env.NEXT_PUBLIC_JOOMLA_API_TOKEN
 const getArticleById = async (id) => {
   try {
     const res = await axios.get(`${API_ENDPOINT}/articles/${id}`, {
-        headers: {
-            'Authorization': 'Bearer ' + token
-        }
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
     })
     return res?.data
   } catch (err) {
@@ -24,16 +24,16 @@ const getRecommandArticles = async (categoryId, limit = 3) => {
   // 推薦閱讀：抓取 相同分類、點擊最高的3篇文章
   try {
     const res = await axios.get(`${API_ENDPOINT}/articles`, {
-        headers: {
-            'Authorization': 'Bearer ' + token
-        },
-        params: {
-          'page[limit]': limit,
-          'filter[state]': 1,
-          'filter[category]': categoryId,
-          'list[ordering]': 'hits',
-          'list[direction]': 'desc',
-        },
+      headers: {
+        'Authorization': 'Bearer ' + token
+      },
+      params: {
+        'page[limit]': limit,
+        'filter[state]': 1,
+        'filter[category]': categoryId,
+        'list[ordering]': 'hits',
+        'list[direction]': 'desc',
+      },
     })
     return res?.data
   } catch (err) {
@@ -52,10 +52,10 @@ const getExtendArticles = async (tags = [], limit = 3) => {
     if (tags.length) params['filter[tag]'] = tags
 
     const res = await axios.get(`${API_ENDPOINT}/articles`, {
-        headers: {
-            'Authorization': 'Bearer ' + token
-        },
-        params,
+      headers: {
+        'Authorization': 'Bearer ' + token
+      },
+      params,
     })
     return res?.data
   } catch (err) {
@@ -63,30 +63,30 @@ const getExtendArticles = async (tags = [], limit = 3) => {
   }
 }
 
-const getArticlesByCategory = async (label_name = '志工早會', limit = 10, offset = 0, state = 1) => {
-    try {
-        const targetCategory = _.find(joomlaContentCategory, (i) => i.label_name === label_name);
-        if (!targetCategory) {
-            throw new Error(`Invalid category : ${category}`);
-        }
-
-        const res = await axios.get(`${API_ENDPOINT}/articles?filter[category]=${targetCategory.id}&page[limit]=${limit}&page[offset]=${offset}&filter[state]=${state}`, {
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        })
-        // console.log(`axios res`)
-        // console.log(res)
-        return res?.data
-
-    } catch (err) {
-        throw err
+const getArticlesByCategory = async ({ label_name = '志工早會', limit = 10, offset = 0, state = 1, tag = '' }) => {
+  try {
+    const targetCategory = _.find(joomlaContentCategory, (i) => i.label_name === label_name);
+    if (!targetCategory) {
+      throw new Error(`Invalid category : ${category}`);
     }
+
+    const res = await axios.get(`${API_ENDPOINT}/articles?filter[category]=${targetCategory.id}&page[limit]=${limit}&page[offset]=${offset}&filter[state]=${state}&filter[tag]=${tag}`, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    // console.log(`axios res`)
+    // console.log(res)
+    return res?.data
+
+  } catch (err) {
+    throw err
+  }
 }
 
 export {
-    getArticlesByCategory,
-    getArticleById,
-    getRecommandArticles,
-    getExtendArticles,
+  getArticlesByCategory,
+  getArticleById,
+  getRecommandArticles,
+  getExtendArticles,
 }

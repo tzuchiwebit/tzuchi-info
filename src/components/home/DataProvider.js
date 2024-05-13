@@ -36,8 +36,14 @@ const requiredPageData = [
     count: 4,
   },
   {
-    name: '專欄文章',
-    count: 4,
+    name: '專欄文章-領航慈濟',
+    count: 2,
+    tag: 1486,
+  },
+  {
+    name: '專欄文章-名人視角',
+    count: 2,
+    tag: 1487,
   },
 ]
 export default function DataProvider({ children }) {
@@ -53,8 +59,11 @@ export default function DataProvider({ children }) {
     try {
       const res = (await Promise.all(requiredPageData.map(async i => ({
         ...i,
-        data: (await getArticlesByCategory(i.name, i.count)).data
+        data: (await getArticlesByCategory({ label_name: i.name, limit: i.count, tag: i.tag })).data
       }))))
+
+      // console.log(`res`)
+      // console.log(res)
 
       setPageData(res);
 

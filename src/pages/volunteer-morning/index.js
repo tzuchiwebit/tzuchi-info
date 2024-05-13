@@ -28,7 +28,7 @@ export default function Page() {
 
   const router = useRouter();
 
-  const { data: listDataRef, loading } = useRequest(() => getArticlesByCategory("志工早會", 9, pageOffset), {
+  const { data: listDataRef, loading } = useRequest(() => getArticlesByCategory({ label_name: "志工早會", limit: 9, offset: pageOffset }), {
     refreshDeps: [pageOffset],
     onSuccess: (res) => {
       // console.log(`res.meta`)
