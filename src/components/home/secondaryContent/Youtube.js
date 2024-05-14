@@ -7,7 +7,17 @@ import { Player, BigPlayButton } from 'video-react';
 import styled from "styled-components";
 import color from "@/shared/styles/color";
 import screens from "@/shared/styles/screens";
-import { useState } from "react";
+import { useMemo, useState } from "react";
+import { getArticlesByCategory } from "@/api/joomlaApi";
+import YouTube from 'react-youtube';
+import Icon from "@/shared/Icon";
+import { useRouter } from "next/router";
+import routes from "@/config/routes";
+import axios from 'axios';
+import classNames from "classnames";
+
+
+const { useRequest } = require('ahooks');
 
 const src = [
     "/test.mp4",
@@ -16,17 +26,61 @@ const src = [
 
 const YoutubeSection = () => {
 
-    const [videoSrc, setVideoSrc] = useState(true);
+    const router = useRouter();
+
+    const [youtubeData, setYoutubeData] = useState({});
+
+    const [youtubeDetail, setYoutubeDetail] = useState({ width: 0, height: 0 });
+
+    const {
+        runAsync: getYoutubeInfo
+    } = useRequest((yt_id) => axios.get(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${yt_id}&format=json`), {
+        manual: true
+    })
+
+    useRequest(() => getArticlesByCategory({
+        label_name: 'Youtube小編精選',
+        limit: 1,
+    }), {
+        onSuccess: async (res) => {
+            const _data = res?.data?.[0].attributes || false
+            if (_data) {
+                const _ytString = _data['yt-url']
+                const splitArray = _ytString.split("v=");
+                const YTId = splitArray[1];
+                // const YTId = `e4HluMzNNXQ`;
+
+                const ytInfo = await getYoutubeInfo(YTId);
+
+                setYoutubeDetail(ytInfo.data);
+                setYoutubeData({
+                    youtubeId: YTId,
+                    bgImage: `http://img.youtube.com/vi/${YTId}/hqdefault.jpg`,
+                    ..._data,
+                })
+            }
+        }
+    })
+
+    // console.log(data)
+    const [onPlay, setOnPlay] = useState(false);
+
+    const opts = {
+        height: '240px',
+        width: '100%',
+        playerVars: {
+            // https://developers.google.com/youtube/player_parameters
+            autoplay: 1,
+        },
+    };
+
     // console.log(videoSrc);
     return <div className="py-7 w-full">
         <div className="rounded-md overflow-hidden">
             {/* <video width="100%" height="240" controls src={'/test.mp4'} /> */}
             {/* http://www.w3schools.com/html/mov_bbb.mp4 */}
-            {
+            {/* {
                 videoSrc ? <>
-                    <div className="hidden">
-                        123123
-                    </div>
                     <VideoPlayer>
                         <source src={src[0]} />
                         <BigPlayButton position="center" />
@@ -37,19 +91,33 @@ const YoutubeSection = () => {
                         <BigPlayButton position="center" />
                     </VideoPlayer>
                 </>
+            } */}
+            {
+                onPlay ? <StyledYoutube className="w-full aspect-4/3" videoId={youtubeData.youtubeId} opts={opts} /> :
+                    (<div
+                        className={classNames(
+                            "relative flex justify-center items-center w-full bg-contain bg-no-repeat aspect-4/3 bg-center"
+                        )}
+                        style={{ backgroundImage: `url(${youtubeData.bgImage})` }}
+                        onClick={() => setOnPlay(true)}>
+                        <div className="w-[60px] h-[45px] z-100 flex justify-center items-center cursor-pointer">
+                            <div className="w-[30px] h-[30px] bg-white z-5 absolute" />
+                            <Icon.PlayButton position="center" className="w-full z-10" />
+                        </div>
+                    </div>)
             }
             {/* <VideoPlayer>
                 <source src={videoSrc ? src[0] : src[1]} />
                 <BigPlayButton position="center" />
             </VideoPlayer> */}
         </div>
-        <div className="font-bold text-primary-blue1 text-xl pt-3" onClick={() => {
-            setVideoSrc(!videoSrc);
+        <div className="font-bold text-primary-blue1 text-xl pt-3 cursor-pointer" onClick={() => {
+            // router.push(`${routes.ARITCLE}/${youtubeData.id}`)
         }}>
-            小犬颱風重創蘭嶼 慈濟啟動關懷
+            {youtubeData.title}
         </div>
         <div className="font-medium text-gray-gray2 text-sm pt-3">
-            {dayjs().format('YYYY-MM-DD')}
+            {dayjs(youtubeData.publish_up).format('YYYY-MM-DD')}
         </div>
     </div>
 }
@@ -90,4 +158,10 @@ const VideoPlayer = styled(Player)`
     }
 
    
+`
+
+const StyledYoutube = styled(YouTube)`
+    .ytp-title{ 
+        display: none;
+    }
 `

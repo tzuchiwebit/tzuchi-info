@@ -32,6 +32,7 @@ export { default as Check } from "./icon/main/check.svg";
 export { default as Bell } from "./icon/main/bell.svg";
 export { default as Global } from "./icon/main/global.svg";
 export { default as Lotus } from "./icon/main/lotus.svg";
+export { default as PlayButton } from "./icon/main/play-button.svg";
 // scrolltop
 export { default as UpArrowMain } from "./icon/main/up-arrow-main.svg";
 
