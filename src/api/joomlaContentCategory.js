@@ -43,14 +43,6 @@ export default [
         // 領航慈濟: 1486
     },
     {
-        id: 16,
-        label_name: '專欄文章',
-        category_name: "column-article",
-        // tag filter
-        // 名人視角: 1487
-        // 領航慈濟: 1486
-    },
-    {
         id: 17,
         label_name: '熱門活動',
         category_name: "",
