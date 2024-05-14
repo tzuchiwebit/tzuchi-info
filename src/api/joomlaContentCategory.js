@@ -36,7 +36,7 @@ export default [
     },
     {
         id: 16,
-        label_name: '專欄文章-領航慈濟',
+        label_name: '專欄文章',
         category_name: "column-article",
         // tag filter
         // 名人視角: 1487
@@ -44,7 +44,7 @@ export default [
     },
     {
         id: 16,
-        label_name: '專欄文章-名人視角',
+        label_name: '專欄文章',
         category_name: "column-article",
         // tag filter
         // 名人視角: 1487
