@@ -4,9 +4,17 @@ import { useRouter } from "next/navigation"
 // import Image from 'next/image';
 // import AuthorIcon from '@/asset/icon/main/author.svg';
 
-export default function BannerTitle({ title = "", link = false }) {
+export default function BannerTitle({ title = "", link = false, behavior = "self" }) {
 
     const router = useRouter();
+
+    const openLink = () => {
+      if (behavior === 'self') {
+        router.push(link)
+      } else if (behavior === 'blank') {
+        window.open(link, '_blank', 'noopener=yes')
+      }
+    }
 
     return (
         <div className="flex flex-row w-full gap-2 items-center">
@@ -17,8 +25,7 @@ export default function BannerTitle({ title = "", link = false }) {
             {
                 link ? (<div className="flex-0 font-medium justify-end items-end text-lg text-primary-blue3">
                     <div
-                        onClick={() => router.push(link)}
-                        target="_blank"
+                        onClick={openLink}
                         className="cursor-pointer flex flex-row whitespace-nowrap">
                         更多<Icon.RightArrow2 width={20} />
                     </div>

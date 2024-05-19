@@ -128,7 +128,7 @@ export default function Youtube() {
         <BannerTitle title={<div className="inherit">
             <div className="text-[26px] font-bold text-primary-blue1">Youtube</div>
             <div className="text-[26px] font-bold text-primary-blue1">小編精選</div>
-        </div>} link={'#'} />
+        </div>} link="https://www.youtube.com/@tzuchi_official" behavior="blank"/>
         <YoutubeSection />
     </div>
 }
@@ -157,11 +157,11 @@ const VideoPlayer = styled(Player)`
 
     }
 
-   
+
 `
 
 const StyledYoutube = styled(YouTube)`
-    .ytp-title{ 
+    .ytp-title{
         display: none;
     }
 `

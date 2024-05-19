@@ -29,13 +29,13 @@ const PrimaryCard = ({ item = {}, onClick = () => { } }) => {
               <Skeleton className="aspect-[14/9]" />
             }
           </ImageContainer>
-          <div className="text-primary-blue1 font-bold text-xl">
+          <div className="text-primary-blue1 font-bold text-xl mt-3">
               {item.title}
           </div>
-          <div className="pb-5">
-              <div className="text-gray-gray2 line-clamp-4">
-                  {item.metadesc}
-              </div>
+          <div className="mt-1">
+            <div className="text-gray-gray2 line-clamp-4">
+                {item.metadesc}
+            </div>
           </div>
         </div>
         <div className="w-full pt-2 font-medium text-sm text-gray-gray4 border-t-2 border-solid border-gray-gray8 flex flex-col">
