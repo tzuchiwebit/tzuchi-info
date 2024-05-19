@@ -1,6 +1,14 @@
 import Icon from '@/shared/Icon'
 
-export default function Location() {
+export default function Location({ data }) {
+  const openSocial = (name) => {
+    for (let i = 0; i < data?.length; i++) {
+      if (data[i]?.[0] === name) {
+        window.open(data[i][1], name, 'noopener=yes')
+        break;
+      }
+    }
+  }
   return (
     <div className="flex flex-col gap-y-6">
       <div className="flex flex-col gap-y-1">
@@ -14,7 +22,7 @@ export default function Location() {
         <span className="text-gray-text">(03)8560260</span>
       </div>
       <div>
-        <button className='bg-primary-blue1 text-white flex flex-row justify-center items-center py-2 px-8 gap-x-2 rounded-lg'>
+        <button className='bg-primary-blue1 text-white flex flex-row justify-center items-center py-2 px-8 gap-x-2 rounded-lg cursor-pointer' onClick={() => openSocial('聯絡我們')}>
           <Icon.ShareEmail width="20px"></Icon.ShareEmail>
           <span className='font-bold'>聯絡我們</span>
         </button>

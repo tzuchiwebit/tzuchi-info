@@ -6,8 +6,12 @@ import Location from "./components/Location";
 import Container from "@/shared/layout/Container";
 import styled from "styled-components";
 import screens from "@/shared/styles/screens"
+import jsonApi from '@/api/jsonApi';
+const { useRequest}  = require('ahooks')
 
 export default function Footer() {
+  const { data: footerSocialData } = useRequest(jsonApi.getFooterSocial);
+
   return (
     <div className="
       w-full bg-gray-gray9
@@ -23,9 +27,9 @@ export default function Footer() {
       }}>
       <Container>
         <Wrapper>
-          <Upper></Upper>
+          <Upper data={footerSocialData?.data}></Upper>
           <div className="flex flex-row justify-between laptop-down:gap-x-5 tablet-down:flex-col tablet-down:gap-y-8">
-            <Location></Location>
+            <Location data={footerSocialData?.data}></Location>
             <LinkGroup></LinkGroup>
           </div>
         </Wrapper>
