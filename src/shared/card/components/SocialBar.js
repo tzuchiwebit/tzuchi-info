@@ -70,11 +70,7 @@ export default function SocialBar({ likes, shares, isMobileType }) {
           }
         </div>
         {
-          !isMobileDevice && isOpen &&
-          <SocialShareModal isOpen={isOpen} toggleOpen={toggleOpen}></SocialShareModal>
-        }
-        {
-          isMobileDevice && isOpen &&
+          isOpen &&
           <SocialShareModal isOpen={isOpen} toggleOpen={toggleOpen}></SocialShareModal>
         }
       </div>
