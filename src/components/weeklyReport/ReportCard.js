@@ -16,7 +16,7 @@ const StyledImage = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  box-shadow: -6px 0px 42px -6px rgba(0,0,0,0.6);
+  box-shadow: 0px 5px 18px 0px #0000004D;
   @media(min-width: ${screens.tablet}) {
     width: 220px;
     height: 300px;
