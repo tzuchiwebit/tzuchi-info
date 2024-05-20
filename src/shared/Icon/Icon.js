@@ -85,3 +85,6 @@ export { default as BookBlue } from "./icon/article/book-blue.svg";
 export { default as BookGray } from "./icon/article/book-gray.svg";
 export { default as Download } from "./icon/article/download.svg";
 export { default as Video } from "./icon/article/video.svg";
+
+export { default as SocialFacebook } from "./icon/social/facebook.svg";
+export { default as SocialLine } from "./icon/social/line.svg";
