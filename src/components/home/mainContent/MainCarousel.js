@@ -1,7 +1,7 @@
 'use client'
 import Icon from "@/shared/Icon"
 import styled from "styled-components"
-import { BannerTitle, LikeAndShare } from "../components"
+import { BannerTitle } from "../components"
 import screens from "@/shared/styles/screens";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel"
@@ -13,15 +13,19 @@ import _ from 'lodash'
 import Skeleton from 'react-loading-skeleton'
 import { useRouter } from "next/navigation";
 import routes from "@/config/routes";
+import dynamic from 'next/dynamic'
+const LikeAndShare = dynamic(() => import('../components/LikeAndShare'), { ssr: false })
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
 
-const Item = ({ item, loading = false }) => {
+const Item = ({ item = {}, loading = false }) => {
 
     const router = useRouter();
+    // console.log(`item`)
+    // console.log(item)
 
     return (
         <div className="relative w-full mb-[60px]">
@@ -34,7 +38,7 @@ const Item = ({ item, loading = false }) => {
                         </div> : <ImageContainer className='cursor-pointer' onClick={() => {
                             router.push(`${routes.ARITCLE}/${item.id}`)
                         }}>
-                            <BlurBGImage url={item?.attributes?.images?.image_intro} />
+                            <BlurBGImage url={item.images?.image_intro} />
                         </ImageContainer>
                     }
                     <div className="px-4 flex flex-col items-center pt-4 pb-2 w-full gap-y-1 gap-x-4">
@@ -44,14 +48,14 @@ const Item = ({ item, loading = false }) => {
                                 router.push(`${routes.ARITCLE}/${item.id}`)
                             }}>
                             {
-                                loading ? <Skeleton /> : item?.attributes?.title
+                                loading ? <Skeleton /> : item?.title
                             }
                         </div>
                         <div className="flex flex-row flex-none border-t border-solid border-gray-gray8 w-full justify-end pt-2 pr-5">
                             <LikeAndShare
                                 articleId={item.id}
-                                likes={item?.attributes?.like}
-                                shares={item?.attributes?.share}
+                                likes={item.like}
+                                shares={item.share}
                             />
                             {/* <SeBtn>
                                 <Icon.ShareFull style={{ width: 24 }} /> 分享
@@ -120,7 +124,7 @@ const CarouselSection = () => {
             {
                 baseInfos.map((_i, _index) => (
                     <div key={_index}>
-                        <Item loading={loading} item={_i} />
+                        <Item loading={loading} item={_i.attributes} />
                     </div>
                 ))
             }

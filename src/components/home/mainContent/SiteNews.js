@@ -101,8 +101,8 @@ export default function SiteNews() {
         return pageData?.data || []
     }, [selctedTagId, pageData])
 
-    console.log(`baseInfos`)
-    console.log(baseInfos)
+    // console.log(`baseInfos`)
+    // console.log(baseInfos)
 
     return <div className="pt-5">
         <BannerTitle title={`各據點消息`} link={routes.THE_BASE_MESSAGE} />

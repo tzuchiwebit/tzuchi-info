@@ -11,29 +11,30 @@ import _ from 'lodash'
 import { useRouter } from "next/navigation";
 import routes from "@/config/routes";
 import Skeleton from "react-loading-skeleton";
+import dynamic from 'next/dynamic'
+const LikeAndShare = dynamic(() => import('../components/LikeAndShare'), { ssr: false })
 
-const Item = ({ item }) => {
+const Item = ({ item = {} }) => {
 
     const router = useRouter();
 
     return (
-        <div
-            className="relative w-full p-1 min-w-[300px] laptop:min-w-0 cursor-pointer"
-            onClick={() => router.push(`${routes.ARITCLE}/${item.id}`)}
-        >
+        <div className="relative w-full p-1 min-w-[300px] laptop:min-w-0 cursor-pointer" >
             <div className="w-full shadow-elevation-3 rounded-md overflow-hidden p-3 flex flex-col laptop:flex-row gap-4 items-center">
-                <ImageContainer>
-                  {
-                    item?.id ?
-                    <BlurBGImage
-                        url={item.images?.image_intro}
-                        alt={item.images?.image_intro_alt}
-                    />:
-                    <Skeleton className="aspect-video" />
-                  }
+                <ImageContainer onClick={() => router.push(`${routes.ARITCLE}/${item.id}`)}>
+                    {
+                        item?.id ?
+                            <BlurBGImage
+                                url={item.images?.image_intro}
+                                alt={item.images?.image_intro_alt}
+                            /> :
+                            <Skeleton className="aspect-video" />
+                    }
                 </ImageContainer>
                 <div className="relative h-[210px] laptop:h-[220px] laptop:max-w-[45%]">
-                    <div className="text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2 h-14">
+                    <div
+                        className="text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2 h-14"
+                        onClick={() => router.push(`${routes.ARITCLE}/${item.id}`)}>
                         {item.title}
                     </div>
                     <div className="pt-2 font-md w-full text-gray-gray2 text-left line-clamp-4">
@@ -44,11 +45,12 @@ const Item = ({ item }) => {
                             {dayjs(item.publish_up).format('YYYY-MM-DD')}<br />
                             {item.place !== "NULL" ? item.place : <><br /></>}
                         </div>
-                        <div className="gap-1 text-lg hidden">
-                            <Icon.Like style={{ width: 16 }} />
-                            <span>讚</span>
-                            <Icon.Views style={{ width: 16 }} />
-                            <span>200 次點閱</span>
+                        <div className="gap-1 text-sm flex">
+                            <LikeAndShare
+                                articleId={item.id}
+                                likes={item.like}
+                                shares={item.share}
+                            />
                         </div>
                     </div>
                 </div>
