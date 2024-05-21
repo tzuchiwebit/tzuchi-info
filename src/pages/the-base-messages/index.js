@@ -74,8 +74,8 @@ export default function Page() {
     }
   }, [baseDataList])
 
-  console.log(`baseData`)
-  console.log(baseData)
+  // console.log(`baseData`)
+  // console.log(baseData)
 
   const SiteCard = ({ items, place }) => {
 
