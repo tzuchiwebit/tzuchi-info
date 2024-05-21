@@ -74,10 +74,13 @@ export default function Page() {
     }
   }, [baseDataList])
 
+  console.log(`baseData`)
+  console.log(baseData)
+
   const SiteCard = ({ items, place }) => {
 
     const router = useRouter();
-    console.log(items)
+    // console.log(items)
 
     return <div className="w-full tablet:w-1/2 laptop:w-1/3 px-3 mb-6">
       <div className="bg-white border rounded-[4px] p-5 shadow-elevation-3 flex flex-col gap-2">
@@ -99,7 +102,7 @@ export default function Page() {
               </div>
 
               {
-                dayjs(i.attributes.publish_up).isAfter(dayjs().subtract(2, 'M')) ? <div className="pl-5">
+                dayjs(i.attributes.publish_up).isAfter(dayjs().subtract(14, 'D')) ? <div className="pl-5">
                   <IsNewTag><span className="absolute -left-[5px] text-complementary-pink z-0">◄</span>NEW</IsNewTag>
                 </div> : <></>
               }
