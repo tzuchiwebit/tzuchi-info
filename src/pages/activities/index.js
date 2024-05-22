@@ -7,7 +7,7 @@ import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import BannerImage from '@/asset/image/activities-banner.jpeg'
 import { BannerTitle } from "@/components/home/components"
 import Image from 'next/image'
-import PrimaryCard from "@/shared/card/PrimaryCard"
+import PrimaryActivityCard from "@/shared/card/PrimaryActivityCard"
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
 import { getArticlesByCategory } from "@/api/joomlaApi"
 // import Skeleton from "react-loading-skeleton"
@@ -43,8 +43,8 @@ export default function Page() {
   })
 
   const listData = useMemo(() => loading ? loadingData : listDataRef?.data || [], [listDataRef, loading]);
-
   // console.log(listData)
+
   const onPageHit = (id) => {
     router.push(`${routes.ARITCLE}/${id}`)
     addHits(id);
@@ -63,7 +63,7 @@ export default function Page() {
               link: '/'
             },
             {
-              label: '志工早會',
+              label: '熱門活動',
               link: ''
             },
           ]} />
@@ -103,7 +103,7 @@ export default function Page() {
       <BannerTitle title="活動資訊" />
       <div className="w-fit flex flex-wrap -mx-3">
         {
-          listData.map((item, index) => <PrimaryCard
+          listData.map((item, index) => <PrimaryActivityCard
             item={item?.attributes}
             key={index}
             index={index}

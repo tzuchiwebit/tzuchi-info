@@ -61,6 +61,7 @@ export { default as ShareTelegram } from "./icon/main/share-telegram.svg";
 export { default as ShareTiktok } from "./icon/main/share-tiktok.svg";
 export { default as ShareThreads } from "./icon/main/share-threads.svg";
 export { default as SelectArrows } from "./icon/main/select-arrows.svg";
+export { default as LocationPin } from "./icon/main/location-pin.svg";
 
 export { default as Facebook } from "./icon/footer/facebook.svg";
 export { default as Instagram } from "./icon/footer/instagram.svg";
