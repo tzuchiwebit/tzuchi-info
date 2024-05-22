@@ -8,6 +8,7 @@ import { useMemo } from "react"
 import _ from 'lodash'
 import Icon from "@/shared/Icon"
 import { LikeAndShare } from "../components"
+import { addHits } from "@/api/api"
 
 const Item = ({ item }) => {
 
@@ -25,7 +26,10 @@ const Item = ({ item }) => {
                             <div className="flex-1">
                                 <div
                                     className="text-primary-blue1 text-xl font-bold mb-2 cursor-pointer"
-                                    onClick={() => router.push(`${routes.ARITCLE}/${_i.id}`)}
+                                    onClick={() => {
+                                        router.push(`${routes.ARITCLE}/${_i.id}`)
+                                        addHits(_i.id);
+                                    }}
                                 >
                                     {_i.title}
                                 </div>

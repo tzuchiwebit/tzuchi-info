@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 import routes from "@/config/routes"
 import _ from 'lodash'
 import DefaultImage from '@/asset/image/default-article-intro.png'
+import { addHits } from "@/api/api"
 
 const Item = ({ item }) => {
 
@@ -14,7 +15,8 @@ const Item = ({ item }) => {
 
     return (
         <div className="flex gap-5 py-4 cursor-pointer" onClick={() => {
-            router.push(`${routes.ARITCLE}/${item.id}`)
+            router.push(`${routes.ARITCLE}/${item.id}`);
+            addHits(item.id);
         }}>
             <div className="h-[72px] w-[72px] flex-0">
               {

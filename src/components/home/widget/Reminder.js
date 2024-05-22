@@ -11,6 +11,7 @@ import Skeleton from 'react-loading-skeleton'
 import _ from 'lodash'
 import { useRouter } from "next/navigation"
 import routes from "@/config/routes"
+import { addHits } from "@/api/api"
 
 export default function Reminder() {
 
@@ -56,6 +57,7 @@ export default function Reminder() {
                 onClick={() => {
                     if (reminderItem.id) {
                         router.push(`${routes.ARITCLE}/${reminderItem.id}`);
+                        addHits(reminderItem.id);
                     }
                 }}>
                 證嚴上人<br />

@@ -13,6 +13,7 @@ import Skeleton from "react-loading-skeleton";
 import { useRouter } from "next/navigation";
 import { LikeAndShare } from "../components";
 import { getArticlesByCategory } from "@/api/joomlaApi";
+import { addHits } from "@/api/api";
 const { useRequest } = require('ahooks');
 
 const tagOptions = [
@@ -54,7 +55,10 @@ const Item = ({ item = {} }) => {
         <div className="relative w-full p-1 min-w-[300px] laptop:min-w-0 cursor-pointer">
             <div className="w-full shadow-elevation-3 rounded-md overflow-hidden p-2">
                 {/* <StyledImage style={{ backgroundImage: `url(${"https://picsum.photos/id/230/300/300"})` }} /> */}
-                <ImageContainer onClick={() => router.push(`${routes.ARITCLE}/${item.id}`)}>
+                <ImageContainer onClick={() => {
+                    router.push(`${routes.ARITCLE}/${item.id}`);
+                    addHits(item.id);
+                }}>
                     {
                         item?.id ?
                             <BlurBGImage url={item?.images?.image_intro} /> :
@@ -63,7 +67,10 @@ const Item = ({ item = {} }) => {
                 </ImageContainer>
                 <div
                     className="pt-2 text-xl font-bold w-full text-primary-blue1 text-left h-24 tablet:h-20 laptop:h-32 desktop:h-28 laptop:pb-2"
-                    onClick={() => router.push(`${routes.ARITCLE}/${item.id}`)}
+                    onClick={() => {
+                        router.push(`${routes.ARITCLE}/${item.id}`)
+                        addHits(item.id);
+                    }}
                 >
                     {item.title}
                 </div>

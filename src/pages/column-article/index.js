@@ -14,6 +14,7 @@ import { getArticlesByCategory } from "@/api/joomlaApi"
 import useScreenSize from '@/shared/hook/useScreenSize';
 import Skeleton from "react-loading-skeleton"
 import { useRouter } from "next/router"
+import { addHits } from "@/api/api"
 import routes from "@/config/routes"
 const { useRequest } = require('ahooks')
 
@@ -102,7 +103,8 @@ export default function Page() {
         </div>) : (<div className="w-fit flex flex-wrap -mx-3">
           {
             listData.map((item, index) => <PrimaryCard item={item?.attributes} key={index} index={index} onClick={() => {
-              router.push(`${routes.ARITCLE}/${item.id}`)
+              router.push(`${routes.ARITCLE}/${item.id}`);
+              addHits(item.id);
             }} />)
           }
         </div>)

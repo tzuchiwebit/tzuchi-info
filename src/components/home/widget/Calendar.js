@@ -11,6 +11,7 @@ import routes from "@/config/routes"
 import useDataProvider from "../useDataProvider"
 import _ from 'lodash'
 import Skeleton from 'react-loading-skeleton'
+import { addHits } from "@/api/api"
 
 export default function Calendar() {
 
@@ -65,7 +66,8 @@ export default function Calendar() {
                             className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base cursor-pointer"
                             onClick={() => {
                                 if (morningData.id) {
-                                    router.push(`${routes.ARITCLE}/${morningData.id}`)
+                                    router.push(`${routes.ARITCLE}/${morningData.id}`);
+                                    addHits(morningData.id);
                                 }
                             }}>
                             {loading ? <Skeleton /> : morningData.title}
@@ -79,7 +81,8 @@ export default function Calendar() {
                     className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base cursor-pointer"
                     onClick={() => {
                         if (morningData.id) {
-                            router.push(`${routes.ARITCLE}/${morningData.id}`)
+                            router.push(`${routes.ARITCLE}/${morningData.id}`);
+                            addHits(morningData.id);
                         }
                     }}>
                     {loading ? <Skeleton /> : morningData.title}

@@ -11,6 +11,7 @@ import _ from 'lodash'
 import { useRouter } from "next/navigation";
 import routes from "@/config/routes";
 import Skeleton from "react-loading-skeleton";
+import { addHits } from "@/api/api"
 import dynamic from 'next/dynamic'
 const LikeAndShare = dynamic(() => import('../components/LikeAndShare'), { ssr: false })
 
@@ -21,7 +22,10 @@ const Item = ({ item = {} }) => {
     return (
         <div className="relative w-full p-1 min-w-[300px] laptop:min-w-0 cursor-pointer" >
             <div className="w-full shadow-elevation-3 rounded-md overflow-hidden p-3 flex flex-col laptop:flex-row gap-4 items-center">
-                <ImageContainer onClick={() => router.push(`${routes.ARITCLE}/${item.id}`)}>
+                <ImageContainer onClick={() => {
+                    router.push(`${routes.ARITCLE}/${item.id}`)
+                    addHits(item.id);
+                }}>
                     {
                         item?.id ?
                             <BlurBGImage
@@ -34,7 +38,10 @@ const Item = ({ item = {} }) => {
                 <div className="relative h-[210px] laptop:h-[220px] laptop:max-w-[45%]">
                     <div
                         className="text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2 h-14"
-                        onClick={() => router.push(`${routes.ARITCLE}/${item.id}`)}>
+                        onClick={() => {
+                            router.push(`${routes.ARITCLE}/${item.id}`)
+                            addHits(item.id);
+                        }}>
                         {item.title}
                     </div>
                     <div className="pt-2 font-md w-full text-gray-gray2 text-left line-clamp-4">

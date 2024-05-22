@@ -6,6 +6,7 @@ import useDataProvider from "../useDataProvider"
 import { useMemo } from "react"
 import { useRouter } from "next/navigation"
 import _ from 'lodash'
+import { addHits } from "@/api/api"
 
 const Item = ({ item }) => {
 
@@ -13,7 +14,8 @@ const Item = ({ item }) => {
 
     return (
         <div className="gap-5 py-4 cursor-pointer" onClick={() => {
-            router.push(`${routes.ARITCLE}/${item.id}`)
+            router.push(`${routes.ARITCLE}/${item.id}`);
+            addHits(item.id);
         }}>
             <div className="text-primary-blue1 text-xl font-bold mb-2">
                 {item.title}

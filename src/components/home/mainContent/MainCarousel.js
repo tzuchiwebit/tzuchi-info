@@ -13,6 +13,7 @@ import _ from 'lodash'
 import Skeleton from 'react-loading-skeleton'
 import { useRouter } from "next/navigation";
 import routes from "@/config/routes";
+import { addHits } from "@/api/api";
 import dynamic from 'next/dynamic'
 const LikeAndShare = dynamic(() => import('../components/LikeAndShare'), { ssr: false })
 
@@ -36,7 +37,8 @@ const Item = ({ item = {}, loading = false }) => {
                         loading ? <div className="">
                             <Skeleton className="aspect-video" />
                         </div> : <ImageContainer className='cursor-pointer' onClick={() => {
-                            router.push(`${routes.ARITCLE}/${item.id}`)
+                            router.push(`${routes.ARITCLE}/${item.id}`);
+                            addHits(item.id);
                         }}>
                             <BlurBGImage url={item.images?.image_intro} />
                         </ImageContainer>
@@ -45,7 +47,8 @@ const Item = ({ item = {}, loading = false }) => {
                         <div
                             className="text-xl font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2 cursor-pointer"
                             onClick={() => {
-                                router.push(`${routes.ARITCLE}/${item.id}`)
+                                router.push(`${routes.ARITCLE}/${item.id}`);
+                                addHits(item.id);
                             }}>
                             {
                                 loading ? <Skeleton /> : item?.title
