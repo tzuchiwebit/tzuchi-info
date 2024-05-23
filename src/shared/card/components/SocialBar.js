@@ -3,21 +3,29 @@ import Icon from "@/shared/Icon"
 import SocialShareModal from "@/components/SocialShareModal"
 import * as classnames from "classnames"
 import useScreenSize from '@/shared/hook/useScreenSize';
+import { useLikeAndShare } from '@/shared/hook';
 
-export default function SocialBar({ likes, shares, isMobileType }) {
+export default function SocialBar({ articleId = '', likes, shares, isMobileType }) {
+
+
+  const { like, share, set, hasLike, hasShare, handleLike, handleShare, setLike = () => { }, setShare = () => { } } = useLikeAndShare({
+    id: articleId
+  });
+
   const screenSize = useScreenSize();
   const [isMobileDevice, setIsMobileDevice] = useState(screenSize.width < 1024)
   const [isOpen, setIsOpen] = useState(false);
 
-  const [likedNum, setLikedNum] = useState(0)
-  const [sharedNum, setSharedNum] = useState(0)
-  const [liked, setLiked] = useState(false)
-  const [shared, setShared] = useState(false)
+  // const [likedNum, setLikedNum] = useState(0)
+  // const [sharedNum, setSharedNum] = useState(0)
+  // const [liked, setLiked] = useState(false)
+  // const [shared, setShared] = useState(false)
 
   const toggleOpen = () => {
     if (!isOpen) {
-      setSharedNum(sharedNum + 1)
-      setShared(true)
+      // setSharedNum(sharedNum + 1)
+      // setShared(true)
+      handleShare(articleId)
     }
     setIsOpen(!isOpen)
   }
@@ -27,27 +35,33 @@ export default function SocialBar({ likes, shares, isMobileType }) {
   }, [screenSize.width])
 
   useEffect(()=> {
-    setLikedNum(Number(likes) || 0)
-    setSharedNum(Number(shares) || 0)
+    setLike(likes);
+    setShare(shares);
   }, [likes, shares])
 
+  // useEffect(()=> {
+  //   setLikedNum(Number(likes) || 0)
+  //   setSharedNum(Number(shares) || 0)
+  // }, [likes, shares])
+
   const clickLike = () => {
-    setLikedNum(likedNum + 1)
-    setLiked(true)
+    // setLikedNum(likedNum + 1)
+    // setLiked(true)
+    handleLike(articleId)
   }
-  const clickShare = () => {
-    setSharedNum(sharedNum + 1)
-    setShared(true)
-  }
+  // const clickShare = () => {
+  //   setSharedNum(sharedNum + 1)
+  //   setShared(true)
+  // }
 
   return (
     <div className="flex gap-x-1">
       <div className="flex gap-x-1 cursor-pointer select-none" onClick={clickLike}>
         {
-          likedNum ?
+          like > 0 ?
           <Fragment>
-            <Icon.LikeFull style={{ width: 16 }} className={classnames({'text-alert-light-red': liked})}/>
-            <p>{likedNum}</p>
+            <Icon.LikeFull style={{ width: 16 }} className={classnames({'text-alert-light-red': hasLike})}/>
+            <p>{like}</p>
           </Fragment>:
           <Fragment>
             <Icon.Like style={{ width: 16 }}/>
@@ -58,10 +72,10 @@ export default function SocialBar({ likes, shares, isMobileType }) {
       <div className='relative'>
         <div className="flex gap-x-1 cursor-pointer select-none" onClick={toggleOpen}>
           {
-            sharedNum ?
+            share > 0 ?
             <Fragment>
-              <Icon.ShareFull style={{ width: 16 }} className={classnames({'text-primary-blue3': shared})}/>
-              <p>{sharedNum}</p>
+              <Icon.ShareFull style={{ width: 16 }} className={classnames({'text-primary-blue3': hasShare})}/>
+              <p>{share}</p>
             </Fragment> :
             <Fragment>
               <Icon.Share style={{ width: 16 }} />

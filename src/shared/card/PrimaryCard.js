@@ -47,7 +47,7 @@ const PrimaryCard = ({ item = {}, onClick = () => { } }) => {
               {item.created_by_alias}
             </div>
             <div className="flex gap-1">
-              <SocialBar likes={item?.like} shares={item?.share}></SocialBar>
+              <SocialBar articleId={item.id} likes={item?.like} shares={item?.share}></SocialBar>
             </div>
           </div>
         </div>
