@@ -85,9 +85,37 @@ const getArticlesByCategory = async ({ label_name = '志工早會', limit = 10, 
   }
 }
 
+const getArticlesByKeyword = async ({ keyword = '', limit = 12, offset = 0, state = 1, sorting = 'desc'}) => {
+  
+  try {
+
+    const params = {
+      'filter[search]': `content:${keyword}`,
+      'filter[state]': state,
+      'list[direction]': sorting,
+      'page[limit]': limit,
+      'page[offset]': offset,
+    }
+    
+    const res = await axios.get(`${API_ENDPOINT}/articles`, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      },
+      params
+    })
+    // console.log(`axios res`)
+    // console.log(res)
+    return res?.data
+
+  } catch (err) {
+    throw err
+  }
+}
+
 export {
   getArticlesByCategory,
   getArticleById,
   getRecommandArticles,
   getExtendArticles,
+  getArticlesByKeyword,
 }

@@ -11,9 +11,10 @@ const defaultOption = [
     { label: '--- 請選擇 ---', value: '--- 請選擇 ---' },
 ]
 
-export default function SearchSelect({ label, options = [], sm = false, ...props }) {
+export default function SearchSelect({ label, options = [], sm = false, onChange = () => { }, ...props }) {
 
     const [value, setValue] = useState('--- 請選擇 ---')
+    const [selectLabel, setSelectLabel] = useState('--- 請選擇 ---')
 
     const selectOptions = useMemo(() => _.concat(defaultOption, options), [options]);
 
@@ -48,7 +49,7 @@ export default function SearchSelect({ label, options = [], sm = false, ...props
                         <Icon.SelectArrows style={{ width: 24, color: color.primary.blue1 }} />
                     </button>
                 </span>
-                <StyledInput $sm={sm} type='text' readOnly value={value} />
+                <StyledInput $sm={sm} type='text' readOnly value={selectLabel} />
                 <StyledSelectSection
                     className={'absolute shadow-elevation-4'}
                     show={isShowing}
@@ -64,7 +65,11 @@ export default function SearchSelect({ label, options = [], sm = false, ...props
                             <StyledOption
                                 $sm={sm}
                                 key={index}
-                                onClick={() => { setValue(opt?.value) }}
+                                onClick={() => {
+                                    setValue(opt?.value)
+                                    setSelectLabel(opt?.label)
+                                    onChange(opt?.value)
+                                }}
                             >
                                 {value === opt.value ? <Icon.Check style={{ width: 20 }} /> : <></>} {opt?.label}
                             </StyledOption>
@@ -92,14 +97,14 @@ const Container = styled.div`
 
 const StyledLabel = styled.div`
     // color: ${color.primary.blue1};
-    font-size: ${(props) => props.$sm ? '18px' : '20px' };
+    font-size: ${(props) => props.$sm ? '18px' : '20px'};
     font-weight: 700;
     height: 100%;
     display: flex;
     align-items: center;
     white-space: nowrap;
     @media(min-width: ${screens.laptop}) {
-        font-size: ${(props) => props.$sm ? '18px' : '26px' };
+        font-size: ${(props) => props.$sm ? '18px' : '26px'};
     }
 `
 
@@ -114,8 +119,8 @@ const StyledInput = styled.input`
     font-weight: 700;
     cursor: pointer;
     @media(min-width: ${screens.laptop}) {
-        font-size: ${(props) => props.$sm ? '18px' : '26px' };
-        height: ${(props) => props.$sm ? '40px' : '50px' };
+        font-size: ${(props) => props.$sm ? '18px' : '26px'};
+        height: ${(props) => props.$sm ? '40px' : '50px'};
     }
 
 `
@@ -137,7 +142,7 @@ const StyledSelectSection = styled(Transition)`
 
 const StyledOption = styled.div`
     color: ${color.gray.gray1};
-    font-size: ${(props) => props.$sm ? '18px' : '24px' };
+    font-size: ${(props) => props.$sm ? '18px' : '24px'};
     padding-top: 4px;
     padding-bottom: 4px;
     font-weight: 500;
@@ -148,6 +153,6 @@ const StyledOption = styled.div`
     white-space: nowrap;
     &:hover {
         font-weight: 700;
-        font-size: ${(props) => props.$sm ? '18px' : '26px' };
+        font-size: ${(props) => props.$sm ? '18px' : '26px'};
     }
 `
