@@ -64,7 +64,7 @@ export default function Page() {
             },
             {
               label: '熱門活動',
-              link: ''
+              link: '/activities'
             },
           ]} />
       </div>
