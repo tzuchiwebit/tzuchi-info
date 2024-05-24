@@ -19,10 +19,13 @@ import { useRouter } from "next/router"
 import _ from 'lodash'
 import DefaultImage from '@/asset/image/default-article-intro.png'
 import { getArticlesByKeyword } from "@/api/joomlaApi"
+import { addHits } from "@/api/api"
+import routes from "@/config/routes"
 const { useRequest } = require('ahooks');
 
 const ResultCard = ({ keyword = "", item = {}, index, isLast = false }) => {
   // console.log(DefaultImage)
+  const router = useRouter();
 
   return <div className="w-full flex gap-1">
     <div className={classNames(
@@ -35,7 +38,12 @@ const ResultCard = ({ keyword = "", item = {}, index, isLast = false }) => {
       isLast ? 'border-b' : '',
       "py-3 laptop:py-8 pl-2 pr-0 laptop:px-4 flex-1 border-t border-solid border-gray-gray7 flex flex-col"
     )}>
-      <div className="text-lg laptop:text-2xl font-bold text-primary-blue1 line-clamp-1">
+      <div
+        className="text-lg laptop:text-2xl font-bold text-primary-blue1 line-clamp-1 cursor-pointer"
+        onClick={() => {
+          addHits(item.id);
+          router.push(`/${routes.ARITCLE}/${item.id}`);
+        }}>
         {index + 1}. {item.title}
       </div>
       <div className="mt-1 laptop:mt-4">
@@ -71,13 +79,22 @@ export default function Page() {
   const searchParams = useSearchParams();
   const keyword = searchParams.get('keyword');
 
-  const { data, loading, run: runGetArticles } = useRequest(() => getArticlesByKeyword({
-    keyword: searchText,
-    limit: pageSize,
-    offset: pageSize * (currentPage - 1),
-  }), {
+  const { data, loading, run: runGetArticles } = useRequest((keyword) => {
+    if (!keyword) {
+      return {
+        data: []
+      }
+    }
+
+    return getArticlesByKeyword({
+      keyword: keyword || searchText,
+      limit: pageSize,
+      offset: pageSize * (currentPage - 1),
+    })
+
+  }, {
     // manual: true,
-    ready: !!(searchText),
+    // ready: !!(searchText),
     refreshDeps: [currentPage],
     onSuccess: (res) => {
       // console.log(res)
@@ -128,7 +145,7 @@ export default function Page() {
   useEffect(() => {
     if (keyword) {
       setSearchText(keyword)
-      // runGetArticles(keyword)
+      runGetArticles(keyword)
     }
   }, [keyword])
 
