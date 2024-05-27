@@ -112,7 +112,7 @@ export default function SiteNews() {
     // console.log(baseInfos)
 
     return <div className="pt-5">
-        <BannerTitle title={`全球志業`} link={routes.THE_BASE_MESSAGE} />
+        <BannerTitle title={`各據點消息`} link={routes.THE_BASE_MESSAGE} />
         <div className="pt-5 w-full">
             <div className="flex gap-2 flex-wrap">
                 {

@@ -18,6 +18,7 @@ import Image from "next/image"
 import styles from './article.module.css'
 import * as classnames from "classnames"
 import DefaultImage from '@/asset/image/default-article-intro.png'
+import joomlaGlobal from '@/api/joomlaGlobal'
 
 const Breadcrumb = ({className}) => {
   const { pageData } = useDataProvider();
@@ -39,6 +40,27 @@ const Breadcrumb = ({className}) => {
         item.link = `/${targetCategory.category_name}`
       }
       list.push(item)
+    }
+
+    // TODO: 如果為全球志業 需加上「州別」
+    if (targetCategory?.id === 14) {
+      console.log(target?.data?.attributes?.tags)
+      for (const tag in (target?.data?.attributes?.tags || {})) {
+        console.log('tag', tag)
+        for (const global in joomlaGlobal) {
+          console.log(joomlaGlobal[global])
+
+          if (joomlaGlobal[global].tag == tag) {
+            const item = {
+              label: joomlaGlobal[global].label,
+              link: joomlaGlobal[global].link
+            }
+            list.push(item)
+            break
+          }
+        }
+
+      }
     }
     return list
   }, [pageData])
