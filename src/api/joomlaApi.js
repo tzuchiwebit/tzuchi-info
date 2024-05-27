@@ -63,7 +63,7 @@ const getExtendArticles = async (tags = [], limit = 3) => {
   }
 }
 
-const getArticlesByCategory = async ({ label_name = '志工早會', limit = 10, offset = 0, state = 1, tag = '' }) => {
+const getArticlesByCategory = async ({ label_name = '志工早會', limit = 10, offset = 0, state = 1, tag = '', ordering, sort }) => {
   const _t = label_name.split('-')[0];
   try {
     const targetCategory = _.find(joomlaContentCategory, (i) => i.label_name.indexOf(_t) > -1);
@@ -71,10 +71,21 @@ const getArticlesByCategory = async ({ label_name = '志工早會', limit = 10, 
       throw new Error(`Invalid category : ${category}`);
     }
 
-    const res = await axios.get(`${API_ENDPOINT}/articles?filter[category]=${targetCategory.id}&page[limit]=${limit}&page[offset]=${offset}&filter[state]=${state}&filter[tag]=${tag}`, {
+    const params = {
+      'filter[category]': targetCategory.id,
+      'page[limit]': limit,
+      'page[offset]': offset,
+      'filter[state]': state,
+    }
+    if (tag) params['filter[tag]'] = tag
+    if (ordering) params['list[ordering]']= ordering
+    if (sort) params['list[direction]']= sort // asc|desc
+
+    const res = await axios.get(`${API_ENDPOINT}/articles`, {
       headers: {
         'Authorization': 'Bearer ' + token
-      }
+      },
+      params
     })
     // console.log(`axios res`)
     // console.log(res)
@@ -86,7 +97,7 @@ const getArticlesByCategory = async ({ label_name = '志工早會', limit = 10, 
 }
 
 const getArticlesByKeyword = async ({ keyword = '', limit = 12, offset = 0, state = 1, sorting = 'desc'}) => {
-  
+
   try {
 
     const params = {
@@ -96,7 +107,7 @@ const getArticlesByKeyword = async ({ keyword = '', limit = 12, offset = 0, stat
       'page[limit]': limit,
       'page[offset]': offset,
     }
-    
+
     const res = await axios.get(`${API_ENDPOINT}/articles`, {
       headers: {
         'Authorization': 'Bearer ' + token
