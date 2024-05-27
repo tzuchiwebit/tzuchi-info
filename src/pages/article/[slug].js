@@ -77,13 +77,10 @@ const Article = () => {
       <div className="flex flex-row items-center gap-x-2 mt-2">
         {/* metadata: date, arthur, location */}
         <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(articleData?.attributes?.publish_up).format('YYYY-MM-DD')}</span>
-        {
-          articleData?.attributes?.created_by_alias &&
-          <Fragment>
-            <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
-            <span className="text-[14px] text-gray-gray4 font-medium">{articleData?.attributes?.created_by_alias}</span>
-          </Fragment>
-        }
+        <Fragment>
+          <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
+          <span className="text-[14px] text-gray-gray4 font-medium">{articleData?.attributes?.created_by_alias ? articleData?.attributes?.created_by_alias: '慈濟基金會'}</span>
+        </Fragment>
         {
           articleData?.attributes?.place &&
           articleData?.attributes?.place.toUpperCase() != 'NULL' &&
@@ -157,13 +154,8 @@ const ExtendArticles = () => {
               <div className="text-[24px] font-bold text-primary-blue1">{item.attributes.title}</div>
               <div className="flex flex-row items-center gap-x-2 laptop:mt-2 mt-1">
                 <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(item.attributes?.publish_up).format('YYYY-MM-DD')}</span>
-                {
-                  item.attributes.created_by_alias&&
-                  <>
-                    <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
-                    <span className="text-[14px] text-gray-gray4 font-medium">{item.attributes.created_by_alias}</span>
-                  </>
-                }
+                <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
+                <span className="text-[14px] text-gray-gray4 font-medium">{item.attributes.created_by_alias ? item.attributes.created_by_alias : '慈濟基金會'}</span>
               </div>
             </div>
           ))
@@ -203,13 +195,8 @@ const RecommandArticles = () => {
               <div className="text-[24px] font-bold text-primary-blue1">{item.attributes.title}</div>
               <div className="flex flex-row items-center gap-x-2 laptop:mt-2 mt-1">
                 <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(item.attributes?.publish_up).format('YYYY-MM-DD')}</span>
-                {
-                  item.attributes.created_by_alias &&
-                    <>
-                      <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
-                      <span className="text-[14px] text-gray-gray4 font-medium">{item.attributes.created_by_alias}</span>
-                    </>
-                }
+                <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
+                <span className="text-[14px] text-gray-gray4 font-medium">{item.attributes.created_by_alias ? item.attributes.created_by_alias : '慈濟基金會'}</span>
               </div>
             </div>
           ))

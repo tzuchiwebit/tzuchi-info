@@ -3,11 +3,9 @@ import Container from "@/shared/layout/Container"
 import _ from 'lodash'
 // import { RadioGroup } from '@headlessui/react'
 import { useMemo, useState } from "react"
-import Pagination from "@/shared/pagination/Pagination"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import BannerImage from '@/asset/image/the-base-messages.png'
 import Image from 'next/image'
-import PrimaryCard from "@/shared/card/PrimaryCard"
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
 import dayjs from "dayjs"
 import Icon from "@/shared/Icon"

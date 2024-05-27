@@ -45,7 +45,7 @@ export default [
     {
         id: 17,
         label_name: '熱門活動',
-        category_name: "",
+        category_name: "activities",
     },
     {
         id: 18,

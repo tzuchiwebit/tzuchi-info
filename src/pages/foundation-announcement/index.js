@@ -6,7 +6,6 @@ import Pagination from "@/shared/pagination/Pagination"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import BannerImage from '@/asset/image/volunteer-morning-meeting.jpeg'
 import Image from 'next/image'
-import PrimaryCard from "@/shared/card/PrimaryCard"
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
 
 export default function Page() {
