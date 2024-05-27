@@ -26,7 +26,7 @@ export default [
     },
     {
         id: 14,
-        label_name: '各據點消息',
+        label_name: '全球志業',
         category_name: "the-base-messages",
     },
     {

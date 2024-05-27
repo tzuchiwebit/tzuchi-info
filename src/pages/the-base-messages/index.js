@@ -54,12 +54,12 @@ export default function Page() {
 
   const { data: baseDataList, loading } = useRequest(() => {
     return Promise.all([
-      getArticlesByCategory({ label_name: "各據點消息", tag: 15, limit: 5 }), // 台灣
-      getArticlesByCategory({ label_name: "各據點消息", tag: 25, limit: 5 }), // 亞洲
-      getArticlesByCategory({ label_name: "各據點消息", tag: 33, limit: 5 }), // 美洲
-      getArticlesByCategory({ label_name: "各據點消息", tag: 170, limit: 5 }), // 歐洲
-      getArticlesByCategory({ label_name: "各據點消息", tag: 188, limit: 5 }), // 非洲
-      getArticlesByCategory({ label_name: "各據點消息", tag: 60, limit: 5 }), // 大洋洲
+      getArticlesByCategory({ label_name: "全球志業", tag: 15, limit: 5 }), // 台灣
+      getArticlesByCategory({ label_name: "全球志業", tag: 25, limit: 5 }), // 亞洲
+      getArticlesByCategory({ label_name: "全球志業", tag: 33, limit: 5 }), // 美洲
+      getArticlesByCategory({ label_name: "全球志業", tag: 170, limit: 5 }), // 歐洲
+      getArticlesByCategory({ label_name: "全球志業", tag: 188, limit: 5 }), // 非洲
+      getArticlesByCategory({ label_name: "全球志業", tag: 60, limit: 5 }), // 大洋洲
     ])
   })
 

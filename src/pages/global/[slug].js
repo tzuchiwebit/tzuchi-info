@@ -91,8 +91,8 @@ const Breadcrumb = ({className}) => {
               link: '/'
             },
             {
-              label: '各據點消息 ',
-              link: ''
+              label: '全球志業 ',
+              link: '/the-base-messages'
             },
             {
               label: joomlaGlobal[params?.slug?.toString()]?.label,

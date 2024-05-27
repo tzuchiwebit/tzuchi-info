@@ -79,7 +79,7 @@ const CarouselSection = () => {
     const { pageData, loading } = useDataProvider();
 
     const baseInfos = useMemo(() => {
-        const target = _.find(pageData, { name: '各據點消息' });
+        const target = _.find(pageData, { name: '全球志業' });
         return target?.data || [{}]
     }, [pageData])
 

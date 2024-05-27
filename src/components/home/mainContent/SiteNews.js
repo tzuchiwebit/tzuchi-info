@@ -97,7 +97,7 @@ export default function SiteNews() {
     const [selctedTagId, setSelectedTagId] = useState(tagOptions[0].id);
 
     const { data: pageData, loading } = useRequest(() => getArticlesByCategory({
-        label_name: '各據點消息',
+        label_name: '全球志業',
         limit: 3,
         tag: selctedTagId
     }), {
@@ -112,7 +112,7 @@ export default function SiteNews() {
     // console.log(baseInfos)
 
     return <div className="pt-5">
-        <BannerTitle title={`各據點消息`} link={routes.THE_BASE_MESSAGE} />
+        <BannerTitle title={`全球志業`} link={routes.THE_BASE_MESSAGE} />
         <div className="pt-5 w-full">
             <div className="flex gap-2 flex-wrap">
                 {
