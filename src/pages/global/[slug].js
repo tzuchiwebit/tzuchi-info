@@ -1,6 +1,6 @@
 "use client"
 import Container from "@/shared/layout/Container"
-import { useState, useMemo, useEffect } from "react"
+import { useState, useMemo, useEffect, useRef } from "react"
 import Pagination from "@/shared/pagination/Pagination"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import Image from 'next/image'
@@ -50,6 +50,7 @@ export default function Page() {
   const [totalPage, setTotalPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const pageOffset = useMemo(() => (currentPage - 1) * 9, [currentPage]);
+  const prevSlug = useRef(params?.slug);
 
   const banner = useMemo(() => {
     if (params?.slug) return require(`@/asset/image/place-${params?.slug}.jpeg`)
@@ -67,10 +68,24 @@ const { data: listDataRef, loading, run } = useRequest(() => getArticlesByCatego
 })
 
 useEffect(()=> {
-  if (params?.slug) {
+  console.log('prevSlug.current', prevSlug.current)
+  console.log('params?.slug', params?.slug)
+  console.log('setCurrentPage', params?.slug !== prevSlug.current)
+  if (params?.slug && params?.slug !== prevSlug.current) {
+    setCurrentPage(1)
+  } else if (params?.slug) {
     run()
   }
+  prevSlug.current = params?.slug
 }, [pageOffset, params?.slug])
+
+// useEffect(()=> {
+//   if (params?.slug) {
+//     setCurrentPage(1)
+//     run()
+//   }
+// }, [params?.slug])
+
 const listData = useMemo(() => loading ? loadingData : listDataRef?.data || [], [listDataRef, loading]);
 
   return <Container>
