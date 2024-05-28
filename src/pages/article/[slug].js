@@ -42,7 +42,6 @@ const Breadcrumb = ({className}) => {
       list.push(item)
     }
 
-    // TODO: 如果為全球志業 需加上「州別」
     if (targetCategory?.id === 14) {
       console.log(target?.data?.attributes?.tags)
       for (const tag in (target?.data?.attributes?.tags || {})) {

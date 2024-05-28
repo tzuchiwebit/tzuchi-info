@@ -73,7 +73,8 @@ useEffect(()=> {
   console.log('setCurrentPage', params?.slug !== prevSlug.current)
   if (params?.slug && params?.slug !== prevSlug.current) {
     setCurrentPage(1)
-  } else if (params?.slug) {
+  }
+  if (params?.slug) {
     run()
   }
   prevSlug.current = params?.slug
