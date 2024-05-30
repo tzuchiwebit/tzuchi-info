@@ -12,7 +12,6 @@ import useDataProvider from "../useDataProvider";
 import Skeleton from "react-loading-skeleton";
 import { useRouter } from "next/navigation";
 import routes from "@/config/routes";
-import { SlidesTrack } from "../components";
 import Image from 'next/image'
 import DefaultImage from '@/asset/image/default-article-intro-square.png'
 import useScreenSize from '@/shared/hook/useScreenSize';
@@ -25,36 +24,30 @@ const Item = ({ item }) => {
     const router = useRouter();
 
     return (
-        <div className="relative laptop:w-[180px] w-[165px] tablet:w-full">
-            {/* <div className="w-full h-[480px] p-1"> */}
-            <div className={"w-full p-1"}>
-                <div
-                    className="w-full rounded-md overflow-hidden cursor-pointer"
-                    onClick={() => {
-                        // router.push(`${routes.ARITCLE}/${item.id}`)
-                    }}>
-                    {
-                      item?.title ?
-                      <Image
-                        src={item?.image ? item?.image: DefaultImage}
-                        alt={""}
-                        width={0}
-                        height={0}
-                        sizes="100vw"
-                        style={{
-                          width: '100%',
-                          height: 'auto',
-                        }}
-                        className="rounded-md"
-                      />:
-                      <Skeleton className="aspect-square" />
-                    }
-
-                    <div className="pt-2 pl-2 pr-0 text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2">
-                        {item?.title}
-                    </div>
-                </div>
-            </div>
+        <div className="w-[171px] cusor-pointer">
+          <div className="w-full rounded-md overflow-hidden cursor-pointer" onClick={() => {
+              // router.push(`${routes.ARITCLE}/${item.id}`)
+          }}>
+              {
+                item?.title ?
+                <Image
+                  src={item?.image ? item?.image: DefaultImage}
+                  alt={""}
+                  width={171}
+                  height={171}
+                  sizes="100vw"
+                  style={{
+                    width: 'auto',
+                    height: 'auto',
+                  }}
+                  className="rounded-md"
+                />:
+                <Skeleton className="aspect-square" />
+              }
+              <div className="pt-2 pl-2 pr-0 text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2">
+                {item?.title}
+              </div>
+          </div>
         </div>
     )
 }
@@ -75,28 +68,29 @@ const NewItem = ({ item = {}, loading = false }) => {
   }, [screenSize.width])
 
   return (
-      <div className="relative mb-[60px] rounded-md laptop:w-[180px] tablet:w-[171px] w-[165px]">
+      <div className="relative mb-[60px] rounded-md laptop:w-[180px] tablet:w-[171px] w-[165px] cursor-pointer select-none" onClick={() => {
+        // router.push(`${routes.ARITCLE}/${item.id}`); addHits(item.id);
+      }}>
         {
           loading ?
-            <div className=""><Skeleton className="aspect-square" /></div> :
+            <Skeleton className="aspect-square" />:
             <Image
               src={item?.image ? item?.image: DefaultImage}
               alt={""}
               width={imageWidth}
-              height={0}
+              height={imageWidth}
               sizes="100vw"
+              style={{
+                width: 'auto',
+                height: 'auto',
+              }}
               className="rounded-md"
             />
         }
         <div className="px-0 flex flex-col items-center pt-4 pb-2 w-full gap-y-1 gap-x-4">
-          <div
-            className="text-xl font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2 cursor-pointer"
-            onClick={() => {
-                router.push(`${routes.ARITCLE}/${item.id}`);
-                addHits(item.id);
-            }}>
+          <div className="text-xl font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">
             {
-                loading ? <Skeleton /> : item?.title
+              loading ? <Skeleton /> : item?.title
             }
           </div>
         </div>
@@ -133,21 +127,23 @@ const CarouselSection = ({ data, loading }) => {
       <Carousel
         showArrows={true}
         showIndicators={true}
-        swipeable
+        swipeable={true}
         infiniteLoop={false}
-        emulateTouch
+        emulateTouch={true}
         centerMode={true}
         centerSlidePercentage={slidePercentage}
         showThumbs={false}
         statusFormatter={() => { }}
-        renderArrowPrev={(clickHandler) => (<button
+        renderArrowPrev={(clickHandler, hasPrev) => hasPrev && (
+          <button
             onClick={clickHandler}
             className="absolute z-10 bottom-5 left-1 p-1 bg-white rounded-4xl shadow-elevation-3 cursor-pointer text-gray-gray2 hover:bg-complementary-blue2 focus:bg-complementary-blue1">
             <Icon.PageArrowLeft
                 style={{ width: 24 }}
             />
-        </button>)}
-        renderArrowNext={(clickHandler) => (<button
+          </button>
+        )}
+        renderArrowNext={(clickHandler, hasNext) => hasNext && (<button
             onClick={clickHandler}
             className="absolute z-10 bottom-5 right-1 p-1 bg-white rounded-4xl shadow-elevation-3 cursor-pointer text-gray-gray2 hover:bg-complementary-blue2 focus:bg-complementary-blue1">
             <Icon.PageArrowRight
@@ -219,11 +215,24 @@ export default function BookSuggest() {
             </div>
         </div>
 
-        <div className="w-full overflow-hidden">
-          <CarouselContainer>
-            <CarouselSection data={sliderData} loading={loadingBooks} />
-          </CarouselContainer>
-        </div>
+        {
+          !loadingBooks &&
+          <div className="w-full">
+            {
+              isTabletOnly ?
+                <div className="flex flex-row justify-between">
+                  {
+                    sliderData.map((item, index) => (<div className='w-fit' key={index}>
+                        <Item item={item} />
+                    </div>))
+                  }
+                </div>:
+                <CarouselContainer>
+                  <CarouselSection data={sliderData} loading={loadingBooks} />
+                </CarouselContainer>
+            }
+          </div>
+        }
         <div className="flex flex-row w-full gap-2 items-center  pt-4">
             <div className="flex-0 text-[24px] font-bold text-primary-blue1">
                 慈濟書庫
@@ -238,18 +247,24 @@ export default function BookSuggest() {
                 </div>
             </div>
         </div>
-        <div className="w-full overflow-hidden">
-            {/* <SlidesTrack>
-                {
-                  sliderData.map((item, index) => (<div className='w-fit' key={index}>
-                      <Item item={item} />
-                  </div>))
-                }
-            </SlidesTrack> */}
-          <CarouselContainer>
-            <CarouselSection data={sliderData} loading={loadingBooks} />
-          </CarouselContainer>
-        </div>
+        {
+          !loadingBooks &&
+          <div className="w-full">
+            {
+              isTabletOnly ?
+                <div className="flex flex-row justify-between">
+                  {
+                    sliderData.map((item, index) => (<div className='w-fit' key={index}>
+                        <Item item={item} />
+                    </div>))
+                  }
+                </div>:
+                <CarouselContainer>
+                  <CarouselSection data={sliderData} loading={loadingBooks} />
+                </CarouselContainer>
+            }
+          </div>
+        }
     </div>
 }
 
