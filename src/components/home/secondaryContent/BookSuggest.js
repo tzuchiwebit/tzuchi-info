@@ -2,63 +2,26 @@
 import Icon from "@/shared/Icon"
 import styled from "styled-components"
 import { BannerTitle } from "../components"
-import screens from "@/shared/styles/screens";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel"
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import _ from "lodash";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import color from "@/shared/styles/color";
 import useDataProvider from "../useDataProvider";
 import Skeleton from "react-loading-skeleton";
 import { useRouter } from "next/navigation";
 import routes from "@/config/routes";
 import { SlidesTrack } from "../components";
-// import routes from "@/app/config/routes";
-// import { useRouter } from "next/navigation";
 import Image from 'next/image'
 import DefaultImage from '@/asset/image/default-article-intro-square.png'
+import useScreenSize from '@/shared/hook/useScreenSize';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-const tagOptions = [
-    '靜思人文',
-    '慈濟書庫',
-]
-
-// const data = [
-//     {
-//         title: '《印順導師年譜》開放線上預購 慈善購書兩不誤',
-//         image: 'https://picsum.photos/id/229/300/300',
-//     },
-//     {
-//         title: '環保輔具平台缺你一分力 擴大招募志工中',
-//         image: 'https://picsum.photos/id/229/300/300',
-//     },
-//     {
-//         title: '澤爸親子講座 打開親子溝通的黃金之鑰',
-//         image: 'https://picsum.photos/id/229/300/300',
-//     },
-//     {
-//         title: '《印順導師年譜》開放線上預購 慈善購書兩不誤',
-//         image: 'https://picsum.photos/id/229/300/300',
-//     },
-//     {
-//         title: '環保輔具平台缺你一分力 擴大招募志工中',
-//         image: 'https://picsum.photos/id/229/300/300',
-//     },
-//     {
-//         title: '澤爸親子講座 打開親子溝通的黃金之鑰',
-//         image: 'https://picsum.photos/id/229/300/300',
-//     },
-// ]
-
-
 const Item = ({ item }) => {
-
     const router = useRouter();
 
     return (
@@ -96,100 +59,133 @@ const Item = ({ item }) => {
     )
 }
 
+const NewItem = ({ item = {}, loading = false }) => {
+  const router = useRouter();
+  const screenSize = useScreenSize();
+  const [imageWidth, setImageWidth] = useState(180)
 
-const PrevBtn = ({ onClick }) => (<button
-    onClick={onClick}
-    className="absolute z-10 bottom-5 left-1 p-1 bg-white rounded-4xl shadow-elevation-3 text-gray-gray2 hover:bg-complementary-blue2 focus:bg-complementary-blue1">
-    <Icon.PageArrowLeft
-        style={{ width: 24 }}
-    />
-</button>)
+  useEffect(() => {
+    if (screenSize.width >= 1024) {
+      setImageWidth(180)
+    } else if (screenSize.width >= 768) {
+      setImageWidth(171)
+    } else if (screenSize.width >= 375 ) {
+      setImageWidth(165)
+    }
+  }, [screenSize.width])
 
-const NextBtn = ({ onClick }) => (<button
-    onClick={onClick}
-    className="absolute z-10 bottom-5 right-1 p-1 bg-white rounded-4xl shadow-elevation-3 text-gray-gray2 hover:bg-complementary-blue2 focus:bg-complementary-blue1">
-    <Icon.PageArrowRight
-        style={{ width: 24 }}
-    />
-</button>)
+  return (
+      <div className="relative mb-[60px] rounded-md laptop:w-[180px] tablet:w-[171px] w-[165px]">
+        {
+          loading ?
+            <div className=""><Skeleton className="aspect-square" /></div> :
+            <Image
+              src={item?.image ? item?.image: DefaultImage}
+              alt={""}
+              width={imageWidth}
+              height={0}
+              sizes="100vw"
+              className="rounded-md"
+            />
+        }
+        <div className="px-0 flex flex-col items-center pt-4 pb-2 w-full gap-y-1 gap-x-4">
+          <div
+            className="text-xl font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2 cursor-pointer"
+            onClick={() => {
+                router.push(`${routes.ARITCLE}/${item.id}`);
+                addHits(item.id);
+            }}>
+            {
+                loading ? <Skeleton /> : item?.title
+            }
+          </div>
+        </div>
+      </div>
+  )
+}
 
-// const CarouselSection = ({ data }) => {
+const CarouselSection = ({ data, loading }) => {
+  const screenSize = useScreenSize();
+  const [slidePercentage, setSlidePercentage] = useState(70)
 
-//     const sliderData = useMemo(() => {
-//         if (data.length === 1) {
-//             return Array(4).fill(data[0])
-//         } else if (data.length === 2) {
-//             return _.concat(data, data);
-//         }
-//         return data
-//     }, [data])
+  const sliderData = useMemo(() => {
+      if (data.length === 1) {
+          return Array(4).fill(data[0])
+      } else if (data.length === 2) {
+          return _.concat(data, data);
+      }
+      return data
+  }, [data])
 
-//     const settings = {
-//         customPaging: function (i) {
-//             return (
-//                 <div
-//                     tabIndex={0}
-//                     role="button"
-//                     // className={classNames((selectedIndex === i) ? 'bg-primary-blue2' : 'bg-gray-gray7', 'w-3 h-3 bottom-5 relative rounded-full')}
-//                     className='w-3 h-3 bottom-5 relative rounded-full translate-x-1'
-//                 />
-//             );
-//         },
-//         dots: true,
-//         dotsClass: "slick-dots",
-//         infinite: true,
-//         centerMode: true,
-//         centerPadding: '11%',
-//         speed: 500,
-//         slidesToShow: 1,
-//         slidesToScroll: 1,
-//         initialSlide: 0,
-//         nextArrow: <NextBtn />,
-//         prevArrow: <PrevBtn />,
-//         responsive: [
-//             {
-//                 breakpoint: 1024,
-//                 settings: {
-//                     centerMode: false,
-//                     slidesToShow: 4,
-//                     slidesToScroll: 1,
-//                     initialSlide: 0,
-//                     infinite: true,
-//                     arrows: false,
-//                     dots: false,
-//                     swipe: false,
-//                 }
-//             },
-//             {
-//                 breakpoint: 767,
-//                 settings: {
-//                     centerMode: false,
-//                     slidesToShow: 2,
-//                     slidesToScroll: 1,
-//                     infinite: true,
-//                 }
-//             }
-//         ]
-//     };
+  useEffect(() => {
+    if (screenSize.width >= 1600) {
+      setSlidePercentage(75)
+    } else if (screenSize.width >= 1024) {
+      setSlidePercentage(65)
+    } else if (screenSize.width >= 768) {
+      setSlidePercentage(25.8)
+    } else if (screenSize.width >= 375 ) {
+      setSlidePercentage(50)
+    }
+  }, [screenSize.width])
 
-//     return (
-//         <Slider style={{ paddingBottom: 60 }} {...settings}>
-//             {
-//                 sliderData.map((item, index) => (<div key={index}>
-//                     <Item item={item.attributes} />
-//                 </div>))
-//             }
-//         </Slider>
-//     );
-// }
+  return (
+      <Carousel
+        showArrows={true}
+        showIndicators={true}
+        swipeable
+        infiniteLoop={false}
+        emulateTouch
+        centerMode={true}
+        centerSlidePercentage={slidePercentage}
+        showThumbs={false}
+        statusFormatter={() => { }}
+        renderArrowPrev={(clickHandler) => (<button
+            onClick={clickHandler}
+            className="absolute z-10 bottom-5 left-1 p-1 bg-white rounded-4xl shadow-elevation-3 cursor-pointer text-gray-gray2 hover:bg-complementary-blue2 focus:bg-complementary-blue1">
+            <Icon.PageArrowLeft
+                style={{ width: 24 }}
+            />
+        </button>)}
+        renderArrowNext={(clickHandler) => (<button
+            onClick={clickHandler}
+            className="absolute z-10 bottom-5 right-1 p-1 bg-white rounded-4xl shadow-elevation-3 cursor-pointer text-gray-gray2 hover:bg-complementary-blue2 focus:bg-complementary-blue1">
+            <Icon.PageArrowRight
+                style={{ width: 24 }}
+            />
+        </button>)}
+        renderIndicator={(onClickHandler, isSelected, index, label) => {
+            const defStyle = { marginLeft: 20, color: "green", cursor: "pointer", bottom: 10, position: 'relative' };
+            const style = isSelected
+                ? { ...defStyle, color: "red" }
+                : { ...defStyle };
+            return (
+                <div
+                    onClick={onClickHandler}
+                    onKeyDown={onClickHandler}
+                    tabIndex={0}
+                    role="button"
+                    className={classNames(isSelected ? 'bg-primary-blue2' : 'bg-gray-gray7', 'w-3 h-3 bottom-5 relative rounded-full')}
+                />
+            );
+        }}
+      >
+        {sliderData.map((_i, _index) => (
+          <div className="mt-1.5" key={_index}>
+            <NewItem loading={loading} item={_i} />
+          </div>
+        ))}
+      </Carousel>
+  );
+}
 
 const onReadMore = () => {
     window.open(`https://tzuchi-ebooks.web.app`)
 }
 
 export default function BookSuggest() {
-
-    const router = useRouter();
+  const screenSize = useScreenSize();
+  const [isTabletOnly, setIsTabletOnly] = useState(screenSize.width >= 768 && screenSize.width < 1024)
 
     const { loadingBooks, suggestBooks: booksData } = useDataProvider();
 
@@ -201,6 +197,10 @@ export default function BookSuggest() {
         }
         return booksData.slice(0, 4)
     }, [booksData])
+
+    useEffect(() => {
+      setIsTabletOnly(screenSize.width >= 768 && screenSize.width < 1024)
+    }, [screenSize.width])
 
     return <div className="pt-3 w-full">
         <BannerTitle title={`好書推薦`} />
@@ -220,17 +220,9 @@ export default function BookSuggest() {
         </div>
 
         <div className="w-full overflow-hidden">
-            <SlidesTrack>
-                {
-                    sliderData.map((item, index) => (<div className='w-fit' key={index}>
-                        <Item item={item} />
-                    </div>))
-                }
-            </SlidesTrack>
-
-            {/* <CarouselContainer>
-                <CarouselSection data={booksData} />
-            </CarouselContainer> */}
+          <CarouselContainer>
+            <CarouselSection data={sliderData} loading={loadingBooks} />
+          </CarouselContainer>
         </div>
         <div className="flex flex-row w-full gap-2 items-center  pt-4">
             <div className="flex-0 text-[24px] font-bold text-primary-blue1">
@@ -247,43 +239,24 @@ export default function BookSuggest() {
             </div>
         </div>
         <div className="w-full overflow-hidden">
-            <SlidesTrack>
+            {/* <SlidesTrack>
                 {
-                    sliderData.map((item, index) => (<div className='w-fit' key={index}>
-                        <Item item={item} />
-                    </div>))
+                  sliderData.map((item, index) => (<div className='w-fit' key={index}>
+                      <Item item={item} />
+                  </div>))
                 }
-            </SlidesTrack>
+            </SlidesTrack> */}
+          <CarouselContainer>
+            <CarouselSection data={sliderData} loading={loadingBooks} />
+          </CarouselContainer>
         </div>
     </div>
 }
 
-
-const StyledImage = styled.div`
-    width: 100%;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    aspect-ratio: 1;
-    border-radius: 5px;
+const CarouselContainer = styled.div`
+  .control-dots {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+  }
 `
-
-// const CarouselContainer = styled.div`
-//     @media(min-width: ${screens.laptop}) {
-//         .slick-track {
-//             left: -33px;
-//         }
-//     }
-//     .slick-dots {
-//         bottom: -6px;
-//         > li {
-//             * {
-//                 background-color: ${color.gray.gray7};
-//             }
-//             &.slick-active > *{
-//                 background-color: ${color.primary.blue2};
-//             }
-//         }
-//     }
-
-// `

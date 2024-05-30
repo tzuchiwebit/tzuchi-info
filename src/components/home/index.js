@@ -66,7 +66,7 @@ const SecondaryContainer = styled.div`
     }
     @media(min-width: ${screens.desktop}) {
         flex-basis: 280px;
-        width: 280px;
+        min-width: 280px;
         flex-direction: row;
         margin-right: 0;
     }
