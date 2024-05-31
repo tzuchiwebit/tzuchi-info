@@ -10,7 +10,7 @@ import PrimaryCard from "@/shared/card/PrimaryCard"
 import classNames from "@/utils/classNames"
 import Icon from "@/shared/Icon"
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
-import { getArticlesByCategory } from "@/api/joomlaApi"
+import { getArticlesByCategory, getUserById } from "@/api/joomlaApi"
 import useScreenSize from '@/shared/hook/useScreenSize';
 import Skeleton from "react-loading-skeleton"
 import { useRouter } from "next/router"
@@ -29,13 +29,17 @@ const tabs = [
   },
 ]
 
-export default function Page() {
+const loadingData = Array(12).fill({
+  loading: true
+});
 
+export default function Page() {
+  const [listData, setListData] = useState(loadingData)
+  const [totalPage, setTotalPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeTab, setActiveTab] = useState(0);
   const screenSize = useScreenSize();
   const [isMobileDevice, setIsMobileDevice] = useState(screenSize.width < 1024)
-  // const loading = true;
   const router = useRouter();
 
   const { data: columnArticlesData, loading } = useRequest(() => getArticlesByCategory({
@@ -44,12 +48,29 @@ export default function Page() {
     offset: isMobileDevice ? (currentPage - 1) * 8 : (currentPage - 1) * 9,
     tag: activeTab === 0 ? 1486 : 1487
   }), {
-    refreshDeps: [activeTab, currentPage]
+    refreshDeps: [activeTab, currentPage],
+    onSuccess: async(res) => {
+
+      const creatorPool = {}
+      for (let article of res.data) {
+        if (creatorPool[article?.attributes?.created_by]) {
+          article.attributes.creator = creatorPool[article?.attributes?.created_by]
+        } else {
+          const creator = (await getUserById(article?.attributes?.created_by))
+          creatorPool[article?.attributes?.created_by] = creator
+          article.attributes.creator = creator
+        }
+      }
+
+      setListData(res.data)
+      setTotalPage(res.meta['total-pages']);
+    },
+    onError: (err) => {
+      console.error(err);
+    }
   });
 
-  const listData = useMemo(() => columnArticlesData?.data || [], [columnArticlesData]);
-  const totalPage = useMemo(() => columnArticlesData?.meta?.['total-pages'] || 1, [columnArticlesData]);
-  
+
   return <Container>
     <FloatScrollTopButton />
     {/* filter options section */}
@@ -96,19 +117,14 @@ export default function Page() {
         </div>
       </div>
       {/* result cards */}
-      {
-        loading ? (<div className="w-full tablet:w-1/2 laptop:w-1/3">
-          <Skeleton className="w-full aspect-video" />
-          <Skeleton count={3} className="w-full" />
-        </div>) : (<div className="w-fit flex flex-wrap -mx-3">
-          {
-            listData.map((item, index) => <PrimaryCard item={item?.attributes} key={index} index={index} onClick={() => {
-              router.push(`${routes.ARITCLE}/${item.id}`);
-              addHits(item.id);
-            }} />)
-          }
-        </div>)
-      }
+      <div className="w-fit flex flex-wrap -mx-3">
+        {
+          listData.map((item, index) => <PrimaryCard item={item?.attributes} key={index} index={index} onClick={() => {
+            router.push(`${routes.ARITCLE}/${item.id}`);
+            addHits(item.id);
+          }} />)
+        }
+      </div>
       <div className="w-full">
         <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
       </div>

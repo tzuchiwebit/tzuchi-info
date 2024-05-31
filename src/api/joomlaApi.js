@@ -4,12 +4,12 @@ import axios from 'axios'
 import _ from 'lodash'
 import joomlaContentCategory from './joomlaContentCategory'
 
-const API_ENDPOINT = `${process.env.NEXT_PUBLIC_CMS_URL}/api/index.php/v1/content`
+const API_ENDPOINT = `${process.env.NEXT_PUBLIC_CMS_URL}/api/index.php/v1`
 const token = process.env.NEXT_PUBLIC_JOOMLA_API_TOKEN
 
 const getArticleById = async (id) => {
   try {
-    const res = await axios.get(`${API_ENDPOINT}/articles/${id}`, {
+    const res = await axios.get(`${API_ENDPOINT}/content/articles/${id}`, {
       headers: {
         'Authorization': 'Bearer ' + token
       }
@@ -20,10 +20,23 @@ const getArticleById = async (id) => {
   }
 }
 
+const getUserById = async (id) => {
+  try {
+    const res = await axios.get(`${API_ENDPOINT}/users/${id}`, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    })
+    return res?.data?.data?.attributes
+  } catch (err) {
+    throw err
+  }
+}
+
 const getRecommandArticles = async (categoryId, limit = 3) => {
   // 推薦閱讀：抓取 相同分類、點擊最高的3篇文章
   try {
-    const res = await axios.get(`${API_ENDPOINT}/articles`, {
+    const res = await axios.get(`${API_ENDPOINT}/content/articles`, {
       headers: {
         'Authorization': 'Bearer ' + token
       },
@@ -51,7 +64,7 @@ const getExtendArticles = async (tags = [], limit = 3) => {
     }
     if (tags.length) params['filter[tag]'] = tags
 
-    const res = await axios.get(`${API_ENDPOINT}/articles`, {
+    const res = await axios.get(`${API_ENDPOINT}/content/articles`, {
       headers: {
         'Authorization': 'Bearer ' + token
       },
@@ -81,7 +94,7 @@ const getArticlesByCategory = async ({ label_name = '志工早會', limit = 10, 
     if (ordering) params['list[ordering]']= ordering
     if (sort) params['list[direction]']= sort // asc|desc
 
-    const res = await axios.get(`${API_ENDPOINT}/articles`, {
+    const res = await axios.get(`${API_ENDPOINT}/content/articles`, {
       headers: {
         'Authorization': 'Bearer ' + token
       },
@@ -108,7 +121,7 @@ const getArticlesByKeyword = async ({ keyword = '', limit = 12, offset = 0, stat
       'page[offset]': offset,
     }
 
-    const res = await axios.get(`${API_ENDPOINT}/articles`, {
+    const res = await axios.get(`${API_ENDPOINT}/content/articles`, {
       headers: {
         'Authorization': 'Bearer ' + token
       },
@@ -129,4 +142,5 @@ export {
   getRecommandArticles,
   getExtendArticles,
   getArticlesByKeyword,
+  getUserById,
 }

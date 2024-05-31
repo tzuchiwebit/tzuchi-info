@@ -43,12 +43,8 @@ const Breadcrumb = ({className}) => {
     }
 
     if (targetCategory?.id === 14) {
-      console.log(target?.data?.attributes?.tags)
       for (const tag in (target?.data?.attributes?.tags || {})) {
-        console.log('tag', tag)
         for (const global in joomlaGlobal) {
-          console.log(joomlaGlobal[global])
-
           if (joomlaGlobal[global].tag == tag) {
             const item = {
               label: joomlaGlobal[global].label,
@@ -100,7 +96,7 @@ const Article = () => {
         <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(articleData?.attributes?.publish_up).format('YYYY-MM-DD')}</span>
         <Fragment>
           <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
-          <span className="text-[14px] text-gray-gray4 font-medium">{articleData?.attributes?.created_by_alias ? articleData?.attributes?.created_by_alias: '慈濟基金會'}</span>
+          <span className="text-[14px] text-gray-gray4 font-medium">{articleData?.attributes?.creator?.name}</span>
         </Fragment>
         {
           articleData?.attributes?.place &&
@@ -176,7 +172,7 @@ const ExtendArticles = () => {
               <div className="flex flex-row items-center gap-x-2 laptop:mt-2 mt-1">
                 <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(item.attributes?.publish_up).format('YYYY-MM-DD')}</span>
                 <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
-                <span className="text-[14px] text-gray-gray4 font-medium">{item.attributes.created_by_alias ? item.attributes.created_by_alias : '慈濟基金會'}</span>
+                <span className="text-[14px] text-gray-gray4 font-medium">{item?.attributes?.creator?.name}</span>
               </div>
             </div>
           ))
@@ -217,7 +213,7 @@ const RecommandArticles = () => {
               <div className="flex flex-row items-center gap-x-2 laptop:mt-2 mt-1">
                 <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(item.attributes?.publish_up).format('YYYY-MM-DD')}</span>
                 <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
-                <span className="text-[14px] text-gray-gray4 font-medium">{item.attributes.created_by_alias ? item.attributes.created_by_alias : '慈濟基金會'}</span>
+                <span className="text-[14px] text-gray-gray4 font-medium">{item?.attributes?.creator?.name}</span>
               </div>
             </div>
           ))

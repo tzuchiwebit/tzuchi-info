@@ -9,7 +9,7 @@ import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
 import { useParams } from 'next/navigation'
 import Skeleton from "react-loading-skeleton"
 import joomlaGlobal from '@/api/joomlaGlobal'
-import { getArticlesByCategory } from "@/api/joomlaApi"
+import { getArticlesByCategory, getUserById } from "@/api/joomlaApi"
 import { useRouter } from "next/router"
 import routes from "@/config/routes"
 const { useRequest } = require('ahooks')
@@ -45,6 +45,7 @@ const Breadcrumb = ({className}) => {
 }
 
 export default function Page() {
+  const [listData, setListData] = useState(loadingData)
   const params = useParams();
   const router = useRouter();
   const [totalPage, setTotalPage] = useState(1);
@@ -59,7 +60,19 @@ export default function Page() {
 const { data: listDataRef, loading, run } = useRequest(() => getArticlesByCategory({ label_name: "全球志業", tag: joomlaGlobal[params?.slug?.toString()]?.tag, limit: 9, offset: pageOffset, ordering: 'created', sort: 'desc' }), {
   refreshDeps: [pageOffset, params?.slug],
   manual: true,
-  onSuccess: (res) => {
+  onSuccess: async (res) => {
+    const creatorPool = {}
+    for (let article of res.data) {
+      if (creatorPool[article?.attributes?.created_by]) {
+        article.attributes.creator = creatorPool[article?.attributes?.created_by]
+      } else {
+        const creator = (await getUserById(article?.attributes?.created_by))
+        creatorPool[article?.attributes?.created_by] = creator
+        article.attributes.creator = creator
+      }
+    }
+
+    setListData(res.data)
     setTotalPage(res.meta['total-pages']);
   },
   onError: (err) => {
@@ -87,7 +100,6 @@ useEffect(()=> {
 //   }
 // }, [params?.slug])
 
-const listData = useMemo(() => loading ? loadingData : listDataRef?.data || [], [listDataRef, loading]);
 
   return <Container>
     <FloatScrollTopButton />

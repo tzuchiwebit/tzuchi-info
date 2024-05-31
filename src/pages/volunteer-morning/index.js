@@ -8,7 +8,7 @@ import BannerImage from '@/asset/image/volunteer-morning-meeting.jpeg'
 import Image from 'next/image'
 import PrimaryCard from "@/shared/card/PrimaryCard"
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
-import { getArticlesByCategory } from "@/api/joomlaApi"
+import { getArticlesByCategory, getUserById } from "@/api/joomlaApi"
 // import Skeleton from "react-loading-skeleton"
 import { useRouter } from "next/navigation"
 import routes from "@/config/routes"
@@ -21,7 +21,7 @@ const loadingData = Array(12).fill({
 
 
 export default function Page() {
-
+  const [listData, setListData] = useState(loadingData)
   const [totalPage, setTotalPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const pageOffset = useMemo(() => (currentPage - 1) * 9, [currentPage]);
@@ -30,9 +30,22 @@ export default function Page() {
 
   const { data: listDataRef, loading } = useRequest(() => getArticlesByCategory({ label_name: "志工早會", limit: 9, offset: pageOffset }), {
     refreshDeps: [pageOffset],
-    onSuccess: (res) => {
+    onSuccess: async (res) => {
       // console.log(`res.meta`)
       // console.log(res.meta)
+
+      const creatorPool = {}
+      for (let article of res.data) {
+        if (creatorPool[article?.attributes?.created_by]) {
+          article.attributes.creator = creatorPool[article?.attributes?.created_by]
+        } else {
+          const creator = (await getUserById(article?.attributes?.created_by))
+          creatorPool[article?.attributes?.created_by] = creator
+          article.attributes.creator = creator
+        }
+      }
+
+      setListData(res.data)
       setTotalPage(res.meta['total-pages']);
     },
     onError: (err) => {
@@ -40,9 +53,6 @@ export default function Page() {
     }
   })
 
-  const listData = useMemo(() => loading ? loadingData : listDataRef?.data || [], [listDataRef, loading]);
-
-  // console.log(listData)
   const onPageHit = (id) => {
     router.push(`${routes.ARITCLE}/${id}`)
     addHits(id);

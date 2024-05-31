@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react"
 import { createContext } from 'react';
-import { getArticlesByCategory } from "@/api/joomlaApi";
+import { getArticlesByCategory, getUserById } from "@/api/joomlaApi";
 import { getBookSuggest } from "@/api/api";
+import _ from 'lodash'
 
 export const DataContext = createContext(null);
 
@@ -64,6 +65,31 @@ export default function DataProvider({ children }) {
 
       // console.log(`res`)
       // console.log(res)
+
+      // fetch creator info
+      const creatorPool = {}
+
+      const targetLeadings = _.find(res, { name: '專欄文章-領航慈濟' });
+      const targetViews = _.find(res, { name: '專欄文章-名人視角' });
+
+      for (let article of targetLeadings.data) {
+        if (creatorPool[article?.attributes?.created_by]) {
+          article.attributes.creator = creatorPool[article?.attributes?.created_by]
+        } else {
+          const creator = (await getUserById(article?.attributes?.created_by))
+          creatorPool[article?.attributes?.created_by] = creator
+          article.attributes.creator = creator
+        }
+      }
+
+      for (let article of targetViews.data) {
+        if (creatorPool[article?.attributes?.created_by]) {
+          article.attributes.creator = creatorPool[article?.attributes?.created_by]
+        } else {
+          const creator = (await getUserById(article?.attributes?.created_by))
+          creatorPool[article?.attributes?.created_by] = creator
+        }
+      }
 
       setPageData(res);
 

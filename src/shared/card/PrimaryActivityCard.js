@@ -51,7 +51,7 @@ const PrimaryActivityCard = ({ item = {}, onClick = () => { } }) => {
         </div>
         <div className="w-full flex justify-between items-center">
           <div className="border-l border-gray-gray4 border-solid pl-1 leading-[16px] h-[16px]">
-            {item.created_by_alias ? item.created_by_alias : '慈濟基金會'}
+            {item?.creator?.name}
           </div>
           <div className="flex gap-1">
             <SocialBar articleId={item.id} likes={item?.like} shares={item?.share}></SocialBar>
