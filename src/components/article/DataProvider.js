@@ -15,10 +15,13 @@ export default function DataProvider({ children }) {
     setLoading(true);
     try {
       const res = []
+      const creatorPool = {}
+
       // 1) fetch article
       const article = (await getArticleById(id)).data
       const creator = (await getUserById(article?.attributes?.created_by))
       article.attributes.creator = creator
+      creatorPool[article?.attributes?.created_by] = creator
       res.push(
         {
           name: 'article',
@@ -28,9 +31,14 @@ export default function DataProvider({ children }) {
 
       // 2) fetch recommand article list
       const recommandArticles = (await getRecommandArticles(article.relationships.category.data.id, 4)).data
-      for (let recommandArticle of recommandArticles) {
-        const recommandArticleCreator = (await getUserById(recommandArticle?.attributes?.created_by))
-        recommandArticle.attributes.creator = recommandArticleCreator
+      for (let article of recommandArticles) {
+        if (creatorPool[article?.attributes?.created_by]) {
+          article.attributes.creator = creatorPool[article?.attributes?.created_by]
+        } else {
+          const creator = (await getUserById(article?.attributes?.created_by))
+          creatorPool[article?.attributes?.created_by] = creator
+          article.attributes.creator = creator
+        }
       }
       res.push(
         {
@@ -41,9 +49,14 @@ export default function DataProvider({ children }) {
 
       // 3) fetch extend article lists
       const extendArticles = (await getExtendArticles(Object.keys(article.attributes.tags), 4)).data
-      for (let extendArticle of extendArticles) {
-        const extendArticleCreator = (await getUserById(extendArticle?.attributes?.created_by))
-        extendArticle.attributes.creator = extendArticleCreator
+      for (let article of extendArticles) {
+        if (creatorPool[article?.attributes?.created_by]) {
+          article.attributes.creator = creatorPool[article?.attributes?.created_by]
+        } else {
+          const creator = (await getUserById(article?.attributes?.created_by))
+          creatorPool[article?.attributes?.created_by] = creator
+          article.attributes.creator = creator
+        }
       }
       res.push(
         {
