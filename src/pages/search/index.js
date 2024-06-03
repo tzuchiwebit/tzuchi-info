@@ -2,16 +2,13 @@
 import Container from "@/shared/layout/Container"
 // import { RadioGroup } from '@headlessui/react'
 import { useEffect, useState, useMemo } from "react"
-import RadioBtn from "@/shared/button/RadioBtn"
 import SearchInput from "@/shared/input/SearchInput"
 // import CheckBox from "@/shared/button/CheckBox"
-import DatePicker from "@/components/search/DatePicker"
-import AdvanceSearch from "@/components/search/AdvanceSearch"
 import PrimaryBtn from "@/shared/button/PrimaryBtn"
 import Icon from "@/shared/Icon"
 import SearchSelect from "@/shared/input/SearchSelect"
 import Pagination from "@/shared/pagination/Pagination"
-import classNames from "@/utils/classNames"
+// import classNames from "@/utils/classNames"
 import { useSearchParams } from "next/navigation"
 import Highlighter from "react-highlight-words";
 import styles from './search.module.css'
@@ -21,6 +18,7 @@ import DefaultImage from '@/asset/image/default-article-intro.png'
 import { getArticlesByKeyword } from "@/api/joomlaApi"
 import { addHits } from "@/api/api"
 import routes from "@/config/routes"
+import * as classnames from "classnames"
 const { useRequest } = require('ahooks');
 
 const ResultCard = ({ keyword = "", item = {}, index, isLast = false }) => {
@@ -28,13 +26,13 @@ const ResultCard = ({ keyword = "", item = {}, index, isLast = false }) => {
   const router = useRouter();
 
   return <div className="w-full flex gap-1">
-    <div className={classNames(
+    <div className={classnames(
       isLast ? 'border-b-2' : '',
       "max-w-[165px] laptop:max-w-[280px] py-3 laptop:py-8 flex-0 border-t-2 border-solid border-primary-blue1"
     )}>
       <img src={item.images?.image_intro || DefaultImage.src} width={'100%'} className="rounded" />
     </div>
-    <div className={classNames(
+    <div className={classnames(
       isLast ? 'border-b' : '',
       "py-3 laptop:py-8 pl-2 pr-0 laptop:px-4 flex-1 border-t border-solid border-gray-gray7 flex flex-col"
     )}>
@@ -175,7 +173,7 @@ export default function Page() {
       </div> */}
     </div>
     <div className="mt-5 laptop:mt-10">
-      <PrimaryBtn onClick={() => {
+      <PrimaryBtn className={classnames(loading && 'disabled')} onClick={() => {
         // runGetArticles(searchText)
         router.push(`/search?keyword=${searchText}`)
       }}>

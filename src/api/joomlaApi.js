@@ -7,6 +7,8 @@ import joomlaContentCategory from './joomlaContentCategory'
 const API_ENDPOINT = `${process.env.NEXT_PUBLIC_CMS_URL}/api/index.php/v1`
 const token = process.env.NEXT_PUBLIC_JOOMLA_API_TOKEN
 
+const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay))
+
 const getArticleById = async (id) => {
   try {
     const res = await axios.get(`${API_ENDPOINT}/content/articles/${id}`, {
@@ -112,7 +114,8 @@ const getArticlesByCategory = async ({ label_name = '志工早會', limit = 10, 
 const getArticlesByKeyword = async ({ keyword = '', limit = 12, offset = 0, state = 1, sorting = 'desc'}) => {
 
   try {
-
+    // 為了讓button disable style明顯，故意做延遲
+    await sleep(500)
     const params = {
       'filter[search]': `content:${keyword}`,
       'filter[state]': state,

@@ -29,7 +29,7 @@ const PrimaryButton = styled.button`
     font-weight: bold;
     white-space: nowrap;
     border-radius: 6px;
-    border: 2px solid white;
+    border: 1.5px solid white;
     font-size: large;
     cursor: pointer;
     gap: 4px;
@@ -37,15 +37,25 @@ const PrimaryButton = styled.button`
     align-items: center;
     transition: all .3s;
     width: 100%;
-    &:hover {
+    user-select: none;
+
+    &:not(.disabled):hover {
         color: ${color.primary.blue2};
         background-color: ${color.complementary.blue1};
     }
-    &:focus {
+    &:not(.disabled):active {
         color: ${color.primary.blue2};
         background-color: white;
-        border: 2px solid ${color.primary.blue2};
+        border: 1.5px solid ${color.primary.blue2};
     }
+
+    &.disabled {
+      background-color: #fff;
+      border: 1.5px solid ${color.gray.gray7};
+      color: ${color.gray.gray7};
+      cursor: not-allowed;
+    }
+
     @media(min-width: ${screens.laptop}) {
         width: auto;
         font-size: 26px;
