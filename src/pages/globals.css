@@ -68,6 +68,9 @@ footer, header, nav, section {
 html {
   padding-right: 0px !important;
 }
+img {
+  pointer-events: none;
+}
 
 /*
 body {
