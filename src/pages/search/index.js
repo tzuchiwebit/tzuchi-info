@@ -173,7 +173,7 @@ export default function Page() {
       </div> */}
     </div>
     <div className="mt-5 laptop:mt-10">
-      <PrimaryBtn className={classnames(loading && 'disabled')} onClick={() => {
+      <PrimaryBtn className={classnames(loading && 'disabled')} disabled={loading} onClick={() => {
         // runGetArticles(searchText)
         router.push(`/search?keyword=${searchText}`)
       }}>
