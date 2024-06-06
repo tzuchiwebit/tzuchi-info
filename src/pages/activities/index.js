@@ -109,7 +109,7 @@ export default function Page() {
           }} />
       </div>
       {/* result cards */}
-      <BannerTitle title="活動點位地圖" />
+      {/* <BannerTitle title="活動點位地圖" /> */}
       <BannerTitle title="活動資訊" />
       <div className="w-fit flex flex-wrap -mx-3">
         {

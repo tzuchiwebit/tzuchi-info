@@ -20,6 +20,8 @@ import * as classnames from "classnames"
 import DefaultImage from '@/asset/image/default-article-intro.png'
 import joomlaGlobal from '@/api/joomlaGlobal'
 import { addHits } from "@/api/api"
+import Icon from "@/shared/Icon"
+import color from "@/shared/styles/color"
 
 const Breadcrumb = ({ className }) => {
   const { pageData } = useDataProvider();
@@ -91,6 +93,17 @@ const Article = () => {
     return ''
   }
 
+  const getLocationPinWidth = (size) => {
+    if (size === 'medium') return 18
+    if (size === 'large') return 20
+    return 16
+  }
+  const getActivityInfoBarWidth = (size) => {
+    if (size === 'medium') return 'border-l-[4px]'
+    if (size === 'large') return 'border-l-[6px]'
+    return 'border-l-[2px]'
+  }
+
   return (
     <div style={{ gridArea: 'a' }}>
       <div className="text-[30px] font-bold text-primary-blue1">
@@ -145,6 +158,14 @@ const Article = () => {
             <div className={classnames(styles.itemButton, selectedFontSize === 'large' ? styles.focus : styles.default, styles.large)} onClick={() => setSelectedFontSize('large')}>大</div>
           </div>
         </div>
+        {
+          articleData?.relationships?.category?.data?.id === '17' &&
+            <div className={classnames(styles[selectedFontSize], 'pl-2 border-solid border-primary-blue3 my-4', getActivityInfoBarWidth(selectedFontSize))}>
+              活動日期：2024-04-21 ～ 2024-04-21<br />
+              活動時間：08:00 ～ 16:00 <br />
+              <span className="flex gap-2">活動地點：地點點位名稱 <Icon.LocationPin style={{ width: getLocationPinWidth(selectedFontSize), color: color.primary.blue2, cursor: 'pointer' }} /></span>
+            </div>
+        }
         <div id={'content-holder'} style={{ wordBreak: 'break-all' }} className={styles[selectedFontSize]} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
       </div>
     </div>

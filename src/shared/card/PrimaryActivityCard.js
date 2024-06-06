@@ -6,8 +6,8 @@ import Skeleton from "react-loading-skeleton"
 import SocialBar from "./components/SocialBar"
 import Image from 'next/image'
 import DefaultImage from '@/asset/image/default-article-intro.png'
-import Icon from "../Icon"
-import color from "../styles/color"
+import Icon from "@/shared/Icon"
+import color from "@/shared/styles/color"
 
 const PrimaryActivityCard = ({ item = {}, onClick = () => { } }) => {
 
