@@ -199,11 +199,11 @@ const Errata = () => {
                 <div className="flex flex-row justify-start gap-x-4">
                   <div className="flex flex-row gap-x-1 items-center">
                     <input type="radio" id="css" name="fav_language" value="CSS" className={styles.genderRadio}/>
-                    <label for="css" className="text-lg font-bold">先生</label>
+                    <label for="css" className="text-lg font-bold cursor-pointer">先生</label>
                   </div>
                   <div className="flex flex-row gap-x-1 items-center">
                     <input type="radio" id="javascript" name="fav_language" className={styles.genderRadio} value="JavaScript"/>
-                    <label for="javascript" className="text-lg font-bold">小姐</label>
+                    <label for="javascript" className="text-lg font-bold cursor-pointer">小姐</label>
                   </div>
                 </div>
               </div>

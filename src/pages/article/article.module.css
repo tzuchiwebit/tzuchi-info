@@ -41,6 +41,16 @@
   border-radius: 50%;
   outline: none;
   border: 2px solid #8D8D8D;
+  cursor: pointer;
+}
+.genderRadio:hover {
+  box-shadow: 0px 0px 0px 3px #E8EEFE;
+  @apply border-primary-blue3;
+}
+.genderRadio:active {
+  box-shadow: 0px 0px 0px 3px #E8EEFE;
+  @apply border-primary-blue2;
+  background: #E8EEFE;
 }
 .genderRadio:before {
   content: '';
@@ -51,10 +61,10 @@
   border-radius: 50%;
 }
 .genderRadio:checked:before {
-  background: #8D8D8D;
+  background: #30559F;
 }
 .genderRadio:checked {
-  border-color:#8D8D8D;
+  border-color:#30559F;
 }
 
 .secondaryBtn {
