@@ -12,6 +12,7 @@ import _ from 'lodash'
 import { useRouter } from "next/navigation"
 import routes from "@/config/routes"
 import { addHits } from "@/api/api"
+import DefaultImage from '@/asset/image/default-article-intro-square.png'
 
 export default function Reminder() {
 
@@ -37,10 +38,10 @@ export default function Reminder() {
     return <OuterContainer>
         <InnerContainer>
             <div className="flex px-2 laptop:justify-end justify-center shrink-0 laptop:max-w-[50%] desktop:max-w-full max-h-[150px]">
-                {reminderItem.image ?
+                {   reminderItem?.id ?
                     <div className="aspect-square relative w-full">
                         <Image
-                            src={reminderItem.image}
+                            src={reminderItem.image ? reminderItem.image : DefaultImage}
                             alt={reminderItem.imageAlt}
                             sizes="100vw"
                             layout='fill'
@@ -85,13 +86,13 @@ const InnerContainer = styled.div`
     padding-top: 8px;
     width: 100%;
     height: 260px;
-    @media(min-width: ${screens.laptop}) {   
+    @media(min-width: ${screens.laptop}) {
         padding-top: 10px;
         padding-bottom: 10px;
         flex-direction: row;
         height: 135px;
     }
-    @media(min-width: ${screens.desktop}) {   
+    @media(min-width: ${screens.desktop}) {
         padding-top: 10px;
         padding-bottom: 0;
         flex-direction: column;
