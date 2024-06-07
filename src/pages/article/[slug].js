@@ -149,7 +149,7 @@ const Article = () => {
           articleData?.attributes?.metadesc &&
           <div className="mt-2 text-gray-gray2 font-medium leading-[22.4px]">{articleData?.attributes?.metadesc}</div>
         }
-        <div className="mt-1 mb-4 flex flex-1 text-lg border-solid border-b-[1px] border-gray-gray7" />
+        <div className="mt-1 mb-4 flex flex-1 text-lg border-solid border-b border-gray-gray7" />
         <div className="mb-4 flex flex-row items-center justify-center w-full bg-gray-gray8 py-1 gap-x-2 rounded">
           <div className="text-base font-medium">文字大小</div>
           <div className="flex flex-row gap-x-1">
@@ -167,6 +167,70 @@ const Article = () => {
             </div>
         }
         <div id={'content-holder'} style={{ wordBreak: 'break-all' }} className={styles[selectedFontSize]} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
+        <Errata></Errata>
+      </div>
+    </div>
+  )
+}
+
+const Errata = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  return (
+    <div>
+      <div className="flex flex-1 text-lg border-solid border-b border-gray-gray7 mb-8" />
+      <div className="bg-gray-gray9 rounded p-3">
+        {
+          !isOpen &&
+            <div className="flex flex-row justify-end">
+              <button className={styles.secondaryBtn} onClick={() => setIsOpen(true)}>勘誤回報</button>
+            </div>
+        }
+        {
+          isOpen &&
+          <Fragment>
+            <button className={classnames('w-full', styles.secondaryBtn)} onClick={() => setIsOpen(false)}>取消勘誤</button>
+            <div className="mt-4 flex flex-col gap-y-4">
+              <div className="flex flex-col gap-y-1">
+                <span className="text-lg font-bold">姓氏*</span>
+                <input className="py-2 px-4 border-2 border-gray-gray6 outline-none rounded font-bold" placeholder="請輸入姓氏"></input>
+              </div>
+              <div className="flex flex-col gap-y-1">
+                <span className="text-lg font-bold">稱謂*</span>
+                <div className="flex flex-row justify-start gap-x-4">
+                  <div className="flex flex-row gap-x-1 items-center">
+                    <input type="radio" id="css" name="fav_language" value="CSS" className={styles.genderRadio}/>
+                    <label for="css" className="text-lg font-bold">先生</label>
+                  </div>
+                  <div className="flex flex-row gap-x-1 items-center">
+                    <input type="radio" id="javascript" name="fav_language" className={styles.genderRadio} value="JavaScript"/>
+                    <label for="javascript" className="text-lg font-bold">小姐</label>
+                  </div>
+                </div>
+              </div>
+              <div className="flex flex-col gap-y-1">
+                <span className="text-lg font-bold">電話</span>
+                <input className="py-2 px-4 border-2 border-gray-gray6 outline-none rounded font-bold" placeholder="請輸入電話"></input>
+              </div>
+              <div className="flex flex-col gap-y-1">
+                <span className="text-lg font-bold">Email*</span>
+                <input className="py-2 px-4 border-2 border-gray-gray6 outline-none rounded font-bold" placeholder="請輸入E-mail"></input>
+              </div>
+              <div className="flex flex-col gap-y-1">
+                <span className="text-lg font-bold">身份*</span>
+                {/* <input className="py-2 px-4 border border-gray-gray6 outline-none rounded font-bold" placeholder="請輸入E-mail"></input> */}
+                <select className="py-[5.5px] px-3 border-2 border-gray-gray6 outline-none rounded font-bold">
+                  <option>職工</option>
+                  <option>志工</option>
+                  <option>一般民眾</option>
+                </select>
+              </div>
+              <div className="flex flex-col gap-y-1">
+                <span className="text-lg font-bold">勘誤意見</span>
+                <textarea rows={6} className="py-2 px-4 border-2 border-gray-gray6 outline-none rounded font-bold resize-none"></textarea>
+              </div>
+            </div>
+          </Fragment>
+        }
       </div>
     </div>
   )
