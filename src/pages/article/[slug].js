@@ -177,7 +177,7 @@ const Errata = () => {
   const [isOpen, setIsOpen] = useState(false)
   return (
     <div>
-      <div className="flex flex-1 text-lg border-solid border-b border-gray-gray7 mb-8" />
+      <div className="flex flex-1 text-lg border-solid border-b border-gray-gray7 desktop:mb-8 tablet:mb-6 mb-4" />
       <div className="bg-gray-gray9 rounded p-3">
         {
           !isOpen &&
@@ -227,6 +227,10 @@ const Errata = () => {
               <div className="flex flex-col gap-y-1">
                 <span className="text-lg font-bold">勘誤意見</span>
                 <textarea rows={6} className="py-2 px-4 border-2 border-gray-gray6 outline-none rounded font-bold resize-none"></textarea>
+              </div>
+              <div className="flex flex-row justify-end">
+                <div className="grow"></div>
+                  <button className="bg-primary-blue2 text-white rounded text-lg py-3 px-4 leading-[22.5px] font-bold">送出</button>
               </div>
             </div>
           </Fragment>
