@@ -2,6 +2,7 @@ import axios from 'axios'
 import _ from 'lodash'
 
 const API_ENDPOINT = `https://webtest.tzuchi-org.tw/api`
+const EBOOK_ENDPOINT = `https://webtest.tzuchi-org.tw/batch_images_upload/tzuchi_library/api/find.php`
 
 const addHits = async (id) => {
   try {
@@ -57,9 +58,9 @@ const addShares = async (id) => {
 const getBookSuggest = async () => {
   try {
 
-    const res = await axios.get(`${API_ENDPOINT}/book.php`)
-    // console.log(`res`)
-    // console.log(res)
+    const res = await axios.get(EBOOK_ENDPOINT)
+    console.log(`res`)
+    console.log(res)
     return res?.data
 
   } catch (err) {

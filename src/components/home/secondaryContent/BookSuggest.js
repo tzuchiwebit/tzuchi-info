@@ -10,50 +10,52 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import useDataProvider from "../useDataProvider";
 import Skeleton from "react-loading-skeleton";
-import { useRouter } from "next/navigation";
-import routes from "@/config/routes";
 import Image from 'next/image'
 import DefaultImage from '@/asset/image/default-article-intro-square.png'
 import useScreenSize from '@/shared/hook/useScreenSize';
 
+const ebookEndpoint = `https://tzuchi-ebooks.web.app`;
+
 function classNames(...classes) {
-    return classes.filter(Boolean).join(' ')
+  return classes.filter(Boolean).join(' ')
 }
 
 const Item = ({ item }) => {
-    const router = useRouter();
+  // console.log(item)
 
-    return (
-        <div className="w-[171px] cusor-pointer">
-          <div className="w-full rounded-md overflow-hidden cursor-pointer" onClick={() => {
-              // router.push(`${routes.ARITCLE}/${item.id}`)
-          }}>
-              {
-                item?.title ?
-                <Image
-                  src={item?.image ? item?.image: DefaultImage}
-                  alt={""}
-                  width={171}
-                  height={171}
-                  sizes="100vw"
-                  style={{
-                    width: 'auto',
-                    height: 'auto',
-                  }}
-                  className="rounded-md"
-                />:
-                <Skeleton className="aspect-square" />
-              }
-              <div className="pt-2 pl-2 pr-0 text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2">
-                {item?.title}
-              </div>
-          </div>
+  return (
+    <div className="w-[171px] cusor-pointer">
+      <div className="w-full rounded-md overflow-hidden cursor-pointer" onClick={() => {
+        // router.push(`${routes.ARITCLE}/${item.id}`)
+        window.open(`${ebookEndpoint}/book/${item.id}`, '_blank');
+      }}>
+        {
+          item?.title ?
+            <Image
+              src={item?.cover_image ? item?.cover_image : DefaultImage}
+              alt={""}
+              width={171}
+              height={171}
+              sizes="100vw"
+              style={{
+                width: 'auto',
+                height: 'auto',
+              }}
+              className="rounded-md"
+            /> :
+            <Skeleton className="aspect-square" />
+        }
+        <div className="pt-2 pl-2 pr-0 text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2">
+          {item?.title}
         </div>
-    )
+      </div>
+    </div>
+  )
 }
 
 const NewItem = ({ item = {}, loading = false }) => {
-  const router = useRouter();
+  // const router = useRouter();
+  // console.log(item)
   const screenSize = useScreenSize();
   const [imageWidth, setImageWidth] = useState(180)
 
@@ -62,39 +64,39 @@ const NewItem = ({ item = {}, loading = false }) => {
       setImageWidth(180)
     } else if (screenSize.width >= 768) {
       setImageWidth(171)
-    } else if (screenSize.width >= 375 ) {
+    } else if (screenSize.width >= 375) {
       setImageWidth(165)
     }
   }, [screenSize.width])
 
   return (
-      <div className="relative mb-[60px] rounded-md laptop:w-[180px] tablet:w-[171px] w-[165px] cursor-pointer select-none" onClick={() => {
-        // router.push(`${routes.ARITCLE}/${item.id}`); addHits(item.id);
-      }}>
-        {
-          loading ?
-            <Skeleton className="aspect-square" />:
-            <Image
-              src={item?.image ? item?.image: DefaultImage}
-              alt={""}
-              width={imageWidth}
-              height={imageWidth}
-              sizes="100vw"
-              style={{
-                width: 'auto',
-                height: 'auto',
-              }}
-              className="rounded-md"
-            />
-        }
-        <div className="px-0 flex flex-col items-center pt-4 pb-2 w-full gap-y-1 gap-x-4">
-          <div className="text-xl font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">
-            {
-              loading ? <Skeleton /> : item?.title
-            }
-          </div>
+    <div className="relative mb-[60px] rounded-md laptop:w-[180px] tablet:w-[171px] w-[165px] cursor-pointer select-none" onClick={() => {
+      window.open(`${ebookEndpoint}/book/${item.id}`, '_blank');
+    }}>
+      {
+        loading ?
+          <Skeleton className="aspect-square" /> :
+          <Image
+            src={item?.cover_image ? item?.cover_image : DefaultImage}
+            alt={""}
+            width={imageWidth}
+            height={imageWidth}
+            sizes="100vw"
+            style={{
+              width: 'auto',
+              height: 'auto',
+            }}
+            className="rounded-md"
+          />
+      }
+      <div className="px-0 flex flex-col items-center pt-4 pb-2 w-full gap-y-1 gap-x-4">
+        <div className="text-xl font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">
+          {
+            loading ? <Skeleton /> : item?.title
+          }
         </div>
       </div>
+    </div>
   )
 }
 
@@ -103,12 +105,12 @@ const CarouselSection = ({ data, loading }) => {
   const [slidePercentage, setSlidePercentage] = useState(70)
 
   const sliderData = useMemo(() => {
-      if (data.length === 1) {
-          return Array(4).fill(data[0])
-      } else if (data.length === 2) {
-          return _.concat(data, data);
-      }
-      return data
+    if (data.length === 1) {
+      return Array(4).fill(data[0])
+    } else if (data.length === 2) {
+      return _.concat(data, data);
+    }
+    return data
   }, [data])
 
   useEffect(() => {
@@ -118,154 +120,154 @@ const CarouselSection = ({ data, loading }) => {
       setSlidePercentage(65)
     } else if (screenSize.width >= 768) {
       setSlidePercentage(25.8)
-    } else if (screenSize.width >= 375 ) {
+    } else if (screenSize.width >= 375) {
       setSlidePercentage(50)
     }
   }, [screenSize.width])
 
   return (
-      <Carousel
-        showArrows={true}
-        showIndicators={true}
-        swipeable={true}
-        infiniteLoop={false}
-        emulateTouch={true}
-        centerMode={true}
-        centerSlidePercentage={slidePercentage}
-        showThumbs={false}
-        statusFormatter={() => { }}
-        renderArrowPrev={(clickHandler, hasPrev) => hasPrev && (
-          <button
-            onClick={clickHandler}
-            className="absolute z-10 bottom-5 left-1 p-1 bg-white rounded-4xl shadow-elevation-3 cursor-pointer text-gray-gray2 hover:bg-complementary-blue2 focus:bg-complementary-blue1">
-            <Icon.PageArrowLeft
-                style={{ width: 24 }}
-            />
-          </button>
-        )}
-        renderArrowNext={(clickHandler, hasNext) => hasNext && (<button
-            onClick={clickHandler}
-            className="absolute z-10 bottom-5 right-1 p-1 bg-white rounded-4xl shadow-elevation-3 cursor-pointer text-gray-gray2 hover:bg-complementary-blue2 focus:bg-complementary-blue1">
-            <Icon.PageArrowRight
-                style={{ width: 24 }}
-            />
-        </button>)}
-        renderIndicator={(onClickHandler, isSelected, index, label) => {
-            const defStyle = { marginLeft: 20, color: "green", cursor: "pointer", bottom: 10, position: 'relative' };
-            const style = isSelected
-                ? { ...defStyle, color: "red" }
-                : { ...defStyle };
-            return (
-                <div
-                    onClick={onClickHandler}
-                    onKeyDown={onClickHandler}
-                    tabIndex={0}
-                    role="button"
-                    className={classNames(isSelected ? 'bg-primary-blue2' : 'bg-gray-gray7', 'w-3 h-3 bottom-5 relative rounded-full')}
-                />
-            );
-        }}
-      >
-        {sliderData.map((_i, _index) => (
-          <div className="mt-1.5" key={_index}>
-            <NewItem loading={loading} item={_i} />
-          </div>
-        ))}
-      </Carousel>
+    <Carousel
+      showArrows={true}
+      showIndicators={true}
+      swipeable={true}
+      infiniteLoop={false}
+      emulateTouch={true}
+      centerMode={true}
+      centerSlidePercentage={slidePercentage}
+      showThumbs={false}
+      statusFormatter={() => { }}
+      renderArrowPrev={(clickHandler, hasPrev) => hasPrev && (
+        <button
+          onClick={clickHandler}
+          className="absolute z-10 bottom-5 left-1 p-1 bg-white rounded-4xl shadow-elevation-3 cursor-pointer text-gray-gray2 hover:bg-complementary-blue2 focus:bg-complementary-blue1">
+          <Icon.PageArrowLeft
+            style={{ width: 24 }}
+          />
+        </button>
+      )}
+      renderArrowNext={(clickHandler, hasNext) => hasNext && (<button
+        onClick={clickHandler}
+        className="absolute z-10 bottom-5 right-1 p-1 bg-white rounded-4xl shadow-elevation-3 cursor-pointer text-gray-gray2 hover:bg-complementary-blue2 focus:bg-complementary-blue1">
+        <Icon.PageArrowRight
+          style={{ width: 24 }}
+        />
+      </button>)}
+      renderIndicator={(onClickHandler, isSelected, index, label) => {
+        const defStyle = { marginLeft: 20, color: "green", cursor: "pointer", bottom: 10, position: 'relative' };
+        const style = isSelected
+          ? { ...defStyle, color: "red" }
+          : { ...defStyle };
+        return (
+          <div
+            onClick={onClickHandler}
+            onKeyDown={onClickHandler}
+            tabIndex={0}
+            role="button"
+            className={classNames(isSelected ? 'bg-primary-blue2' : 'bg-gray-gray7', 'w-3 h-3 bottom-5 relative rounded-full')}
+          />
+        );
+      }}
+    >
+      {sliderData.map((_i, _index) => (
+        <div className="mt-1.5" key={_index}>
+          <NewItem loading={loading} item={_i} />
+        </div>
+      ))}
+    </Carousel>
   );
 }
 
 const onReadMore = () => {
-    window.open(`https://tzuchi-ebooks.web.app`)
+  window.open(ebookEndpoint, '_blank');
 }
 
 export default function BookSuggest() {
   const screenSize = useScreenSize();
   const [isTabletOnly, setIsTabletOnly] = useState(screenSize.width >= 768 && screenSize.width < 1024)
 
-    const { loadingBooks, suggestBooks: booksData } = useDataProvider();
+  const { loadingBooks, suggestBooks: booksData } = useDataProvider();
 
-    const sliderData = useMemo(() => {
-        if (booksData.length === 1) {
-            return Array(4).fill(booksData[0])
-        } else if (booksData.length === 2) {
-            return _.concat(booksData, booksData);
-        }
-        return booksData.slice(0, 4)
-    }, [booksData])
+  const sliderData = useMemo(() => {
+    if (booksData.length === 1) {
+      return Array(4).fill(booksData[0])
+    } else if (booksData.length === 2) {
+      return _.concat(booksData, booksData);
+    }
+    return booksData.slice(0, 4)
+  }, [booksData])
 
-    useEffect(() => {
-      setIsTabletOnly(screenSize.width >= 768 && screenSize.width < 1024)
-    }, [screenSize.width])
+  useEffect(() => {
+    setIsTabletOnly(screenSize.width >= 768 && screenSize.width < 1024)
+  }, [screenSize.width])
 
-    return <div className="pt-3 w-full">
-        <BannerTitle title={`好書推薦`} />
-        <div className="flex flex-row w-full gap-2 items-center pt-4">
-            <div className="flex-0 text-[24px] font-bold text-primary-blue1">
-                靜思人文
-            </div>
-            <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
-            <div className="flex-0 font-medium justify-end items-end text-lg text-primary-blue3">
-                <div
-                    onClick={onReadMore}
-                    target="_blank"
-                    className="cursor-pointer flex flex-row whitespace-nowrap">
-                    更多<Icon.RightArrow2 width={20} />
-                </div>
-            </div>
+  return <div className="pt-3 w-full">
+    <BannerTitle title={`好書推薦`} />
+    <div className="flex flex-row w-full gap-2 items-center pt-4">
+      <div className="flex-0 text-[24px] font-bold text-primary-blue1">
+        靜思人文
+      </div>
+      <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
+      <div className="flex-0 font-medium justify-end items-end text-lg text-primary-blue3">
+        <div
+          onClick={onReadMore}
+          target="_blank"
+          className="cursor-pointer flex flex-row whitespace-nowrap">
+          更多<Icon.RightArrow2 width={20} />
         </div>
-
-        {
-          !loadingBooks &&
-          <div className="w-full">
-            {
-              isTabletOnly ?
-                <div className="flex flex-row justify-between">
-                  {
-                    sliderData.map((item, index) => (<div className='w-fit' key={index}>
-                        <Item item={item} />
-                    </div>))
-                  }
-                </div>:
-                <CarouselContainer>
-                  <CarouselSection data={sliderData} loading={loadingBooks} />
-                </CarouselContainer>
-            }
-          </div>
-        }
-        <div className="flex flex-row w-full gap-2 items-center  pt-4">
-            <div className="flex-0 text-[24px] font-bold text-primary-blue1">
-                慈濟書庫
-            </div>
-            <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
-            <div className="flex-0 font-medium justify-end items-end text-lg text-primary-blue3">
-                <div
-                    onClick={onReadMore}
-                    target="_blank"
-                    className="cursor-pointer flex flex-row whitespace-nowrap">
-                    更多<Icon.RightArrow2 width={20} />
-                </div>
-            </div>
-        </div>
-        {
-          !loadingBooks &&
-          <div className="w-full">
-            {
-              isTabletOnly ?
-                <div className="flex flex-row justify-between">
-                  {
-                    sliderData.map((item, index) => (<div className='w-fit' key={index}>
-                        <Item item={item} />
-                    </div>))
-                  }
-                </div>:
-                <CarouselContainer>
-                  <CarouselSection data={sliderData} loading={loadingBooks} />
-                </CarouselContainer>
-            }
-          </div>
-        }
+      </div>
     </div>
+
+    {
+      !loadingBooks &&
+      <div className="w-full">
+        {
+          isTabletOnly ?
+            <div className="flex flex-row justify-between">
+              {
+                sliderData.map((item, index) => (<div className='w-fit' key={index}>
+                  <Item item={item} />
+                </div>))
+              }
+            </div> :
+            <CarouselContainer>
+              <CarouselSection data={sliderData} loading={loadingBooks} />
+            </CarouselContainer>
+        }
+      </div>
+    }
+    <div className="flex flex-row w-full gap-2 items-center  pt-4">
+      <div className="flex-0 text-[24px] font-bold text-primary-blue1">
+        慈濟書庫
+      </div>
+      <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
+      <div className="flex-0 font-medium justify-end items-end text-lg text-primary-blue3">
+        <div
+          onClick={onReadMore}
+          target="_blank"
+          className="cursor-pointer flex flex-row whitespace-nowrap">
+          更多<Icon.RightArrow2 width={20} />
+        </div>
+      </div>
+    </div>
+    {
+      !loadingBooks &&
+      <div className="w-full">
+        {
+          isTabletOnly ?
+            <div className="flex flex-row justify-between">
+              {
+                sliderData.map((item, index) => (<div className='w-fit' key={index}>
+                  <Item item={item} />
+                </div>))
+              }
+            </div> :
+            <CarouselContainer>
+              <CarouselSection data={sliderData} loading={loadingBooks} />
+            </CarouselContainer>
+        }
+      </div>
+    }
+  </div>
 }
 
 const CarouselContainer = styled.div`
