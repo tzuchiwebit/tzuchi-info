@@ -10,6 +10,7 @@ import Icon from "@/shared/Icon"
 import color from "@/shared/styles/color"
 
 const PrimaryActivityCard = ({ item = {}, onClick = () => { } }) => {
+  console.log(item)
 
   return <div className="w-full tablet:w-1/2 laptop:w-1/3 px-3 mb-6">
     <div className="bg-white border rounded-[4px] p-3 shadow-elevation-3 flex flex-col gap-2">
@@ -34,9 +35,9 @@ const PrimaryActivityCard = ({ item = {}, onClick = () => { } }) => {
         <div className="text-primary-blue1 font-bold text-xl mt-3">
           {item.title}
         </div>
-        <div className="text-gray-gray2 pl-2 border-l-2 border-solid border-primary-blue3 my-2">
-          活動日期：2024-04-21 ～ 2024-04-21<br />
-          活動時間：08:00 ～ 16:00 <br />
+        <div className="text-gray-gray2 pl-2 border-l-2 border-solid border-primary-blue3 my-2 font-medium">
+          活動開始：2024-06-02  08:55<br />
+          活動結束：2024-06-03  08:55 <br />
           <span className="flex gap-2">活動地點：地點點位名稱 <Icon.LocationPin style={{ width: 16, color: color.primary.blue2, cursor: 'pointer' }} /></span>
         </div>
         <div className="mt-1">
