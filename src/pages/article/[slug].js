@@ -161,8 +161,8 @@ const Article = () => {
         {
           articleData?.relationships?.category?.data?.id === '17' &&
             <div className={classnames(styles[selectedFontSize], 'pl-2 border-solid border-primary-blue3 my-4', getActivityInfoBarWidth(selectedFontSize))}>
-              活動日期：2024-04-21 ～ 2024-04-21<br />
-              活動時間：08:00 ～ 16:00 <br />
+              活動開始：2024-06-02  08:55 <br />
+              活動結束：2024-06-03  08:55  <br />
               <span className="flex gap-2">活動地點：地點點位名稱 <Icon.LocationPin style={{ width: getLocationPinWidth(selectedFontSize), color: color.primary.blue2, cursor: 'pointer' }} /></span>
             </div>
         }

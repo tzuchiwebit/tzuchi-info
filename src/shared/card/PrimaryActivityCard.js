@@ -10,7 +10,7 @@ import Icon from "@/shared/Icon"
 import color from "@/shared/styles/color"
 
 const PrimaryActivityCard = ({ item = {}, onClick = () => { } }) => {
-  console.log(item)
+  // console.log(item)
 
   return <div className="w-full tablet:w-1/2 laptop:w-1/3 px-3 mb-6">
     <div className="bg-white border rounded-[4px] p-3 shadow-elevation-3 flex flex-col gap-2">
