@@ -36,7 +36,7 @@ const CloudTagButton = styled.button`
     background-color: ${props => props.$bgColor};
     padding: 2px 12px;
     display: flex;
-    font-weight: bold;
+    font-weight: 500;
     white-space: nowrap;
     border-radius: 9999px;
     cursor: pointer;

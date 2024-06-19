@@ -184,8 +184,10 @@ export default function NavbarTop() {
                     cloudTags.map((item, index) => (
                       <CloudTag
                         label={item["關鍵字"]}
-                        bgColor={item["底色"]}
-                        textColor={item["字色"]}
+                        // bgColor={item["底色"]}
+                        // textColor={item["字色"]}
+                        bgColor={color.complementary.blue2}
+                        textColor={color.primary.blue1}
                         key={index}
                         onClick={() => {
                           router.push(`${routes.SEARCH}?keyword=${item["關鍵字"]}`)
@@ -257,8 +259,10 @@ export default function NavbarTop() {
             cloudTags.map((item, index) => (
               <CloudTag
                 label={item["關鍵字"]}
-                bgColor={item["底色"]}
-                textColor={item["字色"]}
+                // bgColor={item["底色"]}
+                // textColor={item["字色"]}
+                bgColor={color.complementary.blue2}
+                textColor={color.primary.blue1}
                 key={index}
                 onClick={() => {
                   router.push(`${routes.SEARCH}?keyword=${item["關鍵字"]}`)
