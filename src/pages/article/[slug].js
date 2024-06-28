@@ -94,11 +94,6 @@ const Article = () => {
     return ''
   }
 
-  const getLocationPinWidth = (size) => {
-    if (size === 'medium') return 18
-    if (size === 'large') return 20
-    return 16
-  }
   const getActivityInfoBarWidth = (size) => {
     if (size >= 24) return 'border-l-[8px]'
     if (size >= 20) return 'border-l-[6px]'
@@ -134,10 +129,11 @@ const Article = () => {
           shares={articleData?.attributes?.share}
         />
       </div>
-      <div className="laptop:mt-6 mt-4 text-lg">
+      <div className="laptop:mt-6 mt-4">
         <Image
           src={articleData?.attributes?.images?.image_intro ? articleData?.attributes?.images?.image_intro : DefaultImage}
           alt={articleData?.attributes?.images?.image_intro_alt}
+          title={articleData?.attributes?.metadesc}
           width={0}
           height={0}
           sizes="100vw"
@@ -148,7 +144,7 @@ const Article = () => {
         />
         {
           articleData?.attributes?.metadesc &&
-          <div className="mt-2 text-gray-gray2 font-medium leading-[22.4px]">{articleData?.attributes?.metadesc}</div>
+          <div className="mt-2 text-gray-gray2 font-medium" style={{ fontSize: selectedFontSize+'px' }}>{articleData?.attributes?.metadesc}</div>
         }
         <div className="mt-1 mb-4 flex flex-1 text-lg border-solid border-b border-gray-gray7" />
         {
@@ -156,14 +152,14 @@ const Article = () => {
             <div className={classnames('pl-2 border-solid border-primary-blue3 my-4', getActivityInfoBarWidth(selectedFontSize))} style={{fontSize: selectedFontSize+'px'}}>
               活動開始：2024-06-02  08:55 <br />
               活動結束：2024-06-03  08:55  <br />
-              <span className="flex gap-2">活動地點：地點點位名稱 <Icon.LocationPin style={{ width: getLocationPinWidth(selectedFontSize), color: color.primary.blue2, cursor: 'pointer' }} /></span>
+              <span className="flex gap-2">活動地點：地點點位名稱 <Icon.LocationPin style={{ width: selectedFontSize+'px', color: color.primary.blue2, cursor: 'pointer' }} /></span>
             </div>
         }
         <div id={'content-holder'} style={{ wordBreak: 'break-all', fontSize: selectedFontSize+'px' }} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
-        {
+        {/* {
           articleData?.relationships?.category?.data?.id !== '17' &&
           <Errata></Errata>
-        }
+        } */}
       </div>
       <FloatSizeToolbar selectedFontSize={selectedFontSize} setSelectedFontSize={setSelectedFontSize}></FloatSizeToolbar>
     </div>
