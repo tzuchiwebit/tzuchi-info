@@ -15,7 +15,7 @@ export default function Navbar() {
 
   return (
     <StyledHeaderPadding $hasMarquee={hasMarquee}>
-      <header className="bg-white fixed w-full z-20 shadow-elevation-3">
+      <header className="bg-white w-full z-20 shadow-elevation-3">
         <NavbarTop />
         <NavbarBottom />
         <NewsMarquee />

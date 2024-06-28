@@ -160,7 +160,10 @@ const Article = () => {
             </div>
         }
         <div id={'content-holder'} style={{ wordBreak: 'break-all', fontSize: selectedFontSize+'px' }} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
-        <Errata></Errata>
+        {
+          articleData?.relationships?.category?.data?.id !== '17' &&
+          <Errata></Errata>
+        }
       </div>
       <FloatSizeToolbar selectedFontSize={selectedFontSize} setSelectedFontSize={setSelectedFontSize}></FloatSizeToolbar>
     </div>
@@ -327,7 +330,7 @@ const MainContent = () => {
           <>
             <FloatScrollTopButton />
             {/* breadcrumb */}
-            <Breadcrumb className="tablet:mt-4 mt-2"></Breadcrumb>
+            <Breadcrumb className="tablet:mt-8 mt-2"></Breadcrumb>
             <ArticleContainer className="mt-6">
               <Article></Article>
               <RecommandArticles></RecommandArticles>

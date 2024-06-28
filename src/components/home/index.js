@@ -63,12 +63,14 @@ const SecondaryContainer = styled.div`
         flex-basis: 350px;
         width: 350px;
         margin-bottom: 0;
+        margin-top: 20px;
     }
     @media(min-width: ${screens.desktop}) {
         flex-basis: 280px;
         min-width: 280px;
         flex-direction: row;
         margin-right: 0;
+        margin-top: 15px;
     }
     @media(max-width: ${screens["tablet-down"].max}) {
       margin-bottom: 50px;

@@ -126,7 +126,7 @@ export default function Youtube() {
 
     return <div className="pt-5 flex-1">
         <BannerTitle title={<div className="inherit">
-            <div className="text-[26px] font-bold text-primary-blue1">Youtube</div>
+            <div className="text-[26px] font-bold text-primary-blue1">社群影片</div>
             <div className="text-[26px] font-bold text-primary-blue1">小編精選</div>
         </div>} link="https://www.youtube.com/@tzuchi_official" behavior="blank"/>
         <YoutubeSection />
