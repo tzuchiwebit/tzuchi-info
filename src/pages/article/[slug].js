@@ -22,6 +22,7 @@ import joomlaGlobal from '@/api/joomlaGlobal'
 import { addHits } from "@/api/api"
 import Icon from "@/shared/Icon"
 import color from "@/shared/styles/color"
+import FloatSizeToolbar from './float-size-toolbar';
 
 const Breadcrumb = ({ className }) => {
   const { pageData } = useDataProvider();
@@ -75,7 +76,7 @@ const Breadcrumb = ({ className }) => {
 
 const Article = () => {
   const { pageData } = useDataProvider();
-  const [selectedFontSize, setSelectedFontSize] = useState('small')
+  const [selectedFontSize, setSelectedFontSize] = useState(18)
 
   const { slug } = useParams();
   // console.log(`slug`);
@@ -99,9 +100,9 @@ const Article = () => {
     return 16
   }
   const getActivityInfoBarWidth = (size) => {
-    if (size === 'medium') return 'border-l-[4px]'
-    if (size === 'large') return 'border-l-[6px]'
-    return 'border-l-[2px]'
+    if (size >= 24) return 'border-l-[8px]'
+    if (size >= 20) return 'border-l-[6px]'
+    return 'border-l-[4px]'
   }
 
   return (
@@ -133,7 +134,7 @@ const Article = () => {
           shares={articleData?.attributes?.share}
         />
       </div>
-      <div className="laptop:mt-6 mt-4 text-lg leading-[22px]">
+      <div className="laptop:mt-6 mt-4 text-lg">
         <Image
           src={articleData?.attributes?.images?.image_intro ? articleData?.attributes?.images?.image_intro : DefaultImage}
           alt={articleData?.attributes?.images?.image_intro_alt}
@@ -150,25 +151,18 @@ const Article = () => {
           <div className="mt-2 text-gray-gray2 font-medium leading-[22.4px]">{articleData?.attributes?.metadesc}</div>
         }
         <div className="mt-1 mb-4 flex flex-1 text-lg border-solid border-b border-gray-gray7" />
-        <div className="mb-4 flex flex-row items-center justify-center w-full bg-gray-gray8 py-1 gap-x-2 rounded">
-          <div className="text-base font-medium">文字大小</div>
-          <div className="flex flex-row gap-x-1">
-            <div className={classnames(styles.itemButton, selectedFontSize === 'small' ? styles.focus : styles.default, styles.small)} onClick={() => setSelectedFontSize('small')}>小</div>
-            <div className={classnames(styles.itemButton, selectedFontSize === 'medium' ? styles.focus : styles.default, styles.medium)} onClick={() => setSelectedFontSize('medium')}>中</div>
-            <div className={classnames(styles.itemButton, selectedFontSize === 'large' ? styles.focus : styles.default, styles.large)} onClick={() => setSelectedFontSize('large')}>大</div>
-          </div>
-        </div>
         {
           articleData?.relationships?.category?.data?.id === '17' &&
-            <div className={classnames(styles[selectedFontSize], 'pl-2 border-solid border-primary-blue3 my-4', getActivityInfoBarWidth(selectedFontSize))}>
+            <div className={classnames('pl-2 border-solid border-primary-blue3 my-4', getActivityInfoBarWidth(selectedFontSize))} style={{fontSize: selectedFontSize+'px'}}>
               活動開始：2024-06-02  08:55 <br />
               活動結束：2024-06-03  08:55  <br />
               <span className="flex gap-2">活動地點：地點點位名稱 <Icon.LocationPin style={{ width: getLocationPinWidth(selectedFontSize), color: color.primary.blue2, cursor: 'pointer' }} /></span>
             </div>
         }
-        <div id={'content-holder'} style={{ wordBreak: 'break-all' }} className={styles[selectedFontSize]} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
+        <div id={'content-holder'} style={{ wordBreak: 'break-all', fontSize: selectedFontSize+'px' }} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
         <Errata></Errata>
       </div>
+      <FloatSizeToolbar selectedFontSize={selectedFontSize} setSelectedFontSize={setSelectedFontSize}></FloatSizeToolbar>
     </div>
   )
 }

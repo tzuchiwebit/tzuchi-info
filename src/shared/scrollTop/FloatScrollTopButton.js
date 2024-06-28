@@ -7,13 +7,13 @@ import screens from "@/shared/styles/screens";
 const StyledContainer = styled.div`
   position: fixed;
   z-index: 50;
-  bottom: calc(80px + 72px + 16px);
-  right: 32px;
+  bottom: 72px;
+  right: 20px;
   @media(min-width: ${screens.tablet}) {
-    bottom: calc(90px + 72px + 16px);
+    bottom: 80px;
   }
   @media(min-width: ${screens.laptop}) {
-    bottom: calc(28px + 72px + 16px);
+    bottom: 40px;
   }
 `
 
@@ -52,7 +52,7 @@ const FloatScrollTopButton = ({ }) => {
         {
             isVisible ? <button
                 onClick={() => scrollToTop()}
-                className="w-[48px] h-[48px] bg-white flex text-gray-gray3 rounded-full shadow-elevation-3 p-0 items-center justify-center">
+                className="w-[48px] h-[48px] bg-white flex text-gray-gray3 rounded-full shadow-elevation-3 p-0 items-center justify-center border border-gray-gray6">
                 <Icon.UpArrowMain style={{ width: 32 }} />
             </button> : <></>
         }
