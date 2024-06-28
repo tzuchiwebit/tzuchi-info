@@ -6,6 +6,7 @@ import NavbarBottom from './components/NavbarBottom'
 import NavbarMarquee from './components/NavbarMarquee'
 import screens from '@/shared/styles/screens'
 import styled from 'styled-components'
+import NewsMarquee from './components/NewsMarquee'
 
 export default function Navbar() {
 
@@ -17,9 +18,7 @@ export default function Navbar() {
       <header className="bg-white fixed w-full z-20 shadow-elevation-3">
         <NavbarTop />
         <NavbarBottom />
-        {
-          hasMarquee ? <NavbarMarquee /> : <></>
-        }
+        <NewsMarquee />
       </header>
     </StyledHeaderPadding>
   )
@@ -29,12 +28,12 @@ export default function Navbar() {
 const StyledHeaderPadding = styled.div`
   height: ${props => props.$hasMarquee ? 174 : 134}px;
   @media(min-width: ${screens.tablet}) {
-    height: ${props => props.$hasMarquee ? 154 : 118}px;
+    height: ${props => props.$hasMarquee ? 164 : 118}px;
   }
   @media(min-width: ${screens.laptop}) {
-    height: ${props => props.$hasMarquee ? 170 : 130}px;
+    height: ${props => props.$hasMarquee ? 180 : 130}px;
   }
   @media(min-width: ${screens.desktop}) {
-    height: ${props => props.$hasMarquee ? 194 : 154}px;
+    height: ${props => props.$hasMarquee ? 204 : 154}px;
   }
 `
