@@ -85,7 +85,13 @@ const Article = () => {
   const articleData = useMemo(() => {
     const target = _.find(pageData, { name: 'article' });
     if (target?.data?.attributes?.metadesc && target?.data?.attributes?.text) {
-      const htmlString = target?.data?.attributes?.text.replace(/<img([^>]*)(?<!title\s*=\s*["'][^"']*["'])>/, `<img$1 title="${target?.data?.attributes?.metadesc}">`);
+      const htmlString = target.data.attributes.text.replace(/<img([^>]*)>/gi, function(match, p1) {
+        // 删除现有的 title 属性
+        let newTag = match.replace(/\s*title\s*=\s*(['"])[^'"]*\1/, '');
+        // 添加新的 title 属性
+        newTag = newTag.replace(/<img/, `<img title="${target?.data?.attributes?.metadesc}"`);
+        return newTag;
+      });
       target.data.attributes.text = htmlString
     }
 
