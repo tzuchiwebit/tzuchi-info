@@ -1,6 +1,10 @@
 import { Fragment, useState } from 'react';
 import styles from './float-size-toolbar.module.css'
 import color from "@/shared/styles/color"
+import * as classnames from "classnames"
+import Default from "@/asset/font-size-toolbar/default.svg";
+import Add from "@/asset/font-size-toolbar/add.svg";
+import Minus from "@/asset/font-size-toolbar/minus.svg";
 
 export default function FloatSizeToolbar ({selectedFontSize, setSelectedFontSize}) {
   const [isOpen, setIsOpen] = useState(false)
@@ -23,9 +27,9 @@ export default function FloatSizeToolbar ({selectedFontSize, setSelectedFontSize
       {
         !isOpen &&
         <div className={styles.closedContainer}>
-          <div className={styles.menu} style={{backgroundColor: color.gray.white}} onClick={()=> setIsOpen(true)}>
+          <div className={classnames(styles.menu, styles.default)} onClick={()=> setIsOpen(true)}>
             <div className={styles.text}>字</div>
-            <div className={styles.icon}>±</div>
+            <Default className={styles.icon}></Default>
           </div>
         </div>
       }
@@ -38,24 +42,24 @@ export default function FloatSizeToolbar ({selectedFontSize, setSelectedFontSize
           </div>
 
           {/* increen button */}
-          <div className={styles.menu} style={{backgroundColor: color.gray.white}} onClick={increase}>
+          <div className={classnames(styles.menu, styles.add)} onClick={increase}>
             <div className={styles.text}>字</div>
-            <div className={styles.icon}>＋</div>
+            <Add className={styles.icon}></Add>
           </div>
 
           {/* descrease button */}
-          <div className={styles.menu} style={{backgroundColor: color.gray.white}} onClick={descrease}>
+          <div className={classnames(styles.menu, styles.minus)} onClick={descrease}>
             <div className={styles.text}>字</div>
-            <div className={styles.icon}>－</div>
+            <Minus className={styles.icon}></Minus>
           </div>
 
           {/* sperator line */}
           <div style={{borderBottom: '1px solid white', height: '1px', width: '40px'}}></div>
 
           {/* reset button */}
-          <div className={styles.menu} style={{backgroundColor: color.complementary.blue2}} onClick={reset}>
+          <div className={classnames(styles.menu, styles.default)} onClick={reset}>
             <div className={styles.text}>字</div>
-            <div className={styles.icon}>±</div>
+            <Default className={styles.icon}></Default>
           </div>
         </div>
       }

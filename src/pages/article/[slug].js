@@ -84,15 +84,23 @@ const Article = () => {
 
   const articleData = useMemo(() => {
     const target = _.find(pageData, { name: 'article' });
-    if (target?.data?.attributes?.metadesc && target?.data?.attributes?.text) {
-      const htmlString = target.data.attributes.text.replace(/<img([^>]*)>/i, function(match, p1) {
-        // 删除现有的 title 属性
-        let newTag = match.replace(/\s*title\s*=\s*(['"])[^'"]*\1/, '');
-        // 添加新的 title 属性
-        newTag = newTag.replace(/<img/, `<img title="${target?.data?.attributes?.metadesc}"`);
-        return newTag;
-      });
-      target.data.attributes.text = htmlString
+
+    let titleValue
+    // 1) Find the first match
+    const regex = /<img\s+[^>]*title="([^"]*)"[^>]*>/i;
+    const match = target?.data?.attributes?.text?.match(regex);
+
+    if (match) {
+        titleValue = match[1];
+        console.log("Title value:", titleValue);
+    } else {
+        console.log("No img tag with title attribute found.");
+    }
+
+    // 2) insert "title" element
+    if (titleValue) {
+      const newRegex = /(<img\s+[^>]*>)/i;
+      target.data.attributes.text = target?.data?.attributes?.text.replace(newRegex, `$1<p class="my-2 text-gray-gray2 font-medium">${titleValue}</p>`);
     }
 
     return target?.data
