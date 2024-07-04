@@ -1,5 +1,5 @@
 "use client"
-import { Fragment, useMemo, useState } from "react"
+import { Fragment, useMemo, useState, useEffect } from "react"
 import Container from "@/shared/layout/Container"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import styled from "styled-components"
@@ -84,6 +84,11 @@ const Article = () => {
 
   const articleData = useMemo(() => {
     const target = _.find(pageData, { name: 'article' });
+    if (target?.data?.attributes?.metadesc && target?.data?.attributes?.text) {
+      const htmlString = target?.data?.attributes?.text.replace(/<img([^>]*)(?<!title\s*=\s*["'][^"']*["'])>/, `<img$1 title="${target?.data?.attributes?.metadesc}">`);
+      target.data.attributes.text = htmlString
+    }
+
     return target?.data
   }, [pageData])
 
