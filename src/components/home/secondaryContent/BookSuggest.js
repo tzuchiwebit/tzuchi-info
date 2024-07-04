@@ -15,24 +15,34 @@ import DefaultImage from '@/asset/image/default-article-intro-square.png'
 import useScreenSize from '@/shared/hook/useScreenSize';
 
 const ebookEndpoint = `https://tzuchi-ebooks.web.app`;
+const jingsiEndpoint = `https://store.jingsi.com`;
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
 const Item = ({ item }) => {
-  // console.log(item)
+  const getImage = () => {
+    if (item?.cover_image) return  item.cover_image
+    if (item?.image) return item.image
+    return DefaultImage
+  }
+
+  const clickOpen = () => {
+    if (item?.id) {
+      window.open(`${ebookEndpoint}/book/${item.id}`, '_blank');
+    } else if (item?.link) {
+      window.open(`${jingsiEndpoint}${item.link}`, '_blank');
+    }
+  }
 
   return (
     <div className="w-[171px] cusor-pointer">
-      <div className="w-full rounded-md overflow-hidden cursor-pointer" onClick={() => {
-        // router.push(`${routes.ARITCLE}/${item.id}`)
-        window.open(`${ebookEndpoint}/book/${item.id}`, '_blank');
-      }}>
+      <div className="w-full rounded-md overflow-hidden cursor-pointer" onClick={clickOpen}>
         {
           item?.title ?
             <Image
-              src={item?.cover_image ? item?.cover_image : DefaultImage}
+              src={getImage()}
               alt={""}
               width={171}
               height={171}
@@ -69,15 +79,27 @@ const NewItem = ({ item = {}, loading = false }) => {
     }
   }, [screenSize.width])
 
-  return (
-    <div className="relative mb-[60px] rounded-md laptop:w-[180px] tablet:w-[171px] w-[165px] cursor-pointer select-none" onClick={() => {
+  const getImage = () => {
+    if (item?.cover_image) return  item.cover_image
+    if (item?.image) return item.image
+    return DefaultImage
+  }
+
+  const clickOpen = () => {
+    if (item?.id) {
       window.open(`${ebookEndpoint}/book/${item.id}`, '_blank');
-    }}>
+    } else if (item?.link) {
+      window.open(`${jingsiEndpoint}${item.link}`, '_blank');
+    }
+  }
+
+  return (
+    <div className="relative mb-[60px] rounded-md laptop:w-[180px] tablet:w-[171px] w-[165px] cursor-pointer select-none" onClick={clickOpen}>
       {
         loading ?
           <Skeleton className="aspect-square" /> :
           <Image
-            src={item?.cover_image ? item?.cover_image : DefaultImage}
+            src={getImage()}
             alt={""}
             width={imageWidth}
             height={imageWidth}
@@ -177,17 +199,21 @@ const CarouselSection = ({ data, loading }) => {
   );
 }
 
-const onReadMore = () => {
+const onReadMoreBook = () => {
   window.open(ebookEndpoint, '_blank');
+}
+
+const onReadMoreJingSi = () => {
+  window.open(`${jingsiEndpoint}/pages/books`, '_blank');
 }
 
 export default function BookSuggest() {
   const screenSize = useScreenSize();
   const [isTabletOnly, setIsTabletOnly] = useState(screenSize.width >= 768 && screenSize.width < 1024)
 
-  const { loadingBooks, suggestBooks: booksData } = useDataProvider();
+  const { loadingBooks, suggestBooks: booksData, loadingJingsi, jingsiBooks: jingsiData } = useDataProvider();
 
-  const sliderData = useMemo(() => {
+  const sliderBookData = useMemo(() => {
     if (booksData.length === 1) {
       return Array(4).fill(booksData[0])
     } else if (booksData.length === 2) {
@@ -195,6 +221,15 @@ export default function BookSuggest() {
     }
     return booksData.slice(0, 4)
   }, [booksData])
+
+  const sliderJingsiData = useMemo(() => {
+    if (jingsiData.length === 1) {
+      return Array(4).fill(jingsiData[0])
+    } else if (jingsiData.length === 2) {
+      return _.concat(jingsiData, jingsiData);
+    }
+    return jingsiData.slice(0, 4)
+  }, [jingsiData])
 
   useEffect(() => {
     setIsTabletOnly(screenSize.width >= 768 && screenSize.width < 1024)
@@ -209,7 +244,7 @@ export default function BookSuggest() {
       <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
       <div className="flex-0 font-medium justify-end items-end text-lg text-primary-blue3">
         <div
-          onClick={onReadMore}
+          onClick={onReadMoreJingSi}
           target="_blank"
           className="cursor-pointer flex flex-row whitespace-nowrap">
           更多<Icon.RightArrow2 width={20} />
@@ -218,19 +253,19 @@ export default function BookSuggest() {
     </div>
 
     {
-      !loadingBooks &&
+      !loadingJingsi &&
       <div className="w-full">
         {
           isTabletOnly ?
             <div className="flex flex-row justify-between">
               {
-                sliderData.map((item, index) => (<div className='w-fit' key={index}>
+                sliderJingsiData.map((item, index) => (<div className='w-fit' key={index}>
                   <Item item={item} />
                 </div>))
               }
             </div> :
             <CarouselContainer>
-              <CarouselSection data={sliderData} loading={loadingBooks} />
+              <CarouselSection data={sliderJingsiData} loading={loadingJingsi} />
             </CarouselContainer>
         }
       </div>
@@ -242,7 +277,7 @@ export default function BookSuggest() {
       <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
       <div className="flex-0 font-medium justify-end items-end text-lg text-primary-blue3">
         <div
-          onClick={onReadMore}
+          onClick={onReadMoreBook}
           target="_blank"
           className="cursor-pointer flex flex-row whitespace-nowrap">
           更多<Icon.RightArrow2 width={20} />
@@ -256,13 +291,13 @@ export default function BookSuggest() {
           isTabletOnly ?
             <div className="flex flex-row justify-between">
               {
-                sliderData.map((item, index) => (<div className='w-fit' key={index}>
+                sliderBookData.map((item, index) => (<div className='w-fit' key={index}>
                   <Item item={item} />
                 </div>))
               }
             </div> :
             <CarouselContainer>
-              <CarouselSection data={sliderData} loading={loadingBooks} />
+              <CarouselSection data={sliderBookData} loading={loadingBooks} />
             </CarouselContainer>
         }
       </div>

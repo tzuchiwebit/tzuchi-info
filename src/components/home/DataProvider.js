@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { createContext } from 'react';
 import { getArticlesByCategory, getUserById } from "@/api/joomlaApi";
-import { getBookSuggest } from "@/api/api";
+import { getBookSuggest, getBookJingsi } from "@/api/api";
 import _ from 'lodash'
 
 export const DataContext = createContext(null);
@@ -52,8 +52,10 @@ export default function DataProvider({ children }) {
 
   const [pageData, setPageData] = useState([]);
   const [suggestBooks, setSuggestBooks] = useState([]);
+  const [jingsiBooks, setJingsiBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingBooks, setLoadingBooks] = useState(true);
+  const [loadingJingsi, setLoadingJingsi] = useState(true);
 
   const getJournal = async () => {
     setLoading(true);
@@ -114,14 +116,29 @@ export default function DataProvider({ children }) {
     }
   }
 
+  const getBooksJingsi = async () => {
+    setLoadingJingsi(true);
+    try {
+      const res = await getBookJingsi();
+
+      setJingsiBooks(res);
+
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingJingsi(false);
+    }
+  }
+
   useEffect(() => {
     getJournal();
     getBooksSuggested()
+    getBooksJingsi()
   }, [])
 
 
   return (
-    <DataContext.Provider value={{ pageData, loading, loadingBooks, suggestBooks }}>
+    <DataContext.Provider value={{ pageData, loading, loadingBooks, suggestBooks, loadingJingsi, jingsiBooks }}>
       {children}
     </DataContext.Provider>
   );
