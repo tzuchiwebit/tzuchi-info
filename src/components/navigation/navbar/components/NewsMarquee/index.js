@@ -60,17 +60,17 @@ export default function NewsMarquee () {
             <div className={classnames(styles.prefixDialog)}>Upcoming Event <span className={classnames(styles.arrow)}>►</span></div>
             <span className={classnames(styles.message)}  onMouseEnter={togglePause} onMouseLeave={togglePause}>2. Enroll now for a Free Course on Buddhism: Past, Present, and Future.</span>
           </li>
-          <li id="marqueeItem" className={classnames(styles.marqueeItem, styles.urgent)}>
-            <div className={classnames(styles.prefixDialog, styles.urgent)}>Upcoming Event <span className={classnames(styles.arrow, styles.urgent)}>►</span></div>
-            <span className={classnames(styles.message, styles.urgent)} onMouseEnter={togglePause} onMouseLeave={togglePause}>3. Enroll now for a Free Course on Buddhism: Past, Present, and Future.</span>
+          <li id="marqueeItem" className={classnames(styles.marqueeItem)}>
+            <div className={classnames(styles.prefixDialog)}>Upcoming Event <span className={classnames(styles.arrow)}>►</span></div>
+            <span className={classnames(styles.message)} onMouseEnter={togglePause} onMouseLeave={togglePause}>3. Enroll now for a Free Course on Buddhism: Past, Present, and Future.</span>
           </li>
           <li id="marqueeItem" className={styles.marqueeItem}>
             <div className={classnames(styles.prefixDialog)}>Upcoming Event <span className={classnames(styles.arrow)}>►</span></div>
             <span className={classnames(styles.message)} onMouseEnter={togglePause} onMouseLeave={togglePause}>4. Enroll now for a Free Course on Buddhism: Past, Present, and Future.</span>
           </li>
-          <li id="marqueeItem" className={classnames(styles.marqueeItem, styles.urgent)}>
-            <div className={classnames(styles.prefixDialog, styles.urgent)}>Upcoming Event <span className={classnames(styles.arrow, styles.urgent)}>►</span></div>
-            <span className={classnames(styles.message, styles.urgent)} onMouseEnter={togglePause} onMouseLeave={togglePause}>5. Enroll now for a Free Course on Buddhism: Past, Present, and Future.</span>
+          <li id="marqueeItem" className={classnames(styles.marqueeItem)}>
+            <div className={classnames(styles.prefixDialog)}>Upcoming Event <span className={classnames(styles.arrow)}>►</span></div>
+            <span className={classnames(styles.message)} onMouseEnter={togglePause} onMouseLeave={togglePause}>5. Enroll now for a Free Course on Buddhism: Past, Present, and Future.</span>
           </li>
           <li id="marqueeItem" className={styles.marqueeItem}>
             <div className={classnames(styles.prefixDialog)}>Upcoming Event <span className={classnames(styles.arrow)}>►</span></div>
