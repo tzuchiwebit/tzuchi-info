@@ -100,7 +100,7 @@ const Article = () => {
     // 2) insert "title" element
     if (titleValue) {
       const newRegex = /(<img\s+[^>]*>)/i;
-      target.data.attributes.text = target?.data?.attributes?.text.replace(newRegex, `$1<p class="my-2 text-gray-gray2 font-medium">${titleValue}</p>`);
+      target.data.attributes.text = target?.data?.attributes?.text.replace(newRegex, `$1<p class="mt-2 text-gray-gray2 font-medium">${titleValue}</p><div class="mt-1 mb-4 flex flex-1 text-lg border-solid border-b border-gray-gray7" ></div>`);
     }
 
     return target?.data
