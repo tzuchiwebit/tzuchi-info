@@ -93,14 +93,12 @@ const Article = () => {
     if (match) {
         titleValue = match[1];
         console.log("Title value:", titleValue);
+
+        // 2) insert "title" element
+        const newRegex = /(<img\s+[^>]*>)/i;
+        target.data.attributes.text = target?.data?.attributes?.text.replace(newRegex, `$1<p class="mt-1 pb-1 mb-4 text-gray-gray2 font-medium border-solid border-b border-gray-gray7">${titleValue}</p>`);
     } else {
         console.log("No img tag with title attribute found.");
-    }
-
-    // 2) insert "title" element
-    if (titleValue) {
-      const newRegex = /(<img\s+[^>]*>)/i;
-      target.data.attributes.text = target?.data?.attributes?.text.replace(newRegex, `$1<p class="mt-2 text-gray-gray2 font-medium">${titleValue}</p><div class="mt-1 mb-4 flex flex-1 text-lg border-solid border-b border-gray-gray7" ></div>`);
     }
 
     return target?.data
@@ -163,9 +161,10 @@ const Article = () => {
         />
         {
           articleData?.attributes?.metadesc &&
-          <div className="mt-2 text-gray-gray2 font-medium" style={{ fontSize: selectedFontSize+'px' }}>{articleData?.attributes?.metadesc}</div>
+          <>
+            <div className="mt-1 pb-1 mb-4 text-gray-gray2 font-medium border-solid border-b border-gray-gray7" style={{ fontSize: selectedFontSize+'px' }}>{articleData?.attributes?.metadesc}</div>
+          </>
         }
-        <div className="mt-1 mb-4 flex flex-1 text-lg border-solid border-b border-gray-gray7" />
         {
           articleData?.relationships?.category?.data?.id === '17' &&
             <div className={classnames('pl-2 border-solid border-primary-blue3 my-4', getActivityInfoBarWidth(selectedFontSize))} style={{fontSize: selectedFontSize+'px'}}>
@@ -174,7 +173,7 @@ const Article = () => {
               <span className="flex gap-2">活動地點：地點點位名稱 <Icon.LocationPin style={{ width: selectedFontSize+'px', color: color.primary.blue2, cursor: 'pointer' }} /></span>
             </div>
         }
-        <div id={'content-holder'} style={{ wordBreak: 'break-all', fontSize: selectedFontSize+'px' }} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
+        <div className={styles.content} id={'content-holder'} style={{ wordBreak: 'break-all', fontSize: selectedFontSize+'px' }} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
         {/* {
           articleData?.relationships?.category?.data?.id !== '17' &&
           <Errata></Errata>
