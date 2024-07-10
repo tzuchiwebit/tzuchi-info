@@ -52,7 +52,7 @@ const Item = ({ item = {} }) => {
                             {dayjs(item.publish_up).format('YYYY-MM-DD')}<br />
                             {item.place !== "NULL" ? item.place : <><br /></>}
                         </div>
-                        <div className="gap-1 text-sm flex">
+                        <div className="hidden gap-1 text-sm flex">
                             <LikeAndShare
                                 articleId={item.id}
                                 likes={item.like}
