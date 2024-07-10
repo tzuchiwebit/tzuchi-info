@@ -55,6 +55,28 @@ const addShares = async (id) => {
   }
 }
 
+const pushNotify = async ({articleId, reportUuid, name, honorific, title, phone, email, text}) => {
+  try {
+    const payload = {
+      "message": `
+回報者：${name}${honorific}
+電話：${phone}
+Email：${email}
+勘誤文章名稱：${title}
+勘誤意見：${text}
+勘誤ID：${articleId}-${reportUuid}`,
+    }
+    const res = await axios.post(`${API_ENDPOINT}/notify.php`, payload, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    return res?.data
+  } catch (err) {
+    throw err
+  }
+}
+
 const getBookSuggest = async () => {
   try {
 
@@ -85,4 +107,5 @@ export {
   addLikes,
   getBookSuggest,
   getBookJingsi,
+  pushNotify,
 }

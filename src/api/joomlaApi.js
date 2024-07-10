@@ -3,6 +3,7 @@
 import axios from 'axios'
 import _ from 'lodash'
 import joomlaContentCategory from './joomlaContentCategory'
+import { v4 as uuidv4 } from 'uuid';
 
 const API_ENDPOINT = `${process.env.NEXT_PUBLIC_CMS_URL}/api/index.php/v1`
 const token = process.env.NEXT_PUBLIC_JOOMLA_API_TOKEN
@@ -139,6 +140,37 @@ const getArticlesByKeyword = async ({ keyword = '', limit = 12, offset = 0, stat
   }
 }
 
+const addErrata = async ({articleId, reportUuid, name, honorific, phone, email, text, identity}) => {
+  try {
+    const payload = {
+      "title": `${articleId}-${reportUuid}`,
+      "alias": `${articleId}-${reportUuid}`,
+      "articletext": text,
+      "catid": 24,
+      "language": "*",
+      "metadesc": "",
+      "metakey": "",
+      "name": name,
+      "honorific": honorific,
+      "email": email,
+      "identity": identity,
+      "phone": phone,
+      "reports-parent-id": `${articleId}`,
+      "report-uuid": reportUuid,
+      "note": ""
+    }
+    const res = await axios.post(`${API_ENDPOINT}/content/articles`, payload, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+    })
+    return res?.data
+  } catch (err) {
+    throw err
+  }
+}
+
 export {
   getArticlesByCategory,
   getArticleById,
@@ -146,4 +178,5 @@ export {
   getExtendArticles,
   getArticlesByKeyword,
   getUserById,
+  addErrata,
 }
