@@ -141,12 +141,12 @@ const Article = () => {
         }
 
         <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
-        <SocialBar
+        {/* <SocialBar
           articleId={slug}
           isMobileType={false}
           likes={articleData?.attributes?.like}
           shares={articleData?.attributes?.share}
-        />
+        /> */}
       </div>
       <div className="laptop:mt-6 mt-4">
         <Image

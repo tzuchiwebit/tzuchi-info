@@ -54,7 +54,7 @@ const Item = ({ item = {}, loading = false }) => {
                                 loading ? <Skeleton /> : item?.title
                             }
                         </div>
-                        <div className="flex flex-row flex-none border-t border-solid border-gray-gray8 w-full justify-end pt-2 pr-5">
+                        <div className="hidden flex flex-row flex-none border-t border-solid border-gray-gray8 w-full justify-end pt-2 pr-5">
                             <LikeAndShare
                                 articleId={item.id}
                                 likes={item.like}

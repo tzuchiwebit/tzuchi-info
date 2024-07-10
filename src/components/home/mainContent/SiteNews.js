@@ -78,7 +78,7 @@ const Item = ({ item = {} }) => {
                     {dayjs(item.publish_up).format('YYYY-MM-DD')} <br />
                     {item.place}
                 </div>
-                <div className="flex justify-end">
+                <div className="hidden flex justify-end">
                     <LikeAndShare likes={item.like} shares={item.share} articleId={item.id} />
                 </div>
             </div>

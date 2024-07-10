@@ -40,11 +40,11 @@ const Item = ({ item }) => {
                                             <div className="border-l border-solid border-gray-gray4 h-4" />
                                             {_i?.creator?.name}
                                         </div>
-                                        <LikeAndShare
+                                        {/* <LikeAndShare
                                             likes={_i.like}
                                             shares={_i.share}
                                             articleId={_i.id}
-                                        />
+                                        /> */}
                                     </div>
                                 </div>
                             </div>

@@ -54,7 +54,7 @@ const PrimaryActivityCard = ({ item = {}, onClick = () => { } }) => {
           <div className="border-l border-gray-gray4 border-solid pl-1 leading-[16px] h-[16px]">
             {item?.creator?.name}
           </div>
-          <div className="flex gap-1">
+          <div className="hidden flex gap-1">
             <SocialBar articleId={item.id} likes={item?.like} shares={item?.share}></SocialBar>
           </div>
         </div>
