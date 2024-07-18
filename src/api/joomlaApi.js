@@ -3,7 +3,7 @@
 import axios from 'axios'
 import _ from 'lodash'
 import joomlaContentCategory from './joomlaContentCategory'
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 
 const API_ENDPOINT = `${process.env.NEXT_PUBLIC_CMS_URL}/api/index.php/v1`
 const token = process.env.NEXT_PUBLIC_JOOMLA_API_TOKEN
