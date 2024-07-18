@@ -25,6 +25,7 @@ export default function Page() {
   const [totalPage, setTotalPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const pageOffset = useMemo(() => (currentPage - 1) * 9, [currentPage]);
+  const responsive = useResponsive();
   const router = useRouter();
 
   // 吉祥月api, 
