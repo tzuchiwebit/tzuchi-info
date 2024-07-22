@@ -162,9 +162,12 @@ const Article = () => {
           }}
         />
         {
-          articleData?.attributes?.metadesc &&
+          articleData?.attributes?.images?.image_intro_caption ?
           <>
-            <div className="mt-1 pb-1 mb-4 text-gray-gray2 font-medium border-solid border-b border-gray-gray7" style={{ fontSize: selectedFontSize+'px' }}>{articleData?.attributes?.metadesc}</div>
+            <div className="mt-1 pb-1 mb-4 text-gray-gray2 font-medium border-solid border-b border-gray-gray7" style={{ fontSize: selectedFontSize+'px' }}>{articleData?.attributes?.images?.image_intro_caption}</div>
+          </>:
+          <>
+            <div className="mt-1 pb-1 mb-4"></div>
           </>
         }
         {
