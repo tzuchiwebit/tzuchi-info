@@ -1,4 +1,5 @@
-"use client"
+import Head from 'next/head';
+import { getArticleById } from "@/api/joomlaApi";
 import { Fragment, useMemo, useState } from "react"
 import Container from "@/shared/layout/Container"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
@@ -79,10 +80,6 @@ const Breadcrumb = ({ className }) => {
 const Article = () => {
   const { pageData } = useDataProvider();
   const [selectedFontSize, setSelectedFontSize] = useState(18)
-
-  const { slug } = useParams();
-  // console.log(`slug`);
-  // console.log(slug);
 
   const articleData = useMemo(() => {
     const target = _.find(pageData, { name: 'article' });
@@ -294,14 +291,34 @@ const MainContent = () => {
   )
 }
 
-export default function Page() {
-  return (
+export async function getServerSideProps(context) {
+  const slug = context.params.slug
+  console.log('slug', slug)
+  // FIXME: unable to verify the first certificate
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+  const article = (await getArticleById(slug)).data
+  return { props: { article } }
+}
+
+export default function Page({ article }) {
+  return (<>
+   <Head>
+      <title>{article?.attributes?.title}</title>
+      <meta name='description' content={article?.attributes?.metadesc} />
+      {/* <link rel='canonical' href={pageURL} /> */}
+      {/* <meta property='og:type' content={pageType} /> */}
+      <meta property='og:title' content={article?.attributes?.title} />
+      <meta property='og:description' content={article?.attributes?.metadesc} />
+      {/* <meta property='og:url' content={pageURL} /> */}
+      {/* <meta property='og:image' content={ogImage} /> */}
+    </Head>
     <DataProvider>
       <Container>
         <MainContent></MainContent>
       </Container>
       <SocialBar isMobileType={true}></SocialBar>
     </DataProvider>
+  </>
   )
 }
 

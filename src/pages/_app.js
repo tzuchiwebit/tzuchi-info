@@ -8,7 +8,7 @@ export default function MyApp({ Component, pageProps }) {
         <>
             <Head>
                 <meta charSet="UTF-8" />
-                <link rel="icon" href="./favicon.svg" sizes="any" />
+                <link rel="icon" href="/favicon.svg" sizes="any" />
                 <title>慈濟資訊網</title>
             </Head>
             <Layout>
