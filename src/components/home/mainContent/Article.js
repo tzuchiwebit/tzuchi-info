@@ -38,7 +38,8 @@ const Item = ({ item }) => {
                                     <div className="flex justify-between w-full">
                                         <div className="flex gap-1 items-center font-medium">
                                             <div className="border-l border-solid border-gray-gray4 h-4" />
-                                            {_i?.creator?.name}
+                                            {/* {_i?.creator?.name} */}
+                                            {_i?.metadata?.author || '慈濟基金會'}
                                         </div>
                                         {/* <LikeAndShare
                                             likes={_i.like}

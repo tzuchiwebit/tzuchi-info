@@ -18,6 +18,7 @@ export default function DataProvider({ children }) {
       const creatorPool = {}
 
       // 1) fetch article
+      // FIXME: data fetching from "getServerSideProps"
       const article = (await getArticleById(id)).data
       const creator = (await getUserById(article?.attributes?.created_by))
       article.attributes.creator = creator

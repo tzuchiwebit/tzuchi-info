@@ -44,7 +44,7 @@ const PrimaryCard = ({ item = {}, onClick = () => { } }) => {
           </div>
           <div className="w-full flex justify-between items-center">
             <div className="border-l border-gray-gray4 border-solid pl-1 leading-[16px] h-[16px]">
-              {item?.creator?.name}
+              {item?.metadata?.author || '慈濟基金會'}
             </div>
             <div className="hidden flex gap-1">
               <SocialBar articleId={item.id} likes={item?.like} shares={item?.share}></SocialBar>

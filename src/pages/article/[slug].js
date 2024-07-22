@@ -122,11 +122,11 @@ const Article = () => {
         {articleData?.attributes?.title}
       </div>
       <div className="flex flex-row items-center gap-x-2 mt-2">
-        {/* metadata: date, arthur, location */}
+        {/* metadata: date, author, location */}
         <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(articleData?.attributes?.publish_up).format('YYYY-MM-DD')}</span>
         <Fragment>
           <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
-          <span className="text-[14px] text-gray-gray4 font-medium">{articleData?.attributes?.creator?.name}</span>
+          <span className="text-[14px] text-gray-gray4 font-medium">{articleData?.attributes?.metadata?.author || '慈濟基金會'}</span>
         </Fragment>
         {
           articleData?.attributes?.place &&
@@ -218,7 +218,7 @@ const ExtendArticles = () => {
               <div className="flex flex-row items-center gap-x-2 laptop:mt-2 mt-1">
                 <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(item.attributes?.publish_up).format('YYYY-MM-DD')}</span>
                 <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
-                <span className="text-[14px] text-gray-gray4 font-medium">{item?.attributes?.creator?.name}</span>
+                <span className="text-[14px] text-gray-gray4 font-medium">{item?.attributes?.metadata?.author || '慈濟基金會'}</span>
               </div>
             </div>
           ))
@@ -260,7 +260,7 @@ const RecommandArticles = () => {
               <div className="flex flex-row items-center gap-x-2 laptop:mt-2 mt-1">
                 <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(item.attributes?.publish_up).format('YYYY-MM-DD')}</span>
                 <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
-                <span className="text-[14px] text-gray-gray4 font-medium">{item?.attributes?.creator?.name}</span>
+                <span className="text-[14px] text-gray-gray4 font-medium">{item?.attributes?.metadata?.author || '慈濟基金會'}</span>
               </div>
             </div>
           ))
