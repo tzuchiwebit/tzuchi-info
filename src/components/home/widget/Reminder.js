@@ -37,7 +37,7 @@ export default function Reminder() {
 
     return <OuterContainer>
         <InnerContainer>
-            <div className="flex px-2 laptop:justify-end justify-center shrink-0 laptop:max-w-[50%] desktop:max-w-full max-h-[150px]">
+            <div className="flex px-1 laptop:justify-end justify-center shrink-0 laptop:max-w-[50%] desktop:max-w-full max-h-[150px]">
                 {   reminderItem?.id ?
                     <div className="aspect-square relative w-full">
                         <Image
@@ -69,11 +69,11 @@ export default function Reminder() {
             </div>
 
         </InnerContainer>
-        <div className="bg-gray-gray8 p-1.5 w-full">
+        <div className="bg-gray-gray8 p-1 w-full">
             <span
               className="cursor-pointer font-medium flex items-center justify-end text-lg text-primary-blue3 hover:text-primary-blue2"
               onClick={() => {
-                router.push(`https://tw.tzuchi.org/featured/help/2019%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8B%80%E7%97%85%E6%AF%92%E9%98%B2%E7%96%AB/%E8%AD%89%E5%9A%B4%E4%B8%8A%E4%BA%BA%E6%AF%8F%E6%97%A5%E4%B8%80%E5%8F%AE%E5%9A%80`)
+                window.open(`https://tw.tzuchi.org/featured/help/2019%E6%96%B0%E5%9E%8B%E5%86%A0%E7%8B%80%E7%97%85%E6%AF%92%E9%98%B2%E7%96%AB/%E8%AD%89%E5%9A%B4%E4%B8%8A%E4%BA%BA%E6%AF%8F%E6%97%A5%E4%B8%80%E5%8F%AE%E5%9A%80`)
             }}>
                 更多 <Icon.RightArrow2 width="18px" />
             </span>
@@ -87,18 +87,17 @@ const InnerContainer = styled.div`
     display: flex;
     flex-direction: column;
     color: ${color.primary.blue1};
-    padding-top: 8px;
+    padding: 8px 4px 0;
     width: 100%;
     height: 260px;
+
     @media(min-width: ${screens.laptop}) {
-        padding-top: 10px;
-        padding-bottom: 10px;
+        padding: 4px 0 4px;
         flex-direction: row;
         height: 135px;
     }
     @media(min-width: ${screens.desktop}) {
-        padding-top: 10px;
-        padding-bottom: 0;
+        padding: 4px 0 0;
         flex-direction: column;
         height: fit-content;
     }

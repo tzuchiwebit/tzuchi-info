@@ -8,6 +8,7 @@ import { OuterContainer } from "./container"
 import { useRouter } from 'next/navigation'
 import routes from "@/config/routes"
 import Skeleton from "react-loading-skeleton"
+import DefaultImage from '@/asset/image/default-article-intro-square.png'
 
 export default function Journal() {
 
@@ -18,7 +19,7 @@ export default function Journal() {
 
     return <OuterContainer>
         <InnerContainer>
-            <div className="flex px-2 laptop:justify-end justify-center shrink-0 laptop:max-w-[50%] desktop:max-w-full max-h-[150px]">
+            <div className="flex px-1 laptop:justify-end justify-center shrink-0 laptop:max-w-[50%] desktop:max-w-full max-h-[150px]">
                 {reminderItem.image ?
                     <div className="aspect-square relative">
                         <Image
@@ -28,7 +29,7 @@ export default function Journal() {
                             height={0}
                             sizes="100vw"
                             layout='fill'
-                            objectFit='contain'
+                            objectFit='cover'
                             className="w-full laptop:h-auto laptop:w-full desktop:max-w-[165px]"
                         // style={{ width: '100%' }}
                         />
@@ -37,12 +38,12 @@ export default function Journal() {
                     // <Skeleton className="aspect-square w-full laptop:h-auto laptop:w-full max-w-[150px] desktop:max-w-[165px]" />
                 }
                 <Image
-                    src="https://picsum.photos/id/201/200/300"
+                    src={DefaultImage}
                     alt=""
                     width={0}
                     height={0}
                     sizes="100vw"
-                    className="aspect-square w-full laptop:h-auto laptop:w-full max-w-[150px] desktop:max-w-[165px]"
+                    className="aspect-square w-full laptop:h-auto laptop:w-full desktop:max-w-[165px]"
                 />
             </div>
             <div className="flex flex-col p-2 text-xl laptop:justify-start shrink min-h-[90px]">
@@ -55,7 +56,7 @@ export default function Journal() {
             </div>
 
         </InnerContainer>
-        <div className="bg-gray-gray8 p-1.5 w-full">
+        <div className="bg-gray-gray8 p-1 w-full">
             <span
                 className="cursor-pointer font-medium flex items-center justify-end text-lg text-primary-blue3 hover:text-primary-blue2"
                 onClick={() => {
@@ -73,20 +74,19 @@ const InnerContainer = styled.div`
     display: flex;
     flex-direction: column;
     color: ${color.primary.blue1};
-    padding-top: 8px;
+    padding: 8px 4px 0;
     width: 100%;
     height: 260px;
+
     @media(min-width: ${screens.laptop}) {
-        padding-top: 10px;
-        padding-bottom: 10px;
-        flex-direction: row;
-        height: 135px;
+      padding: 4px 0 4px;
+      flex-direction: row;
+      height: 135px;
     }
     @media(min-width: ${screens.desktop}) {
-        padding-top: 10px;
-        padding-bottom: 0;
-        flex-direction: column;
-        height: fit-content;
+      padding: 4px 0 0;
+      flex-direction: column;
+      height: fit-content;
     }
 `
 

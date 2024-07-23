@@ -1,143 +1,104 @@
 'use client'
-import { useState, useEffect, useMemo, Suspense } from "react"
+import { useMemo } from "react"
 import styled from "styled-components"
 import screens from "@/shared/styles/screens"
 import color from "@/shared/styles/color"
-import dayjs from "dayjs"
 import Icon from "@/shared/Icon"
+import Image from "next/image"
 import { OuterContainer } from "./container"
 import { useRouter } from 'next/navigation'
 import routes from "@/config/routes"
+import Skeleton from "react-loading-skeleton"
 import useDataProvider from "../useDataProvider"
 import _ from 'lodash'
-import Skeleton from 'react-loading-skeleton'
 import { addHits } from "@/api/api"
+import DefaultImage from '@/asset/image/default-article-intro-square.png'
+import dayjs from "dayjs"
 
-export default function Calendar() {
+export default function Morning() {
+  const router = useRouter();
+  const { pageData, loading } = useDataProvider();
 
-    const router = useRouter();
-
-    const { pageData, loading } = useDataProvider();
-    // console.log(pageData, loading)
-
-    const morningData = useMemo(() => {
-        const target = _.find(pageData, { name: '志工早會' });
-        if (target?.data) {
-            return {
-                title: target?.data[0]?.attributes?.title || '證嚴上人智慧法語',
-                id: target?.data[0]?.id,
-            }
-        }
-        return {
-
-        }
-    }, [pageData])
-
-    const [date, setDate] = useState({});
-
-    useEffect(() => {
-        setDate({
-            dateUpper: dayjs().format('YYYY.MM'),
-            dateLower: dayjs().format('DD'),
-        })
-    }, []);
+  const morningData = useMemo(() => {
+    const target = _.find(pageData, { name: '志工早會' });
+    if (target?.data) {
+      console.log('aaaa', target?.data)
+      return {
+          title: target?.data[0]?.attributes?.title || '證嚴上人智慧法語',
+          id: target?.data[0]?.id,
+          image: target?.data[0]?.attributes?.images?.image_intro || '',
+          imageAlt: target?.data[0]?.attributes?.images?.image_intro_alt || '',
+          publishUp: target?.data[0]?.attributes?.publish_up || '',
+      }
+    }
+    return {}
+  }, [pageData])
 
     return <OuterContainer>
-        <InnerContainer>
-            <CalendarContainer style={{ backgroundImage: `url(/bgImage/bg-roof.svg)` }}>
-                <div className="w-[48%] border-solid border-gray-gray8 border-r justify-center flex h-fit laptop:justify-end">
-                    <div className="flex flex-col justify-center w-fit pr-1 laptop:text-right laptop:pr-2 desktop:text-center desktop:pr-1">
-                        <div className="font-semibold text-lg w-fit leading-normal tablet:leading-5">
-                            {date.dateUpper}
-                        </div>
-                        <div className="font-semibold text-[40px] leading-none w-auto text-center">
-                            {date.dateLower}
-                        </div>
-                    </div>
-                </div>
-                <div className="w-[52%] flex flex-col h-fit text-lg laptop:text-xl whitespace-nowrap justify-center">
-                    <div className="font-semibold text-center laptop:text-left laptop:pl-2 desktop:text-center desktop:pl-0 leading-7 tracking-normal pt-1">
-                        世代輪轉<br />
-                        法脈接續
-                    </div>
-                    <div className="hidden laptop:flex desktop:hidden laptop:text-left laptop:pl-2 desktop:text-center desktop:pl-0 flex-col justify-center font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink desktop:min-h-[90px]">
-                        志工早會
-                        <div
-                            className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base cursor-pointer"
-                            onClick={() => {
-                                if (morningData.id) {
-                                    router.push(`${routes.ARITCLE}/${morningData.id}`);
-                                    addHits(morningData.id);
-                                }
-                            }}>
-                            {loading ? <Skeleton /> : morningData.title}
-                        </div>
-                    </div>
-                </div>
-            </CalendarContainer>
-            <div className="flex laptop:hidden desktop:flex flex-col font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink min-h-[94px]">
-                志工早會
-                <div
-                    className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base cursor-pointer"
-                    onClick={() => {
-                        if (morningData.id) {
-                            router.push(`${routes.ARITCLE}/${morningData.id}`);
-                            addHits(morningData.id);
-                        }
-                    }}>
-                    {loading ? <Skeleton /> : morningData.title}
-                </div>
-            </div>
-        </InnerContainer>
-        <div className="bg-gray-gray8 p-1.5 w-full">
-            <span
-                className="cursor-pointer font-medium flex items-center justify-end text-lg text-primary-blue3 hover:text-primary-blue2"
-                onClick={() => {
-                    router.push(`${routes.VOLUNTEER_MORNING_MEETING}`)
-                }}>
-                更多 <Icon.RightArrow2 width="18px" />
-            </span>
+      <InnerContainer>
+        <div className="flex px-1 laptop:justify-end justify-center shrink-0 laptop:max-w-[50%] desktop:max-w-full max-h-[150px]">
+          {morningData?.id ?
+            <div className="aspect-square relative w-full">
+              <Image
+                src={morningData.image ? morningData.image : DefaultImage}
+                alt={morningData.imageAlt}
+                sizes="100vw"
+                layout='fill'
+                objectFit='cover'
+                className="w-full laptop:h-auto laptop:w-full desktop:max-w-[165px]"
+              />
+            </div> :
+            <Skeleton className="aspect-square w-full laptop:h-auto laptop:w-full max-w-[150px] desktop:max-w-[165px]" />
+          }
         </div>
+        <div className="flex flex-col p-2 text-xl laptop:justify-start shrink min-h-[90px]">
+          <div className="flex font-semibold leading-7 tracking-normal justify-between items-center tablet:flex-col tablet:items-start desktop:flex-row">
+            志工早會
+          </div>
+          <div
+              className="py-1 line-clamp-2 text-gray-gray2 w-full shrink text-base font-medium border-b border-solid border-gray-gray8 cursor-pointer"
+              onClick={() => {
+                  if (morningData.id) {
+                      router.push(`${routes.ARITCLE}/${morningData.id}`);
+                      addHits(morningData.id);
+                  }
+              }}>
+              {loading ? <Skeleton /> : morningData.title}
+          </div>
+          <div className="pt-1 justify-center laptop:justify-start line-clamp-2 text-gray-gray4 text-sm font-medium w-full shrink">
+          {loading ? <Skeleton /> : dayjs(morningData.publishUp).format('YYYY-MM-DD')}
+          </div>
+        </div>
+      </InnerContainer>
+      <div className="bg-gray-gray8 p-1 w-full">
+        <span
+          className="cursor-pointer font-medium flex items-center justify-end text-lg text-primary-blue3 hover:text-primary-blue2"
+          onClick={() => {
+              router.push(`${routes.VOLUNTEER_MORNING_MEETING}`)
+          }}>
+          更多 <Icon.RightArrow2 width="18px" />
+        </span>
+      </div>
     </OuterContainer>
 }
 
 const InnerContainer = styled.div`
-    width: 100%;
+    border: 4px solid ${color.gray.gray8};
     display: flex;
     flex-direction: column;
-    border: 4px solid ${color.gray.gray8};
     color: ${color.primary.blue1};
-    height: 260px;
-    @media(min-width: ${screens.laptop}) {
-        height: 135px;
-    }
-    @media(min-width: ${screens.desktop}) {
-        height: 275px;
-    }
-`
-
-
-const CalendarContainer = styled.div`
-    background-repeat: no-repeat;
-    display: flex;
-    padding-top: 8px;
-    background-size: 150%;
-    background-position: -10px 100%;
+    padding: 8px 4px 0;
     width: 100%;
-    height: 160px;
+    height: 260px;
+
     @media(min-width: ${screens.laptop}) {
-        padding-top: 8px;
-        flex-direction: row;
-        height: 135px;
-        background-size: 100%;
-        background-position: -30px 110%;
+      padding: 4px 0 4px;
+      flex-direction: row;
+      height: 135px;
     }
     @media(min-width: ${screens.desktop}) {
-        min-height: 165px;
-        padding-top: 16px;
-        padding-left: unset;
-        padding-right: unset;
-        background-size: 200%;
-        background-position: -45px 100%;
+      padding: 4px 0 0;
+      flex-direction: column;
+      height: fit-content;
     }
 `
