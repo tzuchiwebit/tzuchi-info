@@ -10,7 +10,7 @@ import NewsMarquee from './components/NewsMarquee'
 
 export default function Navbar() {
 
-  const [hasMarquee, setHasMarquee] = useState(true);
+  const [hasMarquee, setHasMarquee] = useState(false);
   // const [openCloudTagSearch, setOpenCloudTagSearch] = useState(false);
 
   return (
@@ -18,7 +18,10 @@ export default function Navbar() {
       <header className="bg-white w-full z-20 shadow-elevation-3">
         <NavbarTop />
         <NavbarBottom />
-        <NewsMarquee />
+        {
+          hasMarquee &&
+          <NewsMarquee />
+        }
       </header>
     </StyledHeaderPadding>
   )
