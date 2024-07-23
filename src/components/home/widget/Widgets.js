@@ -2,6 +2,7 @@
 import styled from "styled-components"
 import screens from "@/shared/styles/screens"
 import Calendar from "./Calendar"
+import Morning from "./Morning"
 import Reminder from "./Reminder"
 import Journel from "./Journal"
 import Thinking from "./Thinking"
@@ -46,6 +47,7 @@ export default function Widgets({ ...props }) {
         <div className="w-full flex">
             <Container>
                 <Calendar />
+                <Morning />
                 <Reminder />
                 <Journel />
             </Container>

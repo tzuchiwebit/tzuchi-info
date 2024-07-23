@@ -57,7 +57,7 @@ export default function Activities() {
 
 
     return <div className="pt-3 flex-1">
-        <BannerTitle title={`熱門活動`} link={'/activities'} />
+        <BannerTitle title={`推薦活動`} link={'/activities'} />
         <ActivitiesSection activityData={activityData} loading={loading} />
     </div>
 }
