@@ -19,34 +19,21 @@ export default function Journal() {
 
     return <OuterContainer>
         <InnerContainer>
-            <div className="flex px-1 laptop:justify-end justify-center shrink-0 laptop:max-w-[50%] desktop:max-w-full max-h-[150px]">
-                {reminderItem.image ?
-                    <div className="aspect-square relative">
-                        <Image
-                            src={reminderItem.image}
-                            alt={reminderItem.imageAlt}
-                            width={0}
-                            height={0}
-                            sizes="100vw"
-                            layout='fill'
-                            objectFit='cover'
-                            className="w-full laptop:h-auto laptop:w-full desktop:max-w-[165px]"
-                        // style={{ width: '100%' }}
-                        />
-                    </div> :
-                    <></>
-                    // <Skeleton className="aspect-square w-full laptop:h-auto laptop:w-full max-w-[150px] desktop:max-w-[165px]" />
-                }
-                <Image
-                    src={DefaultImage}
-                    alt=""
-                    width={0}
-                    height={0}
-                    sizes="100vw"
-                    className="aspect-square w-full laptop:h-auto laptop:w-full desktop:max-w-[165px]"
-                />
+            <div className="flex px-1 justify-center">
+              <div className="aspect-square relative laptop:w-[164px] w-[146px]">
+                  <Image
+                      src={reminderItem.image ? reminderItem.image: DefaultImage}
+                      alt={reminderItem.imageAlt}
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      layout='fill'
+                      objectFit='cover'
+                      className="laptop:w-[164px] w-[146px]"
+                  />
+              </div>
             </div>
-            <div className="flex flex-col p-2 text-xl laptop:justify-start shrink min-h-[90px]">
+            <div className="flex flex-col px-2 pt-1 text-xl laptop:justify-start shrink min-h-[90px]">
                 <div className="flex font-semibold leading-7 tracking-normal justify-between items-center tablet:flex-col tablet:items-start desktop:flex-row">
                     慈濟週報 <SubscribeTag onClick={()=> window.open('https://docs.google.com/forms/d/e/1FAIpQLSeRATEdx4-mOyykXIptMyXvbsJvw7XwzDWHWnqG1cMQTexZRA/viewform')}>訂閱 <Icon.Bell style={{ width: 13 }} /></SubscribeTag>
                 </div>
@@ -76,17 +63,17 @@ const InnerContainer = styled.div`
     color: ${color.primary.blue1};
     padding: 8px 4px 0;
     width: 100%;
-    height: 260px;
+    height: 256px;
 
     @media(min-width: ${screens.laptop}) {
       padding: 4px 0 4px;
       flex-direction: row;
-      height: 135px;
+      height: 172px;
     }
     @media(min-width: ${screens.desktop}) {
       padding: 4px 0 0;
       flex-direction: column;
-      height: fit-content;
+      height: 260px;
     }
 `
 

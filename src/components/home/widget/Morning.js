@@ -22,7 +22,6 @@ export default function Morning() {
   const morningData = useMemo(() => {
     const target = _.find(pageData, { name: '志工早會' });
     if (target?.data) {
-      console.log('aaaa', target?.data)
       return {
           title: target?.data[0]?.attributes?.title || '證嚴上人智慧法語',
           id: target?.data[0]?.id,
@@ -36,27 +35,27 @@ export default function Morning() {
 
     return <OuterContainer>
       <InnerContainer>
-        <div className="flex px-1 laptop:justify-end justify-center shrink-0 laptop:max-w-[50%] desktop:max-w-full max-h-[150px]">
+        <div className="flex px-1 justify-center">
           {morningData?.id ?
-            <div className="aspect-square relative w-full">
+            <div className="aspect-square relative laptop:w-[164px] w-[146px]">
               <Image
                 src={morningData.image ? morningData.image : DefaultImage}
                 alt={morningData.imageAlt}
                 sizes="100vw"
                 layout='fill'
                 objectFit='cover'
-                className="w-full laptop:h-auto laptop:w-full desktop:max-w-[165px]"
+                className="laptop:w-[164px] w-[146px]"
               />
             </div> :
-            <Skeleton className="aspect-square w-full laptop:h-auto laptop:w-full max-w-[150px] desktop:max-w-[165px]" />
+            <Skeleton/>
           }
         </div>
-        <div className="flex flex-col p-2 text-xl laptop:justify-start shrink min-h-[90px]">
+        <div className="flex flex-col px-2 pt-1 text-xl laptop:justify-start shrink min-h-[90px]">
           <div className="flex font-semibold leading-7 tracking-normal justify-between items-center tablet:flex-col tablet:items-start desktop:flex-row">
             志工早會
           </div>
           <div
-              className="py-1 line-clamp-2 text-gray-gray2 w-full shrink text-base font-medium border-b border-solid border-gray-gray8 cursor-pointer"
+              className="pb-1 line-clamp-2 text-gray-gray2 w-full shrink text-base font-medium border-b border-solid border-gray-gray8 cursor-pointer"
               onClick={() => {
                   if (morningData.id) {
                       router.push(`${routes.ARITCLE}/${morningData.id}`);
@@ -65,7 +64,7 @@ export default function Morning() {
               }}>
               {loading ? <Skeleton /> : morningData.title}
           </div>
-          <div className="pt-1 justify-center laptop:justify-start line-clamp-2 text-gray-gray4 text-sm font-medium w-full shrink">
+          <div className="pt-0.5 justify-center laptop:justify-start line-clamp-2 text-gray-gray4 text-sm font-medium w-full shrink">
           {loading ? <Skeleton /> : dayjs(morningData.publishUp).format('YYYY-MM-DD')}
           </div>
         </div>
@@ -89,16 +88,16 @@ const InnerContainer = styled.div`
     color: ${color.primary.blue1};
     padding: 8px 4px 0;
     width: 100%;
-    height: 260px;
+    height: 256px;
 
     @media(min-width: ${screens.laptop}) {
       padding: 4px 0 4px;
       flex-direction: row;
-      height: 135px;
+      height: 172px;
     }
     @media(min-width: ${screens.desktop}) {
       padding: 4px 0 0;
       flex-direction: column;
-      height: fit-content;
+      height: 260px;
     }
 `

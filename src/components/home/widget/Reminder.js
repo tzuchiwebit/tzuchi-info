@@ -37,16 +37,15 @@ export default function Reminder() {
 
     return <OuterContainer>
         <InnerContainer>
-            <div className="flex px-1 laptop:justify-end justify-center shrink-0 laptop:max-w-[50%] desktop:max-w-full max-h-[150px]">
+            <div className="flex px-1 justify-center">
                 {   reminderItem?.id ?
-                    <div className="aspect-square relative w-full">
+                    <div className="aspect-square relative laptop:w-[164px] w-[146px]">
                         <Image
                             src={reminderItem.image ? reminderItem.image : DefaultImage}
                             alt={reminderItem.imageAlt}
                             sizes="100vw"
                             layout='fill'
-                            objectFit='contain'
-                            className="w-full laptop:h-auto laptop:w-full desktop:max-w-[165px]"
+                            objectFit='cover'
                         // style={{ width: '100%' }}
                         />
                     </div> :
@@ -54,7 +53,7 @@ export default function Reminder() {
                 }
             </div>
             <div
-                className="flex flex-col font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start shrink min-h-[90px] cursor-pointer"
+                className="flex flex-col font-semibold leading-7 tracking-normal px-2 pt-1 text-xl laptop:justify-start shrink min-h-[90px] cursor-pointer"
                 onClick={() => {
                     if (reminderItem.id) {
                         router.push(`${routes.ARITCLE}/${reminderItem.id}`);
@@ -89,16 +88,16 @@ const InnerContainer = styled.div`
     color: ${color.primary.blue1};
     padding: 8px 4px 0;
     width: 100%;
-    height: 260px;
+    height: 256px;
 
     @media(min-width: ${screens.laptop}) {
         padding: 4px 0 4px;
         flex-direction: row;
-        height: 135px;
+        height: 172px;
     }
     @media(min-width: ${screens.desktop}) {
         padding: 4px 0 0;
         flex-direction: column;
-        height: fit-content;
+        height: 260px;
     }
 `

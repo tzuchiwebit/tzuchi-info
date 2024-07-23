@@ -6,8 +6,8 @@ const OuterContainer = styled.div`
     flex-basis: 49%;
     width: 49%;
     @media(min-width: ${screens.tablet}) {
-        flex-basis: 24%;
-        width: 24%;
+        flex-basis: 23%;
+        width: 23%;
     }
     @media(min-width: ${screens.laptop}) {
         flex-basis: 48.5%;
