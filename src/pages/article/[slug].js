@@ -79,7 +79,7 @@ const Breadcrumb = ({ className }) => {
 
 const Article = () => {
   const { pageData } = useDataProvider();
-  const [selectedFontSize, setSelectedFontSize] = useState(18)
+  const [selectedFontSize, setSelectedFontSize] = useState(26)
 
   const articleData = useMemo(() => {
     const target = _.find(pageData, { name: 'article' });
@@ -161,7 +161,7 @@ const Article = () => {
         {
           articleData?.attributes?.images?.image_intro_caption ?
           <>
-            <div className="mt-1 pb-1 mb-4 text-gray-gray2 font-medium border-solid border-b border-gray-gray7" style={{ fontSize: selectedFontSize+'px' }}>{articleData?.attributes?.images?.image_intro_caption}</div>
+            <div className="mt-1 pb-1 mb-4 text-[22px] text-gray-gray2 font-medium border-solid border-b border-gray-gray7">{articleData?.attributes?.images?.image_intro_caption}</div>
           </>:
           <>
             <div className="mt-1 pb-1 mb-4"></div>

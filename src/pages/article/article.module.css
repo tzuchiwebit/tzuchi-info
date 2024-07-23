@@ -35,5 +35,6 @@
 }
 
 .content figcaption {
-    @apply mt-1 pb-1 text-gray-gray2 font-medium border-solid border-b border-gray-gray7;
+  font-size: 26px;
+  @apply mt-1 pb-1 text-gray-gray2 font-medium border-solid border-b border-gray-gray7;
 }

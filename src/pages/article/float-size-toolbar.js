@@ -10,9 +10,7 @@ export default function FloatSizeToolbar ({selectedFontSize, setSelectedFontSize
   const [isOpen, setIsOpen] = useState(false)
 
   const increase = () => {
-    if (selectedFontSize < 26) {
-      setSelectedFontSize(selectedFontSize+2)
-    }
+    setSelectedFontSize(selectedFontSize+2)
   }
   const descrease = () => {
     if (selectedFontSize > 18) {
@@ -20,7 +18,7 @@ export default function FloatSizeToolbar ({selectedFontSize, setSelectedFontSize
     }
   }
   const reset = () => {
-      setSelectedFontSize(18)
+      setSelectedFontSize(26)
   }
   return(
     <Fragment>
