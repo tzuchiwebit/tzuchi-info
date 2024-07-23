@@ -68,7 +68,7 @@ const InnerContainer = styled.div`
     @media(min-width: ${screens.laptop}) {
       padding: 4px 0 4px;
       flex-direction: row;
-      height: 172px;
+      height: 180px;
     }
     @media(min-width: ${screens.desktop}) {
       padding: 4px 0 0;
