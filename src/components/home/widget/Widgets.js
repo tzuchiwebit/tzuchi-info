@@ -44,9 +44,9 @@ export default function Widgets({ ...props }) {
                 <Journel />
             </Container>
         </Transition> */}
-        <div className="w-full flex">
+        <div className="w-full flex flex-col">
+            <Calendar />
             <Container>
-                <Calendar />
                 <Morning />
                 <Reminder />
                 <Journel />
@@ -61,18 +61,22 @@ const Container = styled.div`
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
-    row-gap: 15px;
+    row-gap: 10px;
+    padding-top: 16px;
+
     @media(min-width: ${screens.tablet}) {
         flex-wrap: nowrap;
         padding-top: 20px;
         justify-content: start;
-        gap: 10px;
+        row-gap: 10px;
+        column-gap: 20px;
     }
     @media(min-width: ${screens.laptop}) {
         justify-content: space-between;
-        padding-top: 12px;
+        padding-top: 20px;
         flex-wrap: wrap;
         row-gap: 20px;
+        column-gap: 10px
     }
     @media(min-width: ${screens.container}) {
         padding: 12px 0 0 0;
