@@ -43,10 +43,11 @@ export default function Reminder() {
                         <Image
                             src={reminderItem.image ? reminderItem.image : DefaultImage}
                             alt={reminderItem.imageAlt}
+                            fill
+                            width={0}
+                            height={0}
                             sizes="100vw"
-                            layout='fill'
-                            objectFit='cover'
-                        // style={{ width: '100%' }}
+                            style={{ objectFit: "contain" }}
                         />
                     </div> :
                     <Skeleton className="aspect-square" />
