@@ -52,7 +52,7 @@ export default function Morning() {
         </div>
         <div className="flex flex-col px-2 pt-1 text-xl laptop:justify-start shrink min-h-[90px]">
           <div className="flex font-semibold leading-7 tracking-normal justify-between items-center tablet:flex-col tablet:items-start desktop:flex-row">
-            志工早會
+            志工早會1
           </div>
           <div
               className="pb-1 line-clamp-2 text-gray-gray2 w-full shrink text-base font-medium border-b border-solid border-gray-gray8 cursor-pointer"
