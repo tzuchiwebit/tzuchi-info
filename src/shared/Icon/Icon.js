@@ -1,0 +1,91 @@
+// LOGO FILE
+export { default as LOGO } from "./icon/new-logo.svg";
+export { default as LOGOMobile } from "./icon/new-logo-m.svg";
+//
+export { default as Add } from "./icon/main/add.svg";
+export { default as Author } from "./icon/main/author.svg";
+export { default as Calender } from "./icon/main/calender.svg";
+export { default as DownArrow } from "./icon/main/down-arrow.svg";
+export { default as LeftArrow } from "./icon/main/left-arrow.svg";
+export { default as RightArrow } from "./icon/main/right-arrow.svg";
+export { default as RightArrow2 } from "./icon/main/right-arrow-2.svg";
+export { default as UpDownArrow } from "./icon/main/up-down-arrow.svg";
+export { default as UpArrow } from "./icon/main/up-arrow.svg";
+export { default as Like } from "./icon/main/like.svg";
+export { default as LikeFull } from "./icon/main/like-full.svg";
+export { default as File } from "./icon/main/file.svg";
+export { default as Link } from "./icon/main/link.svg";
+export { default as PaginationDoubleLeftArrow } from "./icon/main/pagination-double-left-arrow.svg";
+export { default as PaginationDoubleRightArrow } from "./icon/main/pagination-double-right-arrow.svg";
+export { default as PaginationLeftArrow } from "./icon/main/pagination-left-arrow.svg";
+export { default as PaginationRightArrow } from "./icon/main/pagination-right-arrow.svg";
+export { default as Share } from "./icon/main/share.svg";
+export { default as ShareFull } from "./icon/main/share-full.svg";
+export { default as Search } from "./icon/main/search.svg";
+export { default as Menu } from "./icon/main/menu.svg";
+export { default as Cancel } from "./icon/main/cancel.svg";
+export { default as Filter } from "./icon/main/filter.svg";
+export { default as Views } from "./icon/main/views.svg";
+export { default as LatestUpload } from "./icon/main/latest-upload.svg";
+export { default as CyanTriangle } from "./icon/main/cyan-triangle.svg";
+export { default as Check } from "./icon/main/check.svg";
+export { default as Bell } from "./icon/main/bell.svg";
+export { default as Global } from "./icon/main/global.svg";
+export { default as Lotus } from "./icon/main/lotus.svg";
+export { default as PlayButton } from "./icon/main/play-button.svg";
+// scrolltop
+export { default as UpArrowMain } from "./icon/main/up-arrow-main.svg";
+
+// pagination
+export { default as PageArrowLeftDouble } from "./icon/main/page-double-left-arrow.svg";
+export { default as PageArrowRightDouble } from "./icon/main/page-double-right-arrow.svg";
+export { default as PageArrowLeft } from "./icon/main/page-left-arrow.svg";
+export { default as PageArrowRight } from "./icon/main/page-right-arrow.svg";
+// navbar share section
+export { default as ShareLine } from "./icon/main/LINE.svg";
+export { default as ShareMessenger } from "./icon/main/Messenger.svg";
+export { default as ShareInstagram } from "./icon/main/Instagram.svg";
+export { default as ShareWeChat } from "./icon/main/WeChat.svg";
+export { default as ShareCopyLink } from "./icon/main/CopyLink.svg";
+export { default as ShareSMS } from "./icon/main/SMS.svg";
+export { default as ShareEmail } from "./icon/main/Email.svg";
+export { default as ShareMoreInfo } from "./icon/main/MoreInfo.svg";
+export { default as ShareFB } from "./icon/main/FB.svg";
+export { default as ShareYoutube } from "./icon/main/share-youtube.svg";
+export { default as ShareRedBook } from "./icon/main/share-xiao-hung-book.svg";
+export { default as ShareLinkedIn } from "./icon/main/share-linkedin.svg";
+export { default as ShareLineAt } from "./icon/main/share-line@.svg";
+export { default as ShareTwitter } from "./icon/main/share-twitter.svg";
+export { default as ShareWhatsapp } from "./icon/main/share-whatsapp.svg";
+export { default as ShareTelegram } from "./icon/main/share-telegram.svg";
+export { default as ShareTiktok } from "./icon/main/share-tiktok.svg";
+export { default as ShareThreads } from "./icon/main/share-threads.svg";
+export { default as SelectArrows } from "./icon/main/select-arrows.svg";
+export { default as LocationPin } from "./icon/main/location-pin.svg";
+
+export { default as Facebook } from "./icon/footer/facebook.svg";
+export { default as Instagram } from "./icon/footer/instagram.svg";
+export { default as Youtube } from "./icon/footer/youtube.svg";
+export { default as Tictok } from "./icon/footer/tictok.svg";
+export { default as ArrowUp } from "./icon/footer/arrow-up.svg";
+export { default as FooterLinkOne } from "./icon/footer/link-1.svg";
+export { default as FooterLinkTwo } from "./icon/footer/link-2.svg";
+export { default as FooterLinkThree } from "./icon/footer/link-3.svg";
+export { default as FooterLinkFour } from "./icon/footer/link-4.svg";
+export { default as FooterLinkFive } from "./icon/footer/link-5.svg";
+export { default as FooterLinkSix } from "./icon/footer/link-6.svg";
+export { default as FooterLinkSeven } from "./icon/footer/link-7.svg";
+export { default as Minus } from "./icon/footer/minus.svg";
+export { default as Plus } from "./icon/footer/plus.svg";
+
+export { default as ChatAvatar } from "./icon/chat/avatar.svg";
+export { default as CloseWhite } from "./icon/close-white.svg";
+
+export { default as Triangle } from "./icon/article/triangle.svg";
+export { default as BookBlue } from "./icon/article/book-blue.svg";
+export { default as BookGray } from "./icon/article/book-gray.svg";
+export { default as Download } from "./icon/article/download.svg";
+export { default as Video } from "./icon/article/video.svg";
+
+export { default as SocialFacebook } from "./icon/social/facebook.svg";
+export { default as SocialLine } from "./icon/social/line.svg";

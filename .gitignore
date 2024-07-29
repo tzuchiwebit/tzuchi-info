@@ -34,3 +34,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+
+/public/atom.xml
+/public/rss.xml
+
+log/
+src/__app/

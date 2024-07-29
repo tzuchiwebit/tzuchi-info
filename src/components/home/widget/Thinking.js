@@ -1,0 +1,62 @@
+'use client'
+import styled from "styled-components"
+import screens from "@/shared/styles/screens"
+import color from "@/shared/styles/color"
+import dayjs from "dayjs"
+import Icon from "@/shared/Icon"
+import Image from "next/image"
+import { OuterContainer } from "./container"
+
+export default function Thinking() {
+
+    return <OuterContainer>
+        <InnerContainer>
+            <div className="px-2 laptop:justify-end justify-center flex flex-none laptop:max-w-[50%] desktop:max-w-full ">
+                <Image
+                    src="https://picsum.photos/id/206/300/300"
+                    alt=""
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                    className="aspect-square w-full laptop:h-auto laptop:w-full max-w-[150px] desktop:max-w-[165px]"
+                // style={{ width: '100%' }}
+                />
+            </div>
+            <div className="flex flex-col font-semibold leading-7 tracking-normal p-2 text-xl laptop:justify-start desktop:max-w-full shrink min-h-[90px]">
+                宗門學思
+                <div className="pt-0 justify-center laptop:justify-start line-clamp-2 text-gray-gray2 w-full shrink text-base">
+                    慈濟思想論述學術研究
+                </div>
+            </div>
+
+        </InnerContainer>
+        <div className="bg-gray-gray8 p-1.5 w-full">
+            <span className="cursor-pointer font-medium flex items-center justify-end text-lg text-primary-blue3 hover:text-primary-blue2">
+                更多 <Icon.RightArrow2 width="18px" />
+            </span>
+        </div>
+    </OuterContainer>
+}
+
+
+const InnerContainer = styled.div`
+    border: 4px solid ${color.gray.gray8};
+    display: flex;
+    flex-direction: column;
+    color: ${color.primary.blue1};
+    padding-top: 8px;
+    width: 100%;
+    height: 260px;
+    @media(min-width: ${screens.laptop}) {   
+        padding-top: 10px;
+        padding-bottom: 10px;
+        flex-direction: row;
+        height: 135px;
+    }
+    @media(min-width: ${screens.desktop}) {   
+        padding-top: 10px;
+        padding-bottom: 0;
+        flex-direction: column;
+        height: fit-content;
+    }
+`

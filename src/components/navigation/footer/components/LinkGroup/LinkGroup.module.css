@@ -1,0 +1,35 @@
+.horizon_line {
+  @apply w-full border-b border-solid border-primary-blue1 mt-2 mb-3;
+}
+
+.title {
+  @apply font-bold text-xl text-primary-blue1;
+}
+
+.subtitle {
+  @apply cursor-pointer text-gray-text font-bold;
+}
+
+.description {
+  @apply text-gray-text;
+}
+
+.link_wrapper {
+  @apply flex flex-col gap-y-2;
+}
+
+.animate_fadein {
+	animation: fadein 0.5s ease forwards;
+	visibility: hidden;
+  animation-delay: 0.3s;
+}
+
+@keyframes fadein{
+	0% {
+    opacity: 0;
+  }
+	100% {
+    opacity: 1;
+    visibility: initial;
+  }
+}
