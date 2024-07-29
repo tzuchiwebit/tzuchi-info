@@ -35,8 +35,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-yarn.lock
-package-lock.json
 
 /public/atom.xml
 /public/rss.xml
