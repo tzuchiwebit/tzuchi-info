@@ -36,35 +36,36 @@ export default function Reminder() {
     }, [pageData])
 
     return <OuterContainer>
-        <InnerContainer>
-            <div className="flex px-1 justify-center">
-                {   reminderItem?.id ?
-                    <div className="aspect-square relative laptop:w-[164px] w-[146px]">
-                        <Image
-                            src={reminderItem.image ? reminderItem.image : DefaultImage}
-                            alt={reminderItem.imageAlt}
-                            fill
-                            width={0}
-                            height={0}
-                            sizes="100vw"
-                            style={{ objectFit: "contain" }}
-                        />
-                    </div> :
-                    <Skeleton className="aspect-square" />
-                }
-            </div>
-            <div
-                className="flex flex-col font-semibold leading-7 tracking-normal px-2 pt-1 text-xl laptop:justify-start shrink min-h-[90px] cursor-pointer"
-                onClick={() => {
+        <InnerContainer className="cursor-pointer" onClick={() => {
                     if (reminderItem.id) {
                         router.push(`${routes.ARITCLE}/${reminderItem.id}`);
                         addHits(reminderItem.id);
                     }
                 }}>
+            <div className="flex px-1 justify-center">
+              <div className="aspect-square relative laptop:w-[164px] w-[146px]">
+                {
+                  loading ?
+                  <Skeleton className="aspect-square p-2" />:
+                  <Image
+                      src={reminderItem.image ? reminderItem.image : DefaultImage}
+                      alt={reminderItem.imageAlt}
+                      fill
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      style={{ objectFit: "contain" }}
+                  />
+                }
+              </div>
+            </div>
+            <div
+                className="flex flex-col font-semibold leading-7 tracking-normal px-2 pt-1 text-xl laptop:justify-start shrink min-h-[90px] cursor-pointer"
+            >
                 證嚴上人<br />
                 每日一叮嚀
                 <div className="pt-0 justify-center laptop:justify-start line-clamp-1 text-gray-gray2 w-full shrink text-base">
-                    {loading ? <Skeleton /> : reminderItem.title}
+                    {reminderItem.title}
                 </div>
             </div>
 
