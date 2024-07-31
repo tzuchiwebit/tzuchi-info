@@ -34,10 +34,16 @@ export default function Morning() {
   }, [pageData])
 
     return <OuterContainer>
-      <InnerContainer>
+      <InnerContainer className="cursor-pointer">
         <div className="flex px-1 justify-center">
-          {morningData?.id ?
-            <div className="aspect-square relative laptop:w-[164px] w-[146px]">
+            <div className="aspect-square relative laptop:w-[164px] w-[146px]" onClick={() => {
+                  if (morningData.id) {
+                      router.push(`${routes.ARITCLE}/${morningData.id}`);
+                      addHits(morningData.id);
+                  }
+              }}>
+              {loading ?
+              <Skeleton className="aspect-square p-2" />:
               <Image
                 src={morningData.image ? morningData.image : DefaultImage}
                 alt={morningData.imageAlt}
@@ -46,9 +52,8 @@ export default function Morning() {
                 objectFit='cover'
                 className="laptop:w-[164px] w-[146px]"
               />
-            </div> :
-            <Skeleton/>
-          }
+            }
+            </div>
         </div>
         <div className="flex flex-col px-2 pt-1 text-xl laptop:justify-start shrink min-h-[90px]">
           <div className="flex font-semibold leading-7 tracking-normal justify-between items-center tablet:flex-col tablet:items-start desktop:flex-row">

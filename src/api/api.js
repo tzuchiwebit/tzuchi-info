@@ -80,7 +80,7 @@ Email：${email}
 const getBookSuggest = async () => {
   try {
 
-    const res = await axios.get(EBOOK_ENDPOINT)
+    const res = await axios.get(EBOOK_ENDPOINT + '?cat_id=5&limit=4')
     return res?.data
 
   } catch (err) {
@@ -91,7 +91,7 @@ const getBookSuggest = async () => {
 const getWeeklyReport = async () => {
   try {
 
-    const res = await axios.get(EBOOK_ENDPOINT + '?cat_id=4')
+    const res = await axios.get(EBOOK_ENDPOINT + '?cat_id=4&limit=1')
     return res?.data
 
   } catch (err) {

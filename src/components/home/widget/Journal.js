@@ -26,7 +26,7 @@ export default function Journal() {
     }
 
     return <OuterContainer>
-        <InnerContainer className="z-10 cursor-pointer" onClick={() => window.open(weeklyReportItem.base_book, '_blank', 'noopener=yes')}>
+        <InnerContainer className="cursor-pointer" onClick={() => window.open(weeklyReportItem.base_book, '_blank', 'noopener=yes')}>
             <div className="flex px-1 justify-center">
               <div className="aspect-square relative laptop:w-[164px] w-[146px]">
                 {
@@ -100,5 +100,4 @@ const SubscribeTag = styled.button`
     align-items: center;
     width: 60px;
     height: 25px;
-    z-index: 20;
 `

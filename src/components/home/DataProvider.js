@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { createContext } from 'react';
-import { getArticlesByCategory, getUserById } from "@/api/joomlaApi";
+import { getArticlesByCategory, getUserById, getBookJingsiArticles } from "@/api/joomlaApi";
 import { getBookSuggest, getBookJingsi, getWeeklyReport } from "@/api/api";
 import _ from 'lodash'
 
@@ -32,10 +32,10 @@ const requiredPageData = [
     name: '社區故事',
     count: 3,
   },
-  {
-    name: '好書推薦',
-    count: 4,
-  },
+  // {
+  //   name: '好書推薦',
+  //   count: 4,
+  // },
   {
     name: '專欄文章-領航慈濟',
     count: 2,
@@ -135,7 +135,7 @@ export default function DataProvider({ children }) {
     setLoadingJingsi(true);
     try {
       const res = await getBookJingsi();
-
+      // const res = await getBookJingsiArticles();
       setJingsiBooks(res);
 
     } catch (err) {

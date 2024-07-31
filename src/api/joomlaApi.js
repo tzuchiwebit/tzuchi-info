@@ -36,6 +36,25 @@ const getUserById = async (id) => {
   }
 }
 
+const getBookJingsiArticles = async (categoryId = 19, limit = 10) => {
+  console.log('aaaaaaaa', limit)
+  try {
+    const res = await axios.get(`${API_ENDPOINT}/content/articles`, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      },
+      params: {
+        'page[limit]': limit,
+        'filter[state]': 1,
+        'filter[category]': categoryId,
+      },
+    })
+    return res?.data?.data
+  } catch (err) {
+    throw err
+  }
+}
+
 const getRecommandArticles = async (categoryId, limit = 3) => {
   // 推薦閱讀：抓取 相同分類、點擊最高的3篇文章
   try {
@@ -56,6 +75,7 @@ const getRecommandArticles = async (categoryId, limit = 3) => {
     throw err
   }
 }
+
 const getExtendArticles = async (tags = [], limit = 3) => {
   // 抓取 相同文章標籤(or)、點擊最高的3篇文章
   try {
@@ -179,4 +199,5 @@ export {
   getArticlesByKeyword,
   getUserById,
   addErrata,
+  getBookJingsiArticles,
 }
