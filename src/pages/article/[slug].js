@@ -170,9 +170,9 @@ const Article = () => {
         {
           articleData?.relationships?.category?.data?.id === '17' &&
             <div className={classnames('pl-2 border-solid border-primary-blue3 my-4', getActivityInfoBarWidth(selectedFontSize))} style={{fontSize: selectedFontSize+'px'}}>
-              活動開始：2024-06-02  08:55 <br />
-              活動結束：2024-06-03  08:55  <br />
-              <span className="flex gap-2">活動地點：地點點位名稱 <Icon.LocationPin style={{ width: selectedFontSize+'px', color: color.primary.blue2, cursor: 'pointer' }} /></span>
+              活動開始：{dayjs(articleData?.attributes?.['act-start']).format('YYYY-MM-DD HH:mm')} <br />
+              活動結束：{dayjs(articleData?.attributes?.['act-end']).format('YYYY-MM-DD HH:mm')}  <br />
+              <span className="flex gap-2">活動地點：{articleData?.attributes?.['act-place']} <Icon.LocationPin style={{ width: selectedFontSize+'px', color: color.primary.blue2 }} /></span>
             </div>
         }
         <div className={styles.content} id={'content-holder'} style={{ wordBreak: 'break-all', fontSize: selectedFontSize+'px' }} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
@@ -293,7 +293,6 @@ const MainContent = () => {
 
 export async function getServerSideProps(context) {
   const slug = context.params.slug
-  console.log('slug', slug)
   // FIXME: unable to verify the first certificate
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
   const article = (await getArticleById(slug)).data
