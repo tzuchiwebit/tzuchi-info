@@ -88,10 +88,10 @@ const getBookSuggest = async () => {
   }
 }
 
-const getWeeklyReport = async () => {
+const getWeeklyReport = async (limit = 0, offset = 0) => {
   try {
 
-    const res = await axios.get(EBOOK_ENDPOINT + '?cat_id=4&limit=1')
+    const res = await axios.get(EBOOK_ENDPOINT + `?cat_id=4&limit=${limit}&offset=${offset}`)
     return res?.data
 
   } catch (err) {
