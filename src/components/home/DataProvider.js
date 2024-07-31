@@ -121,7 +121,7 @@ export default function DataProvider({ children }) {
   const getWeeklyReports = async () => {
     setLoadingWeeklyReports(true);
     try {
-      const res = await getWeeklyReport();
+      const res = await getWeeklyReport(1, 0);
       setWeeklyReports(res);
 
     } catch (err) {

@@ -89,7 +89,7 @@ export default function Page() {
       <div className="tablet:mt-6 mt-4 grid desktop:grid-cols-4 laptop:grid-cols-3 grid-cols-2 tablet:gap-x-5 gap-x-4 tablet:gap-y-6 gap-y-4">
         {
           listData.map((item, index) => (
-            <ReportCard isHappy={index === 0} key={index} data={item}></ReportCard>
+            <ReportCard isHappy={index === 0 && currentPage === 1} key={index} data={item}></ReportCard>
           ))
         }
       </div>
