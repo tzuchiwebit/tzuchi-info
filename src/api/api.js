@@ -88,12 +88,21 @@ const getBookSuggest = async () => {
   }
 }
 
+const getWeeklyReport = async () => {
+  try {
+
+    const res = await axios.get(EBOOK_ENDPOINT + '?cat_id=4')
+    return res?.data
+
+  } catch (err) {
+    throw err
+  }
+}
+
 const getBookJingsi = async () => {
   try {
 
     const res = await axios.get(JINGSI_ENDPOINT)
-    console.log(`res`)
-    console.log(res)
     return res?.data
 
   } catch (err) {
@@ -106,6 +115,7 @@ export {
   addShares,
   addLikes,
   getBookSuggest,
+  getWeeklyReport,
   getBookJingsi,
   pushNotify,
 }

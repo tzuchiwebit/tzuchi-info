@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { createContext } from 'react';
 import { getArticlesByCategory, getUserById } from "@/api/joomlaApi";
-import { getBookSuggest, getBookJingsi } from "@/api/api";
+import { getBookSuggest, getBookJingsi, getWeeklyReport } from "@/api/api";
 import _ from 'lodash'
 
 export const DataContext = createContext(null);
@@ -52,9 +52,11 @@ export default function DataProvider({ children }) {
 
   const [pageData, setPageData] = useState([]);
   const [suggestBooks, setSuggestBooks] = useState([]);
+  const [weeklyReports, setWeeklyReports] = useState([]);
   const [jingsiBooks, setJingsiBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingBooks, setLoadingBooks] = useState(true);
+  const [loadingWeeklyReports, setLoadingWeeklyReports] = useState(true);
   const [loadingJingsi, setLoadingJingsi] = useState(true);
 
   const getJournal = async () => {
@@ -116,6 +118,19 @@ export default function DataProvider({ children }) {
     }
   }
 
+  const getWeeklyReports = async () => {
+    setLoadingWeeklyReports(true);
+    try {
+      const res = await getWeeklyReport();
+      setWeeklyReports(res);
+
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingWeeklyReports(false);
+    }
+  }
+
   const getBooksJingsi = async () => {
     setLoadingJingsi(true);
     try {
@@ -133,12 +148,13 @@ export default function DataProvider({ children }) {
   useEffect(() => {
     getJournal();
     getBooksSuggested()
+    getWeeklyReports()
     getBooksJingsi()
   }, [])
 
 
   return (
-    <DataContext.Provider value={{ pageData, loading, loadingBooks, suggestBooks, loadingJingsi, jingsiBooks }}>
+    <DataContext.Provider value={{ pageData, loading, loadingBooks, suggestBooks, loadingJingsi, jingsiBooks, weeklyReports, loadingWeeklyReports }}>
       {children}
     </DataContext.Provider>
   );
