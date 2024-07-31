@@ -99,7 +99,9 @@ export default function SiteNews() {
     const { data: pageData, loading } = useRequest(() => getArticlesByCategory({
         label_name: '全球志業',
         limit: 3,
-        tag: selctedTagId
+        tag: selctedTagId,
+        ordering: 'created',
+        sort: 'desc',
     }), {
         refreshDeps: [selctedTagId]
     })
