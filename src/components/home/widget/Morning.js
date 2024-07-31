@@ -34,14 +34,14 @@ export default function Morning() {
   }, [pageData])
 
     return <OuterContainer>
-      <InnerContainer className="cursor-pointer">
-        <div className="flex px-1 justify-center">
-            <div className="aspect-square relative laptop:w-[164px] w-[146px]" onClick={() => {
+      <InnerContainer className="cursor-pointer" onClick={() => {
                   if (morningData.id) {
                       router.push(`${routes.ARITCLE}/${morningData.id}`);
                       addHits(morningData.id);
                   }
               }}>
+        <div className="flex px-1 justify-center">
+            <div className="aspect-square relative laptop:w-[164px] w-[146px]" >
               {loading ?
               <Skeleton className="aspect-square p-2" />:
               <Image
@@ -61,12 +61,7 @@ export default function Morning() {
           </div>
           <div
               className="pb-1 line-clamp-2 text-gray-gray2 w-full shrink text-base font-medium border-b border-solid border-gray-gray8 cursor-pointer"
-              onClick={() => {
-                  if (morningData.id) {
-                      router.push(`${routes.ARITCLE}/${morningData.id}`);
-                      addHits(morningData.id);
-                  }
-              }}>
+            >
               {loading ? <Skeleton /> : morningData.title}
           </div>
           <div className="pt-0.5 justify-center laptop:justify-start line-clamp-2 text-gray-gray4 text-sm font-medium w-full shrink">

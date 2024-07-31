@@ -1,5 +1,5 @@
 "use client"
-import { useState } from "react"
+import { useState, useMemo, useEffect} from "react"
 import Container from "@/shared/layout/Container"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
@@ -7,6 +7,7 @@ import BannerImage from '@/asset/image/weekly-report-banner.jpeg'
 import Image from 'next/image'
 import Pagination from "@/shared/pagination/Pagination"
 import { ReportCard, SocialBar } from "@/components/weeklyReport"
+import { getWeeklyReport } from "@/api/api";
 
 const Breadcrumb = ({className}) => {
   return (
@@ -19,13 +20,9 @@ const Breadcrumb = ({className}) => {
               link: '/'
             },
             {
-              label: '麵包屑',
+              label: '慈濟週報',
               link: ''
-            },
-            {
-              label: '麵包屑',
-              link: ''
-            },
+            }
           ]} />
       </div>
     </div>
@@ -33,7 +30,21 @@ const Breadcrumb = ({className}) => {
 }
 
 export default function Page() {
+  const [listData, setListData] = useState([])
+  const [totalPage, setTotalPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const pageOffset = useMemo(() => (currentPage - 1) * 9, [currentPage]);
+
+  const fetchData = async () => {
+    const res = await getWeeklyReport(10, 0);
+    setListData(res)
+    console.log('rrrrr', res)
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
   return <>
     <Container>
       <FloatScrollTopButton />
@@ -76,20 +87,16 @@ export default function Page() {
 
       {/* card list */}
       <div className="tablet:mt-6 mt-4 grid desktop:grid-cols-4 laptop:grid-cols-3 grid-cols-2 tablet:gap-x-5 gap-x-4 tablet:gap-y-6 gap-y-4">
-        <ReportCard isHappy={true}></ReportCard>
-        <ReportCard isHappy={true}></ReportCard>
-        <ReportCard></ReportCard>
-        <ReportCard></ReportCard>
-        <ReportCard></ReportCard>
-        <ReportCard></ReportCard>
-        <ReportCard></ReportCard>
-        <ReportCard></ReportCard>
-        <ReportCard></ReportCard>
+        {
+          listData.map((item, index) => (
+            <ReportCard isHappy={index === 0} key={index} data={item}></ReportCard>
+          ))
+        }
       </div>
 
       {/* pagination */}
       <div className="mt-10">
-        <Pagination currentPage={currentPage} totalPage={5} onPageChange={setCurrentPage} />
+        <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
       </div>
     </Container>
     <SocialBar isMobileType={true}></SocialBar>
