@@ -20,30 +20,6 @@ export default function Widgets({ ...props }) {
     }
 
     return <div className={classNames(props.className, "w-full")} style={{ flex: 0 }} >
-        {/* <div className="w-full border-b border-solid border-gray-gray7 justify-between pb-2 mb-2 hidden laptop:flex desktop:hidden">
-            <div className="font-bold text-lg text-primary-blue1">
-                {open ? '' : '志工早會 • 證嚴上人每日一叮嚀 • 慈濟週報'}
-            </div>
-            <div
-                className="font-medium text-lg text-primary-blue1 flex gap-1 cursor-pointer"
-                onClick={toggle}>
-                {open ? '收合' : '展開'} <Icon.DownArrow style={{ width: 20, transform: open ? 'rotate(180deg)' : 'rotate(0)', transition: 'all .3s' }} />
-            </div>
-        </div>
-        <Transition
-            show={open}
-            className="transition-all duration-300 overflow-hidden hidden laptop:flex desktop:hidden"
-            enterFrom="transform -tranlateY-50 opacity-0 max-h-0"
-            enterTo="transform tranlateY-0 opacity-100 max-h-[1000px]"
-            leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
-            leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
-        >
-            <Container>
-                <Calendar />
-                <Reminder />
-                <Journel />
-            </Container>
-        </Transition> */}
         <div className="w-full flex flex-col">
             <Calendar />
             <Container>

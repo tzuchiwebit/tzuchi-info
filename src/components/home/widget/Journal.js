@@ -7,38 +7,49 @@ import Image from "next/image"
 import { OuterContainer } from "./container"
 import { useRouter } from 'next/navigation'
 import routes from "@/config/routes"
-import Skeleton from "react-loading-skeleton"
+import useDataProvider from "../useDataProvider"
 import DefaultImage from '@/asset/image/default-article-intro-square.png'
+import { useMemo } from "react"
+import Skeleton from "react-loading-skeleton";
 
 export default function Journal() {
+  const router = useRouter();
+  const { weeklyReports, loadingWeeklyReports } = useDataProvider();
 
-    const router = useRouter();
+    const weeklyReportItem = useMemo(() => {
+      return weeklyReports?.[0] || {}
+    }, [weeklyReports])
 
-    const reminderItem = {};
-
+    const openSubscribeTab = (e) => {
+      e.stopPropagation()
+      window.open('https://docs.google.com/forms/d/e/1FAIpQLSeRATEdx4-mOyykXIptMyXvbsJvw7XwzDWHWnqG1cMQTexZRA/viewform')
+    }
 
     return <OuterContainer>
-        <InnerContainer>
+        <InnerContainer className="z-10 cursor-pointer" onClick={() => window.open(weeklyReportItem.base_book, '_blank', 'noopener=yes')}>
             <div className="flex px-1 justify-center">
               <div className="aspect-square relative laptop:w-[164px] w-[146px]">
+                {
+                  loadingWeeklyReports ?
+                  <Skeleton className="aspect-square p-2" />:
                   <Image
-                      src={reminderItem.image ? reminderItem.image: DefaultImage}
-                      alt={reminderItem.imageAlt}
-                      width={0}
-                      height={0}
-                      sizes="100vw"
-                      layout='fill'
-                      objectFit='cover'
-                      className="laptop:w-[164px] w-[146px]"
+                  src={weeklyReportItem.cover_image ? weeklyReportItem.cover_image: DefaultImage}
+                  alt={weeklyReportItem.title}
+                  fill
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{ objectFit: "contain" }}
                   />
+                }
               </div>
             </div>
             <div className="flex flex-col px-2 pt-1 text-xl laptop:justify-start shrink min-h-[90px]">
                 <div className="flex font-semibold leading-7 tracking-normal justify-between items-center tablet:flex-col tablet:items-start desktop:flex-row">
-                    慈濟週報 <SubscribeTag onClick={()=> window.open('https://docs.google.com/forms/d/e/1FAIpQLSeRATEdx4-mOyykXIptMyXvbsJvw7XwzDWHWnqG1cMQTexZRA/viewform')}>訂閱 <Icon.Bell style={{ width: 13 }} /></SubscribeTag>
+                    慈濟週報 <SubscribeTag onClick={openSubscribeTab}>訂閱 <Icon.Bell style={{ width: 13 }} /></SubscribeTag>
                 </div>
-                <div className="pt-1 justify-center laptop:justify-start line-clamp-2 text-gray-gray2 w-full shrink text-base">
-                    慈濟一週重點訊息
+                <div className="pt-1 justify-center laptop:justify-start line-clamp-2 text-gray-gray2 w-full shrink text-base cursor-pointer">
+                    {weeklyReportItem.title}
                 </div>
             </div>
 
@@ -89,4 +100,5 @@ const SubscribeTag = styled.button`
     align-items: center;
     width: 60px;
     height: 25px;
+    z-index: 20;
 `
