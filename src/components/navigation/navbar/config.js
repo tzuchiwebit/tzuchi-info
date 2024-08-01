@@ -5,11 +5,15 @@ export const HeaderLinkItems = [
     },
     {
         label: '社區網',
-        link: 'https://comm2.tzuchi-org.tw/',
+        link: 'https://tw.tzuchi.org/community/',
     },
     {
         label: '捐款網',
         link: 'https://tcit3.tzuchi.net/OCCD/',
+    },
+    {
+      label: '舊資訊網',
+      link: 'https://tw.tzuchi.org/',
     },
     // {
     //     label: 'RSS',
