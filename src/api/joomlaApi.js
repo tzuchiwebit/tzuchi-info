@@ -36,7 +36,7 @@ const getUserById = async (id) => {
   }
 }
 
-const getBookJingsiArticles = async (categoryId = 19, limit = 10) => {
+const getBookJingsiArticles = async (categoryId = 19, limit = 10, ordering = 'created', sort = 'desc') => {
   try {
     const res = await axios.get(`${API_ENDPOINT}/content/articles`, {
       headers: {
@@ -46,6 +46,8 @@ const getBookJingsiArticles = async (categoryId = 19, limit = 10) => {
         'page[limit]': limit,
         'filter[state]': 1,
         'filter[category]': categoryId,
+        'page[ordering]': ordering,
+        'list[direction]': sort,
       },
     })
     return res?.data?.data
@@ -98,7 +100,7 @@ const getExtendArticles = async (tags = [], limit = 3) => {
   }
 }
 
-const getArticlesByCategory = async ({ label_name = '志工早會', limit = 10, offset = 0, state = 1, tag = '', ordering, sort }) => {
+const getArticlesByCategory = async ({ label_name = '志工早會', limit = 10, offset = 0, state = 1, tag = '', ordering = 'created', sort = 'desc' }) => {
   const _t = label_name.split('-')[0];
   try {
     const targetCategory = _.find(joomlaContentCategory, (i) => i.label_name.indexOf(_t) > -1);
@@ -131,7 +133,7 @@ const getArticlesByCategory = async ({ label_name = '志工早會', limit = 10, 
   }
 }
 
-const getArticlesByKeyword = async ({ keyword = '', limit = 12, offset = 0, state = 1, sorting = 'desc'}) => {
+const getArticlesByKeyword = async ({ keyword = '', limit = 12, offset = 0, state = 1, sorting = 'desc', ordering = 'created'}) => {
 
   try {
     // 為了讓button disable style明顯，故意做延遲
@@ -139,6 +141,7 @@ const getArticlesByKeyword = async ({ keyword = '', limit = 12, offset = 0, stat
     const params = {
       'filter[search]': `content:${keyword}`,
       'filter[state]': state,
+      'list[ordering]': ordering,
       'list[direction]': sorting,
       'page[limit]': limit,
       'page[offset]': offset,
