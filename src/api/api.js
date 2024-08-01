@@ -2,6 +2,7 @@ import axios from 'axios'
 import _ from 'lodash'
 const API_ENDPOINT = `https://webtest.tzuchi-org.tw/api`
 const EBOOK_ENDPOINT = `https://webtest.tzuchi-org.tw/batch_images_upload/tzuchi_library/api/find.php`
+const EBOOK_ENDPOINT_NEW = `https://webtest.tzuchi-org.tw/batch_images_upload/tzuchi_library/api/findnew.php`
 const JINGSI_ENDPOINT = `${API_ENDPOINT}/book.php`
 
 const addHits = async (id) => {
@@ -101,6 +102,19 @@ const getWeeklyReport = async ({limit, offset}) => {
   }
 }
 
+const getWeeklyReportNew = async ({limit, offset}) => {
+  try {
+    let params = '?cat_id=4'
+    if (limit) params = params + `&limit=${limit}`
+    if (offset) params = params + `&offset=${offset}`
+    const res = await axios.get(EBOOK_ENDPOINT_NEW + params)
+    return res?.data
+
+  } catch (err) {
+    throw err
+  }
+}
+
 const getBookJingsi = async () => {
   try {
 
@@ -118,6 +132,7 @@ export {
   addLikes,
   getBookSuggest,
   getWeeklyReport,
+  getWeeklyReportNew,
   getBookJingsi,
   pushNotify,
 }
