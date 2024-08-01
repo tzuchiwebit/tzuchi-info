@@ -51,7 +51,7 @@ const DropDownMenu = () => (<Menu as="div" className="relative inline-block text
                       'block px-4 py-2 font-semibold text-primary-blue1 hover:bg-complementary-blue2'
                     )}
                   >
-                    {item.label}11
+                    {item.label}
                   </a>
                 )}
               </Menu.Item>
