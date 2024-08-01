@@ -8,6 +8,7 @@ import Image from 'next/image'
 import Pagination from "@/shared/pagination/Pagination"
 import { ReportCard, SocialBar } from "@/components/weeklyReport"
 import { getWeeklyReport } from "@/api/api";
+import _ from 'lodash'
 
 const Breadcrumb = ({className}) => {
   return (
@@ -30,16 +31,25 @@ const Breadcrumb = ({className}) => {
 }
 
 export default function Page() {
+  const pageLimit = 10
   const [listData, setListData] = useState([])
-  const [totalPage, setTotalPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageOffset = useMemo(() => (currentPage - 1) * 9, [currentPage]);
+  const totalPage = useMemo(() => {
+    return (listData.length && listData.length > pageLimit) ? Math.ceil((listData.length) / pageLimit) : 1
+  }, [listData])
 
   const fetchData = async () => {
-    const res = await getWeeklyReport(10, 0);
+    const res = await getWeeklyReport({limit: 100});
     setListData(res)
-    console.log('rrrrr', res)
   }
+
+  const pageList = useMemo(() => {
+    if (currentPage === 1) {
+      return _.slice(listData, 0, pageLimit)
+    }
+    return _.slice(listData, (currentPage - 1) * pageLimit, currentPage * pageLimit)
+
+  }, [listData, currentPage])
 
   useEffect(() => {
     fetchData()
@@ -88,7 +98,7 @@ export default function Page() {
       {/* card list */}
       <div className="tablet:mt-6 mt-4 grid desktop:grid-cols-4 laptop:grid-cols-3 grid-cols-2 tablet:gap-x-5 gap-x-4 tablet:gap-y-6 gap-y-4">
         {
-          listData.map((item, index) => (
+          pageList.map((item, index) => (
             <ReportCard isHappy={index === 0 && currentPage === 1} key={index} data={item}></ReportCard>
           ))
         }

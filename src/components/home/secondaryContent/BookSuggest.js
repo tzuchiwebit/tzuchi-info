@@ -90,6 +90,8 @@ const NewItem = ({ item = {}, loading = false }) => {
       window.open(`${ebookEndpoint}/book/${item.id}`, '_blank');
     } else if (item?.link) {
       window.open(`${jingsiEndpoint}${item.link}`, '_blank');
+    } else if (item?.url) {
+      window.open(item.url, '_blank');
     }
   }
 
@@ -223,12 +225,19 @@ export default function BookSuggest() {
   }, [booksData])
 
   const sliderJingsiData = useMemo(() => {
-    if (jingsiData.length === 1) {
-      return Array(4).fill(jingsiData[0])
-    } else if (jingsiData.length === 2) {
-      return _.concat(jingsiData, jingsiData);
+    const formatedData = jingsiData.map((item) => {
+      return {
+        title: item?.attributes?.title,
+        url: item?.attributes?.images?.image_intro_alt,
+        cover_image: item?.attributes?.images?.image_intro,
+      }
+    })
+    if (formatedData.length === 1) {
+      return Array(4).fill(formatedData[0])
+    } else if (formatedData.length === 2) {
+      return _.concat(formatedData, formatedData);
     }
-    return jingsiData.slice(0, 4)
+    return formatedData.slice(0, 4)
   }, [jingsiData])
 
   useEffect(() => {

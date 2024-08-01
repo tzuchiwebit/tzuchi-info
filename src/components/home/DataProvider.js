@@ -121,7 +121,7 @@ export default function DataProvider({ children }) {
   const getWeeklyReports = async () => {
     setLoadingWeeklyReports(true);
     try {
-      const res = await getWeeklyReport(1, 0);
+      const res = await getWeeklyReport({limit: 1});
       setWeeklyReports(res);
 
     } catch (err) {
@@ -134,8 +134,8 @@ export default function DataProvider({ children }) {
   const getBooksJingsi = async () => {
     setLoadingJingsi(true);
     try {
-      const res = await getBookJingsi();
-      // const res = await getBookJingsiArticles();
+      // const res = await getBookJingsi();
+      const res = await getBookJingsiArticles();
       setJingsiBooks(res);
 
     } catch (err) {
