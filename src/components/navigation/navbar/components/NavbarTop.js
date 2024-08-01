@@ -51,7 +51,7 @@ const DropDownMenu = () => (<Menu as="div" className="relative inline-block text
                       'block px-4 py-2 font-semibold text-primary-blue1 hover:bg-complementary-blue2'
                     )}
                   >
-                    {item.label}
+                    {item.label}11
                   </a>
                 )}
               </Menu.Item>
@@ -162,7 +162,7 @@ export default function NavbarTop() {
                           index !== 0 ? 'border-l' : '',
                           'border-gray-text border-solid h-[16px]'
                         )}></div>
-                        <a href={item.link} className="text-gray-text px-2 hover:font-medium whitespace-nowrap" target='_blank'>
+                        <a href={item.link} className="text-gray-text laptop:px-2 px-1 hover:font-medium whitespace-nowrap" target='_blank'>
                           {item.label}
                         </a>
                       </Fragment>
