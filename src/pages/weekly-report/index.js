@@ -7,8 +7,9 @@ import BannerImage from '@/asset/image/weekly-report-banner.jpeg'
 import Image from 'next/image'
 import Pagination from "@/shared/pagination/Pagination"
 import { ReportCard, SocialBar } from "@/components/weeklyReport"
-import { getWeeklyReport } from "@/api/api";
+import { getWeeklyReportNew } from "@/api/api";
 import _ from 'lodash'
+const { useRequest } = require('ahooks')
 
 const Breadcrumb = ({className}) => {
   return (
@@ -33,27 +34,25 @@ const Breadcrumb = ({className}) => {
 export default function Page() {
   const pageLimit = 10
   const [listData, setListData] = useState([])
+  const [totalPage, setTotalPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPage = useMemo(() => {
-    return (listData.length && listData.length > pageLimit) ? Math.ceil((listData.length) / pageLimit) : 1
-  }, [listData])
+  const pageOffset = useMemo(() => (currentPage - 1) * pageLimit, [currentPage]);
 
-  const fetchData = async () => {
-    const res = await getWeeklyReport({limit: 100});
-    setListData(res)
-  }
-
-  const pageList = useMemo(() => {
-    if (currentPage === 1) {
-      return _.slice(listData, 0, pageLimit)
+  const { data: listDataRef, loading, run } = useRequest(() => getWeeklyReportNew({ limit: pageLimit, offset: pageOffset }), {
+    refreshDeps: [pageOffset, currentPage],
+    manual: false,
+    onSuccess: async (res) => {
+      setListData(res?.results || [])
+      setTotalPage((res.total && res.total > pageLimit) ? Math.ceil((res.total) / pageLimit) : 1)
+    },
+    onError: (err) => {
+      console.error(err);
     }
-    return _.slice(listData, (currentPage - 1) * pageLimit, currentPage * pageLimit)
-
-  }, [listData, currentPage])
+  })
 
   useEffect(() => {
-    fetchData()
-  }, [])
+    run()
+  }, [run])
 
   return <>
     <Container>
@@ -98,7 +97,7 @@ export default function Page() {
       {/* card list */}
       <div className="tablet:mt-6 mt-4 grid desktop:grid-cols-4 laptop:grid-cols-3 grid-cols-2 tablet:gap-x-5 gap-x-4 tablet:gap-y-6 gap-y-4">
         {
-          pageList.map((item, index) => (
+          listData.map((item, index) => (
             <ReportCard isHappy={index === 0 && currentPage === 1} key={index} data={item}></ReportCard>
           ))
         }
@@ -106,7 +105,10 @@ export default function Page() {
 
       {/* pagination */}
       <div className="mt-10">
-        <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={setCurrentPage} />
+        <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={(index) => {
+          setCurrentPage(index);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }} />
       </div>
     </Container>
     <SocialBar isMobileType={true}></SocialBar>

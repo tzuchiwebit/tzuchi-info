@@ -37,7 +37,6 @@ const getUserById = async (id) => {
 }
 
 const getBookJingsiArticles = async (categoryId = 19, limit = 10) => {
-  console.log('aaaaaaaa', limit)
   try {
     const res = await axios.get(`${API_ENDPOINT}/content/articles`, {
       headers: {
