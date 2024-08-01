@@ -96,14 +96,14 @@ const CarouselSection = () => {
             statusFormatter={() => { }}
             renderArrowPrev={(clickHandler) => (<button
                 onClick={clickHandler}
-                className="absolute z-10 bottom-5 left-1 p-1 bg-white rounded-4xl shadow-elevation-3 cursor-pointer text-gray-gray2 hover:bg-complementary-blue2 focus:bg-complementary-blue1">
+                className="absolute z-10 bottom-5 left-1 p-1 bg-white rounded-4xl shadow-elevation-3 cursor-pointer text-gray-gray2 hover:bg-complementary-blue2 active:bg-complementary-blue1">
                 <Icon.PageArrowLeft
                     style={{ width: 24 }}
                 />
             </button>)}
             renderArrowNext={(clickHandler) => (<button
                 onClick={clickHandler}
-                className="absolute z-10 bottom-5 right-1 p-1 bg-white rounded-4xl shadow-elevation-3 cursor-pointer text-gray-gray2 hover:bg-complementary-blue2 focus:bg-complementary-blue1">
+                className="absolute z-10 bottom-5 right-1 p-1 bg-white rounded-4xl shadow-elevation-3 cursor-pointer text-gray-gray2 hover:bg-complementary-blue2 active:bg-complementary-blue1">
                 <Icon.PageArrowRight
                     style={{ width: 24 }}
                 />
