@@ -50,10 +50,6 @@ export default function Page() {
     }
   })
 
-  useEffect(() => {
-    run()
-  }, [run])
-
   return <>
     <Container>
       <FloatScrollTopButton />
