@@ -36,9 +36,9 @@ const PrimaryActivityCard = ({ item = {}, onClick = () => { } }) => {
           {item.title}
         </div>
         <div className="text-gray-gray2 pl-2 border-l-2 border-solid border-primary-blue3 my-2 font-medium">
-          活動開始：2024-06-02  08:55<br />
-          活動結束：2024-06-03  08:55 <br />
-          <span className="flex gap-2">活動地點：地點點位名稱 <Icon.LocationPin style={{ width: 16, color: color.primary.blue2, cursor: 'pointer' }} /></span>
+          活動開始：{dayjs(item?.['act-start']).format('YYYY-MM-DD HH:mm')}<br />
+          活動結束：{dayjs(item?.['act-end']).format('YYYY-MM-DD HH:mm')}<br />
+          <span className="flex gap-2">活動地點：{item?.['act-place']} <Icon.LocationPin style={{ width: 16, color: color.primary.blue2, cursor: 'pointer' }} /></span>
         </div>
         <div className="mt-1">
           <div className="text-gray-gray2 line-clamp-4">
