@@ -98,7 +98,7 @@ const YoutubeSection = () => {
                         className={classNames(
                             "relative flex justify-center items-center w-full bg-contain bg-no-repeat aspect-4/3 bg-center"
                         )}
-                        style={{ backgroundImage: `url(${youtubeData.bgImage})` }}
+                        style={{ backgroundImage: `url(${youtubeData.bgImage ? youtubeData.bgImage : ''})` }}
                         onClick={() => setOnPlay(true)}>
                         <div className="w-[60px] h-[45px] z-100 flex justify-center items-center cursor-pointer">
                             <div className="w-[30px] h-[30px] bg-white z-5 absolute" />
