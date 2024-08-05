@@ -13,6 +13,7 @@ import Skeleton from "react-loading-skeleton";
 import Image from 'next/image'
 import DefaultImage from '@/asset/image/default-article-intro-square.png'
 import useScreenSize from '@/shared/hook/useScreenSize';
+import { Linkfont } from "@/shared/styles/linkFont.js";
 
 const ebookEndpoint = `https://tzuchi-ebooks.web.app`;
 const jingsiEndpoint = `https://store.jingsi.com`;
@@ -56,7 +57,7 @@ const Item = ({ item }) => {
             <Skeleton className="aspect-square" />
         }
         <div className="pt-2 pl-2 pr-0 text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2">
-          {item?.title}
+          <Linkfont>{item?.title}</Linkfont>
         </div>
       </div>
     </div>
@@ -116,7 +117,7 @@ const NewItem = ({ item = {}, loading = false }) => {
       <div className="px-0 flex flex-col items-center pt-4 pb-2 w-full gap-y-1 gap-x-4">
         <div className="text-xl font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">
           {
-            loading ? <Skeleton /> : item?.title
+            loading ? <Skeleton /> : <Linkfont>{item?.title}</Linkfont>
           }
         </div>
       </div>

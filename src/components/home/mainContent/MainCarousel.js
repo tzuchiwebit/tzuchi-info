@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import routes from "@/config/routes";
 import { addHits } from "@/api/api";
 import dynamic from 'next/dynamic'
+import { Linkfont } from "@/shared/styles/linkFont.js";
 const LikeAndShare = dynamic(() => import('../components/LikeAndShare'), { ssr: false })
 
 function classNames(...classes) {
@@ -51,7 +52,7 @@ const Item = ({ item = {}, loading = false }) => {
                                 addHits(item.id);
                             }}>
                             {
-                                loading ? <Skeleton /> : item?.title
+                                loading ? <Skeleton /> : <Linkfont>{item?.title}</Linkfont>
                             }
                         </div>
                         <div className="hidden flex flex-row flex-none border-t border-solid border-gray-gray8 w-full justify-end pt-2 pr-5">

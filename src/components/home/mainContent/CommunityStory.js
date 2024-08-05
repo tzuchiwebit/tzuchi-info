@@ -13,6 +13,7 @@ import routes from "@/config/routes";
 import Skeleton from "react-loading-skeleton";
 import { addHits } from "@/api/api"
 import dynamic from 'next/dynamic'
+import { Linkfont } from "@/shared/styles/linkFont.js";
 const LikeAndShare = dynamic(() => import('../components/LikeAndShare'), { ssr: false })
 
 const Item = ({ item = {} }) => {
@@ -42,7 +43,7 @@ const Item = ({ item = {} }) => {
                             router.push(`${routes.ARITCLE}/${item.id}`)
                             addHits(item.id);
                         }}>
-                        {item.title}
+                        <Linkfont>{item.title}</Linkfont>
                     </div>
                     <div className="pt-2 font-md w-full text-gray-gray2 text-left line-clamp-4">
                         {item.metadesc}

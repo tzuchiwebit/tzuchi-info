@@ -1,19 +1,18 @@
 'use client'
 import Icon from "@/shared/Icon"
 import { useRouter } from "next/navigation"
-// import Image from 'next/image';
-// import AuthorIcon from '@/asset/icon/main/author.svg';
+import { Linkfont } from "@/shared/styles/linkFont.js";
 
 export default function BannerTitle({ title = "", link = false, behavior = "self" }) {
 
     const router = useRouter();
 
     const openLink = () => {
-      if (behavior === 'self') {
-        router.push(link)
-      } else if (behavior === 'blank') {
-        window.open(link, '_blank', 'noopener=yes')
-      }
+        if (behavior === 'self') {
+            router.push(link)
+        } else if (behavior === 'blank') {
+            window.open(link, '_blank', 'noopener=yes')
+        }
     }
 
     return (
@@ -24,11 +23,13 @@ export default function BannerTitle({ title = "", link = false, behavior = "self
             <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
             {
                 link ? (<div className="flex-0 font-medium justify-end items-end text-lg text-primary-blue3">
-                    <div
-                        onClick={openLink}
-                        className="cursor-pointer flex flex-row whitespace-nowrap">
-                        更多<Icon.RightArrow2 width={20} />
-                    </div>
+                    <Linkfont>
+                        <div
+                            onClick={openLink}
+                            className="cursor-pointer flex flex-row whitespace-nowrap">
+                            更多<Icon.RightArrow2 width={20} />
+                        </div>
+                    </Linkfont>
                 </div>) : <></>
             }
 

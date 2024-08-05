@@ -15,6 +15,7 @@ import { useRouter } from "next/router";
 import routes from "@/config/routes";
 import axios from 'axios';
 import classNames from "classnames";
+import { Linkfont } from "@/shared/styles/linkFont.js";
 
 
 const { useRequest } = require('ahooks');
@@ -77,21 +78,6 @@ const YoutubeSection = () => {
     // console.log(videoSrc);
     return <div className="py-7 w-full">
         <div className="rounded-md overflow-hidden">
-            {/* <video width="100%" height="240" controls src={'/test.mp4'} /> */}
-            {/* http://www.w3schools.com/html/mov_bbb.mp4 */}
-            {/* {
-                videoSrc ? <>
-                    <VideoPlayer>
-                        <source src={src[0]} />
-                        <BigPlayButton position="center" />
-                    </VideoPlayer>
-                </> : <>
-                    <VideoPlayer>
-                        <source src={src[1]} />
-                        <BigPlayButton position="center" />
-                    </VideoPlayer>
-                </>
-            } */}
             {
                 onPlay ? <StyledYoutube className="w-full aspect-4/3" videoId={youtubeData.youtubeId} opts={opts} /> :
                     (<div
@@ -106,18 +92,14 @@ const YoutubeSection = () => {
                         </div>
                     </div>)
             }
-            {/* <VideoPlayer>
-                <source src={videoSrc ? src[0] : src[1]} />
-                <BigPlayButton position="center" />
-            </VideoPlayer> */}
         </div>
         <div onClick={() => window.open(`https://youtu.be/${youtubeData.youtubeId}`, '_blank')}>
-          <div className="font-bold text-primary-blue1 text-xl pt-3 cursor-pointer" >
-              {youtubeData.title}
-          </div>
-          <div className="font-medium text-gray-gray2 text-sm pt-3">
-              {dayjs(youtubeData.publish_up).format('YYYY-MM-DD')}
-          </div>
+            <div className="font-bold text-primary-blue1 text-xl pt-3 cursor-pointer" >
+                <Linkfont>{youtubeData.title}</Linkfont>
+            </div>
+            <div className="font-medium text-gray-gray2 text-sm pt-3">
+                {dayjs(youtubeData.publish_up).format('YYYY-MM-DD')}
+            </div>
         </div>
     </div>
 }
@@ -128,7 +110,7 @@ export default function Youtube() {
         <BannerTitle title={<div className="inherit">
             <div className="text-[26px] font-bold text-primary-blue1">社群影片</div>
             <div className="text-[26px] font-bold text-primary-blue1">小編精選</div>
-        </div>} link="https://www.youtube.com/@tzuchi_official" behavior="blank"/>
+        </div>} link="https://www.youtube.com/@tzuchi_official" behavior="blank" />
         <YoutubeSection />
     </div>
 }

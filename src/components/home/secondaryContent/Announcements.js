@@ -7,6 +7,7 @@ import { useMemo } from "react"
 import { useRouter } from "next/navigation"
 import _ from 'lodash'
 import { addHits } from "@/api/api"
+import { Linkfont } from "@/shared/styles/linkFont.js"
 
 const Item = ({ item }) => {
 
@@ -18,7 +19,7 @@ const Item = ({ item }) => {
             addHits(item.id);
         }}>
             <div className="text-primary-blue1 text-xl font-bold mb-2">
-                {item.title}
+                <Linkfont>{item.title}</Linkfont>
             </div>
             <div className="text-gray-gray4 text-sm font-medium">
                 {dayjs(item.publish_up).format("YYYY-MM-DD")}

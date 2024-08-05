@@ -9,6 +9,7 @@ import _ from 'lodash'
 import Icon from "@/shared/Icon"
 import { LikeAndShare } from "../components"
 import { addHits } from "@/api/api"
+import { Linkfont } from "@/shared/styles/linkFont.js"
 
 const Item = ({ item }) => {
 
@@ -31,7 +32,7 @@ const Item = ({ item }) => {
                                         addHits(_i.id);
                                     }}
                                 >
-                                    {_i.title}
+                                    <Linkfont>{_i.title}</Linkfont>
                                 </div>
                                 <div className="flex flex-col text-gray-gray4 gap-1 items-start font-medium">
                                     <div className="font-medium text-sm">{dayjs(_i.date).format('YYYY-MM-DD')}</div>

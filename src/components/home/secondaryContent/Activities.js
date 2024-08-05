@@ -6,7 +6,8 @@ import Skeleton from 'react-loading-skeleton'
 import { useRouter } from "next/navigation"
 import routes from "@/config/routes"
 import _ from 'lodash'
-import DefaultImage from '@/asset/image/default-article-intro.png'
+// import DefaultImage from '@/asset/image/default-article-intro.png'
+import { Linkfont } from "@/shared/styles/linkFont.js"
 import { addHits } from "@/api/api"
 
 const Item = ({ item }) => {
@@ -29,7 +30,7 @@ const Item = ({ item }) => {
               }
             </div>
             <div className="text-primary-blue1 text-xl font-bold mb-2 flex-1 line-clamp-4">
-                {item.title}
+                <Linkfont>{item.title}</Linkfont>
             </div>
         </div>
     )
