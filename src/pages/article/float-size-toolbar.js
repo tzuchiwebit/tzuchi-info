@@ -4,6 +4,7 @@ import color from "@/shared/styles/color"
 import * as classnames from "classnames"
 import Default from "@/asset/font-size-toolbar/default.svg";
 import Add from "@/asset/font-size-toolbar/add.svg";
+import Cross from "@/asset/font-size-toolbar/cross.svg";
 import Minus from "@/asset/font-size-toolbar/minus.svg";
 
 export default function FloatSizeToolbar ({selectedFontSize, setSelectedFontSize}) {
@@ -36,7 +37,8 @@ export default function FloatSizeToolbar ({selectedFontSize, setSelectedFontSize
         <div className={styles.openedContainer}>
           {/* close button */}
           <div className={styles.menu} style={{border: '3px solid white', color: color.gray.white}} onClick={()=> setIsOpen(false)}>
-            <div style={{fontSize: '23px', lineHeight: '23px'}}>Ｘ</div>
+            {/* <div style={{fontSize: '23px', lineHeight: '23px'}}>Ｘ</div> */}
+            <Cross className={styles.icon} style={{width: '16px', height: '16px'}}></Cross>
           </div>
 
           {/* increen button */}

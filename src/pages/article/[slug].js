@@ -27,6 +27,16 @@ import FloatSizeToolbar from './float-size-toolbar';
 import 'react-toastify/dist/ReactToastify.css';
 import Errata from "@/components/Errata"
 
+const isPortraitImage = (url) => {
+  const regex = /width=(\d+)&height=(\d+)/;
+  const match = url.match(regex);
+
+  if (match && !!parseInt(match[1]) && !!parseInt(match[2])) {
+    if (parseInt(match[1])/ parseInt(match[2]) < 1 ) return true
+  }
+  return false
+}
+
 const Breadcrumb = ({ className }) => {
   const { pageData } = useDataProvider();
 
@@ -146,18 +156,27 @@ const Article = () => {
         /> */}
       </div>
       <div className="laptop:mt-6 mt-4">
-        <Image
-          src={articleData?.attributes?.images?.image_intro ? articleData?.attributes?.images?.image_intro : DefaultImage}
-          alt={articleData?.attributes?.images?.image_intro_alt}
-          title={articleData?.attributes?.metadesc}
-          width={0}
-          height={0}
-          sizes="100vw"
-          style={{
-            width: '100%',
-            height: 'auto',
-          }}
-        />
+        {/* TODO: 是否portrait */}
+        {/* 文章摘要圖片 */}
+        <div className='flex flex-row justify-center'>
+          <div className={classnames({
+            'desktop:w-[482px] laptop:w-[300px] table:w-[361px] 349px': isPortraitImage(articleData?.attributes?.images?.image_intro),
+            'w-full': !isPortraitImage(articleData?.attributes?.images?.image_intro),
+          })}>
+            <Image
+              src={articleData?.attributes?.images?.image_intro ? articleData?.attributes?.images?.image_intro : DefaultImage}
+              alt={articleData?.attributes?.images?.image_intro_alt}
+              title={articleData?.attributes?.metadesc}
+              width={0}
+              height={0}
+              sizes="100vw"
+              style={{
+                width: '100%',
+                height: 'auto',
+              }}
+            />
+          </div>
+        </div>
         {
           articleData?.attributes?.images?.image_intro_caption ?
           <>
