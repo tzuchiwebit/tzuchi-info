@@ -160,7 +160,7 @@ const Article = () => {
         {/* 文章摘要圖片 */}
         <div className='flex flex-row justify-center'>
           <div className={classnames({
-            'desktop:w-[482px] laptop:w-[300px] table:w-[361px] 349px': isPortraitImage(articleData?.attributes?.images?.image_intro),
+            'desktop:w-[482px] laptop:w-[300px] tablet:w-[361px] w-[349px]': isPortraitImage(articleData?.attributes?.images?.image_intro),
             'w-full': !isPortraitImage(articleData?.attributes?.images?.image_intro),
           })}>
             <Image
