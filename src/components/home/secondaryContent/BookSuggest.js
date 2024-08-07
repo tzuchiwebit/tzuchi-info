@@ -24,7 +24,7 @@ function classNames(...classes) {
 
 const Item = ({ item }) => {
   const getImage = () => {
-    if (item?.cover_image) return  item.cover_image
+    if (item?.cover_image) return item.cover_image
     if (item?.image) return item.image
     return DefaultImage
   }
@@ -81,7 +81,7 @@ const NewItem = ({ item = {}, loading = false }) => {
   }, [screenSize.width])
 
   const getImage = () => {
-    if (item?.cover_image) return  item.cover_image
+    if (item?.cover_image) return item.cover_image
     if (item?.image) return item.image
     return DefaultImage
   }
@@ -257,7 +257,8 @@ export default function BookSuggest() {
           onClick={onReadMoreJingSi}
           target="_blank"
           className="cursor-pointer flex flex-row whitespace-nowrap">
-          更多<Icon.RightArrow2 width={20} />
+          <Linkfont>更多</Linkfont>
+          <Icon.RightArrow2 width={20} />
         </div>
       </div>
     </div>
@@ -290,7 +291,8 @@ export default function BookSuggest() {
           onClick={onReadMoreBook}
           target="_blank"
           className="cursor-pointer flex flex-row whitespace-nowrap">
-          更多<Icon.RightArrow2 width={20} />
+          <Linkfont>更多</Linkfont>
+          <Icon.RightArrow2 width={20} />
         </div>
       </div>
     </div>

@@ -11,6 +11,7 @@ import CloudTag from '@/shared/tag/CloudTag'
 import routes from '@/config/routes'
 import OutsideClickHandler from '@/utils/OutsideClickHandler'
 import jsonApi from '@/api/jsonApi'
+import { Linkfont } from '@/shared/styles/linkFont.js'
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -163,7 +164,7 @@ export default function NavbarTop() {
                           'border-gray-text border-solid h-[16px]'
                         )}></div>
                         <a href={item.link} className="text-gray-text laptop:px-2 px-1 hover:font-medium whitespace-nowrap" target='_blank'>
-                          {item.label}
+                          <Linkfont>{item.label}</Linkfont>
                         </a>
                       </Fragment>
                     ))
