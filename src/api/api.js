@@ -13,10 +13,7 @@ const addHits = async (id) => {
     const res = await axios.post(`${API_ENDPOINT}/hits.php`, bodyFormData, {
       headers: { "Content-Type": "multipart/form-data" },
     })
-
-    console.log(`article id : ${id} hits udpated !`)
     return res?.data
-
   } catch (err) {
     throw err
   }

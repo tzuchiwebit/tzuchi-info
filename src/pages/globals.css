@@ -77,3 +77,13 @@ body {
   color: rgb(var(--foreground-rgb));
   background: rgb(var(--background-rgb));
 } */
+.portrait-wrapper {
+  @apply flex flex-row justify-center;
+}
+.img-portrait {
+  @apply desktop:w-[482px] laptop:w-[300px] tablet:w-[361px] w-[349px] !important;
+}
+
+.img-landscape {
+  @apply w-full;
+}

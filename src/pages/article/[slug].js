@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import { getArticleById } from "@/api/joomlaApi";
-import { Fragment, useMemo, useState } from "react"
+import { Fragment, useEffect, useMemo, useState } from "react"
 import Container from "@/shared/layout/Container"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import styled from "styled-components"
@@ -87,7 +87,7 @@ const Breadcrumb = ({ className }) => {
   )
 }
 
-const Article = () => {
+const Article = ({setVisible}) => {
   const { pageData } = useDataProvider();
   const [selectedFontSize, setSelectedFontSize] = useState(26)
 
@@ -95,7 +95,7 @@ const Article = () => {
     const target = _.find(pageData, { name: 'article' });
 
     let titleValue
-    // 1) Find the first match
+    // 1-1) Find the first match "image"
     const regex = /<img\s+[^>]*title="([^"]*)"[^>]*>/i;
     const match = target?.data?.attributes?.text?.match(regex);
 
@@ -103,12 +103,42 @@ const Article = () => {
         titleValue = match[1];
         console.log("Title value:", titleValue);
 
-        // 2) insert "title" element
+        // 1-2) insert "title" element as 圖說文字
         const newRegex = /(<img\s+[^>]*>)/i;
         target.data.attributes.text = target?.data?.attributes?.text.replace(newRegex, `$1<p class="mt-1 pb-1 mb-4 text-gray-gray2 font-medium border-solid border-b border-gray-gray7">${titleValue}</p>`);
     } else {
         console.log("No img tag with title attribute found.");
     }
+
+    setTimeout(()=> {
+      // // TODO: 2) 文章摘要圖片
+      // FIXME: 如何消除畫面閃一下
+      const summaryImage = document.querySelector("#summary-image-wrapper img")
+      if (summaryImage && summaryImage.height > summaryImage.width) {
+        document.querySelector("#summary-image-wrapper").classList.add("img-portrait")
+      } else {
+        document.querySelector("#summary-image-wrapper").classList.add("img-landscape")
+      }
+
+      // TODO: 3) find portrait image
+      const elements = document.querySelectorAll("#content-holder img")
+      elements.forEach((element) => {
+        console.log('width', element.width, 'height', element.height)
+        if (element.height > element.width) {
+          element.classList.add("img-portrait");
+        }
+        const wrapper = document.createElement('div');
+        wrapper.className = 'portrait-wrapper';
+
+        // 将 img 元素插入到新创建的 div 中
+        element.parentNode.insertBefore(wrapper, element);
+        wrapper.appendChild(element);
+      })
+    }, 200)
+
+    setTimeout(()=> {
+      setVisible(true)
+    },500)
 
     return target?.data
   }, [pageData])
@@ -156,12 +186,11 @@ const Article = () => {
         /> */}
       </div>
       <div className="laptop:mt-6 mt-4">
-        {/* TODO: 是否portrait */}
         {/* 文章摘要圖片 */}
         <div className='flex flex-row justify-center'>
-          <div className={classnames({
-            'desktop:w-[482px] laptop:w-[300px] tablet:w-[361px] w-[349px]': isPortraitImage(articleData?.attributes?.images?.image_intro),
-            'w-full': !isPortraitImage(articleData?.attributes?.images?.image_intro),
+          <div id="summary-image-wrapper" className={classnames({
+            // 'desktop:w-[482px] laptop:w-[300px] tablet:w-[361px] w-[349px]': isPortraitImage(articleData?.attributes?.images?.image_intro),
+            // 'w-full': !isPortraitImage(articleData?.attributes?.images?.image_intro),
           })}>
             <Image
               src={articleData?.attributes?.images?.image_intro ? articleData?.attributes?.images?.image_intro : DefaultImage}
@@ -169,6 +198,7 @@ const Article = () => {
               title={articleData?.attributes?.metadesc}
               width={0}
               height={0}
+
               sizes="100vw"
               style={{
                 width: '100%',
@@ -291,22 +321,27 @@ const RecommandArticles = () => {
 
 const MainContent = () => {
   const { loading } = useDataProvider();
+  const [visible, setVisible] = useState(false)
+  useEffect(()=> {
+    if (loading) setVisible(false)
+  }, [loading])
+
   return (
-    <Fragment>
+    <>
       {
-        loading ? <div className="h-96 flex justify-center items-center"><Spinner></Spinner></div> :
-          <>
+        loading ? <div className="h-screen flex justify-center items-center"><Spinner></Spinner></div> :
+          <div className={classnames({'visible': visible, 'invisible': !visible})}>
             <FloatScrollTopButton />
             {/* breadcrumb */}
             <Breadcrumb className="tablet:mt-8 mt-2"></Breadcrumb>
             <ArticleContainer className="mt-6">
-              <Article></Article>
+              <Article setVisible={setVisible}></Article>
               <RecommandArticles></RecommandArticles>
               <ExtendArticles></ExtendArticles>
             </ArticleContainer>
-          </>
+          </div>
       }
-    </Fragment>
+    </>
   )
 }
 
