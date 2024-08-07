@@ -111,13 +111,13 @@ const YoutubeSection = () => {
                 <BigPlayButton position="center" />
             </VideoPlayer> */}
         </div>
-        <div className="font-bold text-primary-blue1 text-xl pt-3 cursor-pointer" onClick={() => {
-            // router.push(`${routes.ARITCLE}/${youtubeData.id}`)
-        }}>
-            {youtubeData.title}
-        </div>
-        <div className="font-medium text-gray-gray2 text-sm pt-3">
-            {dayjs(youtubeData.publish_up).format('YYYY-MM-DD')}
+        <div onClick={() => window.open(`https://youtu.be/${youtubeData.youtubeId}`, '_blank')}>
+          <div className="font-bold text-primary-blue1 text-xl pt-3 cursor-pointer" >
+              {youtubeData.title}
+          </div>
+          <div className="font-medium text-gray-gray2 text-sm pt-3">
+              {dayjs(youtubeData.publish_up).format('YYYY-MM-DD')}
+          </div>
         </div>
     </div>
 }
