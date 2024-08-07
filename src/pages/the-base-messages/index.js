@@ -15,6 +15,7 @@ import styled from "styled-components"
 import joomlaGlobal from '@/api/joomlaGlobal'
 import { getArticlesByCategory } from "@/api/joomlaApi"
 import { useRouter } from "next/router"
+import { Linkfont } from "@/shared/styles/linkFont.js"
 
 const { useRequest } = require('ahooks');
 
@@ -95,8 +96,8 @@ export default function Page() {
                 router.push(`/article/${i.id}`)
               }}
             >
-              <div className="text-primary-blue1 text-xl font-bold line-clamp-2 ">
-                {i.attributes.title}
+              <div className="text-xl font-bold line-clamp-2 ">
+                <Linkfont>{i.attributes.title}</Linkfont>
               </div>
 
               {

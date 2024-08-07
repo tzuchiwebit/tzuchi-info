@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation"
 import routes from "@/config/routes"
 import { addHits } from "@/api/api"
 import Icon from "@/shared/Icon"
+
 const { useRequest } = require('ahooks')
 
 const loadingData = Array(12).fill({

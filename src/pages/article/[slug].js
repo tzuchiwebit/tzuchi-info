@@ -26,6 +26,7 @@ import color from "@/shared/styles/color"
 import FloatSizeToolbar from './float-size-toolbar';
 import 'react-toastify/dist/ReactToastify.css';
 import Errata from "@/components/Errata"
+import { Linkfont } from '@/shared/styles/linkFont.js';
 
 /**
  * @deprecated
@@ -265,7 +266,9 @@ const ExtendArticles = () => {
               addHits(item.id);
               router.push(`/article/${item.id}`)
             }}>
-              <div className="text-[24px] font-bold text-primary-blue1">{item.attributes.title}</div>
+              <div className="text-[24px] font-bold text-primary-blue1">
+                <Linkfont>{item.attributes.title}</Linkfont>
+              </div>
               <div className="flex flex-row items-center gap-x-2 laptop:mt-2 mt-1">
                 <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(item.attributes?.publish_up).format('YYYY-MM-DD')}</span>
                 <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
@@ -307,7 +310,9 @@ const RecommandArticles = () => {
               addHits(item.id);
               router.push(`/article/${item.id}`)
             }}>
-              <div className="text-[24px] font-bold text-primary-blue1">{item.attributes.title}</div>
+              <div className="text-[24px] font-bold text-primary-blue1">
+                <Linkfont>{item.attributes.title}</Linkfont>
+              </div>
               <div className="flex flex-row items-center gap-x-2 laptop:mt-2 mt-1">
                 <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(item.attributes?.publish_up).format('YYYY-MM-DD')}</span>
                 <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>

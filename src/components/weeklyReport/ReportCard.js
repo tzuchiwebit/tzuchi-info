@@ -7,6 +7,7 @@ import screens from "@/shared/styles/screens";
 import * as classnames from "classnames"
 import useScreenSize from '@/shared/hook/useScreenSize';
 import dayjs from "dayjs"
+import { Linkfont } from "@/shared/styles/linkFont.js"
 
 const StyledImage = styled.div`
   position: relative;
@@ -140,7 +141,9 @@ export default function ReportCard({isHappy, data}) {
             <Badge isHappy={isHappy} data={data}></Badge>
           </StyledImage>
         </div>
-        <span className="mt-3 block text-primary-blue1 tablet:text-xl text-base font-bold">{data.title}</span>
+        <span className="mt-3 block text-primary-blue1 tablet:text-xl text-base font-bold">
+          <Linkfont>{data.title}</Linkfont>
+        </span>
       </div>
       <div className="flex flex-row items-center mt-1">
         <div className="flex flex-1 text-lg border-solid border-b border-gray-gray8" />

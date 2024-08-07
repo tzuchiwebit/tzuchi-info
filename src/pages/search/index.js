@@ -18,6 +18,7 @@ import DefaultImage from '@/asset/image/default-article-intro.png'
 import { getArticlesByKeyword } from "@/api/joomlaApi"
 import { addHits } from "@/api/api"
 import routes from "@/config/routes"
+import { Linkfont } from "@/shared/styles/linkFont.js"
 import * as classnames from "classnames"
 const { useRequest } = require('ahooks');
 
@@ -42,7 +43,7 @@ const ResultCard = ({ keyword = "", item = {}, index, isLast = false }) => {
           addHits(item.id);
           router.push(`/${routes.ARITCLE}/${item.id}`);
         }}>
-        {index + 1}. {item.title}
+        <Linkfont>{index + 1}. {item.title}</Linkfont>
       </div>
       <div className="mt-1 laptop:mt-4">
         {/* {item.content} */}

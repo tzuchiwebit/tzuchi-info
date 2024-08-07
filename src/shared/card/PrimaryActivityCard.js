@@ -8,6 +8,7 @@ import Image from 'next/image'
 import DefaultImage from '@/asset/image/default-article-intro.png'
 import Icon from "@/shared/Icon"
 import color from "@/shared/styles/color"
+import { Linkfont } from "../styles/linkFont.js"
 
 const PrimaryActivityCard = ({ item = {}, onClick = () => { } }) => {
 
@@ -21,13 +22,13 @@ const PrimaryActivityCard = ({ item = {}, onClick = () => { } }) => {
                 src={item?.images?.image_intro ? item?.images?.image_intro : DefaultImage}
                 alt={item?.images?.image_intro_alt}
                 fill
-                style={{ objectFit:"cover", borderRadius: "4px" }}
+                style={{ objectFit: "cover", borderRadius: "4px" }}
               /> :
               <Skeleton className="aspect-[14/9]" />
           }
         </ImageContainer>
         <div className="w-full text-primary-blue1 font-bold text-xl mt-3 line-clamp-2 h-[3.5rem]">
-          {item.title}
+          <Linkfont>{item.title}</Linkfont>
         </div>
         <div className="w-full text-gray-gray2 pl-2 border-l-2 border-solid border-primary-blue3 my-2 font-medium">
           活動開始：{dayjs(item?.['act-start']).format('YYYY-MM-DD HH:mm')}<br />
