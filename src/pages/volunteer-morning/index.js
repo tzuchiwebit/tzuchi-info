@@ -89,7 +89,7 @@ export default function Page() {
           }} />
       </div>
       {/* result cards */}
-      <div className="w-fit flex flex-wrap -mx-3">
+      <div className="grid laptop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-x-5 gap-y-6">
         {
           listData.map((item, index) => <PrimaryCard
             item={item?.attributes}

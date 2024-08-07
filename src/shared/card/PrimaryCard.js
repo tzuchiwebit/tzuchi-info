@@ -9,32 +9,27 @@ import DefaultImage from '@/asset/image/default-article-intro.png'
 
 const PrimaryCard = ({ item = {}, onClick = () => { } }) => {
 
-    return <div className="w-full tablet:w-1/2 laptop:w-1/3 px-3 mb-6">
+    return <div className="w-full">
       <div className="bg-white border rounded-[4px] p-3 shadow-elevation-3 flex flex-col gap-2">
-        <div onClick={onClick} className="cursor-pointer">
+        <div onClick={onClick} className="cursor-pointer flex flex-col items-center">
           <ImageContainer>
             {
               item?.id ?
               <Image
                 src={item?.images?.image_intro ? item?.images?.image_intro: DefaultImage}
                 alt={item?.images?.image_intro_alt}
-                width={0}
-                height={0}
-                sizes="100vw"
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                }}
+                fill
+                style={{ objectFit:"cover", borderRadius: "4px" }}
               />:
               <Skeleton className="aspect-[14/9]" />
             }
           </ImageContainer>
-          <div className="text-primary-blue1 font-bold text-xl mt-3">
+          <div className="w-full text-primary-blue1 font-bold text-xl mt-3 line-clamp-2 h-[3.5rem]">
               {item.title}
           </div>
-          <div className="mt-1">
-            <div className="text-gray-gray2 line-clamp-4">
-                {item.metadesc}
+          <div className="mt-1 w-full">
+            <div className="text-gray-gray2 text-base line-clamp-4 h-[6rem]">
+              {item.metadesc}
             </div>
           </div>
         </div>
@@ -58,15 +53,19 @@ const PrimaryCard = ({ item = {}, onClick = () => { } }) => {
 export default PrimaryCard
 
 const ImageContainer = styled.div`
-    width: 100%;
-    height: auto;
-    // min-height: 160px;
-    overflow: hidden;
-    border-radius: 4px;
-    @media(min-width: ${screens.tablet}) {
-        // height: 210px;
-    }
-    @media(min-width: ${screens.laptop}) {
-        // height: 218px;
-    }
+  position: relative;
+  width: 325px;
+  height: 208px;
+  @media(min-width: ${screens.tablet}) {
+    width: 337px;
+    height: 216px;
+  }
+  @media(min-width: ${screens.laptop}) {
+    width: 276px;
+    height: 177px;
+  }
+  @media(min-width: ${screens.desktop}) {
+    width: 356px;
+    height: 228px;
+  }
 `

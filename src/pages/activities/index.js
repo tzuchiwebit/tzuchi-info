@@ -111,7 +111,7 @@ export default function Page() {
       {/* result cards */}
       {/* <BannerTitle title="活動點位地圖" /> */}
       <BannerTitle title="活動資訊" />
-      <div className="w-fit flex flex-wrap -mx-3">
+      <div className="grid laptop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-x-5 gap-y-6">
         {
           listData.map((item, index) => <PrimaryActivityCard
             item={item?.attributes}

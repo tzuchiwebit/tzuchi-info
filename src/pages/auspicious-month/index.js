@@ -28,7 +28,7 @@ export default function Page() {
   const responsive = useResponsive();
   const router = useRouter();
 
-  // 吉祥月api, 
+  // 吉祥月api,
   const { data: auspiciousMonthData, loading: loadingAuspiciousData } = useRequest(() => {
     return axios.get(`https://raw.githubusercontent.com/KaelLim/JSONFile/main/%E4%B8%83%E6%9C%88%E5%90%89%E7%A5%A5%E6%9C%88/api.json`);
   })
@@ -103,7 +103,7 @@ export default function Page() {
 
       </div>
       {/* result cards */}
-      <div className="w-fit flex flex-wrap -mx-3">
+      <div className="grid laptop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-x-5 gap-y-6">
         {
           (loading || loadingAuspiciousData) ? <Skeleton /> : listData.map((item, index) => <PrimaryCard
             item={item?.attributes}

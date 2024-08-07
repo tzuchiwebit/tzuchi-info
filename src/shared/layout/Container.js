@@ -19,7 +19,7 @@ export default function Container({
   // const extendStyles = className || '';
   return (
     <Outer className='flex' {...props}>
-      <Inner 
+      <Inner
         $noPadding={noPadding}
         $noPaddingTablet={noPaddingTablet}
         $noPaddingContainer={noPaddingContainer}>
@@ -37,8 +37,8 @@ const Outer = styled.div`
 const Inner = styled.div`
   width: 100%;
   max-width: 1200px;
-  padding-left: ${(props) => props.$noPadding ? '0' : '10px'};
-  padding-right: ${(props) => props.$noPadding ? '0' : '10px'};
+  padding-left: ${(props) => props.$noPadding ? '0' : '13px'};
+  padding-right: ${(props) => props.$noPadding ? '0' : '13px'};
   @media(min-width: ${screens.tablet}) {
     padding-left: ${(props) => props.$noPaddingTablet ? '0' : '13px'};
     padding-right: ${(props) => props.$noPaddingTablet ? '0' : '13px'};
