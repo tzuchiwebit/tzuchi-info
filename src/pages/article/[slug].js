@@ -27,6 +27,9 @@ import FloatSizeToolbar from './float-size-toolbar';
 import 'react-toastify/dist/ReactToastify.css';
 import Errata from "@/components/Errata"
 
+/**
+ * @deprecated
+ */
 const isPortraitImage = (url) => {
   const regex = /width=(\d+)&height=(\d+)/;
   const match = url.match(regex);
@@ -111,8 +114,7 @@ const Article = ({setVisible}) => {
     }
 
     setTimeout(()=> {
-      // // TODO: 2) 文章摘要圖片
-      // FIXME: 如何消除畫面閃一下
+      // 2) 文章摘要圖片
       const summaryImage = document.querySelector("#summary-image-wrapper img")
       if (summaryImage && summaryImage.height > summaryImage.width) {
         document.querySelector("#summary-image-wrapper").classList.add("img-portrait")
@@ -120,7 +122,7 @@ const Article = ({setVisible}) => {
         document.querySelector("#summary-image-wrapper").classList.add("img-landscape")
       }
 
-      // TODO: 3) find portrait image
+      // 3) find portrait image
       const elements = document.querySelectorAll("#content-holder img")
       elements.forEach((element) => {
         console.log('width', element.width, 'height', element.height)
