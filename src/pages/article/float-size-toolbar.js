@@ -38,7 +38,7 @@ export default function FloatSizeToolbar ({selectedFontSize, setSelectedFontSize
           {/* close button */}
           <div className={styles.menu} style={{border: '3px solid white', color: color.gray.white}} onClick={()=> setIsOpen(false)}>
             {/* <div style={{fontSize: '23px', lineHeight: '23px'}}>Ｘ</div> */}
-            <Cross className={styles.icon} style={{width: '16px', height: '16px'}}></Cross>
+            <Cross className={styles.icon} style={{width: '19px', height: '19px'}}></Cross>
           </div>
 
           {/* increen button */}
