@@ -33,7 +33,11 @@ const PrimaryActivityCard = ({ item = {}, onClick = () => { } }) => {
         <div className="w-full text-gray-gray2 pl-2 border-l-2 border-solid border-primary-blue3 my-2 font-medium">
           活動開始：{dayjs(item?.['act-start']).format('YYYY-MM-DD HH:mm')}<br />
           活動結束：{dayjs(item?.['act-end']).format('YYYY-MM-DD HH:mm')}<br />
-          <span className="flex gap-2">活動地點：{item?.['act-place']} <Icon.LocationPin style={{ width: 16, color: color.primary.blue2, cursor: 'pointer' }} /></span>
+          <div className="flex flex-row">
+            <div className="line-clamp-1">活動地點：{item?.['act-place']} </div>
+            <Icon.LocationPin style={{ width: 16, color: color.primary.blue2, cursor: 'pointer', flexShrink: 0 }} />
+          </div>
+
         </div>
         <div className="mt-1 w-full">
           <div className="text-gray-gray2 text-base line-clamp-4 h-[6rem]">
