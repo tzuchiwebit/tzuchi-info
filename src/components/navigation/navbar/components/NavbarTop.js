@@ -121,9 +121,9 @@ export default function NavbarTop() {
     <>
       <div className="h-1 w-full bg-gradient-to-r from-primary-blue1 to-primary-linear"></div>
       <Container>
-        <nav className="mx-auto flex max-w-7xl items-center justify-between laptop:min-h-[58px] desktop:min-h-[88px] tablet:py-4" aria-label="Global">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between tablet:py-4" aria-label="Global">
           {/* grid layout */}
-          <div className="flex flex-row w-full gap-2 items-center justify-between container:px-0">
+          <div className="flex flex-row w-full gap-x-2 justify-between container:px-0">
             {/* logo */}
             <div className="flex-none w-[165px] tablet:w-[165px] laptop:w-[225px] desktop:w-[380px] pr-2 desktop:self-start">
               <Link href="/" className="">
@@ -133,9 +133,9 @@ export default function NavbarTop() {
               </Link>
             </div>
             {/* right side nav */}
-            <div className='w-auto hidden tablet:flex flex-col gap-2'>
+            <div className='w-auto hidden tablet:flex flex-col gap-x-2'>
               {/* upper section */}
-              <div className="flex flex-row gap-2 h-10 items-center justify-end w-full" ref={upperRef}>
+              <div className="flex flex-row gap-x-2 h-[52.3px] justify-end w-full" ref={upperRef}>
                 {/* cloud tags */}
                 <CloudTagSearchButton />
                 {/* search input */}
@@ -180,7 +180,7 @@ export default function NavbarTop() {
                 leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
                 leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
               >
-                <div className={'flex flex-row flex-wrap gap-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0'} style={{ width: navbarTopWidth }}>
+                <div className={'flex flex-row flex-wrap gap-x-1 gap-y-2 overflow-hidden mt-2'} style={{ width: navbarTopWidth }}>
                   {
                     cloudTags.map((item, index) => (
                       <CloudTag
@@ -278,7 +278,7 @@ export default function NavbarTop() {
       <Dialog as="div" className="tablet:hidden" open={mobileMenuOpen} onClose={() => { }}>
         {/* <div className="fixed inset-0 z-30" /> */}
         <OutsideClickHandler onOutsideClick={() => setMobileMenuOpen(false)}>
-          <Dialog.Panel className="fixed h-fit inset-y-16 right-0 z-30 w-[270px] overflow-y-auto bg-white shadow-elevation-4 ">
+          <Dialog.Panel className="fixed h-fit inset-y-16 right-0 z-[100] w-[270px] overflow-y-auto bg-white shadow-elevation-4 ">
             <div className="flow-root">
               <div className="divide-y-2 divide-gray-gray8 divide-solid transition-all">
                 {NavLinkItems.map((nav, index) => {
