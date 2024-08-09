@@ -87,3 +87,13 @@ body {
 .img-landscape {
   @apply w-full;
 }
+
+.link-color {
+  color: #30559F;
+}
+.link-color:hover {
+  color: #4F7BBE;
+}
+.link-color:active {
+  color: #1B2D58;
+}

@@ -124,9 +124,8 @@ const Article = ({setVisible}) => {
       }
 
       // 3) find portrait image
-      const elements = document.querySelectorAll("#content-holder img")
-      elements.forEach((element) => {
-        console.log('width', element.width, 'height', element.height)
+      const imgElements = document.querySelectorAll("#content-holder img")
+      imgElements.forEach((element) => {
         if (element.height > element.width) {
           element.classList.add("img-portrait");
         }
@@ -137,6 +136,13 @@ const Article = ({setVisible}) => {
         element.parentNode.insertBefore(wrapper, element);
         wrapper.appendChild(element);
       })
+
+      // 4) add link style
+      const linkElements = document.querySelectorAll("#content-holder a")
+      linkElements.forEach((element) => {
+        element.classList.add('link-color')
+      })
+
     }, 200)
 
     setTimeout(()=> {
