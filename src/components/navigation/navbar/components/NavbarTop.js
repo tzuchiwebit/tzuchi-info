@@ -12,6 +12,7 @@ import routes from '@/config/routes'
 import OutsideClickHandler from '@/utils/OutsideClickHandler'
 import jsonApi from '@/api/jsonApi'
 import { Linkfont } from '@/shared/styles/linkFont.js'
+import useScreenSize from '@/shared/hook/useScreenSize';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -85,6 +86,7 @@ export default function NavbarTop() {
   const upperRef = useRef();
 
   const router = useRouter();
+  const screenSize = useScreenSize();
 
   const getCloudTags = async () => {
     setLoadingCloudTags(true)
@@ -105,6 +107,24 @@ export default function NavbarTop() {
     getCloudTags();
   }, [])
 
+  useEffect(() => {
+    // console.log('responsive.width', screenSize.width)
+        // console.log('upperRef?.current?.clientWidth', upperRef?.current?.clientWidth)
+
+        setTimeout(() => {
+        if (upperRef?.current?.clientWidth) {
+          setNavbarTopWidth(upperRef.current.clientWidth)
+        } else {
+          setNavbarTopWidth('100%')
+        }
+        getCloudTags();
+      }, 1000)
+  }, [screenSize.width])
+
+  useEffect(() => {
+    console.log('upperRef.current.clientWidth', upperRef?.current?.clientWidth)
+  }, [upperRef?.current?.clientWidth])
+
   const CloudTagSearchButton = () => (<button
     className="w-[110px] flex items-center justify-between relative border-b border-solid border-gray-gray7 py-1 mr-2"
     onClick={() => { setOpenCloudTagSearch(!openCloudTagSearch) }}
@@ -121,19 +141,20 @@ export default function NavbarTop() {
     <>
       <div className="h-1 w-full bg-gradient-to-r from-primary-blue1 to-primary-linear"></div>
       <Container>
-        <nav className="mx-auto flex max-w-7xl items-center justify-between tablet:py-4" aria-label="Global">
+        <nav className="mx-auto flex items-center justify-between tablet:py-4" aria-label="Global">
           {/* grid layout */}
-          <div className="flex flex-row w-full gap-x-2 justify-between container:px-0">
+          <div className="flex flex-row w-full gap-x-1 justify-between">
             {/* logo */}
-            <div className="flex-none w-[165px] tablet:w-[165px] laptop:w-[225px] desktop:w-[380px] pr-2 desktop:self-start">
+            <div className="flex-none w-[165px] tablet:w-[157px] laptop:w-[217px] desktop:w-[372px] desktop:self-start">
               <Link href="/" className="">
                 <span className="sr-only">慈濟資訊網</span>
                 <Icon.LOGO className="hidden desktop:block" width="100%" onClick={() => router.push('/')} />
                 <Icon.LOGOMobile className="desktop:hidden" width="100%" onClick={() => router.push('/')} />
               </Link>
             </div>
+            <div className='desktop:w-16 laptop:w-11 tablet:w-4'></div>
             {/* right side nav */}
-            <div className='w-auto hidden tablet:flex flex-col gap-x-2'>
+            <div className='grow-0 hidden tablet:flex flex-col gap-x-2'>
               {/* upper section */}
               <div className="flex flex-row gap-x-2 h-[52.3px] justify-end w-full" ref={upperRef}>
                 {/* cloud tags */}
@@ -180,7 +201,11 @@ export default function NavbarTop() {
                 leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
                 leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
               >
-                <div className={'flex flex-row flex-wrap gap-x-1 gap-y-2 overflow-hidden mt-2'} style={{ width: navbarTopWidth }}>
+                <div className={'flex flex-row flex-wrap gap-x-1 gap-y-2 overflow-hidden mt-2'}
+                style={{
+                  // width: navbarTopWidth,
+                }}
+                >
                   {
                     cloudTags.map((item, index) => (
                       <CloudTag
