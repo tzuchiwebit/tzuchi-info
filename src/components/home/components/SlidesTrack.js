@@ -31,7 +31,7 @@ const SlideTrackContainer = styled.div`
         display: none;
     }
     @media(min-width: ${screens.tablet}) {
-      margin-right: -15px;
-      padding-right: 15px;
+      margin-right: -13px;
+      padding-right: 13px;
     }
 `

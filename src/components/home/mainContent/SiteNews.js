@@ -117,7 +117,7 @@ export default function SiteNews() {
     return <div className="pt-5">
         <BannerTitle title={`各據點消息`} link={routes.THE_BASE_MESSAGE} />
         <div className="pt-5 w-full">
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex gap-x-2 flex-wrap">
                 {
                     tagOptions.map((tag, index) => (<PrimaryTag
                         onClick={() => { setSelectedTagId(tag.id) }}
