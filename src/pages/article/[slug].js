@@ -126,7 +126,9 @@ const Article = ({setVisible}) => {
       // 3) find portrait image
       const imgElements = document.querySelectorAll("#content-holder img")
       imgElements.forEach((element) => {
-        if (element.height > element.width) {
+        const width = parseInt(element.getAttribute("width")) || element.width
+        const height = parseInt(element.getAttribute("height")) || element.height
+        if (height > width) {
           element.classList.add("img-portrait");
         }
         const wrapper = document.createElement('div');

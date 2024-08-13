@@ -121,10 +121,6 @@ export default function NavbarTop() {
       }, 1000)
   }, [screenSize.width])
 
-  useEffect(() => {
-    console.log('upperRef.current.clientWidth', upperRef?.current?.clientWidth)
-  }, [upperRef?.current?.clientWidth])
-
   const CloudTagSearchButton = () => (<button
     className="w-[110px] flex items-center justify-between relative border-b border-solid border-gray-gray7 py-1 mr-2"
     onClick={() => { setOpenCloudTagSearch(!openCloudTagSearch) }}
