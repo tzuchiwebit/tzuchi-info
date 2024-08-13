@@ -94,6 +94,48 @@ const Breadcrumb = ({ className }) => {
 const Article = ({setVisible}) => {
   const { pageData } = useDataProvider();
   const [selectedFontSize, setSelectedFontSize] = useState(26)
+  const [loaded, setLoaded] = useState(false)
+
+  const handleImageLoad = () => {
+    // 1) 處理摘要圖片
+    const summaryImage = document.querySelector("#summary-image-wrapper img")
+    if (summaryImage && summaryImage.height > summaryImage.width) {
+      document.querySelector("#summary-image-wrapper").classList.add("img-portrait")
+    } else {
+      document.querySelector("#summary-image-wrapper").classList.add("img-landscape")
+    }
+
+    // 2) find portrait image
+    const imgElements = document.querySelectorAll("#content-holder img")
+    imgElements.forEach((element) => {
+      const width = parseInt(element.getAttribute("width")) || element.width
+      const height = parseInt(element.getAttribute("height")) || element.height
+
+      if (height > width) {
+        element.classList.add("img-portrait");
+      }
+      const wrapper = document.createElement('div');
+      wrapper.className = 'portrait-wrapper';
+
+      // 将 img 元素插入到新创建的 div 中
+      element.parentNode.insertBefore(wrapper, element);
+      wrapper.appendChild(element);
+    })
+
+    // 3) add link style
+    const linkElements = document.querySelectorAll("#content-holder a")
+    linkElements.forEach((element) => {
+      element.classList.add('link-color')
+    })
+
+    setLoaded(true)
+  }
+
+  useEffect(() => {
+    if (loaded) {
+      setVisible(true)
+    }
+  }, [loaded, setVisible])
 
   const articleData = useMemo(() => {
     const target = _.find(pageData, { name: 'article' });
@@ -114,45 +156,15 @@ const Article = ({setVisible}) => {
         console.log("No img tag with title attribute found.");
     }
 
-    setTimeout(()=> {
-      // 2) 文章摘要圖片
+    setTimeout(() => {
+      // 2) 留點緩衝，再進行 dom 處理
       const summaryImage = document.querySelector("#summary-image-wrapper img")
-      console.log('summaryImage.complete', summaryImage.complete)
-
-      if (summaryImage && summaryImage.height > summaryImage.width) {
-        document.querySelector("#summary-image-wrapper").classList.add("img-portrait")
+      if (!summaryImage.complete) {
+        summaryImage.addEventListener('load', handleImageLoad);
       } else {
-        document.querySelector("#summary-image-wrapper").classList.add("img-landscape")
+        handleImageLoad()
       }
-
-      // 3) find portrait image
-      const imgElements = document.querySelectorAll("#content-holder img")
-      imgElements.forEach((element) => {
-        const width = parseInt(element.getAttribute("width")) || element.width
-        const height = parseInt(element.getAttribute("height")) || element.height
-
-        if (height > width) {
-          element.classList.add("img-portrait");
-        }
-        const wrapper = document.createElement('div');
-        wrapper.className = 'portrait-wrapper';
-
-        // 将 img 元素插入到新创建的 div 中
-        element.parentNode.insertBefore(wrapper, element);
-        wrapper.appendChild(element);
-      })
-
-      // 4) add link style
-      const linkElements = document.querySelectorAll("#content-holder a")
-      linkElements.forEach((element) => {
-        element.classList.add('link-color')
-      })
-
     }, 200)
-
-    setTimeout(()=> {
-      setVisible(true)
-    }, 400)
 
     return target?.data
   }, [pageData])
