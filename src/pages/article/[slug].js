@@ -117,6 +117,8 @@ const Article = ({setVisible}) => {
     setTimeout(()=> {
       // 2) 文章摘要圖片
       const summaryImage = document.querySelector("#summary-image-wrapper img")
+      console.log('summaryImage.complete', summaryImage.complete)
+
       if (summaryImage && summaryImage.height > summaryImage.width) {
         document.querySelector("#summary-image-wrapper").classList.add("img-portrait")
       } else {
@@ -128,7 +130,7 @@ const Article = ({setVisible}) => {
       imgElements.forEach((element) => {
         const width = parseInt(element.getAttribute("width")) || element.width
         const height = parseInt(element.getAttribute("height")) || element.height
-        console.log('width', width, height, 'height')
+
         if (height > width) {
           element.classList.add("img-portrait");
         }
