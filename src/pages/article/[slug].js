@@ -128,6 +128,7 @@ const Article = ({setVisible}) => {
       imgElements.forEach((element) => {
         const width = parseInt(element.getAttribute("width")) || element.width
         const height = parseInt(element.getAttribute("height")) || element.height
+        console.log('width', width, height, 'height')
         if (height > width) {
           element.classList.add("img-portrait");
         }
@@ -149,7 +150,7 @@ const Article = ({setVisible}) => {
 
     setTimeout(()=> {
       setVisible(true)
-    },500)
+    }, 400)
 
     return target?.data
   }, [pageData])
