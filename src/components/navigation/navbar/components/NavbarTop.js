@@ -266,6 +266,7 @@ const DropDownMenu = ({ openShield, navRef, setOpenShield, searchMenuOpen, hambu
   return (
     <Menu ref={menuRef} as="div" className="relative z-[999] inline-block text-left">
       {({ open }) => {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
         useEffect(() => {
           if (!open) {
             setOpenShield(false)
