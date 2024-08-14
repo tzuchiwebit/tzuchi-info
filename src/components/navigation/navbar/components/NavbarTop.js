@@ -34,6 +34,7 @@ const SearchMenu = ({ navRef, openShield, setOpenShield, searchMenuOpen, setSear
         // do nothing
       } else {
         setSearchMenuOpen(false)
+        setOpenShield(false)
       }
     } else {
       // click outside, 全關
@@ -112,7 +113,7 @@ const SearchMenu = ({ navRef, openShield, setOpenShield, searchMenuOpen, setSear
           </div>
         </Transition>
 
-        {/* 熱門快搜 dropdown menu */}
+        {/* 熱門快搜 dropdown menu: mobile version */}
         <Transition
           // as={Fragment}
           show={openCloudTagSearch}
@@ -122,11 +123,7 @@ const SearchMenu = ({ navRef, openShield, setOpenShield, searchMenuOpen, setSear
           leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
           leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
         >
-          <div className={'flex flex-row flex-wrap gap-x-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0 tablet-down:justify-end'}
-            style={{
-              // width: navbarTopWidth
-            }}
-          >
+          <div className={'flex flex-row flex-wrap gap-x-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0 tablet-down:justify-end'}>
             {
               cloudTags.map((item, index) => (
                 <CloudTag
@@ -148,16 +145,43 @@ const SearchMenu = ({ navRef, openShield, setOpenShield, searchMenuOpen, setSear
           </div>
         </Transition>
       </div>
-  </>
+    </>
   )
 }
 
-const HamburgMenu = ({ hamburgMenuOpen, setHamburgMenuOpen, setOpenShield }) => {
+const HamburgMenu = ({ navRef, hamburgMenuOpen, setHamburgMenuOpen, setOpenShield }) => {
   const [currentDialogIndex, setCurrentDialogIndex] = useState(-1);
+  const menuBtnRef = useRef(null)
+  const menuOpenRef = useRef(null)
+
+  const handleClick = (event) => {
+    if (navRef?.current?.contains(event.target)) {
+      // click navbar
+      if (menuOpenRef?.current?.contains(event.target) || menuBtnRef?.current?.contains(event.target)) {
+        // do nothing
+      } else {
+        setHamburgMenuOpen(false)
+        setOpenShield(false)
+      }
+    } else {
+      // click outside, 全關
+      setOpenShield(false)
+      setHamburgMenuOpen(false)
+    }
+  }
+
+  useEffect(() => {
+    if (hamburgMenuOpen) {
+      document.addEventListener('mousedown', handleClick);
+      return () => {
+        document.removeEventListener('mousedown', handleClick);
+      };
+    }
+  }, [hamburgMenuOpen])
 
   return (
     <>
-      <button
+      <button ref={menuBtnRef}
         type="button"
         className="w-[58px] h-[58px] flex flex-row justify-center items-center"
         style={{
@@ -166,94 +190,100 @@ const HamburgMenu = ({ hamburgMenuOpen, setHamburgMenuOpen, setOpenShield }) => 
         }}
         onClick={() => {
           setHamburgMenuOpen(!hamburgMenuOpen);
-          setOpenShield(true)
+          setOpenShield(!hamburgMenuOpen)
         }}
       >
         <span className="sr-only">Open main menu</span>
         <Icon.Menu width="32px" />
       </button>
 
-      <Dialog as="div" className="tablet:hidden" open={hamburgMenuOpen} onClose={() => { setOpenShield(false) }}>
-        <OutsideClickHandler onOutsideClick={() => setHamburgMenuOpen(false)}>
-          <Dialog.Panel className="fixed h-fit inset-y-[62px] right-0 z-[100] w-[270px] overflow-y-auto bg-white shadow-elevation-4 ">
-            <div className="flow-root">
-              <div className="divide-y-2 divide-gray-gray8 divide-solid transition-all">
-                {NavLinkItems.map((nav, index) => {
-                  const isDisclosure = !!(nav?.children);
+      <div ref={menuOpenRef} className={classnames('w-[270px] absolute shadow-elevation-4 bg-white right-0 top-[62px] border-2 border-gray-gray8 border-solid', !hamburgMenuOpen && 'hidden' )}>
+        <Transition
+          as={Fragment}
+          show={hamburgMenuOpen}
+          className=" tablet:hidden bg-white transition-all duration-300 overflow-hidden"
+          enterFrom="transform -tranlateY-50 opacity-0 max-h-0"
+          enterTo="transform tranlateY-0 opacity-100 max-h-[1000px]"
+          leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
+          leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
+        >
+          <div className="flow-root px-1">
+            <div className="divide-y-2 divide-gray-gray8 divide-solid transition-all">
+              {NavLinkItems.map((nav, index) => {
+                const isDisclosure = !!(nav?.children);
 
-                  return (<div className="" key={index}>
-                    <Disclosure as="div" className="">
-                      <>
-                        <Disclosure.Button
-                          className="flex gap-x-2 w-full items-center justify-start py-2 pl-5 font-semibold leading-7 text-primary-blue1 hover:bg-complementary-blue2 "
-                          onClick={() => {
-                            if (!isDisclosure) {
-                              return window.open(nav.link, '_blank');
-                            } else if (currentDialogIndex === index) {
-                              return setCurrentDialogIndex(-1);
-                            }
-                            setCurrentDialogIndex(index);
-                          }}
-                        >
-                          {
-                            !!nav?.children?.length &&
-                            <Icon.CyanTriangle className="transition-all"
-                              width="12px"
-                              style={{
-                                visibility: nav?.children?.length ? 'visible' : 'hidden',
-                                transform: (isDisclosure && currentDialogIndex === index) ? 'rotate(90deg)' : '',
-                              }}
-                            />
-                          }
-                          {nav.label}
-                        </Disclosure.Button>
-                        <Transition
-                          show={isDisclosure && (currentDialogIndex === index)}
-                          enter="transition-height duration-500 ease-in-out"
-                          enterFrom="h-0"
-                          enterTo="h-auto"
-                          leave="transition-height duration-0 "
-                          leaveFrom="h-auto"
-                          leaveTo="h-0"
-                        >
-                          <Disclosure.Panel className="px-3 py-1 bg-primary-blue3">
-                            <div className="divide-y divide-gray-gray8 divide-solid">
-                              {nav?.children && nav.children.map((item) => (
-                                <Disclosure.Button
-                                  key={item.label}
-                                  as="a"
-                                  href={item.link}
-                                  target='_blank'
-                                  className="block py-2 pl-1 text-white"
-                                >
-                                  {item.label}
-                                </Disclosure.Button>
-                              ))}
-                            </div>
-                          </Disclosure.Panel>
-                        </Transition>
-                      </>
-                    </Disclosure>
-                  </div>)
-                })}
-
-                {HeaderLinkItems.map((nav, index) => {
-                  return (<div className="" key={index}>
-                    <Disclosure as="div" className="">
+                return (<div className="" key={index}>
+                  <Disclosure as="div" className="">
+                    <>
                       <Disclosure.Button
-                        className={classnames('flex gap-2 w-full items-center justify-start py-2 pl-5 font-normal leading-7 text-primary-blue1 hover:bg-complementary-blue2', index === 0 ? 'pt-8' : '')}
-                        onClick={() => window.open(nav.link, '_blank')}
+                        className="flex gap-x-2 w-full items-center justify-start py-2 pl-5 font-semibold leading-7 text-primary-blue1 hover:bg-complementary-blue2 "
+                        onClick={() => {
+                          if (!isDisclosure) {
+                            return window.open(nav.link, '_blank');
+                          } else if (currentDialogIndex === index) {
+                            return setCurrentDialogIndex(-1);
+                          }
+                          setCurrentDialogIndex(index);
+                        }}
                       >
+                        {
+                          !!nav?.children?.length &&
+                          <Icon.CyanTriangle className="transition-all"
+                            width="12px"
+                            style={{
+                              visibility: nav?.children?.length ? 'visible' : 'hidden',
+                              transform: (isDisclosure && currentDialogIndex === index) ? 'rotate(90deg)' : '',
+                            }}
+                          />
+                        }
                         {nav.label}
                       </Disclosure.Button>
-                    </Disclosure>
-                  </div>)
-                })}
-              </div>
+                      <Transition
+                        show={isDisclosure && (currentDialogIndex === index)}
+                        enter="transition-height duration-500 ease-in-out"
+                        enterFrom="h-0"
+                        enterTo="h-auto"
+                        leave="transition-height duration-0 "
+                        leaveFrom="h-auto"
+                        leaveTo="h-0"
+                      >
+                        <Disclosure.Panel className="px-3 py-1 bg-primary-blue3">
+                          <div className="divide-y divide-gray-gray8 divide-solid">
+                            {nav?.children && nav.children.map((item) => (
+                              <Disclosure.Button
+                                key={item.label}
+                                as="a"
+                                href={item.link}
+                                target='_blank'
+                                className="block py-2 pl-1 text-white"
+                              >
+                                {item.label}
+                              </Disclosure.Button>
+                            ))}
+                          </div>
+                        </Disclosure.Panel>
+                      </Transition>
+                    </>
+                  </Disclosure>
+                </div>)
+              })}
+
+              {HeaderLinkItems.map((nav, index) => {
+                return (<div className="" key={index}>
+                  <Disclosure as="div" className="">
+                    <Disclosure.Button
+                      className={classnames('flex gap-2 w-full items-center justify-start py-2 pl-5 font-normal leading-7 text-primary-blue1 hover:bg-complementary-blue2', index === 0 ? 'pt-8' : '')}
+                      onClick={() => window.open(nav.link, '_blank')}
+                    >
+                      {nav.label}
+                    </Disclosure.Button>
+                  </Disclosure>
+                </div>)
+              })}
             </div>
-          </Dialog.Panel>
-        </OutsideClickHandler>
-      </Dialog>
+          </div>
+        </Transition>
+      </div>
     </>
   )
 }
@@ -272,83 +302,11 @@ const CloudTagSearchButton = ({ setOpenCloudTagSearch, openCloudTagSearch }) => 
   )
 }
 
-const DropDownMenu = ({ openShield, navRef, setOpenShield, searchMenuOpen, hamburgMenuOpen }) => {
-  const menuRef = useRef(null)
-
-  return (
-    <Menu ref={menuRef} as="div" className="relative z-[999] inline-block text-left">
-      {({ open }) => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        useEffect(() => {
-          if (!open) {
-            setOpenShield(false)
-          }
-        }, [open])
-
-        return (
-          <>
-            <div>
-              <Menu.Button
-                onClick={() => {
-                  setOpenShield(!open);
-                }}
-                className={classnames(
-                  open ? 'bg-complementary-blue2 text-primary-blue1 border-transparent' : 'bg-white text-gray-text border-gray-gray7',
-                  "border border-solid inline-flex w-full items-center justify-center gap-x-1.5 rounded-md px-3 py-2 font-semibold whitespace-nowrap"
-                )}>
-                首頁分類
-                <Icon.UpArrow className="-mr-1 h-5 w-5 text-gray-text transition-all" style={{ transform: open ? 'rotate(0)' : 'rotate(180deg)' }} aria-hidden="true" />
-              </Menu.Button>
-            </div>
-
-            <Transition
-              as={Fragment}
-              enter="transition ease-out duration-100"
-              enterFrom="transform opacity-0 scale-95"
-              enterTo="transform opacity-100 scale-100"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
-              <Menu.Items className="absolute right-0 z-10 -mt-1 w-full divide-solid divide-y-2 divide-gray-gray8 origin-top-right bg-white shadow-lg ring-2 ring-black ring-opacity-5 focus:outline-none">
-                {
-                  AnchorLinkItems.map((item, index) => (<div className="" key={index}>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <div
-                          onClick={() => {
-                            document.querySelector(item.link)?.scrollIntoView({ behavior: 'smooth' })
-                            setOpenShield(!open)
-                          }}
-                          className={classnames(
-                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                            'block px-4 py-2 font-semibold text-primary-blue1 hover:bg-complementary-blue2'
-                          )}
-                        >
-                          {item.label}
-                        </div>
-                      )}
-                    </Menu.Item>
-                  </div>))
-                }
-              </Menu.Items>
-            </Transition>
-          </>
-        )
-      }}
-    </Menu>
-  )
-}
-
 const CategoryMenu = ({ openShield, navRef, setOpenShield, setCategoryMenuOpen, categoryMenuOpen }) => {
   const menuBtnRef = useRef(null)
   const menuOpenRef = useRef(null)
 
   const handleClick = (event) => {
-    console.log('navRef.click:', navRef?.current?.contains(event.target))
-    console.log('menuBtnRef.click:', menuBtnRef?.current?.contains(event.target))
-    console.log('menuOpenRef.click:', menuOpenRef?.current?.contains(event.target))
-
     if (navRef?.current?.contains(event.target)) {
       // click navbar
       if (menuOpenRef?.current?.contains(event.target) || menuBtnRef?.current?.contains(event.target)) {
@@ -389,29 +347,29 @@ const CategoryMenu = ({ openShield, navRef, setOpenShield, setCategoryMenuOpen, 
       </div>
 
       <Transition
-          as={Fragment}
-          show={categoryMenuOpen}
-          className="tablet:hidden bg-white transition-all duration-300 overflow-hidden"
-          enterFrom="transform -tranlateY-50 opacity-0 max-h-0"
-          enterTo="transform tranlateY-0 opacity-100 max-h-[1000px]"
-          leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
-          leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
-        >
-      <div ref={menuOpenRef} className={classnames('absolute w-[112px] z-10 divide-solid divide-y-2 divide-gray-gray8 origin-top-right bg-white shadow-lg ring-2 ring-black ring-opacity-5 focus:outline-none', !categoryMenuOpen && 'hidden' )}>
-        {
-          AnchorLinkItems.map((item, index) => (
-            <div key={index} className={classnames('px-4 py-2 font-semibold text-primary-blue1 hover:bg-complementary-blue2')}
-              onClick={() => {
-                document.querySelector(item.link)?.scrollIntoView({ behavior: 'smooth' })
-                setOpenShield(false)
-                setCategoryMenuOpen(false)
-              }}
-            >
-              {item.label}
-            </div>
-          ))
-        }
-      </div>
+        as={Fragment}
+        show={categoryMenuOpen}
+        className="tablet:hidden bg-white transition-all duration-300 overflow-hidden"
+        enterFrom="transform -tranlateY-50 opacity-0 max-h-0"
+        enterTo="transform tranlateY-0 opacity-100 max-h-[1000px]"
+        leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
+        leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
+      >
+        <div ref={menuOpenRef} className={classnames('absolute w-[112px] z-10 divide-solid divide-y-2 divide-gray-gray8 origin-top-right bg-white shadow-lg ring-2 ring-black ring-opacity-5 focus:outline-none', !categoryMenuOpen && 'hidden' )}>
+          {
+            AnchorLinkItems.map((item, index) => (
+              <div key={index} className={classnames('px-4 py-2 font-semibold text-primary-blue1 hover:bg-complementary-blue2')}
+                onClick={() => {
+                  document.querySelector(item.link)?.scrollIntoView({ behavior: 'smooth' })
+                  setOpenShield(false)
+                  setCategoryMenuOpen(false)
+                }}
+              >
+                {item.label}
+              </div>
+            ))
+          }
+        </div>
       </Transition>
     </div>
   )
@@ -533,7 +491,7 @@ export default function NavbarTop({ setOpenShield, openShield }) {
                 </div>
               </div>
 
-              {/* 熱門快搜 dropdown menu */}
+              {/* 熱門快搜 dropdown menu: web version */}
               <Transition
                 // as={Fragment}
                 show={openCloudTagSearch}
@@ -543,15 +501,11 @@ export default function NavbarTop({ setOpenShield, openShield }) {
                 leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
                 leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
               >
-                <div className={'flex flex-row flex-wrap gap-x-1 gap-y-2 overflow-hidden mt-2'}
-                style={{
-                  // width: navbarTopWidth,
-                }}
-                >
+                <div className={'flex flex-row flex-wrap gap-x-1 gap-y-2 overflow-hidden mt-2'}>
                   {
                     cloudTags.map((item, index) => (
                       <CloudTag
-                        label={item["關鍵字"]}
+                        label={item["關鍵字"]+"1"}
                         // bgColor={item["底色"]}
                         // textColor={item["字色"]}
                         bgColor={color.complementary.blue2}
@@ -572,7 +526,6 @@ export default function NavbarTop({ setOpenShield, openShield }) {
           {/* mobile device only */}
           <div className="flex tablet:hidden items-center">
             {/* 首頁分類 */}
-            {/* <DropDownMenu navRef={navRef} setOpenShield={setOpenShield} openShield={openShield} searchMenuOpen={searchMenuOpen} hamburgMenuOpen={hamburgMenuOpen} /> */}
             <CategoryMenu navRef={navRef} setOpenShield={setOpenShield} openShield={openShield} categoryMenuOpen={categoryMenuOpen} setCategoryMenuOpen={setCategoryMenuOpen}></CategoryMenu>
 
             <div className='flex flex-row ml-2'>
@@ -582,7 +535,7 @@ export default function NavbarTop({ setOpenShield, openShield }) {
                 cloudTags={cloudTags} setOpenShield={setOpenShield} openShield={openShield}
               />
 
-              <HamburgMenu hamburgMenuOpen={hamburgMenuOpen} setHamburgMenuOpen={setHamburgMenuOpen} setOpenShield={setOpenShield}></HamburgMenu>
+              <HamburgMenu navRef={navRef} hamburgMenuOpen={hamburgMenuOpen} setHamburgMenuOpen={setHamburgMenuOpen} setOpenShield={setOpenShield} />
             </div>
           </div>
         </nav >
