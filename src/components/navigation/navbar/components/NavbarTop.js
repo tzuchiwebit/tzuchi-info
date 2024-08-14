@@ -34,13 +34,11 @@ const SearchMenu = ({ navRef, openShield, setOpenShield, searchMenuOpen, setSear
         // do nothing
       } else {
         setSearchMenuOpen(false)
-        setOpenCloudTagSearch(false)
       }
     } else {
       // click outside, 全關
       setOpenShield(false)
       setSearchMenuOpen(false)
-      setOpenCloudTagSearch(false)
     }
   }
 
@@ -50,6 +48,12 @@ const SearchMenu = ({ navRef, openShield, setOpenShield, searchMenuOpen, setSear
       return () => {
         document.removeEventListener('mousedown', handleClick);
       };
+    }
+  }, [searchMenuOpen])
+
+  useEffect(() => {
+    if (!searchMenuOpen) {
+      setOpenCloudTagSearch(false)
     }
   }, [searchMenuOpen])
 
@@ -64,7 +68,6 @@ const SearchMenu = ({ navRef, openShield, setOpenShield, searchMenuOpen, setSear
           color: searchMenuOpen ? color.primary.blue1 : color.gray.gray4,
         }}
         onClick={() => {
-          console.log('openSearchMenu', searchMenuOpen)
           setSearchMenuOpen(!searchMenuOpen)
           setOpenShield(!searchMenuOpen)
         }}
@@ -73,31 +76,41 @@ const SearchMenu = ({ navRef, openShield, setOpenShield, searchMenuOpen, setSear
         <Icon.Search width="32px" />
       </button>
 
-      { searchMenuOpen &&
         <div ref={menuOpenRef} className='absolute shadow-elevation-4 bg-white w-full left-0 top-[62px] border-2 border-gray-gray8 border-solid'>
-          <div className=' flex flex-col tablet:hidden p-3 gap-1 '>
-            <div className='w-full flex items-end'>
-              {/* 熱門快搜 */}
-              <CloudTagSearchButton setOpenCloudTagSearch={setOpenCloudTagSearch} openCloudTagSearch={openCloudTagSearch} />
 
-              {/* 關鍵字搜尋 */}
-              <div className="w-full flex flex-1 justify-end items-center relative tablet:hidden">
-                <input
-                  placeholder="關鍵字搜尋"
-                  className="border-2 border-gray-gray4 px-2 py-1.5 w-full h-[40px] text-lg rounded bg-transparent"
-                  onChange={(e) => {
-                    setSearchText(e.target.value);
-                  }}
-                  value={searchText}
-                />
-                <Icon.Search
-                  width="100%"
-                  className="absolute mr-[2px] w-9 p-1 text-primary-blue1 cursor-pointer bg-gray-gray8 rounded-r"
-                  onClick={() => onKeywordSearch()}
-                />
+          <Transition
+            as={Fragment}
+            show={searchMenuOpen}
+            className="w-full tablet:hidden bg-white transition-all duration-300 overflow-hidden px-3 pb-3"
+            enterFrom="transform -tranlateY-50 opacity-0 max-h-0"
+            enterTo="transform tranlateY-0 opacity-100 max-h-[1000px]"
+            leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
+            leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
+          >
+            <div className=' flex flex-col tablet:hidden p-3 gap-1 '>
+              <div className='w-full flex items-end'>
+                {/* 熱門快搜 */}
+                <CloudTagSearchButton setOpenCloudTagSearch={setOpenCloudTagSearch} openCloudTagSearch={openCloudTagSearch} />
+
+                {/* 關鍵字搜尋 */}
+                <div className="w-full flex flex-1 justify-end items-center relative tablet:hidden">
+                  <input
+                    placeholder="關鍵字搜尋"
+                    className="border-2 border-gray-gray4 px-2 py-1.5 w-full h-[40px] text-lg rounded bg-transparent"
+                    onChange={(e) => {
+                      setSearchText(e.target.value);
+                    }}
+                    value={searchText}
+                  />
+                  <Icon.Search
+                    width="100%"
+                    className="absolute mr-[2px] w-9 p-1 text-primary-blue1 cursor-pointer bg-gray-gray8 rounded-r"
+                    onClick={() => onKeywordSearch()}
+                  />
+                </div>
               </div>
             </div>
-          </div>
+          </Transition>
 
           {/* 熱門快搜 dropdown menu */}
           <Transition
@@ -135,7 +148,6 @@ const SearchMenu = ({ navRef, openShield, setOpenShield, searchMenuOpen, setSear
             </div>
           </Transition>
         </div>
-      }
   </>
   )
 }
