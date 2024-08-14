@@ -11,7 +11,6 @@ import CloudTag from '@/shared/tag/CloudTag'
 import routes from '@/config/routes'
 import OutsideClickHandler from '@/utils/OutsideClickHandler'
 import jsonApi from '@/api/jsonApi'
-import { Linkfont } from '@/shared/styles/linkFont.js'
 import useScreenSize from '@/shared/hook/useScreenSize';
 import * as classnames from "classnames"
 
@@ -19,25 +18,125 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const SearchMenu = ({setOpenShield, searchMenuOpen, setSearchMenuOpen}) => {
+const SearchMenu = ({ navRef, openShield, setOpenShield, searchMenuOpen, setSearchMenuOpen, setOpenCloudTagSearch, openCloudTagSearch, searchText, setSearchText, cloudTags = [] }) => {
+  const router = useRouter();
+  const menuBtnRef = useRef(null)
+  const menuOpenRef = useRef(null)
+
+  const handleClick = (event) => {
+    // console.log('navRef.click:', navRef?.current?.contains(event.target))
+    // console.log('menuBtnRef.click:', menuBtnRef?.current?.contains(event.target))
+    // console.log('menuOpenRef.click:', menuOpenRef?.current?.contains(event.target))
+
+    if (navRef?.current?.contains(event.target)) {
+      // click navbar
+      if (menuOpenRef?.current?.contains(event.target) || menuBtnRef?.current?.contains(event.target)) {
+        // do nothing
+      } else {
+        setSearchMenuOpen(false)
+        setOpenCloudTagSearch(false)
+      }
+    } else {
+      // click outside, 全關
+      setOpenShield(false)
+      setSearchMenuOpen(false)
+      setOpenCloudTagSearch(false)
+    }
+  }
+
+  useEffect(() => {
+    if (searchMenuOpen) {
+      document.addEventListener('mousedown', handleClick);
+      return () => {
+        document.removeEventListener('mousedown', handleClick);
+      };
+    }
+  }, [searchMenuOpen])
+
   return (
-    <button
-    type="button"
-    className="w-[58px] h-[58px] flex flex-row justify-center items-center"
-    style={{
-      backgroundColor: searchMenuOpen ? color.complementary.blue2 : 'transparent',
-      color: searchMenuOpen ? color.primary.blue1 : color.gray.gray4,
-    }}
-    onClick={() => {
-      // console.log(`hamburgMenuOpen`)
-      // console.log(hamburgMenuOpen)
-      setSearchMenuOpen(!searchMenuOpen)
-      setOpenShield(true)
-    }}
-  >
-    <span className="sr-only">Open main menu</span>
-    <Icon.Search width="32px" />
-  </button>
+    <>
+      <button
+        ref={menuBtnRef}
+        type="button"
+        className="w-[58px] h-[58px] flex flex-row justify-center items-center"
+        style={{
+          backgroundColor: searchMenuOpen ? color.complementary.blue2 : 'transparent',
+          color: searchMenuOpen ? color.primary.blue1 : color.gray.gray4,
+        }}
+        onClick={() => {
+          console.log('openSearchMenu', searchMenuOpen)
+          setSearchMenuOpen(!searchMenuOpen)
+          setOpenShield(!searchMenuOpen)
+        }}
+      >
+        <span className="sr-only">Open main menu</span>
+        <Icon.Search width="32px" />
+      </button>
+
+      { searchMenuOpen &&
+        <div ref={menuOpenRef} className='absolute shadow-elevation-4 bg-white w-full left-0 top-[62px] border-2 border-gray-gray8 border-solid'>
+          <div className=' flex flex-col tablet:hidden p-3 gap-1 '>
+            <div className='w-full flex items-end'>
+              {/* 熱門快搜 */}
+              <CloudTagSearchButton setOpenCloudTagSearch={setOpenCloudTagSearch} openCloudTagSearch={openCloudTagSearch} />
+
+              {/* 關鍵字搜尋 */}
+              <div className="w-full flex flex-1 justify-end items-center relative tablet:hidden">
+                <input
+                  placeholder="關鍵字搜尋"
+                  className="border-2 border-gray-gray4 px-2 py-1.5 w-full h-[40px] text-lg rounded bg-transparent"
+                  onChange={(e) => {
+                    setSearchText(e.target.value);
+                  }}
+                  value={searchText}
+                />
+                <Icon.Search
+                  width="100%"
+                  className="absolute mr-[2px] w-9 p-1 text-primary-blue1 cursor-pointer bg-gray-gray8 rounded-r"
+                  onClick={() => onKeywordSearch()}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 熱門快搜 dropdown menu */}
+          <Transition
+            // as={Fragment}
+            show={openCloudTagSearch}
+            className="w-full tablet:hidden bg-white transition-all duration-300 overflow-hidden px-3 pb-3"
+            enterFrom="transform -tranlateY-50 opacity-0 max-h-0"
+            enterTo="transform tranlateY-0 opacity-100 max-h-[1000px]"
+            leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
+            leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
+          >
+            <div className={'flex flex-row flex-wrap gap-x-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0 tablet-down:justify-end'}
+              style={{
+                // width: navbarTopWidth
+              }}
+            >
+              {
+                cloudTags.map((item, index) => (
+                  <CloudTag
+                    label={item["關鍵字"]}
+                    // bgColor={item["底色"]}
+                    // textColor={item["字色"]}
+                    bgColor={color.complementary.blue2}
+                    textColor={color.primary.blue1}
+                    key={index}
+                    onClick={() => {
+                      router.push(`${routes.SEARCH}?keyword=${item["關鍵字"]}`)
+                      setOpenCloudTagSearch(false);
+                      setOpenShield(false)
+                      setSearchMenuOpen(false);
+                    }}
+                  />
+                ))
+              }
+            </div>
+          </Transition>
+        </div>
+      }
+  </>
   )
 }
 
@@ -62,7 +161,7 @@ const HamburgMenu = ({ hamburgMenuOpen, setHamburgMenuOpen, setOpenShield }) => 
         <Icon.Menu width="32px" />
       </button>
 
-      <Dialog as="div" className="tablet:hidden" open={hamburgMenuOpen} onClose={() => { setOpenShield(false); }}>
+      <Dialog as="div" className="tablet:hidden" open={hamburgMenuOpen} onClose={() => { setOpenShield(false) }}>
         <OutsideClickHandler onOutsideClick={() => setHamburgMenuOpen(false)}>
           <Dialog.Panel className="fixed h-fit inset-y-[62px] right-0 z-[100] w-[270px] overflow-y-auto bg-white shadow-elevation-4 ">
             <div className="flow-root">
@@ -161,68 +260,84 @@ const CloudTagSearchButton = ({ setOpenCloudTagSearch, openCloudTagSearch }) => 
   )
 }
 
-const DropDownMenu = ({ openShield, setOpenShield }) => (<Menu as="div" className="relative z-[999] inline-block text-left">
-  {({ open }) => (
-    <>
-      <div>
-        <Menu.Button
-          onClick={() => { setOpenShield(!open) }}
-          className={classnames(
-            open ? 'bg-complementary-blue2 text-primary-blue1 border-transparent' : 'bg-white text-gray-text border-gray-gray7',
-            "border border-solid inline-flex w-full items-center justify-center gap-x-1.5 rounded-md px-3 py-2 font-semibold whitespace-nowrap"
-          )}>
-          首頁分類
-          <Icon.UpArrow className="-mr-1 h-5 w-5 text-gray-text transition-all" style={{ transform: open ? 'rotate(0)' : 'rotate(180deg)' }} aria-hidden="true" />
-        </Menu.Button>
-      </div>
+const DropDownMenu = ({ openShield, setOpenShield, setSearchMenuOpen, setHamburgMenuOpen }) => {
+  const menuRef = useRef(null)
 
-      <Transition
-        as={Fragment}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
-      >
-        <Menu.Items className="absolute right-0 z-10 -mt-1 w-full divide-solid divide-y-2 divide-gray-gray8 origin-top-right bg-white shadow-lg ring-2 ring-black ring-opacity-5 focus:outline-none">
-          {
-            AnchorLinkItems.map((item, index) => (<div className="" key={index}>
-              <Menu.Item>
-                {({ active }) => (
-                  <div
-                    onClick={() => {
-                      document.querySelector(item.link)?.scrollIntoView({ behavior: 'smooth' })
-                      setOpenShield(!open)
-                    }}
-                    className={classnames(
-                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                      'block px-4 py-2 font-semibold text-primary-blue1 hover:bg-complementary-blue2'
+  // useEffect(() => {
+  //   if (searchMenuOpen) {
+  //     document.addEventListener('mousedown', handleClick);
+  //     return () => {
+  //       document.removeEventListener('mousedown', handleClick);
+  //     };
+  //   }
+  // }, [searchMenuOpen])
+
+  return (
+    <Menu ref={menuRef} as="div" className="relative z-[999] inline-block text-left">
+      {({ open }) => (
+        <>
+          <div>
+            <Menu.Button
+              onClick={() => {
+                setOpenShield(!open);
+              }}
+              className={classnames(
+                open ? 'bg-complementary-blue2 text-primary-blue1 border-transparent' : 'bg-white text-gray-text border-gray-gray7',
+                "border border-solid inline-flex w-full items-center justify-center gap-x-1.5 rounded-md px-3 py-2 font-semibold whitespace-nowrap"
+              )}>
+              首頁分類
+              <Icon.UpArrow className="-mr-1 h-5 w-5 text-gray-text transition-all" style={{ transform: open ? 'rotate(0)' : 'rotate(180deg)' }} aria-hidden="true" />
+            </Menu.Button>
+          </div>
+
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95"
+            enterTo="transform opacity-100 scale-100"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100"
+            leaveTo="transform opacity-0 scale-95"
+          >
+            <Menu.Items className="absolute right-0 z-10 -mt-1 w-full divide-solid divide-y-2 divide-gray-gray8 origin-top-right bg-white shadow-lg ring-2 ring-black ring-opacity-5 focus:outline-none">
+              {
+                AnchorLinkItems.map((item, index) => (<div className="" key={index}>
+                  <Menu.Item>
+                    {({ active }) => (
+                      <div
+                        onClick={() => {
+                          document.querySelector(item.link)?.scrollIntoView({ behavior: 'smooth' })
+                          setOpenShield(!open)
+                        }}
+                        className={classnames(
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                          'block px-4 py-2 font-semibold text-primary-blue1 hover:bg-complementary-blue2'
+                        )}
+                      >
+                        {item.label}
+                      </div>
                     )}
-                  >
-                    {item.label}
-                  </div>
-                )}
-              </Menu.Item>
-            </div>))
-          }
-        </Menu.Items>
-      </Transition>
-    </>
-  )}
-</Menu>)
+                  </Menu.Item>
+                </div>))
+              }
+            </Menu.Items>
+          </Transition>
+        </>
+      )}
+    </Menu>
+  )
+}
 
 export default function NavbarTop({ setOpenShield, openShield }) {
+  const navRef = useRef(null)
   const [hamburgMenuOpen, setHamburgMenuOpen] = useState(false);
   const [searchMenuOpen, setSearchMenuOpen] = useState(false);
   const [openCloudTagSearch, setOpenCloudTagSearch] = useState(false);
   const [searchText, setSearchText] = useState('');
-
   const [loadingCloudTags, setLoadingCloudTags] = useState(false);
   const [cloudTags, setCloudTags] = useState([]);
   // console.log(`cloudTags`)
   // console.log(cloudTags)
-
 
   /**
    * @deprecated
@@ -230,7 +345,6 @@ export default function NavbarTop({ setOpenShield, openShield }) {
   const [navbarTopWidth, setNavbarTopWidth] = useState('auto');
 
   const upperRef = useRef();
-
   const router = useRouter();
   const screenSize = useScreenSize();
 
@@ -274,7 +388,7 @@ export default function NavbarTop({ setOpenShield, openShield }) {
 
       {/* navbar: first row */}
       <Container noPadding>
-        <nav className="mx-auto flex items-center justify-between tablet:py-4" aria-label="Global">
+        <nav ref={navRef} className="mx-auto flex items-center justify-between tablet:py-4" aria-label="Global">
           {/* grid layout */}
           <div className="tablet-down:ml-3 flex flex-row w-full gap-x-1 justify-between">
             {/* logo */}
@@ -368,80 +482,20 @@ export default function NavbarTop({ setOpenShield, openShield }) {
           {/* mobile device only */}
           <div className="flex tablet:hidden items-center">
             {/* 首頁分類 */}
-            <DropDownMenu setOpenShield={setOpenShield} openShield={openShield} />
+            <DropDownMenu setOpenShield={setOpenShield} openShield={openShield} setSearchMenuOpen={setSearchMenuOpen}  setHamburgMenuOpen={setHamburgMenuOpen} />
+
             <div className='flex flex-row ml-2'>
-              <SearchMenu setOpenShield={setOpenShield} searchMenuOpen={searchMenuOpen} setSearchMenuOpen={setSearchMenuOpen}></SearchMenu>
+              <SearchMenu navRef={navRef} searchMenuOpen={searchMenuOpen} setSearchMenuOpen={setSearchMenuOpen}
+                setOpenCloudTagSearch={setOpenCloudTagSearch} openCloudTagSearch={openCloudTagSearch}
+                searchText={searchText} setSearchText={setSearchText}
+                cloudTags={cloudTags} setOpenShield={setOpenShield} openShield={openShield}
+              />
+
               <HamburgMenu hamburgMenuOpen={hamburgMenuOpen} setHamburgMenuOpen={setHamburgMenuOpen} setOpenShield={setOpenShield}></HamburgMenu>
             </div>
           </div>
         </nav >
       </Container >
-
-      {/* navbar: second row, mobile device only */}
-      {
-        searchMenuOpen &&
-        <Fragment>
-          <div className='w-full relative flex flex-col tablet:hidden p-3 gap-1 border-2 border-b-0 border-gray-gray8 border-solid'>
-            <div className='w-full flex items-end'>
-              {/* 熱門快搜 */}
-              <CloudTagSearchButton setOpenCloudTagSearch={setOpenCloudTagSearch} openCloudTagSearch={openCloudTagSearch} />
-
-              {/* 關鍵字搜尋 */}
-              <div className="w-full flex flex-1 justify-end items-center relative tablet:hidden">
-                <input
-                  placeholder="關鍵字搜尋"
-                  className="border-2 border-gray-gray4 px-2 py-1.5 w-full h-[40px] text-lg rounded bg-transparent"
-                  onChange={(e) => {
-                    setSearchText(e.target.value);
-                  }}
-                  value={searchText}
-                />
-                <Icon.Search
-                  width="100%"
-                  className="absolute mr-[2px] w-9 p-1 text-primary-blue1 cursor-pointer bg-gray-gray8 rounded-r"
-                  onClick={() => onKeywordSearch()}
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* 熱門快搜 dropdown menu */}
-          {/* TODO: how to listen click outside event */}
-          <Transition
-            // as={Fragment}
-            show={openCloudTagSearch}
-            className="absolute tablet:hidden left-0 bg-white transition-all duration-300 overflow-hidden border-2 border-t-0 border-gray-gray8 border-solid px-3 pb-3 z-10"
-            enterFrom="transform -tranlateY-50 opacity-0 max-h-0"
-            enterTo="transform tranlateY-0 opacity-100 max-h-[1000px]"
-            leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
-            leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
-          >
-            <div className={'flex flex-row flex-wrap gap-x-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0 tablet-down:justify-end'}
-              style={{
-                // width: navbarTopWidth
-              }}
-            >
-              {
-                cloudTags.map((item, index) => (
-                  <CloudTag
-                    label={item["關鍵字"]}
-                    // bgColor={item["底色"]}
-                    // textColor={item["字色"]}
-                    bgColor={color.complementary.blue2}
-                    textColor={color.primary.blue1}
-                    key={index}
-                    onClick={() => {
-                      router.push(`${routes.SEARCH}?keyword=${item["關鍵字"]}`)
-                      setOpenCloudTagSearch(false)
-                    }}
-                  />
-                ))
-              }
-            </div>
-          </Transition>
-        </Fragment>
-      }
-
     </>
   )
 }

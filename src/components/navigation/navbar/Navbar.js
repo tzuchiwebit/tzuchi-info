@@ -11,7 +11,7 @@ import NewsMarquee from './components/NewsMarquee'
 const ScreenShield = () => {
   return (
     <div className='fixed z-10 inset-0'>
-      <div className="fixed inset-0 bg-gray-500 bg-opacity-75"></div>
+      <div id="ScreenShield" className="fixed inset-0 bg-gray-500 bg-opacity-75"></div>
     </div>
   )
 }
@@ -40,7 +40,7 @@ export default function Navbar() {
 
 
 const StyledHeaderPadding = styled.div`
-  height: ${props => props.$hasMarquee ? 174 : 134}px;
+  height: ${props => props.$hasMarquee ? 174 : 68}px;
   position: relative;
   z-index: 100;
   @media(min-width: ${screens.tablet}) {

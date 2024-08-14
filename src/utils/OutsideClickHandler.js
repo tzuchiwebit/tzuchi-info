@@ -7,7 +7,7 @@ const OutsideClickHandler = ({ children, onOutsideClick }) => {
     const handleClickOutside = (event) => {
       if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
         // Clicked outside the wrapper, so call the callback function
-        onOutsideClick();
+        onOutsideClick(event);
       }
     };
 
