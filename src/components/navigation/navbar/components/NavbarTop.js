@@ -260,70 +260,69 @@ const CloudTagSearchButton = ({ setOpenCloudTagSearch, openCloudTagSearch }) => 
   )
 }
 
-const DropDownMenu = ({ openShield, setOpenShield, setSearchMenuOpen, setHamburgMenuOpen }) => {
+const DropDownMenu = ({ openShield, navRef, setOpenShield, searchMenuOpen, hamburgMenuOpen }) => {
   const menuRef = useRef(null)
-
-  // useEffect(() => {
-  //   if (searchMenuOpen) {
-  //     document.addEventListener('mousedown', handleClick);
-  //     return () => {
-  //       document.removeEventListener('mousedown', handleClick);
-  //     };
-  //   }
-  // }, [searchMenuOpen])
 
   return (
     <Menu ref={menuRef} as="div" className="relative z-[999] inline-block text-left">
-      {({ open }) => (
-        <>
-          <div>
-            <Menu.Button
-              onClick={() => {
-                setOpenShield(!open);
-              }}
-              className={classnames(
-                open ? 'bg-complementary-blue2 text-primary-blue1 border-transparent' : 'bg-white text-gray-text border-gray-gray7',
-                "border border-solid inline-flex w-full items-center justify-center gap-x-1.5 rounded-md px-3 py-2 font-semibold whitespace-nowrap"
-              )}>
-              首頁分類
-              <Icon.UpArrow className="-mr-1 h-5 w-5 text-gray-text transition-all" style={{ transform: open ? 'rotate(0)' : 'rotate(180deg)' }} aria-hidden="true" />
-            </Menu.Button>
-          </div>
+      {({ open }) => {
+        useEffect(() => {
+          if (!open) {
+            setOpenShield(false)
+          }
+        }, [open])
 
-          <Transition
-            as={Fragment}
-            enter="transition ease-out duration-100"
-            enterFrom="transform opacity-0 scale-95"
-            enterTo="transform opacity-100 scale-100"
-            leave="transition ease-in duration-75"
-            leaveFrom="transform opacity-100 scale-100"
-            leaveTo="transform opacity-0 scale-95"
-          >
-            <Menu.Items className="absolute right-0 z-10 -mt-1 w-full divide-solid divide-y-2 divide-gray-gray8 origin-top-right bg-white shadow-lg ring-2 ring-black ring-opacity-5 focus:outline-none">
-              {
-                AnchorLinkItems.map((item, index) => (<div className="" key={index}>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <div
-                        onClick={() => {
-                          document.querySelector(item.link)?.scrollIntoView({ behavior: 'smooth' })
-                          setOpenShield(!open)
-                        }}
-                        className={classnames(
-                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                          'block px-4 py-2 font-semibold text-primary-blue1 hover:bg-complementary-blue2'
-                        )}
-                      >
-                        {item.label}
-                      </div>
-                    )}
-                  </Menu.Item>
-                </div>))
-              }
-            </Menu.Items>
-          </Transition>
-        </>
-      )}
+        return (
+          <>
+            <div>
+              <Menu.Button
+                onClick={() => {
+                  setOpenShield(!open);
+                }}
+                className={classnames(
+                  open ? 'bg-complementary-blue2 text-primary-blue1 border-transparent' : 'bg-white text-gray-text border-gray-gray7',
+                  "border border-solid inline-flex w-full items-center justify-center gap-x-1.5 rounded-md px-3 py-2 font-semibold whitespace-nowrap"
+                )}>
+                首頁分類
+                <Icon.UpArrow className="-mr-1 h-5 w-5 text-gray-text transition-all" style={{ transform: open ? 'rotate(0)' : 'rotate(180deg)' }} aria-hidden="true" />
+              </Menu.Button>
+            </div>
+
+            <Transition
+              as={Fragment}
+              enter="transition ease-out duration-100"
+              enterFrom="transform opacity-0 scale-95"
+              enterTo="transform opacity-100 scale-100"
+              leave="transition ease-in duration-75"
+              leaveFrom="transform opacity-100 scale-100"
+              leaveTo="transform opacity-0 scale-95"
+            >
+              <Menu.Items className="absolute right-0 z-10 -mt-1 w-full divide-solid divide-y-2 divide-gray-gray8 origin-top-right bg-white shadow-lg ring-2 ring-black ring-opacity-5 focus:outline-none">
+                {
+                  AnchorLinkItems.map((item, index) => (<div className="" key={index}>
+                    <Menu.Item>
+                      {({ active }) => (
+                        <div
+                          onClick={() => {
+                            document.querySelector(item.link)?.scrollIntoView({ behavior: 'smooth' })
+                            setOpenShield(!open)
+                          }}
+                          className={classnames(
+                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                            'block px-4 py-2 font-semibold text-primary-blue1 hover:bg-complementary-blue2'
+                          )}
+                        >
+                          {item.label}
+                        </div>
+                      )}
+                    </Menu.Item>
+                  </div>))
+                }
+              </Menu.Items>
+            </Transition>
+          </>
+        )
+      }}
     </Menu>
   )
 }
@@ -482,7 +481,7 @@ export default function NavbarTop({ setOpenShield, openShield }) {
           {/* mobile device only */}
           <div className="flex tablet:hidden items-center">
             {/* 首頁分類 */}
-            <DropDownMenu setOpenShield={setOpenShield} openShield={openShield} setSearchMenuOpen={setSearchMenuOpen}  setHamburgMenuOpen={setHamburgMenuOpen} />
+            <DropDownMenu navRef={navRef} setOpenShield={setOpenShield} openShield={openShield} searchMenuOpen={searchMenuOpen} hamburgMenuOpen={hamburgMenuOpen} />
 
             <div className='flex flex-row ml-2'>
               <SearchMenu navRef={navRef} searchMenuOpen={searchMenuOpen} setSearchMenuOpen={setSearchMenuOpen}
