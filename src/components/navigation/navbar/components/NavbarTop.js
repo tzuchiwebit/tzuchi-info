@@ -391,7 +391,7 @@ const CategoryMenu = ({ openShield, navRef, setOpenShield, setCategoryMenuOpen, 
       <Transition
           as={Fragment}
           show={categoryMenuOpen}
-          className="w-full tablet:hidden bg-white transition-all duration-300 overflow-hidden"
+          className="tablet:hidden bg-white transition-all duration-300 overflow-hidden"
           enterFrom="transform -tranlateY-50 opacity-0 max-h-0"
           enterTo="transform tranlateY-0 opacity-100 max-h-[1000px]"
           leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
