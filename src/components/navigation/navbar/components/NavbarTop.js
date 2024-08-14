@@ -3,7 +3,7 @@ import { Fragment, useEffect, useRef, useState } from 'react'
 import Container from '@/shared/layout/Container'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
 import Icon from '@/shared/Icon'
-import { HeaderLinkItems, NavLinkItems } from '../config'
+import { HeaderLinkItems, NavLinkItems, AnchorLinkItems } from '../config'
 import color from '@/shared/styles/color'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
@@ -13,21 +13,165 @@ import OutsideClickHandler from '@/utils/OutsideClickHandler'
 import jsonApi from '@/api/jsonApi'
 import { Linkfont } from '@/shared/styles/linkFont.js'
 import useScreenSize from '@/shared/hook/useScreenSize';
+import * as classnames from "classnames"
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const DropDownMenu = () => (<Menu as="div" className="relative inline-block text-left">
+const SearchMenu = ({setOpenShield, searchMenuOpen, setSearchMenuOpen}) => {
+  return (
+    <button
+    type="button"
+    className="w-[58px] h-[58px] flex flex-row justify-center items-center"
+    style={{
+      backgroundColor: searchMenuOpen ? color.complementary.blue2 : 'transparent',
+      color: searchMenuOpen ? color.primary.blue1 : color.gray.gray4,
+    }}
+    onClick={() => {
+      // console.log(`hamburgMenuOpen`)
+      // console.log(hamburgMenuOpen)
+      setSearchMenuOpen(!searchMenuOpen)
+      setOpenShield(true)
+    }}
+  >
+    <span className="sr-only">Open main menu</span>
+    <Icon.Search width="32px" />
+  </button>
+  )
+}
+
+const HamburgMenu = ({ hamburgMenuOpen, setHamburgMenuOpen, setOpenShield }) => {
+  const [currentDialogIndex, setCurrentDialogIndex] = useState(-1);
+
+  return (
+    <>
+      <button
+        type="button"
+        className="w-[58px] h-[58px] flex flex-row justify-center items-center"
+        style={{
+          backgroundColor: hamburgMenuOpen ? color.complementary.blue2 : 'transparent',
+          color: hamburgMenuOpen ? color.primary.blue1 : color.gray.gray4,
+        }}
+        onClick={() => {
+          setHamburgMenuOpen(!hamburgMenuOpen);
+          setOpenShield(true)
+        }}
+      >
+        <span className="sr-only">Open main menu</span>
+        <Icon.Menu width="32px" />
+      </button>
+
+      <Dialog as="div" className="tablet:hidden" open={hamburgMenuOpen} onClose={() => { setOpenShield(false); }}>
+        <OutsideClickHandler onOutsideClick={() => setHamburgMenuOpen(false)}>
+          <Dialog.Panel className="fixed h-fit inset-y-[62px] right-0 z-[100] w-[270px] overflow-y-auto bg-white shadow-elevation-4 ">
+            <div className="flow-root">
+              <div className="divide-y-2 divide-gray-gray8 divide-solid transition-all">
+                {NavLinkItems.map((nav, index) => {
+                  const isDisclosure = !!(nav?.children);
+
+                  return (<div className="" key={index}>
+                    <Disclosure as="div" className="">
+                      <>
+                        <Disclosure.Button
+                          className="flex gap-x-2 w-full items-center justify-start py-2 pl-5 font-semibold leading-7 text-primary-blue1 hover:bg-complementary-blue2 "
+                          onClick={() => {
+                            if (!isDisclosure) {
+                              return window.open(nav.link, '_blank');
+                            } else if (currentDialogIndex === index) {
+                              return setCurrentDialogIndex(-1);
+                            }
+                            setCurrentDialogIndex(index);
+                          }}
+                        >
+                          {
+                            !!nav?.children?.length &&
+                            <Icon.CyanTriangle className="transition-all"
+                              width="12px"
+                              style={{
+                                visibility: nav?.children?.length ? 'visible' : 'hidden',
+                                transform: (isDisclosure && currentDialogIndex === index) ? 'rotate(90deg)' : '',
+                              }}
+                            />
+                          }
+                          {nav.label}
+                        </Disclosure.Button>
+                        <Transition
+                          show={isDisclosure && (currentDialogIndex === index)}
+                          enter="transition-height duration-500 ease-in-out"
+                          enterFrom="h-0"
+                          enterTo="h-auto"
+                          leave="transition-height duration-0 "
+                          leaveFrom="h-auto"
+                          leaveTo="h-0"
+                        >
+                          <Disclosure.Panel className="px-3 py-1 bg-primary-blue3">
+                            <div className="divide-y divide-gray-gray8 divide-solid">
+                              {nav?.children && nav.children.map((item) => (
+                                <Disclosure.Button
+                                  key={item.label}
+                                  as="a"
+                                  href={item.link}
+                                  target='_blank'
+                                  className="block py-2 pl-1 text-white"
+                                >
+                                  {item.label}
+                                </Disclosure.Button>
+                              ))}
+                            </div>
+                          </Disclosure.Panel>
+                        </Transition>
+                      </>
+                    </Disclosure>
+                  </div>)
+                })}
+
+                {HeaderLinkItems.map((nav, index) => {
+                  return (<div className="" key={index}>
+                    <Disclosure as="div" className="">
+                      <Disclosure.Button
+                        className={classnames('flex gap-2 w-full items-center justify-start py-2 pl-5 font-normal leading-7 text-primary-blue1 hover:bg-complementary-blue2', index === 0 ? 'pt-8' : '')}
+                        onClick={() => window.open(nav.link, '_blank')}
+                      >
+                        {nav.label}
+                      </Disclosure.Button>
+                    </Disclosure>
+                  </div>)
+                })}
+              </div>
+            </div>
+          </Dialog.Panel>
+        </OutsideClickHandler>
+      </Dialog>
+    </>
+  )
+}
+
+const CloudTagSearchButton = ({ setOpenCloudTagSearch, openCloudTagSearch }) => {
+  return (
+    <>
+      <button
+        className="w-[110px] flex items-center justify-between relative border-b border-solid border-gray-gray7 py-1 mr-2"
+        onClick={() => { setOpenCloudTagSearch(!openCloudTagSearch) }}
+        >
+        <span className='whitespace-nowrap text-lg text-primary-blue1 font-bold'>熱門快搜</span>
+        <Icon.UpArrow style={{ width: 20, transition: 'all .15s', transform: openCloudTagSearch ? '' : 'rotate(180deg)' }} />
+      </button>
+    </>
+  )
+}
+
+const DropDownMenu = ({ openShield, setOpenShield }) => (<Menu as="div" className="relative z-[999] inline-block text-left">
   {({ open }) => (
     <>
       <div>
         <Menu.Button
-          className={classNames(
+          onClick={() => { setOpenShield(!open) }}
+          className={classnames(
             open ? 'bg-complementary-blue2 text-primary-blue1 border-transparent' : 'bg-white text-gray-text border-gray-gray7',
             "border border-solid inline-flex w-full items-center justify-center gap-x-1.5 rounded-md px-3 py-2 font-semibold whitespace-nowrap"
           )}>
-          功能選單
+          首頁分類
           <Icon.UpArrow className="-mr-1 h-5 w-5 text-gray-text transition-all" style={{ transform: open ? 'rotate(0)' : 'rotate(180deg)' }} aria-hidden="true" />
         </Menu.Button>
       </div>
@@ -43,18 +187,21 @@ const DropDownMenu = () => (<Menu as="div" className="relative inline-block text
       >
         <Menu.Items className="absolute right-0 z-10 -mt-1 w-full divide-solid divide-y-2 divide-gray-gray8 origin-top-right bg-white shadow-lg ring-2 ring-black ring-opacity-5 focus:outline-none">
           {
-            HeaderLinkItems.map((item, index) => (<div className="" key={index}>
+            AnchorLinkItems.map((item, index) => (<div className="" key={index}>
               <Menu.Item>
                 {({ active }) => (
-                  <a
-                    href={item.link}
-                    className={classNames(
+                  <div
+                    onClick={() => {
+                      document.querySelector(item.link)?.scrollIntoView({ behavior: 'smooth' })
+                      setOpenShield(!open)
+                    }}
+                    className={classnames(
                       active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                       'block px-4 py-2 font-semibold text-primary-blue1 hover:bg-complementary-blue2'
                     )}
                   >
                     {item.label}
-                  </a>
+                  </div>
                 )}
               </Menu.Item>
             </div>))
@@ -63,15 +210,12 @@ const DropDownMenu = () => (<Menu as="div" className="relative inline-block text
       </Transition>
     </>
   )}
-
 </Menu>)
 
-export default function NavbarTop() {
-
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+export default function NavbarTop({ setOpenShield, openShield }) {
+  const [hamburgMenuOpen, setHamburgMenuOpen] = useState(false);
+  const [searchMenuOpen, setSearchMenuOpen] = useState(false);
   const [openCloudTagSearch, setOpenCloudTagSearch] = useState(false);
-  // console.log(`openCloudTagSearch`)
-  // console.log(openCloudTagSearch)
   const [searchText, setSearchText] = useState('');
 
   const [loadingCloudTags, setLoadingCloudTags] = useState(false);
@@ -79,8 +223,10 @@ export default function NavbarTop() {
   // console.log(`cloudTags`)
   // console.log(cloudTags)
 
-  const [currentDialogIndex, setCurrentDialogIndex] = useState(-1);
 
+  /**
+   * @deprecated
+   */
   const [navbarTopWidth, setNavbarTopWidth] = useState('auto');
 
   const upperRef = useRef();
@@ -108,26 +254,15 @@ export default function NavbarTop() {
   }, [])
 
   useEffect(() => {
-    // console.log('responsive.width', screenSize.width)
-        // console.log('upperRef?.current?.clientWidth', upperRef?.current?.clientWidth)
-
-        setTimeout(() => {
-        if (upperRef?.current?.clientWidth) {
-          setNavbarTopWidth(upperRef.current.clientWidth)
-        } else {
-          setNavbarTopWidth('100%')
-        }
-        getCloudTags();
-      }, 1000)
+    setTimeout(() => {
+      if (upperRef?.current?.clientWidth) {
+        setNavbarTopWidth(upperRef.current.clientWidth)
+      } else {
+        setNavbarTopWidth('100%')
+      }
+      getCloudTags();
+    }, 1000)
   }, [screenSize.width])
-
-  const CloudTagSearchButton = () => (<button
-    className="w-[110px] flex items-center justify-between relative border-b border-solid border-gray-gray7 py-1 mr-2"
-    onClick={() => { setOpenCloudTagSearch(!openCloudTagSearch) }}
-  >
-    <span className='whitespace-nowrap text-lg text-primary-blue1 font-bold'>熱門快搜</span>
-    <Icon.UpArrow style={{ width: 20, transition: 'all .15s', transform: openCloudTagSearch ? '' : 'rotate(180deg)' }} />
-  </button>)
 
   const onKeywordSearch = () => {
     return router.push(`${routes.SEARCH}?keyword=${searchText}`)
@@ -136,26 +271,30 @@ export default function NavbarTop() {
   return (
     <>
       <div className="h-1 w-full bg-gradient-to-r from-primary-blue1 to-primary-linear"></div>
-      <Container>
+
+      {/* navbar: first row */}
+      <Container noPadding>
         <nav className="mx-auto flex items-center justify-between tablet:py-4" aria-label="Global">
           {/* grid layout */}
-          <div className="flex flex-row w-full gap-x-1 justify-between">
+          <div className="tablet-down:ml-3 flex flex-row w-full gap-x-1 justify-between">
             {/* logo */}
-            <div className="flex-none w-[165px] tablet:w-[157px] laptop:w-[217px] desktop:w-[372px] desktop:self-start">
+            <div className="flex-none w-[114px] tablet:w-[157px] laptop:w-[217px] desktop:w-[372px] desktop:self-start">
               <Link href="/" className="">
                 <span className="sr-only">慈濟資訊網</span>
                 <Icon.LOGO className="hidden desktop:block" width="100%" onClick={() => router.push('/')} />
                 <Icon.LOGOMobile className="desktop:hidden" width="100%" onClick={() => router.push('/')} />
               </Link>
             </div>
+
             <div className='desktop:w-16 laptop:w-11 tablet:w-4'></div>
+
             {/* right side nav */}
             <div className='grow-0 hidden tablet:flex flex-col gap-x-2'>
-              {/* upper section */}
               <div className="flex flex-row gap-x-2 h-[52.3px] justify-end w-full" ref={upperRef}>
-                {/* cloud tags */}
-                <CloudTagSearchButton />
-                {/* search input */}
+                {/* 熱門快搜 */}
+                <CloudTagSearchButton setOpenCloudTagSearch={setOpenCloudTagSearch} openCloudTagSearch={openCloudTagSearch} />
+
+                {/* 關鍵字搜尋 */}
                 <div className="w-auto flex justify-end items-center relative">
                   <input
                     placeholder="關鍵字搜尋"
@@ -171,7 +310,8 @@ export default function NavbarTop() {
                     onClick={() => onKeywordSearch()}
                   />
                 </div>
-                {/* header navs */}
+
+                {/* header 連結 */}
                 <div className="w-auto flex-0 flex flex-row items-center justify-end">
                   {
                     HeaderLinkItems.map((item, index) => (
@@ -180,14 +320,16 @@ export default function NavbarTop() {
                           index !== 0 ? 'border-l' : '',
                           'border-gray-text border-solid h-[16px]'
                         )}></div>
-                        <a href={item.link} className="text-gray-text laptop:px-2 px-1 hover:font-medium whitespace-nowrap" target='_blank'>
-                          <Linkfont>{item.label}</Linkfont>
+                        <a href={item.link} className="text-primary-blue2 laptop:px-2 px-1 hover:font-medium whitespace-nowrap hover:text-primary-blue3 active:text-primary-blue1" target='_blank'>
+                          {item.label}
                         </a>
                       </Fragment>
                     ))
                   }
                 </div>
               </div>
+
+              {/* 熱門快搜 dropdown menu */}
               <Transition
                 // as={Fragment}
                 show={openCloudTagSearch}
@@ -222,51 +364,48 @@ export default function NavbarTop() {
               </Transition>
             </div>
           </div>
-          {/* mobile layout */}
-          <div className="flex gap-4 tablet:hidden items-center">
-            <DropDownMenu />
-            <button
-              type="button"
-              className="w-16 h-16 flex flex-row justify-center items-center"
-              style={{
-                backgroundColor: mobileMenuOpen ? color.complementary.blue2 : 'transparent',
-                color: mobileMenuOpen ? color.primary.blue1 : color.gray.gray4,
-              }}
-              onClick={() => {
-                // console.log(`mobileMenuOpen`)
-                // console.log(mobileMenuOpen)
-                setMobileMenuOpen(!mobileMenuOpen);
-              }}
-            >
-              <span className="sr-only">Open main menu</span>
-              <Icon.Menu width="32px" />
-            </button>
+
+          {/* mobile device only */}
+          <div className="flex tablet:hidden items-center">
+            {/* 首頁分類 */}
+            <DropDownMenu setOpenShield={setOpenShield} openShield={openShield} />
+            <div className='flex flex-row ml-2'>
+              <SearchMenu setOpenShield={setOpenShield} searchMenuOpen={searchMenuOpen} setSearchMenuOpen={setSearchMenuOpen}></SearchMenu>
+              <HamburgMenu hamburgMenuOpen={hamburgMenuOpen} setHamburgMenuOpen={setHamburgMenuOpen} setOpenShield={setOpenShield}></HamburgMenu>
+            </div>
           </div>
         </nav >
       </Container >
-      {/* <div className="hidden tablet:block h-1 w-full bg-gradient-to-r from-primary-blue1 to-primary-linear"></div> */}
 
-      {/* shows on mobile */}
-      <div className='w-full relative flex flex-col tablet:hidden p-3 gap-1 border-2 border-b-0 border-gray-gray8 border-solid'>
-        <div className='w-full flex items-end'>
-          <CloudTagSearchButton />
-          <div className="w-full flex flex-1 justify-end items-center relative tablet:hidden">
-            <input
-              placeholder="關鍵字搜尋"
-              className="border-2 border-gray-gray4 px-2 py-1.5 w-full h-[40px] text-lg rounded bg-transparent"
-              onChange={(e) => {
-                setSearchText(e.target.value);
-              }}
-              value={searchText}
-            />
-            <Icon.Search
-              width="100%"
-              className="absolute mr-[2px] w-9 p-1 text-primary-blue1 cursor-pointer bg-gray-gray8 rounded-r"
-              onClick={() => onKeywordSearch()}
-            />
+      {/* navbar: second row, mobile device only */}
+      {
+        searchMenuOpen &&
+          <div className='w-full relative flex flex-col tablet:hidden p-3 gap-1 border-2 border-b-0 border-gray-gray8 border-solid'>
+            <div className='w-full flex items-end'>
+              {/* 熱門快搜 */}
+              <CloudTagSearchButton setOpenCloudTagSearch={setOpenCloudTagSearch} openCloudTagSearch={openCloudTagSearch} />
+
+              {/* 關鍵字搜尋 */}
+              <div className="w-full flex flex-1 justify-end items-center relative tablet:hidden">
+                <input
+                  placeholder="關鍵字搜尋"
+                  className="border-2 border-gray-gray4 px-2 py-1.5 w-full h-[40px] text-lg rounded bg-transparent"
+                  onChange={(e) => {
+                    setSearchText(e.target.value);
+                  }}
+                  value={searchText}
+                />
+                <Icon.Search
+                  width="100%"
+                  className="absolute mr-[2px] w-9 p-1 text-primary-blue1 cursor-pointer bg-gray-gray8 rounded-r"
+                  onClick={() => onKeywordSearch()}
+                />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+      }
+
+      {/* 熱門快搜 dropdown menu */}
       <Transition
         // as={Fragment}
         show={openCloudTagSearch}
@@ -276,7 +415,11 @@ export default function NavbarTop() {
         leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
         leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
       >
-        <div className={'flex flex-row flex-wrap gap-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0'} style={{ width: navbarTopWidth }}>
+        <div className={'flex flex-row flex-wrap gap-x-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0 tablet-down:justify-end'}
+          style={{
+            // width: navbarTopWidth
+          }}
+        >
           {
             cloudTags.map((item, index) => (
               <CloudTag
@@ -295,72 +438,6 @@ export default function NavbarTop() {
           }
         </div>
       </Transition>
-
-      <Dialog as="div" className="tablet:hidden" open={mobileMenuOpen} onClose={() => { }}>
-        {/* <div className="fixed inset-0 z-30" /> */}
-        <OutsideClickHandler onOutsideClick={() => setMobileMenuOpen(false)}>
-          <Dialog.Panel className="fixed h-fit inset-y-16 right-0 z-[100] w-[270px] overflow-y-auto bg-white shadow-elevation-4 ">
-            <div className="flow-root">
-              <div className="divide-y-2 divide-gray-gray8 divide-solid transition-all">
-                {NavLinkItems.map((nav, index) => {
-
-                  const isDisclosure = !!(nav?.children);
-
-                  return (<div className="" key={index}>
-                    <Disclosure as="div" className="">
-                      <>
-                        <Disclosure.Button
-                          className="flex gap-2 w-full items-center justify-start py-2 pl-5 font-semibold leading-7 text-gray-900 hover:bg-complementary-blue2 "
-                          onClick={() => {
-                            if (!isDisclosure) {
-                              return window.open(nav.link, '_blank');
-                            } else if (currentDialogIndex === index) {
-                              return setCurrentDialogIndex(-1);
-                            }
-                            setCurrentDialogIndex(index);
-                          }}
-                        >
-                          <Icon.CyanTriangle
-                            className="transition-all"
-                            width="12px"
-                            style={{ visibility: nav?.children?.length ? 'visible' : 'hidden', transform: (isDisclosure && currentDialogIndex === index) ? 'rotate(90deg)' : '' }}
-                          /> {nav.label}
-                        </Disclosure.Button>
-                        <Transition
-                          show={isDisclosure && (currentDialogIndex === index)}
-                          enter="transition-height duration-500 ease-in-out"
-                          enterFrom="h-0"
-                          enterTo="h-auto"
-                          leave="transition-height duration-0 "
-                          leaveFrom="h-auto"
-                          leaveTo="h-0"
-                        >
-                          <Disclosure.Panel className="px-3 py-1 bg-primary-blue3">
-                            <div className="divide-y divide-gray-gray8 divide-solid">
-                              {nav?.children && nav.children.map((item) => (
-                                <Disclosure.Button
-                                  key={item.label}
-                                  as="a"
-                                  href={item.link}
-                                  target='_blank'
-                                  className="block py-2 pl-1 text-white"
-                                >
-                                  {item.label}
-                                </Disclosure.Button>
-                              ))}
-                            </div>
-                          </Disclosure.Panel>
-                        </Transition>
-                      </>
-                    </Disclosure>
-                  </div>)
-                })}
-              </div>
-            </div>
-          </Dialog.Panel>
-        </OutsideClickHandler>
-      </Dialog>
-
     </>
   )
 }

@@ -52,8 +52,8 @@ export default function Reminder() {
                                 src={reminderItem.image ? reminderItem.image : DefaultImage}
                                 alt={reminderItem.imageAlt}
                                 fill
-                                width={0}
-                                height={0}
+                                // width={0}
+                                // height={0}
                                 sizes="100vw"
                                 style={{ objectFit: "contain" }}
                             />

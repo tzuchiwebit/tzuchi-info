@@ -49,8 +49,10 @@ export default function Morning() {
               src={morningData.image ? morningData.image : DefaultImage}
               alt={morningData.imageAlt}
               sizes="100vw"
-              layout='fill'
-              objectFit='cover'
+              fill
+              style={{
+                objectFit: 'cover'
+              }}
               className="laptop:w-[164px] w-[146px]"
             />
           }

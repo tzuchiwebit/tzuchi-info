@@ -21,6 +21,41 @@ export const HeaderLinkItems = [
     // },
 ]
 
+export const AnchorLinkItems = [
+  {
+    label: '近期焦點',
+    link: '#MainCarousel',
+  },
+  {
+    label: '各據點消息',
+    link: '#SiteNews',
+  },
+  {
+    label: '社區故事',
+    link: '#CommunityStory',
+  },
+  {
+    label: '專欄文章',
+    link: '#Article',
+  },
+  {
+    label: '推薦活動',
+    link: '#Activities',
+  },
+  {
+    label: '基金會公告',
+    link: '#Announcements',
+  },
+  {
+    label: '好書推薦',
+    link: '#BookSuggest',
+  },
+  {
+    label: '社群影片 小編精選',
+    link: '#Youtube',
+  },
+]
+
 export const NavLinkItems = [
     // {
     //     label: '聯絡慈濟',

@@ -37,8 +37,6 @@ export default function Journal() {
                 src={weeklyReportItem.cover_image ? weeklyReportItem.cover_image : DefaultImage}
                 alt={weeklyReportItem.title}
                 fill
-                width={0}
-                height={0}
                 sizes="100vw"
                 style={{ objectFit: "contain" }}
               />

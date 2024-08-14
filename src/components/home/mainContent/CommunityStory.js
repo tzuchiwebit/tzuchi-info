@@ -84,7 +84,7 @@ export default function CommunityStory() {
 
     // console.log(storyData)
     return <div className="pt-5">
-        <BannerTitle title={`社區故事`} link="https://tw.tzuchi.org/community/" behavior="blank" />
+        <BannerTitle id="CommunityStory" title={`社區故事`} link="https://tw.tzuchi.org/community/" behavior="blank" />
         <div className="pt-2 w-full">
             <SlidesTrack>
                 <CommunityStorySection data={storyData} />

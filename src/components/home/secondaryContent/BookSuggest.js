@@ -43,21 +43,22 @@ const Item = ({ item }) => {
         {
           item?.title ?
             <Image
+              priority
               src={getImage()}
               alt={""}
               width={171}
               height={171}
               sizes="100vw"
-              style={{
-                width: 'auto',
-                height: 'auto',
-              }}
+              // style={{
+              //   width: 'auto',
+              //   height: 'auto',
+              // }}
               className="rounded-md"
             /> :
             <Skeleton className="aspect-square" />
         }
         <div className="pt-2 pl-2 pr-0 text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2">
-          <Linkfont>{item?.title}</Linkfont>
+          <Linkfont>{item?.title}123</Linkfont>
         </div>
       </div>
     </div>
@@ -98,22 +99,22 @@ const NewItem = ({ item = {}, loading = false }) => {
 
   return (
     <div className="relative mb-[60px] rounded-md laptop:w-[180px] tablet:w-[171px] w-[165px] cursor-pointer select-none" onClick={clickOpen}>
+      <div className="aspect-square relative laptop:w-[164px] w-[164px]">
       {
         loading ?
           <Skeleton className="aspect-square" /> :
           <Image
+            priority
             src={getImage()}
             alt={""}
-            width={imageWidth}
-            height={imageWidth}
-            sizes="100vw"
+            fill
             style={{
-              width: 'auto',
-              height: 'auto',
+              objectFit: 'contain',
             }}
             className="rounded-md"
           />
       }
+      </div>
       <div className="px-0 flex flex-col items-center pt-4 pb-2 w-full gap-y-1 gap-x-4">
         <div className="text-xl font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">
           {
@@ -246,7 +247,7 @@ export default function BookSuggest() {
   }, [screenSize.width])
 
   return <div className="pt-3 w-full">
-    <BannerTitle title={`好書推薦`} />
+    <BannerTitle title={`好書推薦`} id="BookSuggest"/>
     <div className="flex flex-row w-full gap-2 items-center pt-4">
       <div className="flex-0 text-[24px] font-bold text-primary-blue1">
         靜思人文

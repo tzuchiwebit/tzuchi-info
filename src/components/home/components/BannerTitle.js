@@ -3,7 +3,7 @@ import Icon from "@/shared/Icon"
 import { useRouter } from "next/navigation"
 import { Linkfont } from "@/shared/styles/linkFont.js";
 
-export default function BannerTitle({ title = "", link = false, behavior = "self" }) {
+export default function BannerTitle({ title = "", link = false, behavior = "self", id = "" }) {
 
     const router = useRouter();
 
@@ -16,7 +16,7 @@ export default function BannerTitle({ title = "", link = false, behavior = "self
     }
 
     return (
-        <div className="flex flex-row w-full gap-2 items-center">
+        <div id={id} className="flex flex-row w-full gap-2 items-center">
             <div className="flex-0 text-[26px] font-bold text-primary-blue1 border-solid border-l-[6px] border-primary-blue3 pl-2">
                 {title}
             </div>

@@ -139,7 +139,7 @@ const CarouselSection = () => {
 export default function MainCarousel() {
 
     return <div>
-        <BannerTitle title={`近期焦點`} />
+        <BannerTitle title={`近期焦點`} id="MainCarousel" />
         <div className="pt-5 w-full">
             <CarouselSection />
         </div>
