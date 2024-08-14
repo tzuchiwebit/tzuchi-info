@@ -380,6 +380,7 @@ export default function NavbarTop({ setOpenShield, openShield }) {
       {/* navbar: second row, mobile device only */}
       {
         searchMenuOpen &&
+        <Fragment>
           <div className='w-full relative flex flex-col tablet:hidden p-3 gap-1 border-2 border-b-0 border-gray-gray8 border-solid'>
             <div className='w-full flex items-end'>
               {/* 熱門快搜 */}
@@ -403,41 +404,44 @@ export default function NavbarTop({ setOpenShield, openShield }) {
               </div>
             </div>
           </div>
+
+          {/* 熱門快搜 dropdown menu */}
+          {/* TODO: how to listen click outside event */}
+          <Transition
+            // as={Fragment}
+            show={openCloudTagSearch}
+            className="absolute tablet:hidden left-0 bg-white transition-all duration-300 overflow-hidden border-2 border-t-0 border-gray-gray8 border-solid px-3 pb-3 z-10"
+            enterFrom="transform -tranlateY-50 opacity-0 max-h-0"
+            enterTo="transform tranlateY-0 opacity-100 max-h-[1000px]"
+            leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
+            leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
+          >
+            <div className={'flex flex-row flex-wrap gap-x-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0 tablet-down:justify-end'}
+              style={{
+                // width: navbarTopWidth
+              }}
+            >
+              {
+                cloudTags.map((item, index) => (
+                  <CloudTag
+                    label={item["關鍵字"]}
+                    // bgColor={item["底色"]}
+                    // textColor={item["字色"]}
+                    bgColor={color.complementary.blue2}
+                    textColor={color.primary.blue1}
+                    key={index}
+                    onClick={() => {
+                      router.push(`${routes.SEARCH}?keyword=${item["關鍵字"]}`)
+                      setOpenCloudTagSearch(false)
+                    }}
+                  />
+                ))
+              }
+            </div>
+          </Transition>
+        </Fragment>
       }
 
-      {/* 熱門快搜 dropdown menu */}
-      <Transition
-        // as={Fragment}
-        show={openCloudTagSearch}
-        className="absolute tablet:hidden left-0 bg-white transition-all duration-300 overflow-hidden border-2 border-t-0 border-gray-gray8 border-solid px-3 pb-3 z-10"
-        enterFrom="transform -tranlateY-50 opacity-0 max-h-0"
-        enterTo="transform tranlateY-0 opacity-100 max-h-[1000px]"
-        leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
-        leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
-      >
-        <div className={'flex flex-row flex-wrap gap-x-1 gap-y-2 overflow-hidden mt-3 tablet:mt-0 tablet-down:justify-end'}
-          style={{
-            // width: navbarTopWidth
-          }}
-        >
-          {
-            cloudTags.map((item, index) => (
-              <CloudTag
-                label={item["關鍵字"]}
-                // bgColor={item["底色"]}
-                // textColor={item["字色"]}
-                bgColor={color.complementary.blue2}
-                textColor={color.primary.blue1}
-                key={index}
-                onClick={() => {
-                  router.push(`${routes.SEARCH}?keyword=${item["關鍵字"]}`)
-                  setOpenCloudTagSearch(false)
-                }}
-              />
-            ))
-          }
-        </div>
-      </Transition>
     </>
   )
 }
