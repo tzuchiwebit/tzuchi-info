@@ -39,6 +39,7 @@ const Inner = styled.div`
   max-width: 1200px;
   padding-left: ${(props) => props.$noPadding ? '0' : '13px'};
   padding-right: ${(props) => props.$noPadding ? '0' : '13px'};
+
   @media(min-width: ${screens.tablet}) {
     padding-left: ${(props) => props.$noPaddingTablet ? '0' : '13px'};
     padding-right: ${(props) => props.$noPaddingTablet ? '0' : '13px'};

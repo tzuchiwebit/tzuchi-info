@@ -41,9 +41,12 @@ export default function Navbar() {
 
 const StyledHeaderPadding = styled.div`
   height: ${props => props.$hasMarquee ? 174 : 68}px;
-  position: relative;
+  position: fixed;
   z-index: 100;
+  width: 100%;
+
   @media(min-width: ${screens.tablet}) {
+    position: relative;
     height: ${props => props.$hasMarquee ? 164 : 118}px;
   }
   @media(min-width: ${screens.laptop}) {

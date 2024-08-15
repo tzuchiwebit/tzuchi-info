@@ -505,9 +505,7 @@ export default function NavbarTop({ setOpenShield, openShield }) {
                   {
                     cloudTags.map((item, index) => (
                       <CloudTag
-                        label={item["關鍵字"]+"1"}
-                        // bgColor={item["底色"]}
-                        // textColor={item["字色"]}
+                        label={item["關鍵字"]}
                         bgColor={color.complementary.blue2}
                         textColor={color.primary.blue1}
                         key={index}

@@ -16,6 +16,8 @@ export default function RootLayout({ children }) {
           {mounted &&
             <StyledComponentsRegistry>
                 <Navbar />
+                <div className='tablet-down:h-[68px]'>
+                </div>
                 {children}
                 <Footer />
                 {/* <Chat /> */}

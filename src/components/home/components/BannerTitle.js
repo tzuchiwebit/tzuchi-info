@@ -16,7 +16,7 @@ export default function BannerTitle({ title = "", link = false, behavior = "self
     }
 
     return (
-        <div id={id} className="flex flex-row w-full gap-2 items-center">
+        <div id={id} className="flex flex-row w-full gap-2 items-center scroll-mt-[80px]">
             <div className="flex-0 text-[26px] font-bold text-primary-blue1 border-solid border-l-[6px] border-primary-blue3 pl-2">
                 {title}
             </div>
