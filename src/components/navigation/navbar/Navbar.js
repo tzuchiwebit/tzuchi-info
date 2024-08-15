@@ -1,12 +1,14 @@
 'use client'
 
-import { Fragment, useState } from 'react'
+import { useState, useEffect } from 'react'
 import NavbarTop from './components/NavbarTop'
 import NavbarBottom from './components/NavbarBottom'
-import NavbarMarquee from './components/NavbarMarquee'
+// import NavbarMarquee from './components/NavbarMarquee'
 import screens from '@/shared/styles/screens'
 import styled from 'styled-components'
 import NewsMarquee from './components/NewsMarquee'
+// import { useHash } from '@/shared/hook/useHash';
+// import { scrollToSection } from '@/utils';
 
 const ScreenShield = () => {
   return (
@@ -19,7 +21,17 @@ const ScreenShield = () => {
 export default function Navbar() {
   const [hasMarquee, setHasMarquee] = useState(false);
   const [openShield, setOpenShield] = useState(false);
-  // const [openCloudTagSearch, setOpenCloudTagSearch] = useState(false);
+
+  // const hash = useHash();
+  // useEffect(() => {
+  //   const section = hash.replace("#", "");
+  //   if (section) {
+  //     setTimeout(()=> {
+  //       console.log('gogogo')
+  //       scrollToSection(section)
+  //     }, 3000)
+  //   }
+  // }, [hash]);
 
   return (
     <StyledHeaderPadding $hasMarquee={hasMarquee}>

@@ -36,7 +36,7 @@ const Item = ({ item = {}, loading = false }) => {
                 <div className="w-full shadow-elevation-3 rounded-md overflow-hidden">
                     {
                         loading ? <div className="">
-                            <Skeleton className="aspect-video" />
+                            <Skeleton className="w-full desktop:h-[435px] laptop:h-[400px] tablet:h-[475px] h-[230px]" />
                         </div> : <ImageContainer className='cursor-pointer' onClick={() => {
                             router.push(`${routes.ARITCLE}/${item.id}`);
                             addHits(item.id);

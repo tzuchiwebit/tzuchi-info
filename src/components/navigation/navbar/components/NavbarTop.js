@@ -1,7 +1,7 @@
 'use client'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import Container from '@/shared/layout/Container'
-import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
+import { Disclosure, Transition } from '@headlessui/react'
 import Icon from '@/shared/Icon'
 import { HeaderLinkItems, NavLinkItems, AnchorLinkItems } from '../config'
 import color from '@/shared/styles/color'
@@ -9,14 +9,9 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import CloudTag from '@/shared/tag/CloudTag'
 import routes from '@/config/routes'
-import OutsideClickHandler from '@/utils/OutsideClickHandler'
 import jsonApi from '@/api/jsonApi'
 import useScreenSize from '@/shared/hook/useScreenSize';
 import * as classnames from "classnames"
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
 
 const SearchMenu = ({ navRef, openShield, setOpenShield, searchMenuOpen, setSearchMenuOpen, setOpenCloudTagSearch, openCloudTagSearch, searchText, setSearchText, cloudTags = [] }) => {
   const router = useRouter();
@@ -305,6 +300,7 @@ const CloudTagSearchButton = ({ setOpenCloudTagSearch, openCloudTagSearch }) => 
 const CategoryMenu = ({ openShield, navRef, setOpenShield, setCategoryMenuOpen, categoryMenuOpen }) => {
   const menuBtnRef = useRef(null)
   const menuOpenRef = useRef(null)
+  const router = useRouter()
 
   const handleClick = (event) => {
     if (navRef?.current?.contains(event.target)) {
@@ -360,7 +356,13 @@ const CategoryMenu = ({ openShield, navRef, setOpenShield, setCategoryMenuOpen, 
             AnchorLinkItems.map((item, index) => (
               <div key={index} className={classnames('px-4 py-2 font-semibold text-primary-blue1 hover:bg-complementary-blue2')}
                 onClick={() => {
-                  document.querySelector(item.link)?.scrollIntoView({ behavior: 'smooth' })
+                  if (document.getElementById(item.link)) {
+                    document.getElementById(item.link)?.scrollIntoView({ behavior: 'smooth' })
+                  } else {
+                    // TODO: when not at home page
+                    router.push(`/`)
+                  }
+
                   setOpenShield(false)
                   setCategoryMenuOpen(false)
                 }}
@@ -478,7 +480,7 @@ export default function NavbarTop({ setOpenShield, openShield }) {
                   {
                     HeaderLinkItems.map((item, index) => (
                       <Fragment key={index}>
-                        <div className={classNames(
+                        <div className={classnames(
                           index !== 0 ? 'border-l' : '',
                           'border-gray-text border-solid h-[16px]'
                         )}></div>
