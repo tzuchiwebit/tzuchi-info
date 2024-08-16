@@ -8,6 +8,7 @@ import screens from '@/shared/styles/screens'
 import styled from 'styled-components'
 import NewsMarquee from './components/NewsMarquee'
 import NewsEmergency from './components/NewsEmergency'
+import DataProvider from "./DataProvider"
 // import { useHash } from '@/shared/hook/useHash';
 // import { scrollToSection } from '@/utils';
 
@@ -21,6 +22,7 @@ const ScreenShield = () => {
 
 export default function Navbar() {
   const [hasMarquee, setHasMarquee] = useState(false);
+  const [hasEmergency, setHasEmergency] = useState(true);
   const [openShield, setOpenShield] = useState(false);
 
   // const hash = useHash();
@@ -35,20 +37,22 @@ export default function Navbar() {
   // }, [hash]);
 
   return (
-    <StyledHeaderPadding $hasMarquee={hasMarquee}>
-      <header className="bg-white w-full z-20 shadow-elevation-3 relative">
-        <NavbarTop setOpenShield={setOpenShield} openShield={openShield} />
-        <NavbarBottom />
-      </header>
-      {/* <NewsEmergency /> */}
-      {
-        hasMarquee &&
-        <NewsMarquee />
-      }
-      {
-        openShield && <ScreenShield></ScreenShield>
-      }
-    </StyledHeaderPadding>
+    <DataProvider>
+      <StyledHeaderPadding $hasMarquee={hasMarquee}>
+        <header className="bg-white w-full z-20 shadow-elevation-3 relative">
+          <NavbarTop setOpenShield={setOpenShield} openShield={openShield} />
+          <NavbarBottom />
+        </header>
+        {
+          hasMarquee &&
+          <NewsMarquee />
+        }
+        {
+          openShield && <ScreenShield></ScreenShield>
+        }
+      </StyledHeaderPadding>
+      <NewsEmergency />
+    </DataProvider>
   )
 }
 

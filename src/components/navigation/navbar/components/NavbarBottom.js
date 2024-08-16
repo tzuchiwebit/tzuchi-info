@@ -14,7 +14,7 @@ export default function NavbarBottom() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(0)
 
   return (
-    <Container className="hidden tablet:flex border-y border-solid border-gray-gray7">
+    <Container className="hidden tablet:flex border-y border-solid border-gray-gray7 relative z-[300]">
       {/* <div className="flex flex-row items-center w-full [&>*:not(:first-child)]:border-l-2"> */}
       <div className="flex flex-row items-center w-full">
         {
@@ -46,7 +46,7 @@ export default function NavbarBottom() {
                   leaveFrom="opacity-100 translate-y-0"
                   leaveTo="opacity-0 translate-y-1"
                 >
-                  <Popover.Panel className="absolute left-0 z-10 tablet:mt-[102px] desktop:mt-[121px] flex w-screen">
+                  <Popover.Panel className="absolute left-0 tablet:mt-[102px] desktop:mt-[121px] flex w-screen">
                     <div className="w-full flex-auto overflow-hidden bg-gray-gray9 leading-6 shadow-elevation-4">
                       <div className="flex flex-row gap-5 justify-center h-[60px] items-center">
                         {

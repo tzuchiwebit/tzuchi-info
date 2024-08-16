@@ -7,11 +7,18 @@ import Icon from '@/shared/Icon'
 import { Transition } from '@headlessui/react'
 import CloudTagSearchButton from './CloudTagSearchButton'
 import CloudTag from '@/shared/tag/CloudTag'
+import routes from '@/config/routes'
 
 export default function SearchMenu ({ navRef, openShield, setOpenShield, searchMenuOpen, setSearchMenuOpen, setOpenCloudTagSearch, openCloudTagSearch, searchText, setSearchText, cloudTags = [] }) {
   const router = useRouter();
   const menuBtnRef = useRef(null)
   const menuOpenRef = useRef(null)
+
+  const onKeywordSearch = () => {
+    setSearchMenuOpen(false)
+    setOpenShield(false)
+    return router.push(`${routes.SEARCH}?keyword=${searchText}`)
+  }
 
   const handleClick = (event) => {
     // console.log('navRef.click:', navRef?.current?.contains(event.target))
