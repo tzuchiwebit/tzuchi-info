@@ -437,89 +437,86 @@ export default function NavbarTop({ setOpenShield, openShield }) {
       <div className="h-1 w-full bg-gradient-to-r from-primary-blue1 to-primary-linear"></div>
 
       <Container noPadding>
-        <nav ref={navRef} className="mx-auto flex items-center justify-between tablet:py-4" aria-label="Global">
-          {/* grid layout */}
-          <div className="tablet-down:ml-3 flex flex-row w-full gap-x-1 justify-between">
-            {/* logo */}
-            <div className="flex-none w-[114px] tablet:w-[157px] laptop:w-[217px] desktop:w-[372px] desktop:self-start">
-              <Link href="/" className="">
-                <span className="sr-only">慈濟資訊網</span>
-                <Icon.LOGO className="hidden desktop:block" width="100%" onClick={() => router.push('/')} />
-                <Icon.LOGOMobile className="desktop:hidden" width="100%" onClick={() => router.push('/')} />
-              </Link>
-            </div>
+        <nav ref={navRef} className="mx-auto flex flext-row items-center justify-between tablet:py-4" aria-label="Global">
+          {/* logo */}
+          <div className="tablet-down:ml-3 flex-none w-[114px] tablet:w-[157px] laptop:w-[217px] desktop:w-[372px] tablet:self-start">
+            <Link href="/" className="">
+              <span className="sr-only">慈濟資訊網</span>
+              <Icon.LOGO className="hidden desktop:block" width="100%" onClick={() => router.push('/')} />
+              <Icon.LOGOMobile className="desktop:hidden" width="100%" onClick={() => router.push('/')} />
+            </Link>
+          </div>
 
-            <div className='desktop:w-16 laptop:w-11 tablet:w-4'></div>
+          <div className='desktop:w-16 laptop:w-11 tablet:w-4'></div>
 
-            {/* tablet (up) device only */}
-            <div className='grow-0 hidden tablet:flex flex-col gap-x-2'>
-              <div className="flex flex-row gap-x-2 h-[52.3px] justify-end w-full" ref={upperRef}>
-                {/* 熱門快搜 */}
-                <CloudTagSearchButton setOpenCloudTagSearch={setOpenCloudTagSearch} openCloudTagSearch={openCloudTagSearch} />
+          {/* tablet (up) device only */}
+          <div className='grow-0 hidden tablet:flex flex-col gap-x-2'>
+            <div className="flex flex-row gap-x-2 h-[52.3px] justify-end w-full" ref={upperRef}>
+              {/* 熱門快搜 */}
+              <CloudTagSearchButton setOpenCloudTagSearch={setOpenCloudTagSearch} openCloudTagSearch={openCloudTagSearch} />
 
-                {/* 關鍵字搜尋 */}
-                <div className="w-auto flex justify-end items-center relative">
-                  <input
-                    placeholder="關鍵字搜尋"
-                    className="border-2 border-gray-gray6 rounded-md px-2 py-1.5 w-full laptop:w-[300px] tablet:w-[160px] bg-transparent"
-                    onChange={(e) => {
-                      setSearchText(e.target.value);
-                    }}
-                    value={searchText}
-                  />
-                  <Icon.Search
-                    width="100%"
-                    className="absolute mr-[2px] p-1 w-9 bg-gray-gray8 text-primary-blue1 cursor-pointer rounded-r"
-                    onClick={() => onKeywordSearch()}
-                  />
-                </div>
-
-                {/* header 連結 */}
-                <div className="w-auto flex-0 flex flex-row items-center justify-end">
-                  {
-                    HeaderLinkItems.map((item, index) => (
-                      <Fragment key={index}>
-                        <div className={classnames(
-                          index !== 0 ? 'border-l' : '',
-                          'border-gray-text border-solid h-[16px]'
-                        )}></div>
-                        <a href={item.link} className="text-primary-blue2 laptop:px-2 px-1 hover:font-medium whitespace-nowrap hover:text-primary-blue3 active:text-primary-blue1" target='_blank'>
-                          {item.label}
-                        </a>
-                      </Fragment>
-                    ))
-                  }
-                </div>
+              {/* 關鍵字搜尋 */}
+              <div className="w-auto flex justify-end items-center relative">
+                <input
+                  placeholder="關鍵字搜尋"
+                  className="border-2 border-gray-gray6 rounded-md px-2 py-1.5 w-full laptop:w-[300px] tablet:w-[160px] bg-transparent"
+                  onChange={(e) => {
+                    setSearchText(e.target.value);
+                  }}
+                  value={searchText}
+                />
+                <Icon.Search
+                  width="100%"
+                  className="absolute mr-[2px] p-1 w-9 bg-gray-gray8 text-primary-blue1 cursor-pointer rounded-r"
+                  onClick={() => onKeywordSearch()}
+                />
               </div>
 
-              {/* 熱門快搜 dropdown menu: web version */}
-              <Transition
-                // as={Fragment}
-                show={openCloudTagSearch}
-                className="transition-all duration-300 overflow-hidden"
-                enterFrom="transform -tranlateY-50 opacity-0 max-h-0"
-                enterTo="transform tranlateY-0 opacity-100 max-h-[1000px]"
-                leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
-                leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
-              >
-                <div className={'flex flex-row flex-wrap gap-x-1 gap-y-2 overflow-hidden mt-2'}>
-                  {
-                    cloudTags.map((item, index) => (
-                      <CloudTag
-                        label={item["關鍵字"]}
-                        bgColor={color.complementary.blue2}
-                        textColor={color.primary.blue1}
-                        key={index}
-                        onClick={() => {
-                          router.push(`${routes.SEARCH}?keyword=${item["關鍵字"]}`)
-                          setOpenCloudTagSearch(false)
-                        }}
-                      />
-                    ))
-                  }
-                </div>
-              </Transition>
+              {/* header 連結 */}
+              <div className="w-auto flex-0 flex flex-row items-center justify-end">
+                {
+                  HeaderLinkItems.map((item, index) => (
+                    <Fragment key={index}>
+                      <div className={classnames(
+                        index !== 0 ? 'border-l' : '',
+                        'border-gray-text border-solid h-[16px]'
+                      )}></div>
+                      <a href={item.link} className="text-primary-blue2 laptop:px-2 px-1 hover:font-medium whitespace-nowrap hover:text-primary-blue3 active:text-primary-blue1" target='_blank'>
+                        {item.label}
+                      </a>
+                    </Fragment>
+                  ))
+                }
+              </div>
             </div>
+
+            {/* 熱門快搜 dropdown menu: web version */}
+            <Transition
+              // as={Fragment}
+              show={openCloudTagSearch}
+              className="transition-all duration-300 overflow-hidden"
+              enterFrom="transform -tranlateY-50 opacity-0 max-h-0"
+              enterTo="transform tranlateY-0 opacity-100 max-h-[1000px]"
+              leaveFrom="transform tranlateY-0 opacity-100 max-h-[1000px]"
+              leaveTo="transform -tranlateY-50 opacity-0 max-h-0"
+            >
+              <div className={'flex flex-row flex-wrap gap-x-1 gap-y-2 overflow-hidden mt-2'}>
+                {
+                  cloudTags.map((item, index) => (
+                    <CloudTag
+                      label={item["關鍵字"]}
+                      bgColor={color.complementary.blue2}
+                      textColor={color.primary.blue1}
+                      key={index}
+                      onClick={() => {
+                        router.push(`${routes.SEARCH}?keyword=${item["關鍵字"]}`)
+                        setOpenCloudTagSearch(false)
+                      }}
+                    />
+                  ))
+                }
+              </div>
+            </Transition>
           </div>
 
           {/* mobile device only */}
@@ -537,6 +534,7 @@ export default function NavbarTop({ setOpenShield, openShield }) {
               <HamburgMenu navRef={navRef} hamburgMenuOpen={hamburgMenuOpen} setHamburgMenuOpen={setHamburgMenuOpen} setOpenShield={setOpenShield} />
             </div>
           </div>
+
         </nav >
       </Container >
     </>
