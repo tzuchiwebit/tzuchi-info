@@ -82,7 +82,7 @@ export const getServerSideProps = async (ctx) => {
       changefreq: "daily",
     },
     {
-      loc: `${process.env.SITE_URL}//activities`,
+      loc: `${process.env.SITE_URL}/activities`,
       lastmod: new Date().toISOString(),
       priority: 0.8,
       changefreq: "daily",
