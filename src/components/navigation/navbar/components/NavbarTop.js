@@ -436,7 +436,6 @@ export default function NavbarTop({ setOpenShield, openShield }) {
     <>
       <div className="h-1 w-full bg-gradient-to-r from-primary-blue1 to-primary-linear"></div>
 
-      {/* navbar: first row */}
       <Container noPadding>
         <nav ref={navRef} className="mx-auto flex items-center justify-between tablet:py-4" aria-label="Global">
           {/* grid layout */}
@@ -452,7 +451,7 @@ export default function NavbarTop({ setOpenShield, openShield }) {
 
             <div className='desktop:w-16 laptop:w-11 tablet:w-4'></div>
 
-            {/* right side nav */}
+            {/* tablet (up) device only */}
             <div className='grow-0 hidden tablet:flex flex-col gap-x-2'>
               <div className="flex flex-row gap-x-2 h-[52.3px] justify-end w-full" ref={upperRef}>
                 {/* 熱門快搜 */}
