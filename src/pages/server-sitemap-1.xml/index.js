@@ -2,7 +2,6 @@ import { getServerSideSitemapLegacy } from "next-sitemap";
 import { getAllArticles } from "@/api/joomlaApi";
 
 export const getServerSideProps = async (ctx) => {
-  // FIXME: UNABLE_TO_VERIFY_LEAF_SIGNATURE
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
   const res = await getAllArticles({});
 

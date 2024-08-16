@@ -26,6 +26,12 @@ const nextConfig = {
             },
         ],
     },
+    rewrites: async () => [
+      {
+        source: '/server-sitemap-1.xml.gz',
+        destination: '/api/article-sitemap',
+      },
+    ],
 }
 
 if (process.env.ENV_NAME === "development") {

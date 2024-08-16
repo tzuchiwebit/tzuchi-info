@@ -9,7 +9,7 @@ const config = {
     ],
     additionalSitemaps: [
       `${process.env.SITE_URL}/server-sitemap-0.xml`,
-      `${process.env.SITE_URL}/server-sitemap-1.xml`,
+      `${process.env.SITE_URL}/server-sitemap-1.xml.gz`,
     ],
   },
   transform: async (config, path) => { return null },
