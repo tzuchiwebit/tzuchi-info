@@ -7,6 +7,7 @@ import NavbarBottom from './components/NavbarBottom'
 import screens from '@/shared/styles/screens'
 import styled from 'styled-components'
 import NewsMarquee from './components/NewsMarquee'
+import NewsEmergency from './components/NewsEmergency'
 // import { useHash } from '@/shared/hook/useHash';
 // import { scrollToSection } from '@/utils';
 
@@ -38,11 +39,12 @@ export default function Navbar() {
       <header className="bg-white w-full z-20 shadow-elevation-3 relative">
         <NavbarTop setOpenShield={setOpenShield} openShield={openShield} />
         <NavbarBottom />
-        {
-          hasMarquee &&
-          <NewsMarquee />
-        }
       </header>
+      <NewsEmergency />
+      {
+        hasMarquee &&
+        <NewsMarquee />
+      }
       {
         openShield && <ScreenShield></ScreenShield>
       }
