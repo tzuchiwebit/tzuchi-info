@@ -40,7 +40,7 @@ export default function Navbar() {
         <NavbarTop setOpenShield={setOpenShield} openShield={openShield} />
         <NavbarBottom />
       </header>
-      <NewsEmergency />
+      {/* <NewsEmergency /> */}
       {
         hasMarquee &&
         <NewsMarquee />
