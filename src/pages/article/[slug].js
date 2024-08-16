@@ -377,7 +377,7 @@ const MainContent = () => {
 
 export async function getServerSideProps(context) {
   const slug = context.params.slug
-  // FIXME: unable to verify the first certificate
+  // FIXME: unable to verify the first certificate UNABLE_TO_VERIFY_LEAF_SIGNATURE
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
   const article = (await getArticleById(slug)).data
   return { props: { article } }
