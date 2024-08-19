@@ -7,10 +7,7 @@ import NavbarBottom from './components/NavbarBottom'
 import screens from '@/shared/styles/screens'
 import styled from 'styled-components'
 import NewsMarquee from './components/NewsMarquee'
-import NewsEmergency from './components/NewsEmergency'
 import DataProvider from "./DataProvider"
-import { useHash } from '@/shared/hook/useHash';
-import { scrollToSection } from '@/utils';
 
 const ScreenShield = () => {
   return (
@@ -40,7 +37,6 @@ export default function Navbar() {
           openShield && <ScreenShield></ScreenShield>
         }
       </StyledHeaderPadding>
-      <NewsEmergency />
     </DataProvider>
   )
 }
