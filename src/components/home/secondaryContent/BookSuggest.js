@@ -22,7 +22,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Item = ({ item }) => {
+const Item = ({ item = {}, loading = false }) => {
   const getImage = () => {
     if (item?.cover_image) return item.cover_image
     if (item?.image) return item.image
@@ -99,10 +99,10 @@ const NewItem = ({ item = {}, loading = false }) => {
 
   return (
     <div className="relative mb-[60px] rounded-md laptop:w-[180px] tablet:w-[171px] w-[165px] cursor-pointer select-none" onClick={clickOpen}>
-      <div className="aspect-square relative laptop:w-[164px] w-[164px]">
+      <div className="aspect-square relative w-[164px]">
       {
         loading ?
-          <Skeleton className="aspect-square" /> :
+          <Skeleton className="aspect-square" height={164} /> :
           <Image
             priority
             src={getImage()}
@@ -111,7 +111,7 @@ const NewItem = ({ item = {}, loading = false }) => {
             style={{
               objectFit: 'contain',
             }}
-            className="rounded-md"
+            className="rounded-md mt-2"
           />
       }
       </div>
@@ -119,8 +119,8 @@ const NewItem = ({ item = {}, loading = false }) => {
         <div className="text-xl h-[3.5rem] font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">
           {
             loading ?
-            <Skeleton /> :
-            <Linkfont className="text-xl h-[3.5rem] font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">{item?.title}</Linkfont>
+            <Skeleton count={2}/> :
+            <Linkfont className="text-xl h-[3.5rem] font-bold w-full text-primary-blue1 text-left line-clamp-2">{item?.title}</Linkfont>
           }
         </div>
       </div>
@@ -229,9 +229,6 @@ export default function BookSuggest() {
   }, [booksData])
 
   const sliderJingsiData = useMemo(() => {
-    // if (jingsiData.length === 0)
-    // return Array(4).fill({})
-
     const formatedData = jingsiData.map((item) => {
       return {
         title: item?.attributes?.title,
@@ -254,6 +251,7 @@ export default function BookSuggest() {
 
   return <div className="pt-3 w-full">
     <BannerTitle title={`好書推薦`} id="BookSuggest"/>
+
     <div className="flex flex-row w-full gap-2 items-center pt-4">
       <div className="flex-0 text-[24px] font-bold text-primary-blue1">
         靜思人文
@@ -269,25 +267,19 @@ export default function BookSuggest() {
         </div>
       </div>
     </div>
-
-    {
-      !loadingJingsi &&
-      <div className="w-full">
+    <div className="w-full">
+      <div className="tablet-only:flex hidden flex-row justify-between">
         {
-          isTabletOnly ?
-            <div className="flex flex-row justify-between">
-              {
-                sliderJingsiData.map((item, index) => (<div className='w-fit' key={index}>
-                  <Item item={item} />
-                </div>))
-              }
-            </div> :
-            <CarouselContainer>
-              <CarouselSection data={sliderJingsiData} loading={loadingJingsi} />
-            </CarouselContainer>
+          sliderJingsiData.map((item, index) => (<div className='w-fit' key={index}>
+            <Item item={item} loading={loadingJingsi}/>
+          </div>))
         }
       </div>
-    }
+      <CarouselContainer className="">
+        <CarouselSection data={sliderJingsiData} loading={true} />
+      </CarouselContainer>
+    </div>
+
     <div className="flex flex-row w-full gap-2 items-center  pt-4">
       <div className="flex-0 text-[24px] font-bold text-primary-blue1">
         慈濟書庫
@@ -303,28 +295,30 @@ export default function BookSuggest() {
         </div>
       </div>
     </div>
-    {
-      !loadingBooks &&
-      <div className="w-full">
+    <div className="w-full">
+      <div className="tablet-only:flex hidden flex-row justify-between">
         {
-          isTabletOnly ?
-            <div className="flex flex-row justify-between">
-              {
-                sliderBookData.map((item, index) => (<div className='w-fit' key={index}>
-                  <Item item={item} />
-                </div>))
-              }
-            </div> :
-            <CarouselContainer>
-              <CarouselSection data={sliderBookData} loading={loadingBooks} />
-            </CarouselContainer>
+          sliderBookData.map((item, index) => (<div className='w-fit' key={index}>
+            <Item item={item} />
+          </div>))
         }
       </div>
-    }
+      <CarouselContainer>
+        <CarouselSection data={sliderBookData} loading={loadingBooks} />
+      </CarouselContainer>
+    </div>
   </div>
 }
 
 const CarouselContainer = styled.div`
+  display: none;
+  @media(min-width: 1024px) {
+    display: block;
+  }
+  @media(max-width: 767.8px) {
+    display: block;
+  }
+
   .control-dots {
       display: flex;
       gap: 15px;

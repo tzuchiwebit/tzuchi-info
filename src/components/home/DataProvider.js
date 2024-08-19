@@ -51,9 +51,9 @@ export default function DataProvider({ children }) {
 
 
   const [pageData, setPageData] = useState([]);
-  const [suggestBooks, setSuggestBooks] = useState([]);
+  const [suggestBooks, setSuggestBooks] = useState(Array(4).fill({}));
   const [weeklyReports, setWeeklyReports] = useState([]);
-  const [jingsiBooks, setJingsiBooks] = useState([]);
+  const [jingsiBooks, setJingsiBooks] = useState(Array(4).fill({}));
   const [loading, setLoading] = useState(true);
   const [loadingBooks, setLoadingBooks] = useState(true);
   const [loadingWeeklyReports, setLoadingWeeklyReports] = useState(true);
