@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
             <DataProvider>
               <StyledComponentsRegistry>
                 <Navbar />
-                <div className='tablet-down:h-[68px]' />
+                <div className='tablet-down:h-[62px]' />
                 <NewsEmergency></NewsEmergency>
                 {children}
                 <Footer />
