@@ -5,6 +5,7 @@ import * as classnames from "classnames"
 import Icon from '@/shared/Icon'
 import { Transition } from '@headlessui/react'
 import { AnchorLinkItems } from '../../../config'
+import { scrollToSection } from '@/utils';
 
 export default function CategoryMenu({ openShield, navRef, setOpenShield, setCategoryMenuOpen, categoryMenuOpen }) {
   const menuBtnRef = useRef(null)
@@ -68,8 +69,7 @@ export default function CategoryMenu({ openShield, navRef, setOpenShield, setCat
                   if (document.getElementById(item.link)) {
                     document.getElementById(item.link)?.scrollIntoView({ behavior: 'smooth' })
                   } else {
-                    // TODO: when not at home page
-                    router.push(`/`)
+                    router.push(`/#${item.link}`)
                   }
 
                   setOpenShield(false)

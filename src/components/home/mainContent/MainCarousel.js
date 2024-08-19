@@ -33,15 +33,17 @@ const Item = ({ item = {}, loading = false }) => {
         <div className="relative w-full mb-[60px]">
             {/* <div className="w-full h-[480px] p-1"> */}
             <div className={"w-full p-1"}>
-                <div className="w-full shadow-elevation-3 rounded-md overflow-hidden">
+                <div className="w-full shadow-elevation-3 rounded-md overflow-hidden -mt-1">
                     {
-                        loading ? <div className="">
-                            <Skeleton className="w-full desktop:h-[435px] laptop:h-[400px] tablet:h-[475px] h-[230px]" />
-                        </div> : <ImageContainer className='cursor-pointer' onClick={() => {
-                            router.push(`${routes.ARITCLE}/${item.id}`);
-                            addHits(item.id);
+                      loading ?
+                        <ImageContainer className="rounded-md">
+                          <Skeleton className="w-full h-full" />
+                        </ImageContainer> :
+                        <ImageContainer className='cursor-pointer' onClick={() => {
+                          router.push(`${routes.ARITCLE}/${item.id}`);
+                          addHits(item.id);
                         }}>
-                            <BlurBGImage url={item.images?.image_intro} />
+                          <BlurBGImage url={item.images?.image_intro} />
                         </ImageContainer>
                     }
                     <div className="px-4 flex flex-col items-center pt-4 pb-2 w-full gap-y-1 gap-x-4">
@@ -52,7 +54,7 @@ const Item = ({ item = {}, loading = false }) => {
                                 addHits(item.id);
                             }}>
                             {
-                                loading ? <Skeleton /> : <Linkfont>{item?.title}</Linkfont>
+                                loading ? <Skeleton /> : <Linkfont className="line-clamp-1">{item?.title}</Linkfont>
                             }
                         </div>
                         <div className="hidden flex flex-row flex-none border-t border-solid border-gray-gray8 w-full justify-end pt-2 pr-5">

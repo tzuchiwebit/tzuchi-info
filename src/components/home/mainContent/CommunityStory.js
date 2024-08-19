@@ -36,7 +36,7 @@ const Item = ({ item = {} }) => {
                             <Skeleton className="aspect-video" />
                     }
                 </ImageContainer>
-                <div className="relative h-[210px] laptop:h-[220px] laptop:max-w-[45%]">
+                <div className="relative h-[210px] laptop:h-[220px] laptop:w-[45%]">
                     <div
                         className="text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2 h-14"
                         onClick={() => {
@@ -49,9 +49,9 @@ const Item = ({ item = {} }) => {
                         {item.metadesc}
                     </div>
                     <div className="w-full absolute bottom-0 pt-2 font-medium text-sm text-gray-gray4 border-t-2 border-solid border-gray-gray8 flex justify-between items-center">
-                        <div>
-                            {dayjs(item.publish_up).format('YYYY-MM-DD')}<br />
-                            {item.place !== "NULL" ? item.place : <><br /></>}
+                        <div className="flex flex-col">
+                            <span className="h-[1.25rem]">{item.publish_up && dayjs(item.publish_up).format('YYYY-MM-DD')}</span>
+                            <span>{item.place !== "NULL" ? item.place : ""}</span>
                         </div>
                         <div className="hidden gap-1 text-sm flex">
                             <LikeAndShare
@@ -79,7 +79,7 @@ export default function CommunityStory() {
 
     const storyData = useMemo(() => {
         const target = _.find(pageData, { name: '社區故事' });
-        return target?.data || []
+        return target?.data || [{},{},{}]
     }, [pageData])
 
     // console.log(storyData)

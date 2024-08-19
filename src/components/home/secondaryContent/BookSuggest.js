@@ -57,8 +57,8 @@ const Item = ({ item }) => {
             /> :
             <Skeleton className="aspect-square" />
         }
-        <div className="pt-2 pl-2 pr-0 text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2">
-          <Linkfont>{item?.title}123</Linkfont>
+        <div className="pt-2 pl-2 pr-0 text-xl h-[3.5rem] font-bold w-full text-primary-blue1 text-left line-clamp-2">
+          <Linkfont>{item?.title}</Linkfont>
         </div>
       </div>
     </div>
@@ -116,9 +116,11 @@ const NewItem = ({ item = {}, loading = false }) => {
       }
       </div>
       <div className="px-0 flex flex-col items-center pt-4 pb-2 w-full gap-y-1 gap-x-4">
-        <div className="text-xl font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">
+        <div className="text-xl h-[3.5rem] font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">
           {
-            loading ? <Skeleton /> : <Linkfont>{item?.title}</Linkfont>
+            loading ?
+            <Skeleton /> :
+            <Linkfont className="text-xl h-[3.5rem] font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">{item?.title}</Linkfont>
           }
         </div>
       </div>
@@ -227,6 +229,9 @@ export default function BookSuggest() {
   }, [booksData])
 
   const sliderJingsiData = useMemo(() => {
+    // if (jingsiData.length === 0)
+    // return Array(4).fill({})
+
     const formatedData = jingsiData.map((item) => {
       return {
         title: item?.attributes?.title,
@@ -240,6 +245,7 @@ export default function BookSuggest() {
       return _.concat(formatedData, formatedData);
     }
     return formatedData.slice(0, 4)
+    // return Array(4).fill({})
   }, [jingsiData])
 
   useEffect(() => {

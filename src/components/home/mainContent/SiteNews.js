@@ -75,8 +75,13 @@ const Item = ({ item = {} }) => {
                 >
                     <Linkfont>{item.title}</Linkfont>
                 </div>
-                <div className="pt-2 font-medium text-sm text-gray-gray4 border-t border-solid border-gray-gray8">
-                    {dayjs(item.publish_up).format('YYYY-MM-DD')} <br />
+                <div className="pt-2 h-6 leading-normal font-medium text-sm text-gray-gray4 border-t border-solid border-gray-gray8">
+                  {
+                    item?.publish_up &&
+                    dayjs(item.publish_up).format('YYYY-MM-DD')
+                  }
+                </div>
+                <div className="pt-1 h-6 leading-normal font-medium text-sm text-gray-gray4">
                     {item.place}
                 </div>
                 <div className="hidden flex justify-end">
@@ -108,7 +113,7 @@ export default function SiteNews() {
     })
 
     const baseInfos = useMemo(() => {
-        return pageData?.data || []
+        return pageData?.data || [{},{},{}]
     }, [selctedTagId, pageData])
 
     // console.log(`baseInfos`)

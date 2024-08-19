@@ -30,7 +30,7 @@ export default function DataProvider({ children }) {
     }
   }
 
-  useEffect(async () => {
+  useEffect(() => {
     getEmergencyArticles();
   }, [])
 

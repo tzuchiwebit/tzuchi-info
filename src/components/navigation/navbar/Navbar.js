@@ -9,8 +9,8 @@ import styled from 'styled-components'
 import NewsMarquee from './components/NewsMarquee'
 import NewsEmergency from './components/NewsEmergency'
 import DataProvider from "./DataProvider"
-// import { useHash } from '@/shared/hook/useHash';
-// import { scrollToSection } from '@/utils';
+import { useHash } from '@/shared/hook/useHash';
+import { scrollToSection } from '@/utils';
 
 const ScreenShield = () => {
   return (
@@ -24,17 +24,6 @@ export default function Navbar() {
   const [hasMarquee, setHasMarquee] = useState(false);
   const [hasEmergency, setHasEmergency] = useState(true);
   const [openShield, setOpenShield] = useState(false);
-
-  // const hash = useHash();
-  // useEffect(() => {
-  //   const section = hash.replace("#", "");
-  //   if (section) {
-  //     setTimeout(()=> {
-  //       console.log('gogogo')
-  //       scrollToSection(section)
-  //     }, 3000)
-  //   }
-  // }, [hash]);
 
   return (
     <DataProvider>

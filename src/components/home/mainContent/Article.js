@@ -18,7 +18,7 @@ const Item = ({ item }) => {
     return (
         <div className="w-full block shadow-elevation-3 rounded-md overflow-hidden" >
             <div className="text-white bg-primary-blue1 p-3 text-[24px] font-bold" >
-                {item.title}
+                {item?.title}
             </div>
             <div className="divide-y divide-solid divide-gray-gray7/50">
                 {
@@ -26,7 +26,7 @@ const Item = ({ item }) => {
                         <div className="p-3 flex gap-4" key={_index}>
                             <div className="flex-1">
                                 <div
-                                    className="text-primary-blue1 text-xl font-bold mb-2 cursor-pointer"
+                                    className="text-primary-blue1 text-xl h-[1.75rem] font-bold mb-2 cursor-pointer line-clamp-1"
                                     onClick={() => {
                                         router.push(`${routes.ARITCLE}/${_i.id}`)
                                         addHits(_i.id);
@@ -68,11 +68,12 @@ const ArticleSection = ({ leading = [], view = [] }) => {
     const data = [
         {
             title: '領航慈濟',
-            children: leading?.map(i => i.attributes).slice(0, 2)
+            // children: leading?.map(i => i.attributes).slice(0, 2) || [{},{}]
+            children: leading.length ? leading?.map(i => i.attributes).slice(0, 2) : [{},{}]
         },
         {
             title: '名人視角',
-            children: view?.map(i => i.attributes).slice(0, 2)
+            children: view.length ? view.map(i => i.attributes).slice(0, 2) : [{}, {}]
         }
     ]
 
