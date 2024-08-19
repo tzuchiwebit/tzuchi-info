@@ -38,28 +38,26 @@ const Item = ({ item = {}, loading = false }) => {
   }
 
   return (
-    <div className="w-[171px] cusor-pointer">
-      <div className="w-full rounded-md overflow-hidden cursor-pointer" onClick={clickOpen}>
+    <div className="w-[171px] cusor-pointer overflow-hidden" onClick={clickOpen}>
+      <div className="aspect-square relative w-[164px] rounded-md">
         {
-          item?.title ?
+          loading ?
+          <div className="w-[164px] h-[164px]"></div>:
             <Image
               priority
               src={getImage()}
               alt={""}
-              width={171}
-              height={171}
               sizes="100vw"
-              // style={{
-              //   width: 'auto',
-              //   height: 'auto',
-              // }}
+              fill
+              style={{
+                objectFit: 'contain',
+              }}
               className="rounded-md"
-            /> :
-            <Skeleton className="aspect-square" />
+            />
         }
-        <div className="pt-2 pl-2 pr-0 text-xl h-[3.5rem] font-bold w-full text-primary-blue1 text-left line-clamp-2">
-          <Linkfont>{item?.title}</Linkfont>
-        </div>
+      </div>
+      <div className="mt-2 pl-2 pr-0 text-xl h-[3.5rem] font-bold w-full text-primary-blue1 text-left line-clamp-2">
+        <Linkfont>{item?.title}</Linkfont>
       </div>
     </div>
   )
@@ -98,11 +96,12 @@ const NewItem = ({ item = {}, loading = false }) => {
   }
 
   return (
-    <div className="relative mb-[60px] rounded-md laptop:w-[180px] tablet:w-[171px] w-[165px] cursor-pointer select-none" onClick={clickOpen}>
+    <div className="mb-[62px] rounded-md laptop:w-[180px] tablet:w-[171px] w-[165px] cursor-pointer select-none" onClick={clickOpen}>
       <div className="aspect-square relative w-[164px]">
       {
         loading ?
-          <Skeleton className="aspect-square" height={164} /> :
+          // <Skeleton className="aspect-square" /> :
+          <div className="w-[164px] h-[164px]"></div>:
           <Image
             priority
             src={getImage()}
@@ -111,7 +110,7 @@ const NewItem = ({ item = {}, loading = false }) => {
             style={{
               objectFit: 'contain',
             }}
-            className="rounded-md mt-2"
+            className="rounded-md"
           />
       }
       </div>
@@ -276,7 +275,7 @@ export default function BookSuggest() {
         }
       </div>
       <CarouselContainer className="">
-        <CarouselSection data={sliderJingsiData} loading={true} />
+        <CarouselSection data={sliderJingsiData} loading={loadingJingsi} />
       </CarouselContainer>
     </div>
 
