@@ -26,15 +26,22 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  @media(max-width: 767.8px) {
-    bottom: 124px;
-  }
+  bottom: 124px;
+  right: 20px;
+
   @media(min-width: 768px) {
     bottom: 136px;
+    right: 20px;
   }
   @media(min-width: 1024px) {
     bottom: 96px;
+    right: 20px;
   }
+  @media(min-width: 1600px) {
+    bottom: 96px;
+    right: 28px;
+  }
+
   .menu.default {
     background-color: #fff;
     .icon {
@@ -52,29 +59,33 @@
 .openedContainer {
   position: fixed;
   z-index: 50;
-  right: 12px;
-  width: 64px;
+  right: 4px;
+  width: 80px;
   border-top-left-radius: 100px;
   border-top-right-radius: 100px;
-  border-bottom-left-radius: 30px;
-  border-bottom-right-radius: 30px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
   display: flex;
   flex-direction: column;
-  row-gap: 12px;
+  /* row-gap: 12px; */
   justify-content: start;
   align-items: center;
   background-color: #00000080;
-  cursor: pointer;
-  padding: 8px;
+  padding: 8px 8px 0;
 
   @media(max-width: 767.8px) {
     bottom: 124px;
   }
   @media(min-width: 768px) {
     bottom: 136px;
+    right: 4px;
   }
   @media(min-width: 1024px) {
+    right: 4px;
     bottom: 96px;
+  }
+  @media(min-width: 1600px) {
+    right: 12px;
   }
 
   .menu.default {
@@ -86,4 +97,8 @@
       margin-left: -3px; */
     }
   }
+}
+
+.link {
+  cursor: pointer;
 }

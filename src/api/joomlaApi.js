@@ -133,7 +133,7 @@ const getArticlesByCategory = async ({ label_name = '志工早會', limit = 10, 
   }
 }
 
-const getAllArticles = async ({ limit = 1000, offset = 0, state = 1, ordering = 'created', sort = 'desc' }) => {
+const getAllArticles = async ({ limit = 10000, offset = 0, state = 1, ordering = 'created', sort = 'desc' }) => {
   try {
     const params = {
       'page[limit]': limit,

@@ -18,7 +18,7 @@ export default function NewsEmergency() {
         <div className={classnames("w-full flex flex-row justify-center bg-[#FFD965] py-4", isShow ? styles.wrapper: 'hidden', )}>
           <div className="desktop:w-[980px] laptop:w-[940px] tablet:w-[742px] w-[350px] text-lg text-primary-blue1 flex flex-row gap-x-2">
             <div className="" id={'emergency-holder'} style={{ wordBreak: 'break-all' }} dangerouslySetInnerHTML={{ __html: emergencyArticle }} />
-            <div className="shrink-0 cursor-pointer self-start tablet:hidden block" onClick={() => setIsClose(true)}>
+            <div className="shrink-0 cursor-pointer self-start tablet:hidden" onClick={() => setIsClose(true)}>
               <Icon.CloseCircle></Icon.CloseCircle>
             </div>
           </div>

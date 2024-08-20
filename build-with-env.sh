@@ -26,10 +26,10 @@ else
   exit 1
 fi
 
-echo "ENV_NAME: $ENV_NAME"
+echo "✨ [ENV_NAME] $ENV_NAME"
 env_vars=$(grep -v '^#' $PROJECT_DIR/$ENV_FILE  | xargs)
 
-echo $env_vars
+echo "✅ $env_vars"
 cd $PROJECT_DIR
 PATH="/root/.nvm/versions/node/v18.18.2/bin:$PATH"
 env $(grep -v '^#' "$PROJECT_DIR/$ENV_FILE" | xargs) npm run build

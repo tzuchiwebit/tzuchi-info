@@ -41,6 +41,9 @@
   @media(min-width: 1024px) {
     bottom: 96px;
   }
+  @media(min-width: 1600px) {
+    right: 28px;
+  }
   .menu.default {
     background-color: #fff;
     .icon {
