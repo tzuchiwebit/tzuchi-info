@@ -5,6 +5,9 @@ export async function GET(request) {
   const { searchParams } = new URL(request.url)
   const id = searchParams.get('id')
 
+  console.log('API_ENDPOINT', API_ENDPOINT)
+  console.log('token', token)
+
   // FIXME: unable to verify the first certificate
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
   const url =`${API_ENDPOINT}/content/articles/${id}`
@@ -15,7 +18,7 @@ export async function GET(request) {
     },
   })
   const data = await res.json()
-  // return NextResponse.json(data.results[0]);
+  console.log('data', data)
 
   return new Response(JSON.stringify(data), {
     status: 200,

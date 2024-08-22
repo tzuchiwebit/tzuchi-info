@@ -12,6 +12,7 @@ export async function generateMetadata({ params }, parent) {
   const article = (await getArticleById(params.slug)).data
 
   return {
+    metadataBase: new URL(`${process.env.SITE_URL}/article/${params.slug}`),
     title: `${article?.attributes?.title} - 慈濟資訊網`,
     description: article?.attributes?.metadesc,
     openGraph: {
