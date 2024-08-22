@@ -10,6 +10,7 @@ import NewsEmergency from '@/components/navigation/navbar/components/NewsEmergen
 import Script from "next/script";
 import { Suspense } from "react";
 import './globals.css'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 export default function RootLayout({ children }) {
   const [mounted, setMounted] = useState(false)
