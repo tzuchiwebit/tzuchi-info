@@ -11,10 +11,6 @@ export default function FloatLinkButton() {
   const { floatLinkArticles, loadingFloatLinks } = useDataProvider()
   const [isOpen, setIsOpen] = useState(false)
 
-  useEffect(()=> {
-    console.log('loadingFloatLinks', loadingFloatLinks, 'floatLinkArticles', floatLinkArticles.length)
-  }, [loadingFloatLinks, floatLinkArticles])
-
   return (
     <Fragment>
       {

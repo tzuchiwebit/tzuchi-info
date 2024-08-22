@@ -72,6 +72,14 @@ img {
   pointer-events: none;
 }
 
+body {
+  transform: scale(1);
+  transform-origin: top left;
+  /* width: 100vw;
+  height: 100vh; */
+  /* overflow: hidden; */
+}
+
 /*
 body {
   color: rgb(var(--foreground-rgb));
