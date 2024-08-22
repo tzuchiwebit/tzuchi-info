@@ -55,19 +55,26 @@ const useLikeAndShare = ({ id }) => {
   };
 
   const handleLike = async (id) => {
+    console.log('like.1111')
     if (hasLike) {
       return;
     }
+    console.log('like.2222')
     addLikes(id);
+    console.log('like.3333')
     setHasLike(true);
+    console.log('like.4444')
     setLike(parseInt(like) + 1);
   };
 
   const handleShare = async (id) => {
+    console.log('1111')
     if (hasShare) {
       return;
     }
+    console.log('2222')
     addShares(id);
+    console.log('3333')
     setHasShare(true);
     setShare(parseInt(share) + 1);
   };

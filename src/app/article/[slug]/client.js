@@ -1,6 +1,4 @@
 "use client"
-import Head from 'next/head';
-import { getArticleById } from "@/api/joomlaApi";
 import { Fragment, useEffect, useMemo, useState } from "react"
 import Container from "@/shared/layout/Container"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
@@ -28,19 +26,8 @@ import FloatSizeToolbar from './float-size-toolbar';
 import 'react-toastify/dist/ReactToastify.css';
 import Errata from "@/components/Errata"
 import { Linkfont } from '@/shared/styles/linkFont.js';
-
-/**
- * @deprecated
- */
-const isPortraitImage = (url) => {
-  const regex = /width=(\d+)&height=(\d+)/;
-  const match = url.match(regex);
-
-  if (match && !!parseInt(match[1]) && !!parseInt(match[2])) {
-    if (parseInt(match[1])/ parseInt(match[2]) < 1 ) return true
-  }
-  return false
-}
+import database, { increaseLike , increaseShare } from "@/config/database"
+import { onValue, ref } from "firebase/database";
 
 const Breadcrumb = ({ className }) => {
   const { pageData } = useDataProvider();
@@ -96,6 +83,29 @@ const Article = ({setVisible}) => {
   const { pageData } = useDataProvider();
   const [selectedFontSize, setSelectedFontSize] = useState(26)
   const [loaded, setLoaded] = useState(false)
+  const params = useParams();
+  // const [recommendationList, setRecommendationListRef] = useState({})
+  const [like, setLike] = useState(0)
+  const [share, setShare] = useState(0)
+
+  useEffect(() => {
+    onValue(ref(database, params.slug + '/likes/'), snapshot => {
+      const data = snapshot.val()
+      setLike(data)
+    })
+    onValue(ref(database, params.slug + '/shares/'), snapshot => {
+      const data = snapshot.val()
+      setShare(data)
+    })
+  }, [params.slug])
+
+  useEffect(()=> {
+    // setData()
+    if (params?.slug) {
+      increaseShare(params.slug)
+      increaseLike(params.slug)
+    }
+  },[params.slug])
 
   const handleImageLoad = () => {
     // 1) 處理摘要圖片
@@ -148,7 +158,6 @@ const Article = ({setVisible}) => {
 
     if (match) {
         titleValue = match[1];
-        console.log("Title value:", titleValue);
 
         // 1-2) insert "title" element as 圖說文字
         const newRegex = /(<img\s+[^>]*>)/i;
@@ -186,7 +195,7 @@ const Article = ({setVisible}) => {
   return (
     <div style={{ gridArea: 'a' }}>
       <div className="text-[30px] font-bold text-primary-blue1">
-        {articleData?.attributes?.title}
+        {articleData?.attributes?.title}|{share}|
       </div>
       <div className="flex flex-row items-center gap-x-2 mt-2">
         {/* metadata: date, author, location */}
@@ -205,12 +214,12 @@ const Article = ({setVisible}) => {
         }
 
         <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
-        {/* <SocialBar
-          articleId={slug}
+        <SocialBar
+          articleId={articleData?.id}
           isMobileType={false}
           likes={articleData?.attributes?.like}
           shares={articleData?.attributes?.share}
-        /> */}
+        />
       </div>
       <div className="laptop:mt-6 mt-4">
         {/* 文章摘要圖片 */}
@@ -376,18 +385,8 @@ const MainContent = () => {
   )
 }
 
-export default function Page({ article }) {
+export default function Page() {
   return (<>
-    <Head>
-      <title>{article?.attributes?.title} - 慈濟資訊網</title>
-      <meta name='description' content={article?.attributes?.metadesc} />
-      {/* <link rel='canonical' href={pageURL} /> */}
-      <meta property="og:type" content="article" />
-      <meta property='og:title' content={article?.attributes?.title + ' - 慈濟資訊網'} />
-      <meta property='og:description' content={article?.attributes?.metadesc} />
-      {/* <meta property='og:url' content={pageURL} /> */}
-      <meta property='og:image' content="https://imagedelivery.net/oK0RK5YvW3bVFXgaGP6foQ/032741ee-fac7-44b6-3cea-649da4b8ff00/2K" />
-    </Head>
     <DataProvider>
       <Container>
         <MainContent></MainContent>

@@ -44,7 +44,7 @@ export default function SocialShare({ articleId = '', isMobileType = false, like
               <div onClick={() => handleLike(articleId)}
                 className="flex flex-row items-center justify-center gap-x-1 cursor-pointer select-none">
                 <Icon.Like style={{ width: 32 }} />
-                <span className="text-[26px] font-bold leading-[32px]">{like > 0 ? like + '個' : ''}讚</span>
+                <span className="text-[26px] font-bold leading-[32px]">{like > 0 ? like + '個' : ''}讚aa</span>
               </div>
               <div className="border-l-4 border-solid border-white"></div>
               <div onClick={() => {
@@ -52,7 +52,7 @@ export default function SocialShare({ articleId = '', isMobileType = false, like
                 handleShare(articleId);
               }} className="flex flex-row items-center justify-center gap-x-1 cursor-pointer select-none">
                 <Icon.Share style={{ width: 32 }} />
-                <span className="text-[26px] font-bold leading-[32px]">{share > 0 ? share + '個' : ''}分享</span>
+                <span className="text-[26px] font-bold leading-[32px]">{share > 0 ? share + '個' : ''}分享bb</span>
               </div>
             </div>
             {
