@@ -14,7 +14,7 @@ import color from "@/shared/styles/color"
 import styled from "styled-components"
 import joomlaGlobal from '@/api/joomlaGlobal'
 import { getArticlesByCategory } from "@/api/joomlaApi"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { Linkfont } from "@/shared/styles/linkFont.js"
 
 const { useRequest } = require('ahooks');

@@ -13,7 +13,7 @@ import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
 import { getArticlesByCategory, getUserById } from "@/api/joomlaApi"
 import useScreenSize from '@/shared/hook/useScreenSize';
 import Skeleton from "react-loading-skeleton"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import { addHits } from "@/api/api"
 import routes from "@/config/routes"
 const { useRequest } = require('ahooks')

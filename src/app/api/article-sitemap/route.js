@@ -1,3 +1,6 @@
+import { createGzip } from 'zlib'
+import { SitemapStream } from 'sitemap'
+
 const API_ENDPOINT = `${process.env.NEXT_PUBLIC_CMS_URL}/api/index.php/v1`
 const token = process.env.NEXT_PUBLIC_JOOMLA_API_TOKEN
 

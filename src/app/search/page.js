@@ -12,7 +12,7 @@ import Pagination from "@/shared/pagination/Pagination"
 import { useSearchParams } from "next/navigation"
 import Highlighter from "react-highlight-words";
 import styles from './search.module.css'
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import _ from 'lodash'
 import DefaultImage from '@/asset/image/default-article-intro.png'
 import { getArticlesByKeyword } from "@/api/joomlaApi"

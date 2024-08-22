@@ -1,6 +1,8 @@
-import { getServerSideSitemapLegacy } from "next-sitemap";
+import { getServerSideSitemap } from 'next-sitemap'
 
-export const getServerSideProps = async (ctx) => {
+export async function GET(request) {
+  // Method to source urls from cms
+  // const urls = await fetch('https//example.com/api')
 
   const fields = [
     {
@@ -95,7 +97,5 @@ export const getServerSideProps = async (ctx) => {
     },
   ]
 
-  return getServerSideSitemapLegacy(ctx, fields);
-};
-
-export default function SitemapIndex() {}
+  return getServerSideSitemap(fields)
+}
