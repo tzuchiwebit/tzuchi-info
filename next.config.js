@@ -34,8 +34,4 @@ const nextConfig = {
     ],
 }
 
-if (process.env.ENV_NAME === "development") {
-  // nextConfig.output = 'export'
-}
-
 module.exports = nextConfig

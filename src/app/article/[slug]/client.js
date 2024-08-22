@@ -26,7 +26,7 @@ import FloatSizeToolbar from './float-size-toolbar';
 import 'react-toastify/dist/ReactToastify.css';
 import Errata from "@/components/Errata"
 import { Linkfont } from '@/shared/styles/linkFont.js';
-import database, { increaseLike , increaseShare } from "@/config/database"
+import database, { increaseLike , increaseShare, getLikeRef, getShareRef } from "@/config/database"
 import { onValue, ref } from "firebase/database";
 
 const Breadcrumb = ({ className }) => {
@@ -84,28 +84,19 @@ const Article = ({setVisible}) => {
   const [selectedFontSize, setSelectedFontSize] = useState(26)
   const [loaded, setLoaded] = useState(false)
   const params = useParams();
-  // const [recommendationList, setRecommendationListRef] = useState({})
   const [like, setLike] = useState(0)
   const [share, setShare] = useState(0)
 
   useEffect(() => {
-    onValue(ref(database, params.slug + '/likes/'), snapshot => {
+    onValue(getLikeRef(params.slug), snapshot => {
       const data = snapshot.val()
       setLike(data)
     })
-    onValue(ref(database, params.slug + '/shares/'), snapshot => {
+    onValue(getShareRef(params.slug), snapshot => {
       const data = snapshot.val()
       setShare(data)
     })
   }, [params.slug])
-
-  useEffect(()=> {
-    // setData()
-    if (params?.slug) {
-      increaseShare(params.slug)
-      increaseLike(params.slug)
-    }
-  },[params.slug])
 
   const handleImageLoad = () => {
     // 1) 處理摘要圖片
@@ -195,7 +186,7 @@ const Article = ({setVisible}) => {
   return (
     <div style={{ gridArea: 'a' }}>
       <div className="text-[30px] font-bold text-primary-blue1">
-        {articleData?.attributes?.title}|{share}|
+        {articleData?.attributes?.title}
       </div>
       <div className="flex flex-row items-center gap-x-2 mt-2">
         {/* metadata: date, author, location */}
@@ -214,12 +205,7 @@ const Article = ({setVisible}) => {
         }
 
         <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
-        <SocialBar
-          articleId={articleData?.id}
-          isMobileType={false}
-          likes={articleData?.attributes?.like}
-          shares={articleData?.attributes?.share}
-        />
+        <SocialBar articleId={articleData?.id} isMobileType={false} />
       </div>
       <div className="laptop:mt-6 mt-4">
         {/* 文章摘要圖片 */}
@@ -385,13 +371,24 @@ const MainContent = () => {
   )
 }
 
+const MobileSocialbar = () => {
+  const { loading ,pageData } = useDataProvider();
+  const articleData = useMemo(() => {
+    const target = _.find(pageData, { name: 'article' });
+    return target?.data
+  }, [pageData])
+  return (
+    !loading && <SocialBar articleId={articleData?.id} isMobileType={true} />
+  )
+}
+
 export default function Page() {
   return (<>
     <DataProvider>
       <Container>
         <MainContent></MainContent>
       </Container>
-      <SocialBar isMobileType={true}></SocialBar>
+      <MobileSocialbar />
     </DataProvider>
   </>
   )

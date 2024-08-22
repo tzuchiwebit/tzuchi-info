@@ -26,7 +26,7 @@ else
   exit 1
 fi
 
-echo "✨ [ENV_NAME] $ENV_NAME"
+echo "✨ [NEXT_PUBLIC_ENV_NAME] $NEXT_PUBLIC_ENV_NAME"
 env_vars=$(grep -v '^#' $PROJECT_DIR/$ENV_FILE  | xargs)
 
 echo "✅ $env_vars"
