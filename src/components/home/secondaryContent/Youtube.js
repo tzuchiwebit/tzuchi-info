@@ -11,7 +11,6 @@ import { useMemo, useState } from "react";
 import { getArticlesByCategory } from "@/api/joomlaApi";
 import YouTube from 'react-youtube';
 import Icon from "@/shared/Icon";
-import { useRouter } from "next/router";
 import routes from "@/config/routes";
 import axios from 'axios';
 import classNames from "classnames";
@@ -26,8 +25,6 @@ const src = [
 ]
 
 const YoutubeSection = () => {
-
-    const router = useRouter();
 
     const [youtubeData, setYoutubeData] = useState({});
 

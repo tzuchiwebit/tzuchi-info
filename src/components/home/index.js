@@ -17,7 +17,7 @@ export default function Home() {
     return (
         <DataProvider>
             <LikeAndShareProvider>
-                <div className="flex flex-col laptop:flex-row w-full">
+                <div className="flex flex-col laptop:flex-row w-full relative">
                     <FloatScrollTopButton />
                     <FloatLinkToolbar />
                     <MainContainer>

@@ -385,15 +385,15 @@ export async function getServerSideProps(context) {
 
 export default function Page({ article }) {
   return (<>
-   <Head>
-      <title>{article?.attributes?.title}</title>
+    <Head>
+      <title>{article?.attributes?.title} - 慈濟資訊網</title>
       <meta name='description' content={article?.attributes?.metadesc} />
       {/* <link rel='canonical' href={pageURL} /> */}
-      {/* <meta property='og:type' content={pageType} /> */}
-      <meta property='og:title' content={article?.attributes?.title} />
+      <meta property="og:type" content="article" />
+      <meta property='og:title' content={article?.attributes?.title + ' - 慈濟資訊網'} />
       <meta property='og:description' content={article?.attributes?.metadesc} />
       {/* <meta property='og:url' content={pageURL} /> */}
-      {/* <meta property='og:image' content={ogImage} /> */}
+      <meta property='og:image' content="https://imagedelivery.net/oK0RK5YvW3bVFXgaGP6foQ/032741ee-fac7-44b6-3cea-649da4b8ff00/2K" />
     </Head>
     <DataProvider>
       <Container>
