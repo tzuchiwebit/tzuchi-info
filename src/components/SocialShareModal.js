@@ -46,7 +46,9 @@ const ModalContainer = styled.div`
 `
 
 export default function SocailShareModal({ isOpen, toggleOpen, articleId })  {
-  const body = `歡迎來到慈濟資訊網 ${process.env.NEXT_PUBLIC_URL}\n\n分享作品給您參考 ${process.env.NEXT_PUBLIC_URL}/article/${articleId}`
+  const subject = "慈濟資訊網文章分享";
+  const articleUrl = `${process.env.NEXT_PUBLIC_URL}/article/${articleId}`
+  const body = `歡迎來到慈濟資訊網 ${process.env.NEXT_PUBLIC_URL}\n\n分享作品給您參考 ${articleUrl}`
   const [isShow, setIsShow] = useState(false)
 
   const toggleShow = () => {
@@ -71,7 +73,6 @@ export default function SocailShareModal({ isOpen, toggleOpen, articleId })  {
   }
 
   const mailTo = () => {
-    const subject = "慈濟資訊網文章分享";
     window.open(`mailto:?subject=${subject}&body=${encodeURIComponent(body)}`)
   }
 
@@ -92,15 +93,25 @@ export default function SocailShareModal({ isOpen, toggleOpen, articleId })  {
   }
 
   const sendInstagram = () => {
-    // const url = encodeURIComponent('https://www.example.com'); // URL to be shared
-    // window.open(`https://www.instagram.com`, '_blank');
-    navigator.share(encodeURIComponent(body))
+    const url = encodeURIComponent('https://www.example.com'); // URL to be shared
+    window.open(`https://www.instagram.com`, '_blank');
   }
 
   const sendWechat = () => {
-    // const link = `${process.env.NEXT_PUBLIC_URL}/article/${articleId}`
-    // window.open(`weixin://dl/business/?t=ta428dhj739hg3efe6e`)
-    navigator.share(encodeURIComponent(body))
+    const link = `${process.env.NEXT_PUBLIC_URL}/article/${articleId}`
+    window.open(`weixin://dl/business/?t=ta428dhj739hg3efe6e`)
+  }
+
+  const sendDeviceShare = () => {
+    if (navigator.share) {
+      navigator.share({
+        title: subject,
+        text: body,
+        url: articleUrl,
+      })
+        .then(() => console.log('成功！'))
+        .catch((error) => console.log('發生錯誤', error));
+    }
   }
 
   useEffect(() => {
@@ -126,11 +137,11 @@ export default function SocailShareModal({ isOpen, toggleOpen, articleId })  {
             <Icon.ShareMessenger style={{ width: 32 }}></Icon.ShareMessenger>
             <span className="font-medium">Messenger</span>
           </div>
-          <div className="flex flex-col items-center cursor-pointer" onClick={sendInstagram}>
+          <div className="flex flex-col items-center cursor-pointer" onClick={sendDeviceShare}>
             <Icon.ShareInstagram style={{ width: 32 }}></Icon.ShareInstagram>
             <span className="font-medium">Instagram</span>
           </div>
-          <div className="flex flex-col items-center cursor-pointer" onClick={sendWechat}>
+          <div className="flex flex-col items-center cursor-pointer" onClick={sendDeviceShare}>
             <Icon.ShareWeChat style={{ width: 32 }}></Icon.ShareWeChat>
             <span className="font-medium">WeChat</span>
           </div>
