@@ -57,8 +57,8 @@ export default function Journal() {
       <span
         className="cursor-pointer font-medium flex items-center justify-end text-lg text-primary-blue3 hover:text-primary-blue2"
         onClick={() => {
-          // router.push(`${routes.WEEKLY_REPORT}`)
-          window.open('https://tw.tzuchi.org/tzuchiweekly', '_blank')
+          router.push(`${routes.WEEKLY_REPORT}`)
+          // window.open('https://tw.tzuchi.org/tzuchiweekly', '_blank')
         }}>
         更多 <Icon.RightArrow2 width="18px" />
       </span>

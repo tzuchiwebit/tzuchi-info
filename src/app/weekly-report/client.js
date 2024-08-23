@@ -73,7 +73,7 @@ export default function Page() {
           <div className="grow flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
 
           {/* social bar */}
-          <SocialBar isMobileType={false}></SocialBar>
+          {/* <SocialBar isMobileType={false}></SocialBar> */}
         </div>
 
       </div>
@@ -107,6 +107,6 @@ export default function Page() {
         }} />
       </div>
     </Container>
-    <SocialBar isMobileType={true}></SocialBar>
+    {/* <SocialBar isMobileType={true}></SocialBar> */}
   </>
 }
