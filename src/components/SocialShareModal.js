@@ -92,13 +92,15 @@ export default function SocailShareModal({ isOpen, toggleOpen, articleId })  {
   }
 
   const sendInstagram = () => {
-    const url = encodeURIComponent('https://www.example.com'); // URL to be shared
-    window.open(`https://www.instagram.com`, '_blank');
+    // const url = encodeURIComponent('https://www.example.com'); // URL to be shared
+    // window.open(`https://www.instagram.com`, '_blank');
+    navigator.share(encodeURIComponent(body))
   }
 
   const sendWechat = () => {
-    const link = `${process.env.NEXT_PUBLIC_URL}/article/${articleId}`
-    window.open(`weixin://dl/business/?t=ta428dhj739hg3efe6e`)
+    // const link = `${process.env.NEXT_PUBLIC_URL}/article/${articleId}`
+    // window.open(`weixin://dl/business/?t=ta428dhj739hg3efe6e`)
+    navigator.share(encodeURIComponent(body))
   }
 
   useEffect(() => {

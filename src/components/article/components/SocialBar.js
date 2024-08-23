@@ -1,31 +1,38 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import Icon from "@/shared/Icon"
 import useScreenSize from '@/shared/hook/useScreenSize';
 import SocialShareModal from "@/components/SocialShareModal"
 import * as classnames from "classnames"
 import database, { increaseLike , increaseShare, getLikeRef, getShareRef } from "@/config/database"
 import { onValue, ref } from "firebase/database";
-const { useLocalStorageState } = require('ahooks')
+import useDataProvider from "@/components/article/useDataProvider"
 
 export default function SocialShare({ articleId = '', isMobileType = false }) {
-  const LIKE_KEY = `like_${articleId}`;
-  const SHARE_KEY = `share_${articleId}`;
+  const { hasLikeLocal, setHasLikeLocal, hasShareLocal, setHasShareLocal } = useDataProvider();
 
   const [like, setLike] = useState(0)
   const [share, setShare] = useState(0)
-  const [hasLike, setHasLike] = useLocalStorageState(LIKE_KEY, {defaultValue: false});
-  const [hasShare, setHasShare] = useLocalStorageState(SHARE_KEY, {defaultValue: false});
+
+  const hasLike = useMemo(()=> {
+    console.log('hasLikeLocal', hasLikeLocal)
+    return !!hasLikeLocal
+  }, [hasLikeLocal])
+
+  const hasShare = useMemo(()=> {
+    console.log('hasShareLocal', hasShareLocal)
+    return !!hasShareLocal
+  }, [hasShareLocal])
 
   const handleIncreaseLike = () => {
-    if (hasLike) return
-    setHasLike(true)
+    if (hasLikeLocal) return
+    setHasLikeLocal(true)
     increaseLike(articleId)
   }
 
   const handleIncreaseShare = () => {
-    if (hasShare) return
-    setHasShare(true)
+    if (hasShareLocal) return
+    setHasShareLocal(true)
     increaseShare(articleId)
   }
 
@@ -64,14 +71,14 @@ export default function SocialShare({ articleId = '', isMobileType = false }) {
             <div className="laptop:hidden grid grid-cols-[1fr_auto_1fr] bg-primary-blue3 tablet:h-[73px] h-[65px] py-4 text-white w-screen sticky bottom-0">
               <div onClick={handleIncreaseLike}
                 className="flex flex-row items-center justify-center gap-x-1 cursor-pointer select-none">
-                { hasLike ? <Icon.LikeFull style={{ width: 32 }} /> : <Icon.Like style={{ width: 32 }} />}
+                { hasLikeLocal ? <Icon.LikeFull style={{ width: 32 }} /> : <Icon.Like style={{ width: 32 }} />}
                 <span className="text-[26px] font-bold leading-[32px]">{like > 0 ? like + '個' : ''}讚</span>
               </div>
               <div className="border-l-4 border-solid border-white"></div>
               <div onClick={() => {
                 toggleOpen();
               }} className="flex flex-row items-center justify-center gap-x-1 cursor-pointer select-none">
-                { hasShare ? <Icon.ShareFull style={{ width: 32 }} /> : <Icon.Share style={{ width: 32 }} />}
+                { hasShareLocal ? <Icon.ShareFull style={{ width: 32 }} /> : <Icon.Share style={{ width: 32 }} />}
                 <span className="text-[26px] font-bold leading-[32px]">{share > 0 ? share + '個' : ''}分享</span>
               </div>
             </div>
@@ -84,8 +91,8 @@ export default function SocialShare({ articleId = '', isMobileType = false }) {
             <div onClick={handleIncreaseLike}
               className={classnames({
                 'flex flex-row items-center gap-x-1 border-[1.5px] rounded border-solid  py-2 px-4 cursor-pointer select-none': true,
-                'text-complementary-blue3 border-complementary-blue3': hasLike,
-                'text-gray-gray4 border-gray-gray4': !hasLike,
+                'text-complementary-blue3 border-complementary-blue3': hasLikeLocal,
+                'text-gray-gray4 border-gray-gray4': !hasLikeLocal,
               })}
             >
               <Icon.Like style={{ width: 20 }} />
@@ -97,8 +104,8 @@ export default function SocialShare({ articleId = '', isMobileType = false }) {
               }}
                 className={classnames({
                   'flex flex-row items-center gap-x-1 border-[1.5px] rounded border-solid py-2 px-4 cursor-pointer select-none': true,
-                  'text-complementary-blue3 border-complementary-blue3': hasShare,
-                  'text-gray-gray4 border-gray-gray4': !hasShare,
+                  'text-complementary-blue3 border-complementary-blue3': hasShareLocal,
+                  'text-gray-gray4 border-gray-gray4': !hasShareLocal,
                 })
                 }>
                 <Icon.ShareFull style={{ width: 20 }} />

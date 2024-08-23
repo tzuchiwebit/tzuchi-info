@@ -2,6 +2,7 @@ import { useState, useEffect } from "react"
 import { createContext } from 'react';
 import { getArticleById, getRecommandArticles, getExtendArticles, getUserById } from "@/api/joomlaApi";
 import { useParams } from 'next/navigation'
+const { useLocalStorageState } = require('ahooks')
 
 export const DataContext = createContext(null);
 
@@ -10,6 +11,8 @@ export default function DataProvider({ children }) {
 
   const [pageData, setPageData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [hasLikeLocal, setHasLikeLocal] = useLocalStorageState(`like_${params.slug}`, {defaultValue: false});
+  const [hasShareLocal, setHasShareLocal] = useLocalStorageState(`share_${params.slug}`, {defaultValue: false});
 
   const getArticle = async (id) => {
     setLoading(true);
@@ -81,7 +84,7 @@ export default function DataProvider({ children }) {
 
 
   return (
-    <DataContext.Provider value={{pageData, loading}}>
+    <DataContext.Provider value={{pageData, loading, hasLikeLocal, setHasLikeLocal, hasShareLocal, setHasShareLocal}}>
       {children}
     </DataContext.Provider>
   );
