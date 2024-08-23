@@ -109,11 +109,14 @@ const Article = ({setVisible}) => {
     })
 
     // 3) add link style
-    const linkElements = document.querySelectorAll("#content-holder a")
-    linkElements.forEach((linkElement) => {
-      console.log('linkElement.classList', linkElement.classList.length)
-      linkElement.classList.add('link-color')
-    })
+    setTimeout(()=> {
+
+      const linkElements = document.querySelectorAll("#content-holder a")
+      linkElements.forEach((linkElement) => {
+        console.log('linkElement.classList', linkElement.classList.length)
+        linkElement.classList.add('link-color')
+      })
+    }, 100)
 
     setCompleted(true)
   }
