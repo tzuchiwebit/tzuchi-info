@@ -64,20 +64,20 @@ export default function SocialShare({ articleId = '', isMobileType = false }) {
             <div className="laptop:hidden grid grid-cols-[1fr_auto_1fr] bg-primary-blue3 tablet:h-[73px] h-[65px] py-4 text-white w-screen sticky bottom-0">
               <div onClick={handleIncreaseLike}
                 className="flex flex-row items-center justify-center gap-x-1 cursor-pointer select-none">
-                <Icon.Like style={{ width: 32 }} />
+                { hasLike ? <Icon.LikeFull style={{ width: 32 }} /> : <Icon.Like style={{ width: 32 }} />}
                 <span className="text-[26px] font-bold leading-[32px]">{like > 0 ? like + '個' : ''}讚</span>
               </div>
               <div className="border-l-4 border-solid border-white"></div>
               <div onClick={() => {
                 toggleOpen();
               }} className="flex flex-row items-center justify-center gap-x-1 cursor-pointer select-none">
-                <Icon.Share style={{ width: 32 }} />
+                { hasShare ? <Icon.ShareFull style={{ width: 32 }} /> : <Icon.Share style={{ width: 32 }} />}
                 <span className="text-[26px] font-bold leading-[32px]">{share > 0 ? share + '個' : ''}分享</span>
               </div>
             </div>
             {
               isMobileDevice && isOpen &&
-              <SocialShareModal isOpen={isOpen} toggleOpen={toggleOpen}></SocialShareModal>
+              <SocialShareModal isOpen={isOpen} toggleOpen={toggleOpen} articleId={articleId}></SocialShareModal>
             }
           </> :
           <div className="laptop:flex flex-row gap-x-2 hidden">
@@ -106,7 +106,7 @@ export default function SocialShare({ articleId = '', isMobileType = false }) {
               </div>
               {
                 !isMobileDevice && isOpen &&
-                <SocialShareModal isOpen={isOpen} toggleOpen={toggleOpen}></SocialShareModal>
+                <SocialShareModal isOpen={isOpen} toggleOpen={toggleOpen} articleId={articleId}></SocialShareModal>
               }
             </div>
           </div>
