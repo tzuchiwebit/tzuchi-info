@@ -2,6 +2,7 @@ import Container from "@/shared/layout/Container"
 import Home from "@/components/home"
 
 export const metadata = {
+  metadataBase: new URL(`${process.env.SITE_URL}`),
   title: '慈濟資訊網',
   description: '訪問慈濟資訊網，與全球慈濟脈動保持同步，無論是最新志工早會資訊、證嚴上人開示，還是慈濟近期焦點，都能在慈濟資訊網找到。 ',
   openGraph: {

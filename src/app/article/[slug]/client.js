@@ -26,8 +26,6 @@ import FloatSizeToolbar from './float-size-toolbar';
 import 'react-toastify/dist/ReactToastify.css';
 import Errata from "@/components/Errata"
 import { Linkfont } from '@/shared/styles/linkFont.js';
-import database, { increaseLike , increaseShare, getLikeRef, getShareRef } from "@/config/database"
-import { onValue, ref } from "firebase/database";
 
 const Breadcrumb = ({ className }) => {
   const { pageData } = useDataProvider();
@@ -82,21 +80,7 @@ const Breadcrumb = ({ className }) => {
 const Article = ({setVisible}) => {
   const { pageData } = useDataProvider();
   const [selectedFontSize, setSelectedFontSize] = useState(26)
-  const [loaded, setLoaded] = useState(false)
-  const params = useParams();
-  const [like, setLike] = useState(0)
-  const [share, setShare] = useState(0)
-
-  useEffect(() => {
-    onValue(getLikeRef(params.slug), snapshot => {
-      const data = snapshot.val()
-      setLike(data)
-    })
-    onValue(getShareRef(params.slug), snapshot => {
-      const data = snapshot.val()
-      setShare(data)
-    })
-  }, [params.slug])
+  const [completed, setCompleted] = useState(false)
 
   const handleImageLoad = () => {
     // 1) 處理摘要圖片
@@ -126,18 +110,19 @@ const Article = ({setVisible}) => {
 
     // 3) add link style
     const linkElements = document.querySelectorAll("#content-holder a")
-    linkElements.forEach((element) => {
-      element.classList.add('link-color')
+    linkElements.forEach((linkElement) => {
+      console.log('linkElement.classList', linkElement.classList.length)
+      linkElement.classList.add('link-color')
     })
 
-    setLoaded(true)
+    setCompleted(true)
   }
 
   useEffect(() => {
-    if (loaded) {
+    if (completed) {
       setVisible(true)
     }
-  }, [loaded, setVisible])
+  }, [completed, setVisible])
 
   const articleData = useMemo(() => {
     const target = _.find(pageData, { name: 'article' });

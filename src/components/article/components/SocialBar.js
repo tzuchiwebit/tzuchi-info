@@ -14,16 +14,6 @@ export default function SocialShare({ articleId = '', isMobileType = false }) {
   const [like, setLike] = useState(0)
   const [share, setShare] = useState(0)
 
-  const hasLike = useMemo(()=> {
-    console.log('hasLikeLocal', hasLikeLocal)
-    return !!hasLikeLocal
-  }, [hasLikeLocal])
-
-  const hasShare = useMemo(()=> {
-    console.log('hasShareLocal', hasShareLocal)
-    return !!hasShareLocal
-  }, [hasShareLocal])
-
   const handleIncreaseLike = () => {
     if (hasLikeLocal) return
     setHasLikeLocal(true)

@@ -7,6 +7,7 @@ import Footer from '@/components/navigation/footer/Footer'
 import { useState, useEffect } from "react"
 import DataProvider from "@/components/navigation/navbar/DataProvider"
 import NewsEmergency from '@/components/navigation/navbar/components/NewsEmergency'
+import NewsMarquee from '@/components/navigation/navbar/components/NewsMarquee'
 import Script from "next/script";
 import { Suspense } from "react";
 import './globals.css'
@@ -47,6 +48,7 @@ export default function RootLayout({ children }) {
               <Navbar />
               <div className='tablet-down:h-[62px]' />
               <NewsEmergency></NewsEmergency>
+              <NewsMarquee></NewsMarquee>
               {children}
               <Footer />
               {/* <Chat /> */}
