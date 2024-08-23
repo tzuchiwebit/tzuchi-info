@@ -28,6 +28,10 @@ const nextConfig = {
     },
     rewrites: async () => [
       {
+        source: '/server-sitemap-0.xml',
+        destination: '/api/server-sitemap-0.xml',
+      },
+      {
         source: '/server-sitemap-1.xml.gz',
         destination: '/api/article-sitemap',
       },
