@@ -2,6 +2,9 @@ import { getServerSideSitemap } from 'next-sitemap'
 const API_ENDPOINT = `${process.env.NEXT_PUBLIC_CMS_URL}/api/index.php/v1`
 const token = process.env.NEXT_PUBLIC_JOOMLA_API_TOKEN
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET(request) {
   const params = {
     'page[limit]': 1000,

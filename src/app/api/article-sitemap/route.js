@@ -2,13 +2,18 @@ import { NextResponse } from 'next/server';
 import { SitemapStream, streamToPromise } from 'sitemap';
 import { createGzip } from 'zlib';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET() {
   // Create a stream to write to
   const smStream = new SitemapStream();
   const gzip = createGzip(); // Create a Gzip stream
 
   const url =`https://webtest.tzuchi-org.tw/api/jcustom/v1/lightarticles.php?state=1&ordering=created&direction=desc`
+  // process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
   const res = await fetch(url, {
+    cache: 'no-store',
     headers: {
       'Content-Type': 'application/json',
     },
