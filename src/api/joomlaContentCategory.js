@@ -1,4 +1,4 @@
-export default [
+const category =  [
     {
         id: 2,
         label_name: 'Uncategorised',
@@ -83,3 +83,5 @@ export default [
       category_name: "",
     },
 ]
+
+export default category

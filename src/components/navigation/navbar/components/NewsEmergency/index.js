@@ -9,7 +9,7 @@ export default function NewsEmergency() {
   const [isClose, setIsClose] = useState(false);
   const isShow = useMemo(() => {
     return !!emergencyArticle && !isClose
-}, [emergencyArticle, isClose])
+  }, [emergencyArticle, isClose])
 
   return (
     <Fragment>
