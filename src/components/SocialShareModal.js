@@ -82,7 +82,7 @@ export default function SocailShareModal({ isOpen, toggleOpen, articleId })  {
   }
 
   const sendLine = () => {
-    const lineShareUrl = `https://social-plugins.line.me/lineit/share?text=${encodeURIComponent(body)}`;
+    const lineShareUrl = `https://social-plugins.line.me/lineit/share?text=${encodeURIComponent(articleUrl)}`;
     window.open(lineShareUrl);
   }
 
