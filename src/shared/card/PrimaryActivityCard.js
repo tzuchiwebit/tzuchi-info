@@ -4,11 +4,10 @@ import screens from "../styles/screens"
 import dayjs from "dayjs"
 import Skeleton from "react-loading-skeleton"
 import SocialBar from "./components/SocialBar"
-import Image from 'next/image'
-import DefaultImage from '@/asset/image/default-article-intro.png'
 import Icon from "@/shared/Icon"
 import color from "@/shared/styles/color"
 import { Linkfont } from "../styles/linkFont.js"
+import BlurBGImage from "@/shared/image/BlurBGImage";
 
 const PrimaryActivityCard = ({ item = {}, onClick = () => { } }) => {
 
@@ -18,12 +17,13 @@ const PrimaryActivityCard = ({ item = {}, onClick = () => { } }) => {
         <ImageContainer>
           {
             item?.id ?
-              <Image
-                src={item?.images?.image_intro ? item?.images?.image_intro : DefaultImage}
-                alt={item?.images?.image_intro_alt}
-                fill
-                style={{ objectFit: "cover", borderRadius: "4px" }}
-              /> :
+              <BlurBGImage url={item.images?.image_intro} />:
+              // <Image
+              //   src={item?.images?.image_intro ? item?.images?.image_intro : DefaultImage}
+              //   alt={item?.images?.image_intro_alt}
+              //   fill
+              //   style={{ objectFit: "cover", borderRadius: "4px" }}
+              // /> :
               <Skeleton className="aspect-[14/9]" />
           }
         </ImageContainer>

@@ -4,9 +4,8 @@ import screens from "../styles/screens"
 import dayjs from "dayjs"
 import Skeleton from "react-loading-skeleton"
 import SocialBar from "./components/SocialBar"
-import Image from 'next/image'
-import DefaultImage from '@/asset/image/default-article-intro.png'
 import { Linkfont } from "../styles/linkFont.js"
+import BlurBGImage from "@/shared/image/BlurBGImage";
 
 const PrimaryCard = ({ item = {}, onClick = () => { } }) => {
 
@@ -16,17 +15,18 @@ const PrimaryCard = ({ item = {}, onClick = () => { } }) => {
           <ImageContainer>
             {
               item?.id ?
-              <Image
-                src={item?.images?.image_intro ? item?.images?.image_intro: DefaultImage}
-                alt={item?.images?.image_intro_alt}
-                fill
-                style={{ objectFit:"cover", borderRadius: "4px" }}
-              />:
+              <BlurBGImage url={item.images?.image_intro} />:
+              // <Image
+              //   src={item?.images?.image_intro ? item?.images?.image_intro: DefaultImage}
+              //   alt={item?.images?.image_intro_alt}
+              //   fill
+              //   style={{ objectFit:"cover", borderRadius: "4px" }}
+              // />:
               <Skeleton className="aspect-[14/9]" />
             }
           </ImageContainer>
-          <div className="w-full text-primary-blue1 font-bold text-xl mt-3 line-clamp-2 h-[3.5rem]">
-              <Linkfont>{item.title}</Linkfont>
+          <div className="w-full text-primary-blue1 font-bold text-xl mt-3 line-clamp-2 h-[3.5rem] break-words">
+            <Linkfont>{item.title}</Linkfont>
           </div>
           <div className="mt-1 w-full">
             <div className="text-gray-gray2 text-base line-clamp-4 h-[6rem]">

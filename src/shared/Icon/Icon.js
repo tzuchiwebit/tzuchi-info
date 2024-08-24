@@ -90,3 +90,5 @@ export { default as Video } from "./icon/article/video.svg";
 
 export { default as SocialFacebook } from "./icon/social/facebook.svg";
 export { default as SocialLine } from "./icon/social/line.svg";
+
+export { default as Quotation } from "./icon/main/quotation.svg";

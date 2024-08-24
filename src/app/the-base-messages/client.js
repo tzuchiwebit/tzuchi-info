@@ -116,9 +116,9 @@ export default function Page() {
   return <Container>
     <FloatScrollTopButton />
     {/* filter options section */}
-    <div className="flex w-full flex-col gap-5">
+    <div className="flex w-full flex-col tablet:gap-y-6 gap-y-4">
       {/* breadcrumbs */}
-      <div className="flex pt-[30px] gap-1">
+      <div className="flex tablet:mt-6 mt-4">
         <PrimaryBreadcrumb
           items={[
             {

@@ -347,7 +347,7 @@ const MainContent = () => {
           <div className={classnames({'visible': visible, 'invisible': !visible})}>
             <FloatScrollTopButton />
             {/* breadcrumb */}
-            <Breadcrumb className="tablet:mt-8 mt-4"></Breadcrumb>
+            <Breadcrumb className="tablet:mt-6 mt-4"></Breadcrumb>
             <ArticleContainer className="mt-6">
               <Article setVisible={setVisible}></Article>
               <RecommandArticles></RecommandArticles>

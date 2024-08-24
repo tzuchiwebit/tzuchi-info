@@ -15,7 +15,10 @@ const PrimaryBreadcrumb = ({ items = [], separator = <Icon.PageArrowRight style=
                       router.push(i.link)
                     }
                 }}>
-                    <Linkfont>{i.label}</Linkfont>
+                  {
+                    !!i.link ? <Linkfont>{i.label}</Linkfont> : <span className="text-gray-gray2">{i.label}</span>
+                  }
+                    {/* <Linkfont>{i.label}</Linkfont> */}
                 </div>
                 {
                     index < items.length - 1 ? <div className="font-medium">

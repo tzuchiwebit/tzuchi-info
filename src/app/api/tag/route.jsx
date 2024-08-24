@@ -7,7 +7,7 @@ export async function GET(request) {
 
   // FIXME: unable to verify the first certificate
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
-  const url =`${API_ENDPOINT}/content/articles/${id}`
+  const url =`${API_ENDPOINT}/tags/${id}`
   const res = await fetch(url, {
     cache: 'no-store',
     headers: {
