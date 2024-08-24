@@ -33,6 +33,16 @@ export default function Page({ tagInfo }) {
 
   const router = useRouter();
 
+  const imageIntro = useMemo(()=> {
+    if (!!tagInfo?.images?.image_intro) {
+      if (tagInfo?.images?.image_intro?.indexOf("images") > -1) {
+        return `${process.env.NEXT_PUBLIC_CMS_URL}/${tagInfo?.images?.image_intro}`
+      }
+      return tagInfo?.images?.image_intro
+    }
+    return null
+  }, [tagInfo?.images?.image_intro])
+
   const { data: listDataRef, loading } = useRequest(() => getArticlesByCategory({ label_name: "證嚴上人每日一叮嚀", limit: 9, offset: pageOffset }), {
     refreshDeps: [pageOffset],
     onSuccess: async (res) => {
@@ -72,7 +82,7 @@ export default function Page({ tagInfo }) {
       <div className="w-full desktop:h-[238px] laptop:h-[282px] grid desktop:grid-cols-[455px_1fr] laptop:grid-cols-[539px_1fr] grid-cols-1">
         <div className="relative tablet-only:w-[742px] tablet-only:h-[350px] tablet-down:w-[349px] tablet-down:h-[165px]">
           <Image
-            src={tagInfo?.images?.image_intro ? tagInfo?.images?.image_intro : DefaultImage}
+            src={imageIntro ? imageIntro : DefaultImage}
             alt=""
             fill
             sizes="100vw"
