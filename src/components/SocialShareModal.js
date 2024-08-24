@@ -87,8 +87,7 @@ export default function SocailShareModal({ isOpen, toggleOpen, articleId })  {
   }
 
   const sendMessager = () => {
-    // const link = `${process.env.NEXT_PUBLIC_URL}/article/${articleId}`
-    const link = 'https://tzuchi-ebooks.web.app/book/865'
+    const link = `${process.env.NEXT_PUBLIC_URL}/article/${articleId}`
     const messengerShareUrl = `https://www.facebook.com/sharer.php?u=${encodeURIComponent(link)}`;
     window.open(messengerShareUrl);
   }
