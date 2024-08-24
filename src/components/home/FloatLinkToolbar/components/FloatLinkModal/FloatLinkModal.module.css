@@ -1,0 +1,11 @@
+.portrait {
+  @apply desktop:h-[702px] laptop:h-[577px] tablet:h-[832px] h-[531px];
+}
+
+.landscape {
+  @apply tablet:w-[495px] w-[300px];
+}
+
+.close {
+  @apply absolute tablet:w-12 tablet:h-12 w-[34px] h-[34px] rounded-full border border-solid border-gray-gray6 tablet:-top-6 tablet:-right-6 -top-4 -right-4 cursor-pointer flex justify-center items-center bg-white shadow-elevation-4;
+}
