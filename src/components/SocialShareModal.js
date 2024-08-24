@@ -87,8 +87,9 @@ export default function SocailShareModal({ isOpen, toggleOpen, articleId })  {
   }
 
   const sendMessager = () => {
-    const link = `${process.env.NEXT_PUBLIC_URL}/article/${articleId}`
-    const messengerShareUrl = `https://www.facebook.com/sharer.php?u=${encodeURIComponent(link)}`;
+    // const link = `${process.env.NEXT_PUBLIC_URL}/article/${articleId}`
+    // const messengerShareUrl = `https://www.facebook.com/sharer.php?u=${encodeURIComponent(link)}`;
+    const messengerShareUrl = 'https://www.facebook.com/dialog/share?&display=popup&href=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2F&redirect_uri=https%3A%2F%2Fdevelopers.facebook.com%2Ftools%2Fexplorer'
     window.open(messengerShareUrl);
   }
 
