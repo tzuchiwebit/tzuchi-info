@@ -88,8 +88,9 @@ export default function SocailShareModal({ isOpen, toggleOpen, articleId })  {
 
   const sendMessager = () => {
     const link = `${process.env.NEXT_PUBLIC_URL}/article/${articleId}`
-    const messengerShareUrl = `https://www.facebook.com/sharer.php?u=${link}`;
-    window.open(messengerShareUrl);
+    // const messengerShareUrl = `https://www.facebook.com/sharer.php?u=${link}`;
+    // window.open(messengerShareUrl);
+    window.open('fb-messenger://share?link=' + encodeURIComponent(link));
   }
 
   const sendInstagram = () => {
