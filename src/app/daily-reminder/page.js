@@ -2,6 +2,8 @@ import Client from './client'
 import { Suspense } from "react";
 import { getTagById } from "@/api/routeApi";
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata({ params }, parent) {
   const tag = (await getTagById(2)).data
   const images = []
