@@ -85,7 +85,7 @@ export default function Page({ tagInfo }) {
             <div className="border-b border-solid border-primary-blue1 w-full"></div>
           </div>
           <div className="grow laptop:py-4 py-2 px-2 flex flex-col gap-y-[6px]">
-            <span className="font-bold text-primary-blue1 text-[30px]">每日一叮嚀</span>
+            <span className="font-bold text-primary-blue1 text-[30px]">{tagInfo?.title}</span>
             <div className="text-gray-gray2 text-base desktop:line-clamp-3 desktop:h-[4.5rem] laptop:line-clamp-4 laptop:h-[6rem] break-all">
               {tagInfo.metadesc}
             </div>
