@@ -32,7 +32,7 @@ const Breadcrumb = ({className}) => {
 }
 
 export default function Page() {
-  const pageLimit = 10
+  const pageLimit = 12
   const [listData, setListData] = useState([])
   const [totalPage, setTotalPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);

@@ -38,7 +38,7 @@ export default function FloatLinkButton() {
 
               {
                 floatLinkArticles.map((item, _index) => (
-                  <div key={_index} className={classnames(styles.link, 'relative w-[100px] h-[100px]')} onClick={() => {
+                  <div key={_index} className={classnames(styles.link, 'relative w-[100px] h-[121px] -mb-5')} onClick={() => {
                     if (!!item.attributes.images.image_intro_alt) {
                       if (!!item.attributes.images.image_fulltext) {
                         setModalUrl(item.attributes.images.image_intro_alt)
@@ -55,7 +55,7 @@ export default function FloatLinkButton() {
                       alt={""}
                       fill
                       style={{
-                        objectFit: 'cover',
+                        objectFit: 'contain',
                       }}
                     />
                   </div>
