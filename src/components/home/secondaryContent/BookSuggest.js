@@ -31,7 +31,7 @@ const Item = ({ item = {}, loading = false }) => {
 
   const clickOpen = () => {
     if (item?.id) {
-      window.open(`${ebookEndpoint}/book/${item.id}`, '_blank');
+      window.open(`${process.env.NEXT_PUBLIC_EBOOK_URL}/book/${item.id}`, '_blank');
     } else if (item?.link) {
       window.open(`${jingsiEndpoint}${item.link}`, '_blank');
     }
@@ -87,7 +87,7 @@ const NewItem = ({ item = {}, loading = false }) => {
 
   const clickOpen = () => {
     if (item?.id) {
-      window.open(`${ebookEndpoint}/book/${item.id}`, '_blank');
+      window.open(`${process.env.NEXT_PUBLIC_EBOOK_URL}/book/${item.id}`, '_blank');
     } else if (item?.link) {
       window.open(`${jingsiEndpoint}${item.link}`, '_blank');
     } else if (item?.url) {
@@ -205,7 +205,7 @@ const CarouselSection = ({ data, loading }) => {
 }
 
 const onReadMoreBook = () => {
-  window.open(ebookEndpoint, '_blank');
+  window.open(process.env.NEXT_PUBLIC_EBOOK_URL, '_blank');
 }
 
 const onReadMoreJingSi = () => {
