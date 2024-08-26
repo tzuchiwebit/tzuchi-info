@@ -13,16 +13,22 @@ import { Suspense } from "react";
 import './globals.css'
 import 'react-loading-skeleton/dist/skeleton.css'
 
-export default function RootLayout({ children }) {
-  const [mounted, setMounted] = useState(false)
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+// export const viewport = {
+//   // width: 1600,
+//   // width: 'device-wdith',
+//   width: 'device-width, shrink-to-fit=no',
+//   initialScale: 1,
+//   maximumScale: 1,
+//   minimumScale: 1,
+//   userScalable: false,
+// }
 
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <link rel="icon" href="/favicon.svg" sizes="any" />
       <head>
+        {/* <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta> */}
         <Script id="gtm-script" strategy="beforeInteractive">
           {`
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':

@@ -10,7 +10,7 @@ import FloatLinkModal from './components/FloatLinkModal'
 
 export default function FloatLinkButton() {
   const { floatLinkArticles, loadingFloatLinks } = useDataProvider()
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState(true)
   const [isOpenModal, setIsOpenModal] = useState(false)
   const [modalImage, setModalImage] = useState("")
   const [modalUrl, setModalUrl] = useState("")
