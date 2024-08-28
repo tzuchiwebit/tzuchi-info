@@ -44,8 +44,12 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 Routes are defined in /src/app/config/routes.js
 
 
-## Deploy on Vercel
+## Deploy on Tzuchi Server (testing environment)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+cd /root/workspace/tzuchi-info
+git pull --rebase
+./build-with-env.sh -e development
+./stop.sh
+./start.sh
+```
