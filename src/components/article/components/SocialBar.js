@@ -62,14 +62,14 @@ export default function SocialShare({ articleId = '', isMobileType = false }) {
               <div onClick={handleIncreaseLike}
                 className="flex flex-row items-center justify-center gap-x-1 cursor-pointer select-none">
                 { hasLikeLocal ? <Icon.LikeFull style={{ width: 32 }} /> : <Icon.Like style={{ width: 32 }} />}
-                <span className="text-[26px] font-bold leading-[32px]">{like > 0 ? like + '個' : ''}讚</span>
+                <span className="text-[26px] font-bold leading-[32px]">讚</span>
               </div>
               <div className="border-l-4 border-solid border-white"></div>
               <div onClick={() => {
                 toggleOpen();
               }} className="flex flex-row items-center justify-center gap-x-1 cursor-pointer select-none">
                 { hasShareLocal ? <Icon.ShareFull style={{ width: 32 }} /> : <Icon.Share style={{ width: 32 }} />}
-                <span className="text-[26px] font-bold leading-[32px]">{share > 0 ? share + '個' : ''}分享</span>
+                <span className="text-[26px] font-bold leading-[32px]">分享</span>
               </div>
             </div>
             {
@@ -85,11 +85,7 @@ export default function SocialShare({ articleId = '', isMobileType = false }) {
                 'text-gray-gray4 border-gray-gray4': !hasLikeLocal,
               })}
             >
-              {
-                hasLikeLocal ?
-                <Icon.LikeFull style={{ width: 20 }} />:
-                <Icon.Like style={{ width: 20 }} />
-              }
+              { hasLikeLocal ? <Icon.LikeFull style={{ width: 20 }} />: <Icon.Like style={{ width: 20 }} />}
               {/* <span className="text-[18px] font-bold leading-[20px]">{like > 0 ? like + '個' : ''}讚</span> */}
               <span className="text-[18px] font-bold leading-[20px]">讚</span>
             </div>
