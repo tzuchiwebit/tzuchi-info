@@ -85,8 +85,13 @@ export default function SocialShare({ articleId = '', isMobileType = false }) {
                 'text-gray-gray4 border-gray-gray4': !hasLikeLocal,
               })}
             >
-              <Icon.Like style={{ width: 20 }} />
-              <span className="text-[18px] font-bold leading-[20px]">{like > 0 ? like + '個' : ''}讚</span>
+              {
+                hasLikeLocal ?
+                <Icon.LikeFull style={{ width: 20 }} />:
+                <Icon.Like style={{ width: 20 }} />
+              }
+              {/* <span className="text-[18px] font-bold leading-[20px]">{like > 0 ? like + '個' : ''}讚</span> */}
+              <span className="text-[18px] font-bold leading-[20px]">讚</span>
             </div>
             <div className="relative">
               <div onClick={() => {
@@ -99,7 +104,8 @@ export default function SocialShare({ articleId = '', isMobileType = false }) {
                 })
                 }>
                 <Icon.ShareFull style={{ width: 20 }} />
-                <span className="text-[18px] font-bold leading-[20px]">{share > 0 ? share + '個' : ''}分享</span>
+                {/* <span className="text-[18px] font-bold leading-[20px]">{share > 0 ? share + '個' : ''}分享</span> */}
+                <span className="text-[18px] font-bold leading-[20px]">分享</span>
               </div>
               {
                 !isMobileDevice && isOpen &&
