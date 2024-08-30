@@ -134,13 +134,15 @@ const Article = ({setVisible}) => {
     // 1-1) Find the first match "image"
     const regex = /<img\s+[^>]*title="([^"]*)"[^>]*>/i;
     const match = target?.data?.attributes?.text?.match(regex);
+    console.log('match', match)
+    console.log('text', target?.data?.attributes?.text)
 
     if (match) {
         titleValue = match[1];
 
         // 1-2) insert "title" element as 圖說文字
         const newRegex = /(<img\s+[^>]*>)/i;
-        target.data.attributes.text = target?.data?.attributes?.text.replace(newRegex, `$1<p class="mt-1 pb-1 mb-4 text-gray-gray2 font-medium border-solid border-b border-gray-gray7">${titleValue}</p>`);
+        target.data.attributes.text = target?.data?.attributes?.text.replace(newRegex, `$1<p class="mt-1 pb-1 mb-4 text-gray-gray2 font-medium border-solid border-b border-primary-blue3">${titleValue}</p>`);
     } else {
         console.log("No img tag with title attribute found.");
     }
@@ -219,11 +221,15 @@ const Article = ({setVisible}) => {
         </div>
         {
           articleData?.attributes?.images?.image_intro_caption ?
+          <div className="flex flex-col w-full mt-2 mb-4 gap-y-1">
+            <div className="text-lg text-gray-gray2 font-medium">{articleData?.attributes?.images?.image_intro_caption}</div>
+            <div className="w-full flex flex-row gap-x-2 items-center" >
+              <div className="grow border-solid border-b border-primary-blue3"></div>
+              <Icon.ExclaimationMark style={{width: 26, height: 26}}/>
+            </div>
+          </div>:
           <>
-            <div className="mt-1 pb-1 mb-4 text-lg text-gray-gray2 font-medium border-solid border-b border-gray-gray7">{articleData?.attributes?.images?.image_intro_caption}</div>
-          </>:
-          <>
-            <div className="mt-1 pb-1 mb-4"></div>
+            <div className="mt-2"></div>
           </>
         }
         {

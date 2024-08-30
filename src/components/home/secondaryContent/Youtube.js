@@ -53,7 +53,7 @@ const YoutubeSection = () => {
                 setYoutubeDetail(ytInfo.data);
                 setYoutubeData({
                     youtubeId: YTId,
-                    bgImage: `http://img.youtube.com/vi/${YTId}/hqdefault.jpg`,
+                    bgImage: `https://img.youtube.com/vi/${YTId}/hqdefault.jpg`,
                     ..._data,
                 })
             }
