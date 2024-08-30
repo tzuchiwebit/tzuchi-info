@@ -5,8 +5,6 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 COPY package*.json ./
-COPY next.config.js ./
-COPY next-sitemap.config.js ./
 RUN npm ci
 
 FROM base AS builder

@@ -1,3 +1,4 @@
+console.log('NEXT_PUBLIC_URL', process.env.NEXT_PUBLIC_URL)
 
 const config = {
   siteUrl: process.env.NEXT_PUBLIC_URL,
