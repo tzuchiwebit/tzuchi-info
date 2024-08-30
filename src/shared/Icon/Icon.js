@@ -80,12 +80,16 @@ export { default as Plus } from "./icon/footer/plus.svg";
 
 export { default as ChatAvatar } from "./icon/chat/avatar.svg";
 export { default as CloseWhite } from "./icon/close-white.svg";
+export { default as CloseCircle } from "./icon/close-circle.svg";
 
 export { default as Triangle } from "./icon/article/triangle.svg";
 export { default as BookBlue } from "./icon/article/book-blue.svg";
 export { default as BookGray } from "./icon/article/book-gray.svg";
 export { default as Download } from "./icon/article/download.svg";
 export { default as Video } from "./icon/article/video.svg";
+export { default as ExclaimationMark } from "./icon/article/exclaimation-mark.svg";
 
 export { default as SocialFacebook } from "./icon/social/facebook.svg";
 export { default as SocialLine } from "./icon/social/line.svg";
+
+export { default as Quotation } from "./icon/main/quotation.svg";

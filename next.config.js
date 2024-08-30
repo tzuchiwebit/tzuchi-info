@@ -26,10 +26,16 @@ const nextConfig = {
             },
         ],
     },
-}
-
-if (process.env.ENV_NAME === "development") {
-  // nextConfig.output = 'export'
+    rewrites: async () => [
+      {
+        source: '/server-sitemap-0.xml',
+        destination: '/api/server-sitemap-0.xml',
+      },
+      {
+        source: '/server-sitemap-1.xml.gz',
+        destination: '/api/article-sitemap',
+      },
+    ],
 }
 
 module.exports = nextConfig

@@ -9,6 +9,7 @@ import _ from 'lodash'
 import Icon from "@/shared/Icon"
 import { LikeAndShare } from "../components"
 import { addHits } from "@/api/api"
+import { Linkfont } from "@/shared/styles/linkFont.js"
 
 const Item = ({ item }) => {
 
@@ -17,7 +18,7 @@ const Item = ({ item }) => {
     return (
         <div className="w-full block shadow-elevation-3 rounded-md overflow-hidden" >
             <div className="text-white bg-primary-blue1 p-3 text-[24px] font-bold" >
-                {item.title}
+                {item?.title}
             </div>
             <div className="divide-y divide-solid divide-gray-gray7/50">
                 {
@@ -25,13 +26,13 @@ const Item = ({ item }) => {
                         <div className="p-3 flex gap-4" key={_index}>
                             <div className="flex-1">
                                 <div
-                                    className="text-primary-blue1 text-xl font-bold mb-2 cursor-pointer"
+                                    className="text-primary-blue1 text-xl h-[1.75rem] font-bold mb-2 cursor-pointer line-clamp-1"
                                     onClick={() => {
                                         router.push(`${routes.ARITCLE}/${_i.id}`)
                                         addHits(_i.id);
                                     }}
                                 >
-                                    {_i.title}
+                                    <Linkfont>{_i.title}</Linkfont>
                                 </div>
                                 <div className="flex flex-col text-gray-gray4 gap-1 items-start font-medium">
                                     <div className="font-medium text-sm">{dayjs(_i.date).format('YYYY-MM-DD')}</div>
@@ -67,11 +68,12 @@ const ArticleSection = ({ leading = [], view = [] }) => {
     const data = [
         {
             title: '領航慈濟',
-            children: leading?.map(i => i.attributes).slice(0, 2)
+            // children: leading?.map(i => i.attributes).slice(0, 2) || [{},{}]
+            children: leading.length ? leading?.map(i => i.attributes).slice(0, 2) : [{},{}]
         },
         {
             title: '名人視角',
-            children: view?.map(i => i.attributes).slice(0, 2)
+            children: view.length ? view.map(i => i.attributes).slice(0, 2) : [{}, {}]
         }
     ]
 
@@ -99,7 +101,7 @@ export default function Article() {
     // console.log(articlesData)
 
     return <div className="pt-5">
-        <BannerTitle title={`專欄文章`} link={routes.COLUMN_ARTICLE} />
+        <BannerTitle id="Article" title={`專欄文章`} link={routes.COLUMN_ARTICLE} />
         <ArticleSection leading={articlesData.leading} view={articlesData.view} />
     </div>
 }

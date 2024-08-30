@@ -7,6 +7,7 @@ import { useMemo } from "react"
 import { useRouter } from "next/navigation"
 import _ from 'lodash'
 import { addHits } from "@/api/api"
+import { Linkfont } from "@/shared/styles/linkFont.js"
 
 const Item = ({ item }) => {
 
@@ -15,13 +16,15 @@ const Item = ({ item }) => {
     return (
         <div className="gap-5 py-4 cursor-pointer" onClick={() => {
             router.push(`${routes.ARITCLE}/${item.id}`);
-            addHits(item.id);
+            addHits(item?.id);
         }}>
-            <div className="text-primary-blue1 text-xl font-bold mb-2">
-                {item.title}
+            <div className="text-primary-blue1 text-xl font-bold mb-2 line-clamp-2 h-[3.5rem]">
+                <Linkfont>{item?.title}</Linkfont>
             </div>
-            <div className="text-gray-gray4 text-sm font-medium">
-                {dayjs(item.publish_up).format("YYYY-MM-DD")}
+            <div className="text-gray-gray4 text-sm font-medium h-[1.25rem]">
+                { item?.publish_up &&
+                  dayjs(item?.publish_up).format("YYYY-MM-DD")
+                }
             </div>
         </div>
     )
@@ -41,11 +44,11 @@ export default function Announcements() {
 
     const announcementsData = useMemo(() => {
         const target = _.find(pageData, { name: '基金會公告' });
-        return target?.data || []
+        return target?.data || [{},{},{}]
     }, [pageData])
 
     return <div className="py-3 flex-1">
-        <BannerTitle title={`基金會公告`} link="https://tw.tzuchi.org/about-us/關於慈濟基金會/最新公告" behavior="blank" />
+        <BannerTitle id="Announcements" title={`基金會公告`} link="https://tw.tzuchi.org/about-us/關於慈濟基金會/最新公告" behavior="blank" />
         <AnnouncementSection data={announcementsData} />
     </div>
 }

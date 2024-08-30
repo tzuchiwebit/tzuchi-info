@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import routes from "@/config/routes";
 import { addHits } from "@/api/api";
 import dynamic from 'next/dynamic'
+import { Linkfont } from "@/shared/styles/linkFont.js";
 const LikeAndShare = dynamic(() => import('../components/LikeAndShare'), { ssr: false })
 
 function classNames(...classes) {
@@ -32,15 +33,17 @@ const Item = ({ item = {}, loading = false }) => {
         <div className="relative w-full mb-[60px]">
             {/* <div className="w-full h-[480px] p-1"> */}
             <div className={"w-full p-1"}>
-                <div className="w-full shadow-elevation-3 rounded-md overflow-hidden">
+                <div className="w-full shadow-elevation-3 rounded-md overflow-hidden -mt-1">
                     {
-                        loading ? <div className="">
-                            <Skeleton className="aspect-video" />
-                        </div> : <ImageContainer className='cursor-pointer' onClick={() => {
-                            router.push(`${routes.ARITCLE}/${item.id}`);
-                            addHits(item.id);
+                      loading ?
+                        <ImageContainer className="rounded-md">
+                          <Skeleton className="w-full h-full" />
+                        </ImageContainer> :
+                        <ImageContainer className='cursor-pointer' onClick={() => {
+                          router.push(`${routes.ARITCLE}/${item.id}`);
+                          addHits(item.id);
                         }}>
-                            <BlurBGImage url={item.images?.image_intro} />
+                          <BlurBGImage url={item.images?.image_intro} />
                         </ImageContainer>
                     }
                     <div className="px-4 flex flex-col items-center pt-4 pb-2 w-full gap-y-1 gap-x-4">
@@ -51,7 +54,7 @@ const Item = ({ item = {}, loading = false }) => {
                                 addHits(item.id);
                             }}>
                             {
-                                loading ? <Skeleton /> : item?.title
+                                loading ? <Skeleton /> : <Linkfont className="line-clamp-1">{item?.title}</Linkfont>
                             }
                         </div>
                         <div className="hidden flex flex-row flex-none border-t border-solid border-gray-gray8 w-full justify-end pt-2 pr-5">
@@ -138,7 +141,7 @@ const CarouselSection = () => {
 export default function MainCarousel() {
 
     return <div>
-        <BannerTitle title={`近期焦點`} />
+        <BannerTitle title={`近期焦點`} id="MainCarousel" />
         <div className="pt-5 w-full">
             <CarouselSection />
         </div>

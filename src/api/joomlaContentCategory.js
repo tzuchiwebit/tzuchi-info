@@ -1,4 +1,4 @@
-export default [
+const category =  [
     {
         id: 2,
         label_name: 'Uncategorised',
@@ -72,4 +72,16 @@ export default [
         label_name: '入口網',
         category_name: "",
     },
+    {
+      id: 26,
+      label_name: '浮動式按鈕',
+      category_name: "",
+    },
+    {
+      id: 27,
+      label_name: '緊急發佈訊息',
+      category_name: "",
+    },
 ]
+
+export default category

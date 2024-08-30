@@ -13,6 +13,7 @@ import Skeleton from "react-loading-skeleton";
 import Image from 'next/image'
 import DefaultImage from '@/asset/image/default-article-intro-square.png'
 import useScreenSize from '@/shared/hook/useScreenSize';
+import { Linkfont } from "@/shared/styles/linkFont.js";
 
 const ebookEndpoint = `https://tzuchi-ebooks.web.app`;
 const jingsiEndpoint = `https://store.jingsi.com`;
@@ -21,43 +22,42 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-const Item = ({ item }) => {
+const Item = ({ item = {}, loading = false }) => {
   const getImage = () => {
-    if (item?.cover_image) return  item.cover_image
+    if (item?.cover_image) return item.cover_image
     if (item?.image) return item.image
     return DefaultImage
   }
 
   const clickOpen = () => {
     if (item?.id) {
-      window.open(`${ebookEndpoint}/book/${item.id}`, '_blank');
+      window.open(`${process.env.NEXT_PUBLIC_EBOOK_URL}/book/${item.id}`, '_blank');
     } else if (item?.link) {
       window.open(`${jingsiEndpoint}${item.link}`, '_blank');
     }
   }
 
   return (
-    <div className="w-[171px] cusor-pointer">
-      <div className="w-full rounded-md overflow-hidden cursor-pointer" onClick={clickOpen}>
+    <div className="w-[171px] cusor-pointer overflow-hidden" onClick={clickOpen}>
+      <div className="aspect-square relative w-[164px] rounded-md">
         {
-          item?.title ?
+          loading ?
+          <div className="w-[164px] h-[164px]"></div>:
             <Image
+              priority
               src={getImage()}
               alt={""}
-              width={171}
-              height={171}
               sizes="100vw"
+              fill
               style={{
-                width: 'auto',
-                height: 'auto',
+                objectFit: 'contain',
               }}
               className="rounded-md"
-            /> :
-            <Skeleton className="aspect-square" />
+            />
         }
-        <div className="pt-2 pl-2 pr-0 text-xl font-bold w-full text-primary-blue1 text-left line-clamp-2">
-          {item?.title}
-        </div>
+      </div>
+      <div className="mt-2 pl-2 pr-0 text-xl h-[3.5rem] font-bold w-full text-primary-blue1 text-left line-clamp-2">
+        <Linkfont>{item?.title}</Linkfont>
       </div>
     </div>
   )
@@ -80,14 +80,14 @@ const NewItem = ({ item = {}, loading = false }) => {
   }, [screenSize.width])
 
   const getImage = () => {
-    if (item?.cover_image) return  item.cover_image
+    if (item?.cover_image) return item.cover_image
     if (item?.image) return item.image
     return DefaultImage
   }
 
   const clickOpen = () => {
     if (item?.id) {
-      window.open(`${ebookEndpoint}/book/${item.id}`, '_blank');
+      window.open(`${process.env.NEXT_PUBLIC_EBOOK_URL}/book/${item.id}`, '_blank');
     } else if (item?.link) {
       window.open(`${jingsiEndpoint}${item.link}`, '_blank');
     } else if (item?.url) {
@@ -96,27 +96,30 @@ const NewItem = ({ item = {}, loading = false }) => {
   }
 
   return (
-    <div className="relative mb-[60px] rounded-md laptop:w-[180px] tablet:w-[171px] w-[165px] cursor-pointer select-none" onClick={clickOpen}>
+    <div className="mb-[62px] rounded-md laptop:w-[180px] tablet:w-[171px] w-[165px] cursor-pointer select-none" onClick={clickOpen}>
+      <div className="aspect-square relative w-[164px]">
       {
         loading ?
-          <Skeleton className="aspect-square" /> :
+          // <Skeleton className="aspect-square" /> :
+          <div className="w-[164px] h-[164px]"></div>:
           <Image
+            priority
             src={getImage()}
             alt={""}
-            width={imageWidth}
-            height={imageWidth}
-            sizes="100vw"
+            fill
             style={{
-              width: 'auto',
-              height: 'auto',
+              objectFit: 'contain',
             }}
             className="rounded-md"
           />
       }
+      </div>
       <div className="px-0 flex flex-col items-center pt-4 pb-2 w-full gap-y-1 gap-x-4">
-        <div className="text-xl font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">
+        <div className="text-xl h-[3.5rem] font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">
           {
-            loading ? <Skeleton /> : item?.title
+            loading ?
+            <Skeleton count={2}/> :
+            <Linkfont className="text-xl h-[3.5rem] font-bold w-full text-primary-blue1 text-left line-clamp-2">{item?.title}</Linkfont>
           }
         </div>
       </div>
@@ -202,7 +205,7 @@ const CarouselSection = ({ data, loading }) => {
 }
 
 const onReadMoreBook = () => {
-  window.open(ebookEndpoint, '_blank');
+  window.open(process.env.NEXT_PUBLIC_EBOOK_URL, '_blank');
 }
 
 const onReadMoreJingSi = () => {
@@ -238,6 +241,7 @@ export default function BookSuggest() {
       return _.concat(formatedData, formatedData);
     }
     return formatedData.slice(0, 4)
+    // return Array(4).fill({})
   }, [jingsiData])
 
   useEffect(() => {
@@ -245,7 +249,8 @@ export default function BookSuggest() {
   }, [screenSize.width])
 
   return <div className="pt-3 w-full">
-    <BannerTitle title={`好書推薦`} />
+    <BannerTitle title={`好書推薦`} id="BookSuggest"/>
+
     <div className="flex flex-row w-full gap-2 items-center pt-4">
       <div className="flex-0 text-[24px] font-bold text-primary-blue1">
         靜思人文
@@ -256,29 +261,24 @@ export default function BookSuggest() {
           onClick={onReadMoreJingSi}
           target="_blank"
           className="cursor-pointer flex flex-row whitespace-nowrap">
-          更多<Icon.RightArrow2 width={20} />
+          <Linkfont>更多</Linkfont>
+          <Icon.RightArrow2 width={20} />
         </div>
       </div>
     </div>
-
-    {
-      !loadingJingsi &&
-      <div className="w-full">
+    <div className="w-full">
+      <div className="tablet-only:flex hidden flex-row justify-between">
         {
-          isTabletOnly ?
-            <div className="flex flex-row justify-between">
-              {
-                sliderJingsiData.map((item, index) => (<div className='w-fit' key={index}>
-                  <Item item={item} />
-                </div>))
-              }
-            </div> :
-            <CarouselContainer>
-              <CarouselSection data={sliderJingsiData} loading={loadingJingsi} />
-            </CarouselContainer>
+          sliderJingsiData.map((item, index) => (<div className='w-fit' key={index}>
+            <Item item={item} loading={loadingJingsi}/>
+          </div>))
         }
       </div>
-    }
+      <CarouselContainer className="">
+        <CarouselSection data={sliderJingsiData} loading={loadingJingsi} />
+      </CarouselContainer>
+    </div>
+
     <div className="flex flex-row w-full gap-2 items-center  pt-4">
       <div className="flex-0 text-[24px] font-bold text-primary-blue1">
         慈濟書庫
@@ -289,32 +289,35 @@ export default function BookSuggest() {
           onClick={onReadMoreBook}
           target="_blank"
           className="cursor-pointer flex flex-row whitespace-nowrap">
-          更多<Icon.RightArrow2 width={20} />
+          <Linkfont>更多</Linkfont>
+          <Icon.RightArrow2 width={20} />
         </div>
       </div>
     </div>
-    {
-      !loadingBooks &&
-      <div className="w-full">
+    <div className="w-full">
+      <div className="tablet-only:flex hidden flex-row justify-between">
         {
-          isTabletOnly ?
-            <div className="flex flex-row justify-between">
-              {
-                sliderBookData.map((item, index) => (<div className='w-fit' key={index}>
-                  <Item item={item} />
-                </div>))
-              }
-            </div> :
-            <CarouselContainer>
-              <CarouselSection data={sliderBookData} loading={loadingBooks} />
-            </CarouselContainer>
+          sliderBookData.map((item, index) => (<div className='w-fit' key={index}>
+            <Item item={item} />
+          </div>))
         }
       </div>
-    }
+      <CarouselContainer>
+        <CarouselSection data={sliderBookData} loading={loadingBooks} />
+      </CarouselContainer>
+    </div>
   </div>
 }
 
 const CarouselContainer = styled.div`
+  display: none;
+  @media(min-width: 1024px) {
+    display: block;
+  }
+  @media(max-width: 767.8px) {
+    display: block;
+  }
+
   .control-dots {
       display: flex;
       gap: 15px;

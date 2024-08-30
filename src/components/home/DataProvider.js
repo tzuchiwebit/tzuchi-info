@@ -3,9 +3,9 @@ import { createContext } from 'react';
 import { getArticlesByCategory, getUserById, getBookJingsiArticles } from "@/api/joomlaApi";
 import { getBookSuggest, getBookJingsi, getWeeklyReport } from "@/api/api";
 import _ from 'lodash'
+import dayjs from "dayjs"
 
 export const DataContext = createContext(null);
-
 
 const requiredPageData = [
   {
@@ -47,17 +47,18 @@ const requiredPageData = [
     tag: 1487,
   },
 ]
+
 export default function DataProvider({ children }) {
-
-
   const [pageData, setPageData] = useState([]);
-  const [suggestBooks, setSuggestBooks] = useState([]);
+  const [suggestBooks, setSuggestBooks] = useState(Array(4).fill({}));
   const [weeklyReports, setWeeklyReports] = useState([]);
-  const [jingsiBooks, setJingsiBooks] = useState([]);
+  const [jingsiBooks, setJingsiBooks] = useState(Array(4).fill({}));
+  const [floatLinkArticles, setFloatLinkArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingBooks, setLoadingBooks] = useState(true);
   const [loadingWeeklyReports, setLoadingWeeklyReports] = useState(true);
   const [loadingJingsi, setLoadingJingsi] = useState(true);
+  const [loadingFloatLinks, setLoadingFloatLinks] = useState(false)
 
   const getJournal = async () => {
     setLoading(true);
@@ -145,16 +146,32 @@ export default function DataProvider({ children }) {
     }
   }
 
+  const getFloatLinkArticles = async () => {
+    setLoadingFloatLinks(true);
+    try {
+      const res = await getArticlesByCategory({ label_name: "浮動式按鈕" })
+      const result = res.data.filter(item => {
+        return !item.attributes?.publish_down || dayjs().isAfter(dayjs(item.attributes?.publish_down, 'YYYY-MM-DD HH:mm:ss'))
+      });
+      setFloatLinkArticles(result)
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoadingFloatLinks(false);
+    }
+  }
+
   useEffect(() => {
     getJournal();
     getBooksSuggested()
     getWeeklyReports()
     getBooksJingsi()
+    getFloatLinkArticles()
   }, [])
 
 
   return (
-    <DataContext.Provider value={{ pageData, loading, loadingBooks, suggestBooks, loadingJingsi, jingsiBooks, weeklyReports, loadingWeeklyReports }}>
+    <DataContext.Provider value={{ pageData, loading, loadingBooks, suggestBooks, loadingJingsi, jingsiBooks, weeklyReports, loadingWeeklyReports, loadingFloatLinks, floatLinkArticles }}>
       {children}
     </DataContext.Provider>
   );

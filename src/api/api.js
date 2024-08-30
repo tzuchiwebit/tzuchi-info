@@ -13,10 +13,7 @@ const addHits = async (id) => {
     const res = await axios.post(`${API_ENDPOINT}/hits.php`, bodyFormData, {
       headers: { "Content-Type": "multipart/form-data" },
     })
-
-    console.log(`article id : ${id} hits udpated !`)
     return res?.data
-
   } catch (err) {
     throw err
   }
@@ -80,9 +77,8 @@ Email：${email}
 
 const getBookSuggest = async () => {
   try {
-
-    const res = await axios.get(EBOOK_ENDPOINT + '?cat_id=5&limit=4')
-    return res?.data
+    const res = await axios.get(EBOOK_ENDPOINT_NEW + '?cat_id=5&limit=4&ebook=Y')
+    return res?.data?.results
 
   } catch (err) {
     throw err
@@ -94,8 +90,8 @@ const getWeeklyReport = async ({limit, offset}) => {
     let params = '?cat_id=4'
     if (limit) params = params + `&limit=${limit}`
     if (offset) params = params + `&offset=${offset}`
-    const res = await axios.get(EBOOK_ENDPOINT + params)
-    return res?.data
+    const res = await axios.get(EBOOK_ENDPOINT_NEW + params)
+    return res?.data?.results
 
   } catch (err) {
     throw err

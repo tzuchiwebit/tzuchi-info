@@ -26,5 +26,4 @@ const Container = styled.div`
     @media(min-width: ${screens.desktop}) {
         width: 680px;
     }
-    
 `

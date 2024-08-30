@@ -1,39 +1,57 @@
 "use client"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import Icon from "@/shared/Icon"
 import useScreenSize from '@/shared/hook/useScreenSize';
 import SocialShareModal from "@/components/SocialShareModal"
 import * as classnames from "classnames"
-import { useLikeAndShare } from "@/shared/hook";
+import database, { increaseLike , increaseShare, getLikeRef, getShareRef } from "@/config/database"
+import { onValue, ref } from "firebase/database";
+import useDataProvider from "@/components/article/useDataProvider"
 
-export default function SocialShare({ articleId = '', isMobileType = false, likes = 0, shares = 0 }) {
+export default function SocialShare({ articleId = '', isMobileType = false }) {
+  const { hasLikeLocal, setHasLikeLocal, hasShareLocal, setHasShareLocal } = useDataProvider();
 
-  const { like, share, hasLike, hasShare, handleLike, handleShare, setLike = () => { }, setShare = () => { } } = useLikeAndShare({
-    id: articleId
-  });
+  const [like, setLike] = useState(0)
+  const [share, setShare] = useState(0)
+
+  const handleIncreaseLike = () => {
+    if (hasLikeLocal) return
+    setHasLikeLocal(true)
+    increaseLike(articleId)
+  }
+
+  const handleIncreaseShare = () => {
+    if (hasShareLocal) return
+    setHasShareLocal(true)
+    increaseShare(articleId)
+  }
+
+  useEffect(() => {
+    if (!!articleId) {
+      onValue(getLikeRef(articleId), snapshot => {
+        const data = snapshot.val()
+        setLike(data)
+      })
+      onValue(getShareRef(articleId), snapshot => {
+        const data = snapshot.val()
+        setShare(data)
+      })
+    }
+  }, [articleId])
 
   const screenSize = useScreenSize();
   const [isMobileDevice, setIsMobileDevice] = useState(screenSize.width < 1024)
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = () => {
     if (!isOpen) {
-      setSharedNum(sharedNum + 1)
+      handleIncreaseShare()
     }
     setIsOpen(!isOpen)
   }
-  const [clickedNum, setClickedNum] = useState(0)
-  const [sharedNum, setSharedNum] = useState(0)
 
   useEffect(() => {
     setIsMobileDevice(screenSize.width < 1024);
-    setLike(likes)
-    setShare(shares)
   }, [screenSize.width])
-
-  // useEffect(() => {
-  //   setClickedNum(Number(likes) || 0)
-  //   setSharedNum(Number(shares) || 0)
-  // }, [likes, shares])
 
   return (
     <>
@@ -41,53 +59,53 @@ export default function SocialShare({ articleId = '', isMobileType = false, like
         isMobileType ?
           <>
             <div className="laptop:hidden grid grid-cols-[1fr_auto_1fr] bg-primary-blue3 tablet:h-[73px] h-[65px] py-4 text-white w-screen sticky bottom-0">
-              <div onClick={() => handleLike(articleId)}
+              <div onClick={handleIncreaseLike}
                 className="flex flex-row items-center justify-center gap-x-1 cursor-pointer select-none">
-                <Icon.Like style={{ width: 32 }} />
-                <span className="text-[26px] font-bold leading-[32px]">{like > 0 ? like + '個' : ''}讚</span>
+                { hasLikeLocal ? <Icon.LikeFull style={{ width: 32 }} /> : <Icon.Like style={{ width: 32 }} />}
+                <span className="text-[26px] font-bold leading-[32px]">讚</span>
               </div>
               <div className="border-l-4 border-solid border-white"></div>
               <div onClick={() => {
                 toggleOpen();
-                handleShare(articleId);
               }} className="flex flex-row items-center justify-center gap-x-1 cursor-pointer select-none">
-                <Icon.Share style={{ width: 32 }} />
-                <span className="text-[26px] font-bold leading-[32px]">{share > 0 ? share + '個' : ''}分享</span>
+                { hasShareLocal ? <Icon.ShareFull style={{ width: 32 }} /> : <Icon.Share style={{ width: 32 }} />}
+                <span className="text-[26px] font-bold leading-[32px]">分享</span>
               </div>
             </div>
             {
               isMobileDevice && isOpen &&
-              <SocialShareModal isOpen={isOpen} toggleOpen={toggleOpen}></SocialShareModal>
+              <SocialShareModal isOpen={isOpen} toggleOpen={toggleOpen} articleId={articleId}></SocialShareModal>
             }
           </> :
           <div className="laptop:flex flex-row gap-x-2 hidden">
-            <div onClick={() => handleLike(articleId)}
+            <div onClick={handleIncreaseLike}
               className={classnames({
                 'flex flex-row items-center gap-x-1 border-[1.5px] rounded border-solid  py-2 px-4 cursor-pointer select-none': true,
-                'text-complementary-blue3 border-complementary-blue3': hasLike,
-                'text-gray-gray4 border-gray-gray4': !hasLike,
+                'text-complementary-blue3 border-complementary-blue3': hasLikeLocal,
+                'text-gray-gray4 border-gray-gray4': !hasLikeLocal,
               })}
             >
-              <Icon.Like style={{ width: 20 }} />
-              <span className="text-[18px] font-bold leading-[20px]">{like > 0 ? like + '個' : ''}讚</span>
+              { hasLikeLocal ? <Icon.LikeFull style={{ width: 20 }} />: <Icon.Like style={{ width: 20 }} />}
+              {/* <span className="text-[18px] font-bold leading-[20px]">{like > 0 ? like + '個' : ''}讚</span> */}
+              <span className="text-[18px] font-bold leading-[20px]">讚</span>
             </div>
             <div className="relative">
               <div onClick={() => {
                 toggleOpen();
-                handleShare(articleId);
               }}
                 className={classnames({
                   'flex flex-row items-center gap-x-1 border-[1.5px] rounded border-solid py-2 px-4 cursor-pointer select-none': true,
-                  'text-complementary-blue3 border-complementary-blue3': hasShare,
-                  'text-gray-gray4 border-gray-gray4': !hasShare,
+                  'text-complementary-blue3 border-complementary-blue3': hasShareLocal,
+                  'text-gray-gray4 border-gray-gray4': !hasShareLocal,
                 })
                 }>
                 <Icon.ShareFull style={{ width: 20 }} />
-                <span className="text-[18px] font-bold leading-[20px]">{share > 0 ? share + '個' : ''}分享</span>
+                {/* <span className="text-[18px] font-bold leading-[20px]">{share > 0 ? share + '個' : ''}分享</span> */}
+                <span className="text-[18px] font-bold leading-[20px]">分享</span>
               </div>
               {
                 !isMobileDevice && isOpen &&
-                <SocialShareModal isOpen={isOpen} toggleOpen={toggleOpen}></SocialShareModal>
+                <SocialShareModal isOpen={isOpen} toggleOpen={toggleOpen} articleId={articleId}></SocialShareModal>
               }
             </div>
           </div>

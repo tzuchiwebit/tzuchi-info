@@ -6,7 +6,8 @@ import Skeleton from 'react-loading-skeleton'
 import { useRouter } from "next/navigation"
 import routes from "@/config/routes"
 import _ from 'lodash'
-import DefaultImage from '@/asset/image/default-article-intro.png'
+// import DefaultImage from '@/asset/image/default-article-intro.png'
+import { Linkfont } from "@/shared/styles/linkFont.js"
 import { addHits } from "@/api/api"
 
 const Item = ({ item }) => {
@@ -28,8 +29,8 @@ const Item = ({ item }) => {
                 <Skeleton className="ring-2 ring-white aspect-square" borderRadius="999px"/>
               }
             </div>
-            <div className="text-primary-blue1 text-xl font-bold mb-2 flex-1 line-clamp-4">
-                {item.title}
+            <div className="text-primary-blue1 text-xl font-bold mb-1 flex-1 desktop:line-clamp-4 desktop:h-[7rem] line-clamp-3 h-[5.25rem]">
+                <Linkfont>{item.title}</Linkfont>
             </div>
         </div>
     )
@@ -52,12 +53,12 @@ export default function Activities() {
             id: i.attributes.id,
             title: i.attributes?.title,
             avatar: i.attributes?.images?.image_intro
-        })) || []
+        })) || [{}, {}, {}]
     }, [pageData])
 
 
     return <div className="pt-3 flex-1">
-        <BannerTitle title={`推薦活動`} link={'/activities'} />
+        <BannerTitle id="Activities" title={`推薦活動`} link={'/activities'} />
         <ActivitiesSection activityData={activityData} loading={loading} />
     </div>
 }

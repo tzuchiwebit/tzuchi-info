@@ -1,5 +1,5 @@
 'use client'
-import Icon from "@/shared/Icon"
+import screens from "@/shared/styles/screens";
 import styled from "styled-components"
 // import Image from 'next/image';
 // import AuthorIcon from '@/asset/icon/main/author.svg';
@@ -24,11 +24,14 @@ export default function SlidesTrack({ children }) {
 const SlideTrackContainer = styled.div`
     display: flex;
     flex-direction: row;
-    margin-right: -15px;
-    padding-right: 15px;
+
     overflow-x: scroll;
     cursor: move;
     &::-webkit-scrollbar {
         display: none;
+    }
+    @media(min-width: ${screens.tablet}) {
+      margin-right: -13px;
+      padding-right: 13px;
     }
 `

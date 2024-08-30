@@ -1,6 +1,4 @@
 'use client'
-// import Icon from "@/shared/Icon"
-import { useState, useEffect } from "react"
 import styled from "styled-components"
 import screens from "@/shared/styles/screens"
 import color from "@/shared/styles/color"
@@ -10,25 +8,26 @@ import SecondaryContent from "./secondaryContent/SecondaryContent"
 import DataProvider from "./DataProvider"
 import LikeAndShareProvider from "./SocialShareProvider"
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
+import FloatLinkToolbar from "./FloatLinkToolbar"
 
 export default function Home() {
-
-    return (
-        <DataProvider>
-            <LikeAndShareProvider>
-                <div className="flex flex-col laptop:flex-row w-full">
-                    <FloatScrollTopButton />
-                    <MainContainer>
-                        <Widgets className="hidden desktop:block" />
-                        <MainContent />
-                    </MainContainer>
-                    <SecondaryContainer>
-                        <SecondaryContent />
-                    </SecondaryContainer>
-                </div>
-            </LikeAndShareProvider>
-        </DataProvider>
-    )
+  return (
+    <DataProvider>
+      <LikeAndShareProvider>
+        <div className="flex flex-col laptop:flex-row w-full">
+          <FloatScrollTopButton />
+          <FloatLinkToolbar />
+          <MainContainer>
+            <Widgets className="hidden desktop:block" />
+            <MainContent />
+          </MainContainer>
+          <SecondaryContainer>
+            <SecondaryContent />
+          </SecondaryContainer>
+        </div>
+      </LikeAndShareProvider>
+    </DataProvider>
+  )
 }
 
 const MainContainer = styled.div`

@@ -11,10 +11,10 @@ import { useMemo, useState } from "react";
 import { getArticlesByCategory } from "@/api/joomlaApi";
 import YouTube from 'react-youtube';
 import Icon from "@/shared/Icon";
-import { useRouter } from "next/router";
 import routes from "@/config/routes";
 import axios from 'axios';
 import classNames from "classnames";
+import { Linkfont } from "@/shared/styles/linkFont.js";
 
 
 const { useRequest } = require('ahooks');
@@ -25,8 +25,6 @@ const src = [
 ]
 
 const YoutubeSection = () => {
-
-    const router = useRouter();
 
     const [youtubeData, setYoutubeData] = useState({});
 
@@ -55,7 +53,7 @@ const YoutubeSection = () => {
                 setYoutubeDetail(ytInfo.data);
                 setYoutubeData({
                     youtubeId: YTId,
-                    bgImage: `http://img.youtube.com/vi/${YTId}/hqdefault.jpg`,
+                    bgImage: `https://img.youtube.com/vi/${YTId}/hqdefault.jpg`,
                     ..._data,
                 })
             }
@@ -77,28 +75,13 @@ const YoutubeSection = () => {
     // console.log(videoSrc);
     return <div className="py-7 w-full">
         <div className="rounded-md overflow-hidden">
-            {/* <video width="100%" height="240" controls src={'/test.mp4'} /> */}
-            {/* http://www.w3schools.com/html/mov_bbb.mp4 */}
-            {/* {
-                videoSrc ? <>
-                    <VideoPlayer>
-                        <source src={src[0]} />
-                        <BigPlayButton position="center" />
-                    </VideoPlayer>
-                </> : <>
-                    <VideoPlayer>
-                        <source src={src[1]} />
-                        <BigPlayButton position="center" />
-                    </VideoPlayer>
-                </>
-            } */}
             {
                 onPlay ? <StyledYoutube className="w-full aspect-4/3" videoId={youtubeData.youtubeId} opts={opts} /> :
                     (<div
                         className={classNames(
                             "relative flex justify-center items-center w-full bg-contain bg-no-repeat aspect-4/3 bg-center"
                         )}
-                        style={{ backgroundImage: `url(${youtubeData.bgImage})` }}
+                        style={{ backgroundImage: `url(${youtubeData.bgImage ? youtubeData.bgImage : ''})` }}
                         onClick={() => setOnPlay(true)}>
                         <div className="w-[60px] h-[45px] z-100 flex justify-center items-center cursor-pointer">
                             <div className="w-[30px] h-[30px] bg-white z-5 absolute" />
@@ -106,18 +89,14 @@ const YoutubeSection = () => {
                         </div>
                     </div>)
             }
-            {/* <VideoPlayer>
-                <source src={videoSrc ? src[0] : src[1]} />
-                <BigPlayButton position="center" />
-            </VideoPlayer> */}
         </div>
-        <div className="font-bold text-primary-blue1 text-xl pt-3 cursor-pointer" onClick={() => {
-            // router.push(`${routes.ARITCLE}/${youtubeData.id}`)
-        }}>
-            {youtubeData.title}
-        </div>
-        <div className="font-medium text-gray-gray2 text-sm pt-3">
-            {dayjs(youtubeData.publish_up).format('YYYY-MM-DD')}
+        <div onClick={() => window.open(`https://youtu.be/${youtubeData.youtubeId}`, '_blank')}>
+            <div className="font-bold text-primary-blue1 text-xl pt-3 cursor-pointer" >
+                <Linkfont>{youtubeData.title}</Linkfont>
+            </div>
+            <div className="font-medium text-gray-gray2 text-sm pt-3">
+                {dayjs(youtubeData.publish_up).format('YYYY-MM-DD')}
+            </div>
         </div>
     </div>
 }
@@ -125,10 +104,10 @@ const YoutubeSection = () => {
 export default function Youtube() {
 
     return <div className="pt-5 flex-1">
-        <BannerTitle title={<div className="inherit">
+        <BannerTitle id="Youtube" title={<div className="inherit">
             <div className="text-[26px] font-bold text-primary-blue1">社群影片</div>
             <div className="text-[26px] font-bold text-primary-blue1">小編精選</div>
-        </div>} link="https://www.youtube.com/@tzuchi_official" behavior="blank"/>
+        </div>} link="https://www.youtube.com/@tzuchi_official" behavior="blank" />
         <YoutubeSection />
     </div>
 }

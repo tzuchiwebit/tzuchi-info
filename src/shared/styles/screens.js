@@ -8,4 +8,5 @@ module.exports = {
   'desktop-down': { 'max': '1599.8px' },
   'laptop-down': { 'max': '1023.8px' },
   'tablet-down': { 'max': '767.8px' },
+  'tablet-only': { 'max': '1023.8px', min: '768px' },
 };

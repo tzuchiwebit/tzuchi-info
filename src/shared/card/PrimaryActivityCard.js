@@ -4,44 +4,43 @@ import screens from "../styles/screens"
 import dayjs from "dayjs"
 import Skeleton from "react-loading-skeleton"
 import SocialBar from "./components/SocialBar"
-import Image from 'next/image'
-import DefaultImage from '@/asset/image/default-article-intro.png'
 import Icon from "@/shared/Icon"
 import color from "@/shared/styles/color"
+import { Linkfont } from "../styles/linkFont.js"
+import BlurBGImage from "@/shared/image/BlurBGImage";
 
 const PrimaryActivityCard = ({ item = {}, onClick = () => { } }) => {
-  // console.log(item)
 
-  return <div className="w-full tablet:w-1/2 laptop:w-1/3 px-3 mb-6">
+  return <div className="w-full">
     <div className="bg-white border rounded-[4px] p-3 shadow-elevation-3 flex flex-col gap-2">
-      <div onClick={onClick} className="cursor-pointer">
+      <div onClick={onClick} className="cursor-pointer flex flex-col items-center">
         <ImageContainer>
           {
             item?.id ?
-              <Image
-                src={item?.images?.image_intro ? item?.images?.image_intro : DefaultImage}
-                alt={item?.images?.image_intro_alt}
-                width={0}
-                height={0}
-                sizes="100vw"
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                }}
-              /> :
+              <BlurBGImage url={item.images?.image_intro} />:
+              // <Image
+              //   src={item?.images?.image_intro ? item?.images?.image_intro : DefaultImage}
+              //   alt={item?.images?.image_intro_alt}
+              //   fill
+              //   style={{ objectFit: "cover", borderRadius: "4px" }}
+              // /> :
               <Skeleton className="aspect-[14/9]" />
           }
         </ImageContainer>
-        <div className="text-primary-blue1 font-bold text-xl mt-3">
-          {item.title}
+        <div className="w-full text-primary-blue1 font-bold text-xl mt-3 line-clamp-2 h-[3.5rem]">
+          <Linkfont>{item.title}</Linkfont>
         </div>
-        <div className="text-gray-gray2 pl-2 border-l-2 border-solid border-primary-blue3 my-2 font-medium">
-          活動開始：2024-06-02  08:55<br />
-          活動結束：2024-06-03  08:55 <br />
-          <span className="flex gap-2">活動地點：地點點位名稱 <Icon.LocationPin style={{ width: 16, color: color.primary.blue2, cursor: 'pointer' }} /></span>
+        <div className="w-full text-gray-gray2 pl-2 border-l-2 border-solid border-primary-blue3 my-2 font-medium">
+          活動開始：{dayjs(item?.['act-start']).format('YYYY-MM-DD HH:mm')}<br />
+          活動結束：{dayjs(item?.['act-end']).format('YYYY-MM-DD HH:mm')}<br />
+          <div className="flex flex-row">
+            <div className="line-clamp-1">活動地點：{item?.['act-place']} </div>
+            <Icon.LocationPin style={{ width: 16, color: color.primary.blue2, cursor: 'pointer', flexShrink: 0 }} />
+          </div>
+
         </div>
-        <div className="mt-1">
-          <div className="text-gray-gray2 line-clamp-4">
+        <div className="mt-1 w-full">
+          <div className="text-gray-gray2 text-base line-clamp-4 h-[6rem]">
             {item.metadesc}
           </div>
         </div>
@@ -67,15 +66,19 @@ const PrimaryActivityCard = ({ item = {}, onClick = () => { } }) => {
 export default PrimaryActivityCard
 
 const ImageContainer = styled.div`
-    width: 100%;
-    height: auto;
-    // min-height: 160px;
-    overflow: hidden;
-    border-radius: 4px;
-    @media(min-width: ${screens.tablet}) {
-        // height: 210px;
-    }
-    @media(min-width: ${screens.laptop}) {
-        // height: 218px;
-    }
+  position: relative;
+  width: 325px;
+  height: 208px;
+  @media(min-width: ${screens.tablet}) {
+    width: 337px;
+    height: 216px;
+  }
+  @media(min-width: ${screens.laptop}) {
+    width: 276px;
+    height: 177px;
+  }
+  @media(min-width: ${screens.desktop}) {
+    width: 356px;
+    height: 228px;
+  }
 `

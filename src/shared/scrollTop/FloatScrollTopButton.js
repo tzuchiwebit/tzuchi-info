@@ -15,6 +15,9 @@ const StyledContainer = styled.div`
   @media(min-width: ${screens.laptop}) {
     bottom: 40px;
   }
+  @media(min-width: ${screens.desktop}) {
+    right: 28px;
+  }
 `
 
 const FloatScrollTopButton = ({ }) => {

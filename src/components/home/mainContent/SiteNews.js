@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { LikeAndShare } from "../components";
 import { getArticlesByCategory } from "@/api/joomlaApi";
 import { addHits } from "@/api/api";
+import { Linkfont } from "@/shared/styles/linkFont.js";
 const { useRequest } = require('ahooks');
 
 const tagOptions = [
@@ -66,16 +67,21 @@ const Item = ({ item = {} }) => {
                     }
                 </ImageContainer>
                 <div
-                    className="pt-2 text-xl font-bold w-full text-primary-blue1 text-left h-24 tablet:h-20 laptop:h-32 desktop:h-28 laptop:pb-2"
+                    className="pt-2 text-xl font-bold w-full text-left h-24 tablet:h-20 laptop:h-32 desktop:h-28 laptop:pb-2"
                     onClick={() => {
                         router.push(`${routes.ARITCLE}/${item.id}`)
                         addHits(item.id);
                     }}
                 >
-                    {item.title}
+                    <Linkfont>{item.title}</Linkfont>
                 </div>
-                <div className="pt-2 font-medium text-sm text-gray-gray4 border-t border-solid border-gray-gray8">
-                    {dayjs(item.publish_up).format('YYYY-MM-DD')} <br />
+                <div className="pt-2 h-6 leading-normal font-medium text-sm text-gray-gray4 border-t border-solid border-gray-gray8">
+                  {
+                    item?.publish_up &&
+                    dayjs(item.publish_up).format('YYYY-MM-DD')
+                  }
+                </div>
+                <div className="pt-1 h-6 leading-normal font-medium text-sm text-gray-gray4">
                     {item.place}
                 </div>
                 <div className="hidden flex justify-end">
@@ -107,14 +113,14 @@ export default function SiteNews() {
     })
 
     const baseInfos = useMemo(() => {
-        return pageData?.data || []
+        return pageData?.data || [{},{},{}]
     }, [selctedTagId, pageData])
 
     // console.log(`baseInfos`)
     // console.log(baseInfos)
 
     return <div className="pt-5">
-        <BannerTitle title={`各據點消息`} link={routes.THE_BASE_MESSAGE} />
+        <BannerTitle title={`各據點消息`} link={routes.THE_BASE_MESSAGE} id="SiteNews"/>
         <div className="pt-5 w-full">
             <div className="flex gap-2 flex-wrap">
                 {

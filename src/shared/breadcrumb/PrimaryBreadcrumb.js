@@ -1,6 +1,7 @@
 import Icon from "../Icon"
 import { useRouter } from "next/navigation"
 import * as classnames from "classnames"
+import { Linkfont } from "../styles/linkFont.js";
 
 const PrimaryBreadcrumb = ({ items = [], separator = <Icon.PageArrowRight style={{ width: 16 }} /> }) => {
 
@@ -14,7 +15,10 @@ const PrimaryBreadcrumb = ({ items = [], separator = <Icon.PageArrowRight style=
                       router.push(i.link)
                     }
                 }}>
-                    {i.label}
+                  {
+                    !!i.link ? <Linkfont>{i.label}</Linkfont> : <span className="text-gray-gray2">{i.label}</span>
+                  }
+                    {/* <Linkfont>{i.label}</Linkfont> */}
                 </div>
                 {
                     index < items.length - 1 ? <div className="font-medium">

@@ -3,12 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "npm run sitemap:dev && next dev",
+    "build": "npm run sitemap && next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy": "ssh -p 7212 root@info.tzuchi-org.tw 'rm -rf /var/www/html && mkdir /var/www/html' && scp -P 7212 -r out/* root@info.tzuchi-org.tw:/var/www/html",
-    "deploy.meproz.deprecated": "ssh root@www.meproz.com 'rm -rf /var/www/tzuchi-info && mkdir /var/www/tzuchi-info' && scp -r out/* root@www.meproz.com:/var/www/tzuchi-info"
+    "sitemap:dev": "NODE_ENV=development next-sitemap",
+    "sitemap": "next-sitemap"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
@@ -19,8 +19,10 @@
     "classnames": "^2.3.2",
     "dayjs": "^1.11.10",
     "feed": "^4.2.2",
+    "firebase": "^10.13.0",
     "lodash": "^4.17.21",
     "next": "14.0.3",
+    "next-sitemap": "^4.2.3",
     "next-themes": "^0.2.1",
     "next-video": "^0.9.1",
     "react": "^18",
@@ -35,12 +37,14 @@
     "react-toastify": "^10.0.5",
     "react-use-draggable-scroll": "^0.4.7",
     "react-youtube": "^10.1.0",
+    "sitemap": "^8.0.0",
     "slick-carousel": "^1.8.1",
     "styled-components": "^6.1.1",
     "swiper": "^11.0.5",
     "tailwind-datepicker-react": "^1.4.3",
     "uuid": "^10.0.0",
-    "video-react": "^0.16.0"
+    "video-react": "^0.16.0",
+    "zlib": "^1.0.5"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",

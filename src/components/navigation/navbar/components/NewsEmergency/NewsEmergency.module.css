@@ -1,0 +1,18 @@
+.wrapper {
+  animation-name: supportanimation;
+  animation-duration: 0.6s;
+  animation-fill-mode: backwards;
+}
+
+@keyframes supportanimation {
+  from {
+   /* transform: translate(200%, 0); */
+   transform: translateY(-100%);
+   opacity:0;
+  }
+  to {
+   /* transform: translate(0%, 0); */
+   transform: translateY(0);
+   opacity: 1;
+  }
+ }
