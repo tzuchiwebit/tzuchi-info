@@ -80,7 +80,7 @@ export default function Page({ tagInfo }) {
 
       {/* banner image */}
       <div className="w-full desktop:h-[238px] laptop:h-[282px] grid desktop:grid-cols-[455px_1fr] laptop:grid-cols-[539px_1fr] grid-cols-1">
-        <div className="relative tablet-only:w-[742px] tablet-only:h-[350px] tablet-down:w-[349px] tablet-down:h-[165px]">
+        <div className="relative tablet-only:w-auto tablet-only:h-[350px] tablet-down:w-auto tablet-down:h-[165px]">
           <Image
             src={imageIntro ? imageIntro : DefaultImage}
             alt=""
