@@ -6,6 +6,7 @@ const routes = {
   THE_BASE_MESSAGE: "/the-base-messages", // 各據點消息
   ARITCLE: "/article", // 文章內容頁
   WEEKLY_REPORT: "/weekly-report", // 週報
+  DAILY_REMINDER: "/daily-reminder", // 每日叮嚀
   // SEARCH: "search", // 搜尋頁
   // SEARCH: "search", // 搜尋頁
   // SEARCH: "search", // 搜尋頁

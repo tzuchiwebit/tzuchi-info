@@ -54,21 +54,16 @@
   background-color: #5DC5C4;
   color: white;
   border-radius: 8px;
-  height: 27px;
-  font-size: 14px;
+  height: 31px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   padding: 4px 16px;
 
-  @media(min-width: 768px) {
-    height: 30px;
-    font-size: 16px;
-  }
-
   @media(min-width: 1600px) {
-    height: 35px;
+    height: 37px;
     font-size: 20px;
   }
 }
@@ -134,16 +129,16 @@
     font-size: 20px;
   }
 }
-.message a {
-  color: #30559F;
-}
-.message a:hover {
+.message {
   text-underline-offset: 4px;
-  text-decoration: underline 2px;
-  color: #4F7BBE;
-}
-.message a:active {
-  color: #1B2D58;
+  text-decoration: underline 1px;
+  font-size: 16px;
+  @apply text-white font-bold;
+
+  @media(min-width: 1600px) {
+    font-size: 20px;
+  }
+
 }
 .message::before {
   @media(max-width: 1023.8px) {
@@ -163,11 +158,15 @@
   color: #5DC5C4;
 
   @media(min-width: 768px) {
-    right: -10px;
-    top: -10px;
+    right: -8px;
+    top: -5px;
+  }
+  @media(min-width: 1024px) {
+    right: -8px;
+    top: -5px;
   }
   @media(min-width: 1600px) {
-    right: -10px;
+    right: -8px;
     top: -10px;
   }
 }

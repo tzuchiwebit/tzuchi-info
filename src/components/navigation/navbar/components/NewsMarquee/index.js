@@ -50,16 +50,16 @@ export default function NewsMarquee () {
 
   useEffect(()=> {
     if (screenWidth && screenWidth >= 1600) {
-      setTop('125px')
-      setHeight('59px')
+      // setTop('125px')
+      setHeight('61px')
       setIsReady(true)
     } else if (screenWidth && screenWidth >= 768) {
-      setTop('72px')
-      setHeight('54px')
+      // setTop('72px')
+      setHeight('43px')
       setIsReady(true)
     } else if (screenWidth && screenWidth >= 375) {
-      setTop('58px')
-      setHeight('39px')
+      // setTop('58px')
+      setHeight('43px')
       setIsReady(true)
     }
   }, [screenWidth])
