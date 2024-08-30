@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "npm run sitemap:dev && next dev",
-    "build": "npm run sitemap && next build",
+    "build": "next build && npm run sitemap",
     "start": "next start",
     "lint": "next lint",
     "sitemap:dev": "NODE_ENV=development next-sitemap",
