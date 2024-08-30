@@ -3,7 +3,7 @@ import { Suspense } from "react";
 
 export async function generateMetadata({ params }, parent) {
   return {
-    metadataBase: new URL(`${process.env.SITE_URL}/auspicious-month`),
+    metadataBase: new URL(`${process.env.NEXT_PUBLIC_URL}/auspicious-month`),
     title: `熱門活動 - 慈濟資訊網`,
     description: `歡迎點擊活動頁了解活動詳情，一同參與。`,
     openGraph: {

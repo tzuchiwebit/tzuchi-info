@@ -21,7 +21,7 @@ export async function GET() {
   const list = await res.json()
   list.forEach((id) => {
     smStream.write({
-      url: `${process.env.SITE_URL}/article/${id}`,
+      url: `${process.env.NEXT_PUBLIC_URL}/article/${id}`,
       changefreq: "daily",
       priority: 1
     })

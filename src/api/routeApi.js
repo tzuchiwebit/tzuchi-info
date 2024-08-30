@@ -3,7 +3,7 @@ import joomlaContentCategory from './joomlaContentCategory'
 
 export const getArticleById = async (id) => {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
-  const res = await fetch(`${process.env.SITE_URL}/api/article?id=${id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/article?id=${id}`, {
     headers: {
       'Content-Type': 'application/json',
       // next: { revalidate: 2 }, // reset data cache
@@ -14,7 +14,7 @@ export const getArticleById = async (id) => {
 
 export const getTagById = async (id) => {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
-  const res = await fetch(`${process.env.SITE_URL}/api/tag?id=${id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/tag?id=${id}`, {
     headers: {
       'Content-Type': 'application/json',
       // next: { revalidate: 2 }, // reset data cache
@@ -40,7 +40,7 @@ export const getArticlesByCategory = async ({label_name = '志工早會', limit 
   }
 
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
-  const url = `${process.env.SITE_URL}/api/articles?${new URLSearchParams(params).toString()}`
+  const url = `${process.env.NEXT_PUBLIC_URL}/api/articles?${new URLSearchParams(params).toString()}`
   const res = await fetch(url, {
     headers: {
       'Content-Type': 'application/json',

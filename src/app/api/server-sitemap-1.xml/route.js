@@ -26,7 +26,7 @@ export async function GET(request) {
   const data = await res.json()
 
   const fields = data?.data.map((item) => ({
-    loc: `${process.env.SITE_URL}/article/${item.id}`,
+    loc: `${process.env.NEXT_PUBLIC_URL}/article/${item.id}`,
     lastmod: item.attributes.modified,
     priority: 1,
     changefreq: "daily",

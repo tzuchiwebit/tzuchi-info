@@ -9,10 +9,14 @@ import { getArticleById } from "@/api/routeApi";
 // export const revalidate = 0
 
 export async function generateMetadata({ params }, parent) {
+  console.log('NODE_ENV', process.env.NODE_ENV)
+  console.log('NEXT_PUBLIC_ENV_NAME', process.env.NEXT_PUBLIC_ENV_NAME)
+  console.log('NEXT_PUBLIC_URL', process.env.NEXT_PUBLIC_URL)
+  console.log('NEXT_PUBLIC_URL', process.env.NEXT_PUBLIC_URL)
   const article = (await getArticleById(params.slug)).data
 
   return {
-    metadataBase: new URL(`${process.env.SITE_URL}/article/${params.slug}`),
+    metadataBase: new URL(`${process.env.NEXT_PUBLIC_URL}/article/${params.slug}`),
     title: `${article?.attributes?.title} - 慈濟資訊網`,
     description: article?.attributes?.metadesc,
     openGraph: {

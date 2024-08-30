@@ -9,7 +9,7 @@ export async function generateMetadata({ params }, parent) {
   const images = []
   if (tag?.attributes?.images?.image_intro) images.push(tag?.attributes?.images?.image_intro)
   return {
-    metadataBase: new URL(`${process.env.SITE_URL}/daily-reminder`),
+    metadataBase: new URL(`${process.env.NEXT_PUBLIC_URL}/daily-reminder`),
     title: tag?.attributes?.title,
     description: tag?.attributes?.metadesc,
     openGraph: { images },

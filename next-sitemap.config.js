@@ -1,6 +1,6 @@
 
 const config = {
-  siteUrl: process.env.SITE_URL,
+  siteUrl: process.env.NEXT_PUBLIC_URL,
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [
@@ -8,8 +8,8 @@ const config = {
       { userAgent: '*', allow: '/' },
     ],
     additionalSitemaps: [
-      `${process.env.SITE_URL}/server-sitemap-0.xml`,
-      `${process.env.SITE_URL}/server-sitemap-1.xml.gz`,
+      `${process.env.NEXT_PUBLIC_URL}/server-sitemap-0.xml`,
+      `${process.env.NEXT_PUBLIC_URL}/server-sitemap-1.xml.gz`,
     ],
   },
   transform: async (config, path) => { return null },

@@ -5,7 +5,7 @@ export async function generateMetadata({ params, searchParams}, parent) {
   console.log('searchParams', searchParams.keyword)
 
   return {
-    metadataBase: new URL(`${process.env.SITE_URL}/search`),
+    metadataBase: new URL(`${process.env.NEXT_PUBLIC_URL}/search`),
     title: `${searchParams?.keyword}搜尋結果 - 慈濟資訊網`,
     description: `以下是含有 ${searchParams?.keyword} 的搜尋結果。`,
     openGraph: {
