@@ -219,7 +219,7 @@ const Article = ({setVisible}) => {
         {
           articleData?.attributes?.images?.image_intro_caption ?
           <div className="flex flex-col w-full mt-2 mb-5 gap-y-1">
-            <div className="text-lg text-gray-gray2 font-medium">{articleData?.attributes?.images?.image_intro_caption}</div>
+            <div className="text-lg text-gray-text font-medium">{articleData?.attributes?.images?.image_intro_caption}</div>
             <div className="w-full flex flex-row gap-x-2 items-center" >
               <div className="grow border-solid border-b border-primary-blue3"></div>
               <Icon.ExclaimationMark style={{width: 26, height: 26}}/>
