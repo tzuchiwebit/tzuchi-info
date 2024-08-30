@@ -31,20 +31,13 @@ You can start editing the page by modifying `app/page.js`. The page auto-updates
 
 This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
 ## Learn More
 Routes are defined in /src/app/config/routes.js
 
 
-## Deploy on Tzuchi Server (testing environment)
+## Testing Deploy on Tzuchi Server
+> using `ssh` terminal to manually deploy
 
 ```bash
 cd /root/workspace/tzuchi-info
@@ -53,3 +46,10 @@ git pull --rebase
 ./stop.sh
 ./start.sh
 ```
+
+## Production Deploy on Google Cloud Run
+> using `git push` and `containerization` to deploy automatically
+>> github + cloud build + artifact registry + cloud run
+
+1. git push to `main` branch
+2. auto trigger cloud build to build image and deploy
