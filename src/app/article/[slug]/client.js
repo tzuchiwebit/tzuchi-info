@@ -113,7 +113,6 @@ const Article = ({setVisible}) => {
 
       const linkElements = document.querySelectorAll("#content-holder a")
       linkElements.forEach((linkElement) => {
-        console.log('linkElement.classList', linkElement.classList.length)
         linkElement.classList.add('link-color')
       })
     }, 100)
@@ -134,8 +133,6 @@ const Article = ({setVisible}) => {
     // 1-1) Find the first match "image"
     const regex = /<img\s+[^>]*title="([^"]*)"[^>]*>/i;
     const match = target?.data?.attributes?.text?.match(regex);
-    console.log('match', match)
-    console.log('text', target?.data?.attributes?.text)
 
     if (match) {
         titleValue = match[1];
