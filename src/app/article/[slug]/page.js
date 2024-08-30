@@ -11,7 +11,7 @@ import { getArticleById } from "@/api/routeApi";
 export async function generateMetadata({ params }, parent) {
   console.log('NODE_ENV', process.env.NODE_ENV)
   console.log('NEXT_PUBLIC_ENV_NAME', process.env.NEXT_PUBLIC_ENV_NAME)
-  console.log('NEXT_PUBLIC_URL', process.env.NEXT_PUBLIC_URL)
+  console.log('SITE_URL', process.env.SITE_URL)
   console.log('NEXT_PUBLIC_URL', process.env.NEXT_PUBLIC_URL)
   const article = (await getArticleById(params.slug)).data
 
