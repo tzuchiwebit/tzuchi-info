@@ -27,6 +27,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <link rel="icon" href="/favicon.svg" sizes="any" />
+      {
+        process.env.NODE_ENV !== 'production' &&
+        <meta name="robots" content="noindex, nofollow" />
+      }
       <head>
         {/* <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta> */}
         <Script id="gtm-script" strategy="beforeInteractive">
