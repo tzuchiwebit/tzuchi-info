@@ -1,11 +1,11 @@
 console.log('NEXT_PUBLIC_URL', process.env.NEXT_PUBLIC_URL)
-console.log('NODE_ENV', process.env.NODE_ENV)
+console.log('NEXT_PUBLIC_ENV_NAME', process.env.NEXT_PUBLIC_ENV_NAME)
 
 const policies = []
 const additionalSitemaps = []
 let generateIndexSitemap = false
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NEXT_PUBLIC_ENV_NAME === 'production') {
   policies.push({ userAgent: '*', disallow: '/private/' })
   policies.push({ userAgent: '*', allow: '/' })
 

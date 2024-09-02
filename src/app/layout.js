@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <link rel="icon" href="/favicon.svg" sizes="any" />
       {
-        process.env.NODE_ENV !== 'production' &&
+        process.env.NEXT_PUBLIC_ENV_NAME !== 'production' &&
         <meta name="robots" content="noindex, nofollow" />
       }
       <head>
