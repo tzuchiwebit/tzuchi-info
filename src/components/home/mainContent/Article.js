@@ -35,7 +35,7 @@ const Item = ({ item }) => {
                                     <Linkfont>{_i.title}</Linkfont>
                                 </div>
                                 <div className="flex flex-col text-gray-gray4 gap-1 items-start font-medium">
-                                    <div className="font-medium text-sm">{dayjs(_i.date).format('YYYY-MM-DD')}</div>
+                                    <div className="font-medium text-sm">{dayjs(_i.publish_up).format('YYYY-MM-DD')}</div>
                                     <div className="flex justify-between w-full">
                                         <div className="flex gap-1 items-center font-medium">
                                             <div className="border-l border-solid border-gray-gray4 h-4" />
@@ -97,8 +97,8 @@ export default function Article() {
         }
     }, [pageData])
 
-    // console.log(`articlesData`)
-    // console.log(articlesData)
+    console.log(`articlesData`)
+    console.log(articlesData)
 
     return <div className="pt-5">
         <BannerTitle id="Article" title={`專欄文章`} link={routes.COLUMN_ARTICLE} />

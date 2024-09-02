@@ -18,12 +18,12 @@ export default function DataProvider({ children }) {
     try {
       const res = await getArticlesByCategory({ label_name: "緊急發佈訊息", limit: 1 })
       if (res?.data) {
-        if (!!res?.data[0].attributes?.publish_down) {
+        if (!!res?.data[0]?.attributes?.publish_down) {
           if (dayjs().isAfter(dayjs(res?.data[0].attributes?.publish_down, 'YYYY-MM-DD HH:mm:ss'))) {
             setEmergencyArticle(res?.data[0].attributes?.text);
           }
         } else {
-          setEmergencyArticle(res?.data[0].attributes?.text);
+          setEmergencyArticle(res?.data[0]?.attributes?.text);
         }
       }
     } catch (err) {
