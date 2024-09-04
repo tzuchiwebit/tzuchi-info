@@ -47,6 +47,25 @@ git pull --rebase
 ./start.sh
 ```
 
+### supervisord config
+> using `run-with-env.sh` script to run app
+```bash
+[program:tzuchi-info]
+directory=/root/workspace/tzuchi-info
+command=/root/workspace/tzuchi-info/run-with-env.sh -e development
+user=root
+autostart=true
+autorestart=true
+startretries=3
+stdout_logfile_maxbytes=5MB
+stdout_logfile_backups=5
+stderr_logfile=/root/workspace/tzuchi-info/log/api.err
+stdout_logfile=/root/workspace/tzuchi-info/log/api.log
+exitcodes=1
+stopasgroup=true
+stopsignal=QUIT
+```
+
 ## Production Deploy on Google Cloud Run
 > using `git push` and `containerization` to deploy automatically
 >> github + cloud build + artifact registry + cloud run

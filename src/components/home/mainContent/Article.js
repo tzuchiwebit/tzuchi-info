@@ -97,9 +97,6 @@ export default function Article() {
         }
     }, [pageData])
 
-    console.log(`articlesData`)
-    console.log(articlesData)
-
     return <div className="pt-5">
         <BannerTitle id="Article" title={`專欄文章`} link={routes.COLUMN_ARTICLE} />
         <ArticleSection leading={articlesData.leading} view={articlesData.view} />
