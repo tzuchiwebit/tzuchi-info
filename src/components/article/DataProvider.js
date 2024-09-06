@@ -6,7 +6,7 @@ const { useLocalStorageState } = require('ahooks')
 
 export const DataContext = createContext(null);
 
-export default function DataProvider({ children }) {
+export default function DataProvider({ children, hasAudio }) {
   const params = useParams();
 
   const [pageData, setPageData] = useState([]);
@@ -84,7 +84,7 @@ export default function DataProvider({ children }) {
 
 
   return (
-    <DataContext.Provider value={{pageData, loading, hasLikeLocal, setHasLikeLocal, hasShareLocal, setHasShareLocal}}>
+    <DataContext.Provider value={{ pageData, loading, hasLikeLocal, setHasLikeLocal, hasShareLocal, setHasShareLocal, hasAudio }}>
       {children}
     </DataContext.Provider>
   );

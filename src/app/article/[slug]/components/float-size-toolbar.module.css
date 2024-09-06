@@ -1,3 +1,7 @@
+/*
+--h: height, 代表是否有多的float button, 是否需要往上移
+ */
+
 .menu {
   width: 48px;
   height: 48px;
@@ -33,13 +37,14 @@
   justify-content: center;
   align-items: center;
   @media(max-width: 767.8px) {
-    bottom: 124px;
+    bottom: calc(72px + 60px + var(--h));
   }
   @media(min-width: 768px) {
-    bottom: 136px;
+    bottom: calc(80px + 60px + var(--h));
   }
   @media(min-width: 1024px) {
-    bottom: 96px;
+    /* 40px為FloatScroll的bottom */
+    bottom: calc(40px + 60px + var(--h));
   }
   @media(min-width: 1600px) {
     right: 28px;

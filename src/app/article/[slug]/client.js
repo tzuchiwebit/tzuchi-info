@@ -22,7 +22,8 @@ import joomlaGlobal from '@/api/joomlaGlobal'
 import { addHits } from "@/api/api"
 import Icon from "@/shared/Icon"
 import color from "@/shared/styles/color"
-import FloatSizeToolbar from './float-size-toolbar';
+import FloatSizeToolbar from './components/float-size-toolbar';
+import FloatReadToolbar from './components/float-read-toolbar';
 import 'react-toastify/dist/ReactToastify.css';
 import Errata from "@/components/Errata"
 import { Linkfont } from '@/shared/styles/linkFont.js';
@@ -78,7 +79,7 @@ const Breadcrumb = ({ className }) => {
 }
 
 const Article = ({setVisible}) => {
-  const { pageData } = useDataProvider();
+  const { pageData, hasAudio } = useDataProvider();
   const [selectedFontSize, setSelectedFontSize] = useState(26)
   const [completed, setCompleted] = useState(false)
 
@@ -243,7 +244,11 @@ const Article = ({setVisible}) => {
           <Errata title={articleData?.attributes?.title}></Errata>
         }
       </div>
-      <FloatSizeToolbar selectedFontSize={selectedFontSize} setSelectedFontSize={setSelectedFontSize}></FloatSizeToolbar>
+      <FloatSizeToolbar selectedFontSize={selectedFontSize} setSelectedFontSize={setSelectedFontSize} hasAudio={hasAudio}></FloatSizeToolbar>
+      {
+        hasAudio &&
+        <FloatReadToolbar></FloatReadToolbar>
+      }
     </div>
   )
 }
@@ -373,9 +378,9 @@ const MobileSocialbar = () => {
   )
 }
 
-export default function Page() {
+export default function Page({ hasAudio }) {
   return (<>
-    <DataProvider>
+    <DataProvider hasAudio={hasAudio}>
       <Container>
         <MainContent></MainContent>
       </Container>

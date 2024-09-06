@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useMemo } from 'react';
 import styles from './float-size-toolbar.module.css'
 import color from "@/shared/styles/color"
 import * as classnames from "classnames"
@@ -7,7 +7,7 @@ import Add from "@/asset/font-size-toolbar/add.svg";
 import Cross from "@/asset/font-size-toolbar/cross.svg";
 import Minus from "@/asset/font-size-toolbar/minus.svg";
 
-export default function FloatSizeToolbar ({selectedFontSize, setSelectedFontSize}) {
+export default function FloatSizeToolbar ({selectedFontSize, setSelectedFontSize, hasAudio}) {
   const [isOpen, setIsOpen] = useState(false)
 
   const increase = () => {
@@ -21,11 +21,18 @@ export default function FloatSizeToolbar ({selectedFontSize, setSelectedFontSize
   const reset = () => {
       setSelectedFontSize(26)
   }
+  const shiftHeight = useMemo(() => {
+    if (hasAudio) {
+      return '60px'
+    } else {
+      return '0px'
+    }
+  }, [hasAudio])
   return(
     <Fragment>
       {
         !isOpen &&
-        <div className={styles.closedContainer}>
+        <div className={styles.closedContainer} style={{'--h': shiftHeight }}>
           <div className={classnames(styles.menu, styles.default)} onClick={()=> setIsOpen(true)}>
             <div className={styles.text}>字</div>
             <Default className={styles.icon}></Default>

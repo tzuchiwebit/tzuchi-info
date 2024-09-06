@@ -25,11 +25,24 @@ export async function generateMetadata({ params }, parent) {
   }
 }
 
+const checkAudioExists = async (url) => {
+  let result = false
+  try {
+    const response = await fetch(url, { method: 'HEAD' }); // Use HEAD request to check if file exists
+    if (response.ok) {
+      result = true
+    }
+  } catch (error) {
+  }
+  return result
+};
+
 export default async function Page({ params }) {
+  const hasAudio = await checkAudioExists(`${process.env.NEXT_PUBLIC_AUDIO_BASE_URL}/${params?.slug}.mp3`)
   return (
     <section>
       <Suspense fallback={<Loading></Loading>}>
-        <Client></Client>
+        <Client hasAudio={hasAudio}></Client>
       </Suspense>
     </section>
   )
