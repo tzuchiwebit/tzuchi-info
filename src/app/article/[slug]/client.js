@@ -239,9 +239,15 @@ const Article = ({setVisible}) => {
             </div>
         }
         <div className={styles.content} id={'content-holder'} style={{ wordBreak: 'break-all', fontSize: selectedFontSize+'px' }} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
+
+        <div className="laptop:flex hidden flex-row items-center gap-x-2 desktop:mt-8 mt-6">
+          <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
+          <SocialBar articleId={articleData?.id} isMobileType={false} />
+        </div>
+
         {
           articleData?.relationships?.category?.data?.id !== '17' &&
-          <Errata title={articleData?.attributes?.title}></Errata>
+          <Errata title={articleData?.attributes?.title} className="desktop:mt-8 tablet:mt-6 mt-4"></Errata>
         }
       </div>
       <FloatSizeToolbar selectedFontSize={selectedFontSize} setSelectedFontSize={setSelectedFontSize} hasAudio={hasAudio}></FloatSizeToolbar>
