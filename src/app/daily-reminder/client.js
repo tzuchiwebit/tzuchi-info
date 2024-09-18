@@ -1,29 +1,22 @@
 "use client"
 import Container from "@/shared/layout/Container"
-// import { RadioGroup } from '@headlessui/react'
-import { useEffect, useState, useMemo } from "react"
+import { useState, useMemo } from "react"
 import Pagination from "@/shared/pagination/Pagination"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
-import BannerImage from '@/asset/image/activities-banner.jpeg'
-import { BannerTitle } from "@/components/home/components"
 import Image from 'next/image'
-import PrimaryActivityCard from "@/shared/card/PrimaryActivityCard"
 import PrimaryCard from "@/shared/card/PrimaryCard"
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
-import { getArticlesByCategory, getUserById } from "@/api/joomlaApi"
-// import Skeleton from "react-loading-skeleton"
+import { getArticlesByCategory } from "@/api/joomlaApi"
 import { useRouter } from "next/navigation"
 import routes from "@/config/routes"
 import { addHits } from "@/api/api"
 import Icon from "@/shared/Icon"
 import DefaultImage from '@/asset/image/default-article-intro.png'
-
 const { useRequest } = require('ahooks')
 
 const loadingData = Array(9).fill({
   loading: true
 });
-
 
 export default function Page({ tagInfo }) {
   const [listData, setListData] = useState(loadingData)

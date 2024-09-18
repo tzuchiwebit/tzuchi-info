@@ -16,12 +16,6 @@ const PrimaryCard = ({ item = {}, onClick = () => { } }) => {
             {
               item?.id ?
               <BlurBGImage url={item.images?.image_intro} />:
-              // <Image
-              //   src={item?.images?.image_intro ? item?.images?.image_intro: DefaultImage}
-              //   alt={item?.images?.image_intro_alt}
-              //   fill
-              //   style={{ objectFit:"cover", borderRadius: "4px" }}
-              // />:
               <Skeleton className="aspect-[14/9]" />
             }
           </ImageContainer>

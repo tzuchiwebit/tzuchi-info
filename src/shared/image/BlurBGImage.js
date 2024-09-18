@@ -3,15 +3,7 @@ import styled from 'styled-components';
 import DefaultImage from '@/asset/image/default-article-intro.png'
 import Image from 'next/image'
 
-// export default styled.div`
-//   width: 90%;
-//   max-width: 1168px;
-//   margin: 0 auto;
-//   `;
-
 export default function BlurBGImage({ width, height, url, ...props }) {
-  // Tailwind CSS
-  // const extendStyles = className || '';
   return (
     <ImageContainer>
       {
@@ -65,7 +57,7 @@ const ImageContainer = styled.div`
         position: relative;
         z-index: 10;
         display: block;
-        object-fit: cover;
+        object-fit: contain;
     }
     .background-img-item {
         position: absolute;

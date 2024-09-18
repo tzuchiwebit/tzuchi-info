@@ -1,6 +1,7 @@
 import Client from './client'
 import { Suspense } from "react";
 import { getTagById } from "@/api/routeApi";
+import Spinner from "@/components/Spinner"
 
 export const dynamic = 'force-dynamic'
 
@@ -20,7 +21,7 @@ export default async function Page({ params }) {
   const tag = (await getTagById(2)).data
   return (
     <section>
-      <Suspense fallback={<p>Loading data...</p>}>
+      <Suspense fallback={<div className="h-screen flex justify-center items-center"><Spinner /></div>}>
         <Client tagInfo={tag?.attributes}></Client>
       </Suspense>
     </section>
