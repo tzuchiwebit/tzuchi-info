@@ -65,7 +65,7 @@ const getTags4All = async (title) => {
     })
     return res?.data
   } catch (err) {
-    throw err
+    // throw err
   }
 }
 

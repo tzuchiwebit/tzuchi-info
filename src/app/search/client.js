@@ -41,7 +41,7 @@ const ResultCard = ({ keyword = "", item = {}, index, isLast = false }) => {
         className="text-lg laptop:text-2xl font-bold text-primary-blue1 line-clamp-1 cursor-pointer"
         onClick={() => {
           addHits(item.id);
-          router.push(`${process.env.NEXT_PUBLIC_URL}/${routes.ARITCLE}/${item.id}`);
+          router.push(`/${routes.ARITCLE}/${item.id}`);
         }}>
         <Linkfont>{index + 1}. {item.title}</Linkfont>
       </div>
