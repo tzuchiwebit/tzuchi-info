@@ -288,12 +288,12 @@ const ExtendArticles = () => {
               router.push(`/article/${item.id}`)
             }}>
               <div className="text-[24px] font-bold text-primary-blue1">
-                <Linkfont>{item.attributes.title}</Linkfont>
+                <Linkfont>{item?.title}</Linkfont>
               </div>
               <div className="flex flex-row items-center gap-x-2 laptop:mt-2 mt-1">
-                <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(item.attributes?.publish_up).format('YYYY-MM-DD')}</span>
+                <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(item?.publish_up).format('YYYY-MM-DD')}</span>
                 <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
-                <span className="text-[14px] text-gray-gray4 font-medium">{item?.attributes?.metadata?.author || '慈濟基金會'}</span>
+                <span className="text-[14px] text-gray-gray4 font-medium">{item?.author || '慈濟基金會'}</span>
               </div>
             </div>
           ))
@@ -332,12 +332,12 @@ const RecommandArticles = () => {
               router.push(`/article/${item.id}`)
             }}>
               <div className="text-[24px] font-bold text-primary-blue1">
-                <Linkfont>{item.attributes.title}</Linkfont>
+                <Linkfont>{item?.title}</Linkfont>
               </div>
               <div className="flex flex-row items-center gap-x-2 laptop:mt-2 mt-1">
-                <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(item.attributes?.publish_up).format('YYYY-MM-DD')}</span>
+                <span className="text-[14px] text-gray-gray4 font-medium">{dayjs(item?.publish_up).format('YYYY-MM-DD')}</span>
                 <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
-                <span className="text-[14px] text-gray-gray4 font-medium">{item?.attributes?.metadata?.author || '慈濟基金會'}</span>
+                <span className="text-[14px] text-gray-gray4 font-medium">{item?.author || '慈濟基金會'}</span>
               </div>
             </div>
           ))

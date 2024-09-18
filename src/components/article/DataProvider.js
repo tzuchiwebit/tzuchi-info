@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { createContext } from 'react';
-import { getArticleById, getRecommandArticles, getExtendArticles, getUserById } from "@/api/joomlaApi";
+import { getArticleById, getRecommandArticles, getExtendArticles, getTags4All } from "@/api/joomlaApi";
 import { useParams } from 'next/navigation'
 const { useLocalStorageState } = require('ahooks')
 
@@ -21,11 +21,7 @@ export default function DataProvider({ children, hasAudio }) {
       const creatorPool = {}
 
       // 1) fetch article
-      // FIXME: data fetching from "getServerSideProps"
       const article = (await getArticleById(id)).data
-      const creator = (await getUserById(article?.attributes?.created_by))
-      article.attributes.creator = creator
-      creatorPool[article?.attributes?.created_by] = creator
       res.push(
         {
           name: 'article',
@@ -33,41 +29,22 @@ export default function DataProvider({ children, hasAudio }) {
         }
       )
 
-      // 2) fetch recommand article list
-      const recommandArticles = (await getRecommandArticles(article.relationships.category.data.id, 4)).data
-      for (let article of recommandArticles) {
-        if (creatorPool[article?.attributes?.created_by]) {
-          article.attributes.creator = creatorPool[article?.attributes?.created_by]
-        } else {
-          const creator = (await getUserById(article?.attributes?.created_by))
-          creatorPool[article?.attributes?.created_by] = creator
-          article.attributes.creator = creator
-        }
-      }
-      res.push(
-        {
+      let tags4All = []
+      if (article.attributes['readmore-tags']) {
+        tags4All = await getTags4All(article.attributes['readmore-tags'])
+        // 2) fetch recommand article list
+        res.push({
           name: 'recommandArticles',
-          data: recommandArticles,
-        }
-      )
+          data: tags4All?.[0]?.recommend,
+        })
 
-      // 3) fetch extend article lists
-      const extendArticles = (await getExtendArticles(Object.keys(article.attributes.tags), 4)).data
-      for (let article of extendArticles) {
-        if (creatorPool[article?.attributes?.created_by]) {
-          article.attributes.creator = creatorPool[article?.attributes?.created_by]
-        } else {
-          const creator = (await getUserById(article?.attributes?.created_by))
-          creatorPool[article?.attributes?.created_by] = creator
-          article.attributes.creator = creator
-        }
-      }
-      res.push(
-        {
+        // 3) fetch extend article lists
+        res.push({
           name: 'extendArticles',
-          data: extendArticles,
-        }
-      )
+          data: tags4All?.[0]?.readmore,
+        })
+      }
+
       setPageData(res);
     } catch (err) {
       console.error(err);

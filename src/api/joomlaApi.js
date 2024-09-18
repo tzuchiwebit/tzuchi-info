@@ -56,6 +56,19 @@ const getBookJingsiArticles = async (categoryId = 19, limit = 4, ordering = 'cre
   }
 }
 
+const getTags4All = async (title) => {
+  try {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_CUSTOM_JOOMLA_API}/tags4all.php`, {
+      params: {
+        'title': title,
+      },
+    })
+    return res?.data
+  } catch (err) {
+    throw err
+  }
+}
+
 const getRecommandArticles = async (categoryId, limit = 3) => {
   // 推薦閱讀：抓取 相同分類、點擊最高的3篇文章
   try {
@@ -228,4 +241,5 @@ export {
   addErrata,
   getBookJingsiArticles,
   getAllArticles,
+  getTags4All,
 }
