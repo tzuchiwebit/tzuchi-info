@@ -38,7 +38,10 @@ const checkAudioExists = async (url) => {
 };
 
 export default async function Page({ params }) {
-  const hasAudio = await checkAudioExists(`${process.env.NEXT_PUBLIC_AUDIO_BASE_URL}/${params?.slug}.mp3`)
+  let hasAudio = false
+  if (process.env.NEXT_PUBLIC_ENV_NAME === 'development') {
+    hasAudio = await checkAudioExists(`${process.env.NEXT_PUBLIC_AUDIO_BASE_URL}/${params?.slug}.mp3`)
+  }
   return (
     <section>
       <Suspense fallback={<Loading></Loading>}>
