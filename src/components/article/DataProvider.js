@@ -18,7 +18,6 @@ export default function DataProvider({ children, hasAudio }) {
     setLoading(true);
     try {
       const res = []
-      const creatorPool = {}
 
       // 1) fetch article
       const article = (await getArticleById(id)).data
@@ -35,13 +34,13 @@ export default function DataProvider({ children, hasAudio }) {
         // 2) fetch recommand article list
         res.push({
           name: 'recommandArticles',
-          data: tags4All?.[0]?.recommend,
+          data: tags4All?.recommend,
         })
 
         // 3) fetch extend article lists
         res.push({
           name: 'extendArticles',
-          data: tags4All?.[0]?.readmore,
+          data: tags4All?.readmore,
         })
       }
 
