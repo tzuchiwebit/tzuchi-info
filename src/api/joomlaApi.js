@@ -146,7 +146,7 @@ const getArticlesByCategory = async ({ label_name = '志工早會', limit = 10, 
   }
 }
 
-const getAllArticles = async ({ limit = 10000, offset = 0, state = 1, ordering = 'created', sort = 'desc' }) => {
+const getArticles = async ({ limit = 10, offset = 0, state = 1, ordering = 'created', sort = 'desc', tag = '', tags = [] }) => {
   try {
     const params = {
       'page[limit]': limit,
@@ -155,6 +155,8 @@ const getAllArticles = async ({ limit = 10000, offset = 0, state = 1, ordering =
       'list[ordering]': ordering,
       'list[direction]': sort,
     }
+    if (tag) params['filter[tag][]'] = tag
+    if (tags.length) params['filter[tag]'] = tags
 
     const res = await axios.get(`${API_ENDPOINT}/content/articles`, {
       headers: {
@@ -240,6 +242,6 @@ export {
   getUserById,
   addErrata,
   getBookJingsiArticles,
-  getAllArticles,
+  getArticles,
   getTags4All,
 }

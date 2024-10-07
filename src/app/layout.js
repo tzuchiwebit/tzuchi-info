@@ -4,7 +4,6 @@ import StyledComponentsRegistry from '@/lib/registry'
 import Navbar from '@/components/navigation/navbar/Navbar'
 import Footer from '@/components/navigation/footer/Footer'
 // import Chat from '@/components/navigation/chat/Chat'
-import { useState, useEffect } from "react"
 import DataProvider from "@/components/navigation/navbar/DataProvider"
 import NewsEmergency from '@/components/navigation/navbar/components/NewsEmergency'
 import NewsMarquee from '@/components/navigation/navbar/components/NewsMarquee'
