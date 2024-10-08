@@ -14,13 +14,14 @@ export async function generateMetadata({ params }, parent) {
   console.log('SITE_URL', process.env.SITE_URL)
   console.log('NEXT_PUBLIC_URL', process.env.NEXT_PUBLIC_URL)
   const article = (await getArticleById(params.slug)).data
-
+  console.log('article', article?.attributes?.images?.image_intro)
+  const imageUrl = article?.attributes?.images?.image_intro ? article?.attributes?.images?.image_intro : "https://imagedelivery.net/oK0RK5YvW3bVFXgaGP6foQ/032741ee-fac7-44b6-3cea-649da4b8ff00/2K";
   return {
     metadataBase: new URL(`${process.env.NEXT_PUBLIC_URL}/article/${params.slug}`),
     title: `${article?.attributes?.title} - 慈濟資訊網`,
     description: article?.attributes?.metadesc,
     openGraph: {
-      images: ["https://imagedelivery.net/oK0RK5YvW3bVFXgaGP6foQ/032741ee-fac7-44b6-3cea-649da4b8ff00/2K"],
+      images: [imageUrl],
     },
   }
 }
