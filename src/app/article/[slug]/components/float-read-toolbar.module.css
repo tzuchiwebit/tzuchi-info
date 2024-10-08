@@ -41,7 +41,7 @@
   @media(min-width: 1024px) {
     bottom: calc(40px + 48px + 12px);
   }
-  @media(min-width: 1600px) {
+  @media(min-width: 1200px) {
     right: 28px;
   }
   .menu.default {

@@ -46,7 +46,7 @@
     /* 40px為FloatScroll的bottom */
     bottom: calc(40px + 60px + var(--h));
   }
-  @media(min-width: 1600px) {
+  @media(min-width: 1200px) {
     right: 28px;
   }
   .menu.default {
