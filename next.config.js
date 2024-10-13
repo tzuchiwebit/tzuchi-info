@@ -35,6 +35,10 @@ const nextConfig = {
         source: '/server-sitemap-1.xml.gz',
         destination: '/api/article-sitemap',
       },
+      {
+        source: '/server-sitemap-2.xml.gz',
+        destination: '/api/tags-sitemap',
+      },
     ],
 }
 
