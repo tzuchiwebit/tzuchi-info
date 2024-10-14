@@ -79,12 +79,16 @@ export default function NavbarTop({ setOpenShield, openShield }) {
       <Container noPadding>
         <nav ref={navRef} className="mx-auto flex flext-row items-center justify-between tablet:py-4" aria-label="Global">
           {/* logo */}
-          <div className="tablet-down:ml-3 flex-none w-[114px] tablet:w-[157px] laptop:w-[217px] desktop:w-[372px] tablet:self-start">
+          <div className="tablet-down:ml-3 flex-none w-[114px] tablet:w-[157px] laptop:w-[217px] desktop:w-[372px] tablet:self-start relative">
             <Link href="/" className="">
               <span className="sr-only">慈濟資訊網</span>
               <Icon.LOGO className="hidden desktop:block" width="100%" onClick={() => router.push('/')} />
               <Icon.LOGOMobile className="desktop:hidden" width="100%" onClick={() => router.push('/')} />
             </Link>
+            {
+              !!process.env.NEXT_PUBLIC_STAGING &&
+              <span className='absolute top-2 -right-4 text-xs font-bold' style={{color: 'red'}}>{process.env.NEXT_PUBLIC_STAGING}</span>
+            }
           </div>
 
           <div className='desktop:w-16 laptop:w-11 tablet:w-4'></div>

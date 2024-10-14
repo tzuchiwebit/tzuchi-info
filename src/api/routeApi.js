@@ -13,8 +13,10 @@ export const getArticleById = async (id) => {
 }
 
 export const getTagById = async (id) => {
+  const { signal } = new AbortController()
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/tag?id=${id}`, {
+    signal,
     headers: {
       'Content-Type': 'application/json',
       // next: { revalidate: 2 }, // reset data cache
