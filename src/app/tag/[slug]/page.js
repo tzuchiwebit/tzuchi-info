@@ -3,6 +3,8 @@ import { Suspense } from "react";
 import { getTagById } from "@/api/routeApi";
 import { redirect  } from 'next/navigation'
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function generateMetadata({ params }, parent) {
   const tag = (await getTagById(params.slug)).data
