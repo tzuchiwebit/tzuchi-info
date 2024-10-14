@@ -19,6 +19,7 @@ export async function generateMetadata({ params }, parent) {
 
 export default async function Page({ params }) {
   const tag = (await getTagById(params.slug)).data
+  console.log(JSON.stringify(tag?.attributes?.metadesc))
   if (tag?.id) {
     return (
       <section>
