@@ -56,12 +56,14 @@ const getBookJingsiArticles = async (categoryId = 19, limit = 4, ordering = 'cre
   }
 }
 
-const getTags4All = async (title) => {
+const getTags4All = async (title, excludeArticleId) => {
   try {
+    const params = {
+      'title': title,
+    }
+    if (excludeArticleId) params.exclude = excludeArticleId
     const res = await axios.get(`${process.env.NEXT_PUBLIC_CUSTOM_JOOMLA_API}/tags4all.php`, {
-      params: {
-        'title': title,
-      },
+      params: params,
     })
     return res?.data
   } catch (err) {
