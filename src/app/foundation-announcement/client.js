@@ -1,33 +1,46 @@
 "use client"
 import Container from "@/shared/layout/Container"
-// import { RadioGroup } from '@headlessui/react'
-import { useEffect, useState } from "react"
+import { useState, useMemo } from "react"
 import Pagination from "@/shared/pagination/Pagination"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
-import BannerImage from '@/asset/image/volunteer-morning-meeting.jpeg'
-import Image from 'next/image'
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
+import { useRouter } from "next/navigation"
+import { getArticlesByCategory } from "@/api/joomlaApi"
+import routes from "@/config/routes"
+import dayjs from "dayjs"
+import Spinner from "@/components/Spinner"
+import { addHits } from "@/api/api";
+const { useRequest } = require('ahooks')
+
+const categoryName = '基金會公告'
+const pageLimit = 10
+const loadingData = Array(pageLimit).fill({
+  loading: true
+});
 
 export default function Page() {
-
+  const [listData, setListData] = useState(loadingData)
+  const [totalPage, setTotalPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
+  const pageOffset = useMemo(() => (currentPage - 1) * pageLimit, [currentPage]);
 
+  const router = useRouter();
 
-  const results = Array(12).fill({
-    title: '教善導正 合心造福',
-    content: '【證嚴上人行腳11月13日高雄溫馨座談開示】 「高雄和師父的情，其實是很長，莫忘那一年，莫忘那一人，更重要的也是莫忘那一些事。所以我們大家都共同在做事，大家共同做的事，也都有共同合一個心，所以這個叫做『合』。」 「合」是由一個「人」、一個「一」、一個「口」，組建而成。證嚴上人第一梯次歲末祝福行腳，11月13日於高雄靜思堂與慈誠、委員、慈青進行溫馨座談，透過「合」字的組合，提醒所有慈濟志工要「合心」。 【證嚴上人行腳11月13日高雄溫馨座談開示】 「高雄和師父的情，其實是很長，莫忘那一年，莫忘那一人，更重要的也是莫忘那一些事。所以我們大家都共同在做事，大家共同做的事，也都有共同合一個心，所以這個叫做『合』。」 「合」是由一個「人」、一個「一」、一個「口」，組建而成。證嚴上人第一梯次歲末祝福行腳，11月13日於高雄靜思堂與慈誠、委員、慈青進行溫馨座談，透過「合」字的組合，提醒所有慈濟志工要「合心」。 ',
-    date: '2014/12/22',
-    image: 'https://picsum.photos/280/180',
-    author: '顏博文 執行長'
-  });
-
-  const testData = Array(12).fill({
-    date: '2024-01-29',
-    content: '112年「大愛共善 救拔苦難」募得款及使用情形成果報告'
+  const { loading } = useRequest(() => getArticlesByCategory({ label_name: categoryName, limit: pageLimit, offset: pageOffset }), {
+    refreshDeps: [pageOffset],
+    onSuccess: async (res) => {
+      setListData(res.data)
+      setTotalPage(res.meta['total-pages']);
+    },
+    onError: (err) => {
+      console.error(err);
+    }
   })
 
-  // console.log(`testData`)
-  // console.log(testData)
+  const onPageHit = (id) => {
+    router.push(`${routes.ARITCLE}/${id}`)
+    addHits(id);
+  }
 
 
   return <Container>
@@ -43,16 +56,16 @@ export default function Page() {
               link: '/'
             },
             {
-              label: '認識慈濟',
-              link: ''
-            },
-            {
-              label: '公益勸募',
+              label: categoryName,
               link: ''
             },
           ]} />
       </div>
-      <div className="w-full flex flex-wrap mt-5">
+      <div className="w-full flex flex-wrap mt-5 relative">
+        {
+          loading &&
+          <div className="absolute" style={{top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}}><Spinner></Spinner></div>
+        }
         <table className="w-full border-collapse tablet:text-center">
           <thead>
             <tr className="text-xl font-bold text-primary-blue1 bg-complementary-blue2">
@@ -66,12 +79,17 @@ export default function Page() {
           </thead>
           <tbody>
             {
-              testData.map((item, index) => <tr key={index} className="font-medium text-gray-gray2">
-                <td className="border border-gray-gray4 border-solid py-2 px-1 whitespace-nowrap">
-                  {item.date}
+              listData.map((item, index) => <tr key={index} className="font-medium text-gray-gray2  h-[41px]">
+                <td className="border border-gray-gray4 border-solid py-2 px-1 whitespace-nowrap laptop:w-40">
+                  {
+                    item?.attributes?.created && dayjs(item?.attributes?.created).format('YYYY-MM-DD')
+                  }
                 </td>
-                <td className="border border-gray-gray4 border-solid py-2 px-1">
-                  {item.content}
+                <td className="border border-gray-gray4 border-solid py-2 px-1 text-center">
+                  <div className="font-medium text-primary-blue1 flex-1 line-clamp-2 cursor-pointer hover:text-primary-blue2"
+                    onClick={() => {
+                      onPageHit(item.id)
+                  }}>{item?.attributes?.title}</div>
                 </td>
               </tr>)
             }
@@ -80,7 +98,10 @@ export default function Page() {
         </table>
       </div>
       <div className="w-full">
-        <Pagination currentPage={currentPage} totalPage={5} onPageChange={setCurrentPage} />
+      <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={(index) => {
+          setCurrentPage(index);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }} />
       </div>
     </div>
 

@@ -48,7 +48,7 @@ export default function Announcements() {
     }, [pageData])
 
     return <div className="py-3 flex-1">
-        <BannerTitle id="Announcements" title={`基金會公告`} link="https://tw.tzuchi.org/about-us/關於慈濟基金會/最新公告" behavior="blank" />
+        <BannerTitle id="Announcements" title={`基金會公告`} link={'/foundation-announcement'} />
         <AnnouncementSection data={announcementsData} />
     </div>
 }
