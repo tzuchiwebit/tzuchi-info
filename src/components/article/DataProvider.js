@@ -29,7 +29,6 @@ export default function DataProvider({ children, hasAudio }) {
       )
 
       let tags4All = []
-      if (article.attributes['readmore-tags']) {
         tags4All = await getTags4All(article.attributes['readmore-tags'], id)
         // 2) fetch recommand article list
         res.push({
@@ -42,7 +41,6 @@ export default function DataProvider({ children, hasAudio }) {
           name: 'extendArticles',
           data: tags4All?.readmore,
         })
-      }
 
       setPageData(res);
     } catch (err) {
