@@ -10,7 +10,7 @@ export async function GET() {
   const smStream = new SitemapStream();
   const gzip = createGzip(); // Create a Gzip stream
 
-  const url =`${process.env.NEXT_PUBLIC_CUSTOM_JOOMLA_API}/lightarticles.php?state=1&ordering=created&direction=desc`
+  const url =`${process.env.NEXT_PUBLIC_CMS_URL}/api/jcustom/v1/lightarticles.php?state=1&ordering=created&direction=desc`
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
   const res = await fetch(url, {
     cache: 'no-store',

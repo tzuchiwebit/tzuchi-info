@@ -62,7 +62,7 @@ const getTags4All = async (title, excludeArticleId) => {
       'title': title,
     }
     if (excludeArticleId) params.exclude = excludeArticleId
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_CUSTOM_JOOMLA_API}/tags4all.php`, {
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_CMS_URL}/api/jcustom/v1/tags4all.php`, {
       params: params,
     })
     return res?.data

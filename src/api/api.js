@@ -1,8 +1,7 @@
 import axios from 'axios'
 import _ from 'lodash'
-const API_ENDPOINT = `https://webtest.tzuchi-org.tw/api`
-const EBOOK_ENDPOINT = `https://webtest.tzuchi-org.tw/batch_images_upload/tzuchi_library/api/find.php`
-const EBOOK_ENDPOINT_NEW = `https://webtest.tzuchi-org.tw/batch_images_upload/tzuchi_library/api/findnew.php`
+const API_ENDPOINT = `${process.env.NEXT_PUBLIC_CMS_URL}/api`
+const EBOOK_ENDPOINT_NEW = `${process.env.NEXT_PUBLIC_CMS_URL}/batch_images_upload/tzuchi_library/api/findnew.php`
 const JINGSI_ENDPOINT = `${API_ENDPOINT}/book.php`
 
 const addHits = async (id) => {
