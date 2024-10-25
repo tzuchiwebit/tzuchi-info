@@ -63,7 +63,7 @@ export default function Page() {
     {/* filter options section */}
     <div className="flex w-full flex-col gap-5">
       {/* breadcrumbs */}
-      <div className="flex pt-[30px] gap-1">
+      <div className="flex gap-1 tablet:mt-6 mt-4">
         <PrimaryBreadcrumb
           items={[
             {
