@@ -31,10 +31,20 @@ export default async function Page({ params, ...props }) {
   const pathname = new URL(header_url).pathname?.substring(1);
   const targetTag = _.find(redirectList, { tag_link: pathname });
   if (targetTag) {
-    redirect(`/${targetTag.redirect_link}`); // Permanent redirect
-    return; // Stop execution after redirect
+    return redirect(`/${targetTag.redirect_link}`); // Permanent redirect
   }
-
-  redirect('/'); // Default redirect to home if no match
-
+  
+  const tag = (await getTagById(params.slug)).data
+  console.log('tagInfo', JSON.stringify(tag?.attributes))
+  if (tag?.id) {
+    return (
+      <section>
+        <Suspense>
+          <Client tagInfo={tag?.attributes}></Client>
+        </Suspense>
+      </section>
+    )
+  } else {
+    redirect('/') // Default redirect to home if no match
+  }
 }
