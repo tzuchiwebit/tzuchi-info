@@ -17,7 +17,7 @@ export async function GET(request) {
 
   // FIXME: unable to verify the first certificate
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
-  const url =`${API_ENDPOINT}/tags?${new URLSearchParams(params).toString()}`
+  const url = `${API_ENDPOINT}/tags?${new URLSearchParams(params).toString()}`
   const res = await fetch(url, {
     cache: 'no-store',
     headers: {
@@ -26,12 +26,26 @@ export async function GET(request) {
     },
   })
   const list = (await res.json()).data
+  const redirectListData = await fetch(`https://infobackend.tzuchi-org.tw/api/jcustom/v1/redirect.json`, {
+    cache: 'no-store',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  const redirectList = await redirectListData.json();
+  const removeList = redirectList.map(item => {
+    const _tmp = item.tag_link.split('/') || ["", ""];
+    return parseInt(_tmp[1]);
+  });
   list.forEach((item) => {
-    smStream.write({
-      url: `${process.env.NEXT_PUBLIC_URL}/tag/${item?.id}`,
-      changefreq: "daily",
-      priority: 0.8
-    })
+    // console.log(item?.id)
+    if (removeList.indexOf(parseInt(item?.id)) === -1) {
+      smStream.write({
+        url: `${process.env.NEXT_PUBLIC_URL}/tag/${item?.id}`,
+        changefreq: "daily",
+        priority: 0.8
+      })
+    }
   })
 
   smStream.end();
