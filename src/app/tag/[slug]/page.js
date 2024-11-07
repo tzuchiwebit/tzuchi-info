@@ -11,12 +11,12 @@ export async function generateMetadata({ params }, parent) {
   const images = []
 
   if (tag?.attributes?.images?.image_intro) images.push(tag?.attributes?.images?.image_intro)
-    return {
-      metadataBase: new URL(`${process.env.NEXT_PUBLIC_URL}/daily-reminder`),
-      title: tag?.attributes?.title,
-      description: tag?.attributes?.metadesc,
-      openGraph: { images },
-    }
+  return {
+    metadataBase: new URL(`${process.env.NEXT_PUBLIC_URL}/daily-reminder`),
+    title: `${tag?.attributes?.title} - 慈濟資訊網`,
+    description: tag?.attributes?.metadesc,
+    openGraph: { images },
+  }
 }
 
 export default async function Page({ params }) {
