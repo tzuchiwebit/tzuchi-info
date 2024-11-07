@@ -78,7 +78,7 @@ const Breadcrumb = ({ className }) => {
   )
 }
 
-const Article = ({setVisible}) => {
+const Article = ({ setVisible }) => {
   const { pageData, hasAudio } = useDataProvider();
   const [selectedFontSize, setSelectedFontSize] = useState(26)
   const [completed, setCompleted] = useState(false)
@@ -110,7 +110,7 @@ const Article = ({setVisible}) => {
     })
 
     // 3) add link style
-    setTimeout(()=> {
+    setTimeout(() => {
 
       const linkElements = document.querySelectorAll("#content-holder a")
       linkElements.forEach((linkElement) => {
@@ -136,13 +136,13 @@ const Article = ({setVisible}) => {
     const match = target?.data?.attributes?.text?.match(regex);
 
     if (match) {
-        titleValue = match[1];
+      titleValue = match[1];
 
-        // 1-2) insert "title" element as 圖說文字
-        const newRegex = /(<img\s+[^>]*>)/i;
-        target.data.attributes.text = target?.data?.attributes?.text.replace(newRegex, `$1<p class="mt-1 pb-1 mb-4 text-gray-gray2 font-medium border-solid border-b border-primary-blue3">${titleValue}</p>`);
+      // 1-2) insert "title" element as 圖說文字
+      const newRegex = /(<img\s+[^>]*>)/i;
+      target.data.attributes.text = target?.data?.attributes?.text.replace(newRegex, `$1<p class="mt-1 pb-1 mb-4 text-gray-gray2 font-medium border-solid border-b border-primary-blue3">${titleValue}</p>`);
     } else {
-        console.log("No img tag with title attribute found.");
+      console.log("No img tag with title attribute found.");
     }
 
     setTimeout(() => {
@@ -184,6 +184,12 @@ const Article = ({setVisible}) => {
           <span className="text-[14px] text-gray-gray4 font-medium">{articleData?.attributes?.metadata?.author || '慈濟基金會'}</span>
         </Fragment>
         {
+          articleData?.attributes?.created_by_alias ? <Fragment>
+            <div className="w-[1px] h-4 border-l border-solid border-gray-gray4"></div>
+            <span className="text-[14px] text-gray-gray4 font-medium">{articleData?.attributes?.created_by_alias} 編輯</span>
+          </Fragment> : <></>
+        }
+        {
           articleData?.attributes?.place &&
           articleData?.attributes?.place.toUpperCase() != 'NULL' &&
           <Fragment>
@@ -219,26 +225,26 @@ const Article = ({setVisible}) => {
         </div>
         {
           articleData?.attributes?.images?.image_intro_caption ?
-          <div className="flex flex-col w-full mt-2 mb-5 gap-y-1">
-            <div className="text-lg text-gray-text font-medium">{articleData?.attributes?.images?.image_intro_caption}</div>
-            <div className="w-full flex flex-row gap-x-2 items-center" >
-              <div className="grow border-solid border-b border-primary-blue3"></div>
-              <Icon.ExclaimationMark style={{width: 26, height: 26}}/>
-            </div>
-          </div>:
-          <>
-            <div className="mt-2"></div>
-          </>
+            <div className="flex flex-col w-full mt-2 mb-5 gap-y-1">
+              <div className="text-lg text-gray-text font-medium">{articleData?.attributes?.images?.image_intro_caption}</div>
+              <div className="w-full flex flex-row gap-x-2 items-center" >
+                <div className="grow border-solid border-b border-primary-blue3"></div>
+                <Icon.ExclaimationMark style={{ width: 26, height: 26 }} />
+              </div>
+            </div> :
+            <>
+              <div className="mt-2"></div>
+            </>
         }
         {
           articleData?.relationships?.category?.data?.id === '17' &&
-            <div className={classnames('pl-2 border-solid border-primary-blue3 my-4', getActivityInfoBarWidth(selectedFontSize))} style={{fontSize: selectedFontSize+'px'}}>
-              活動開始：{dayjs(articleData?.attributes?.['act-start']).format('YYYY-MM-DD HH:mm')}<br />
-              活動結束：{dayjs(articleData?.attributes?.['act-end']).format('YYYY-MM-DD HH:mm')}<br />
-              <span className="flex gap-2">活動地點：{articleData?.attributes?.['act-place']} <Icon.LocationPin style={{ width: selectedFontSize+'px', color: color.primary.blue2 }} /></span>
-            </div>
+          <div className={classnames('pl-2 border-solid border-primary-blue3 my-4', getActivityInfoBarWidth(selectedFontSize))} style={{ fontSize: selectedFontSize + 'px' }}>
+            活動開始：{dayjs(articleData?.attributes?.['act-start']).format('YYYY-MM-DD HH:mm')}<br />
+            活動結束：{dayjs(articleData?.attributes?.['act-end']).format('YYYY-MM-DD HH:mm')}<br />
+            <span className="flex gap-2">活動地點：{articleData?.attributes?.['act-place']} <Icon.LocationPin style={{ width: selectedFontSize + 'px', color: color.primary.blue2 }} /></span>
+          </div>
         }
-        <div className={styles.content} id={'content-holder'} style={{ wordBreak: 'break-all', fontSize: selectedFontSize+'px' }} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
+        <div className={styles.content} id={'content-holder'} style={{ wordBreak: 'break-all', fontSize: selectedFontSize + 'px' }} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
 
         <div className="laptop:flex hidden flex-row items-center gap-x-2 desktop:mt-8 mt-6">
           <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
@@ -350,7 +356,7 @@ const RecommandArticles = () => {
 const MainContent = () => {
   const { loading } = useDataProvider();
   const [visible, setVisible] = useState(false)
-  useEffect(()=> {
+  useEffect(() => {
     if (loading) setVisible(false)
   }, [loading])
 
@@ -358,7 +364,7 @@ const MainContent = () => {
     <>
       {
         loading ? <div className="h-screen flex justify-center items-center"><Spinner></Spinner></div> :
-          <div className={classnames({'visible': visible, 'invisible': !visible})}>
+          <div className={classnames({ 'visible': visible, 'invisible': !visible })}>
             <FloatScrollTopButton />
             {/* breadcrumb */}
             <Breadcrumb className="tablet:mt-6 mt-4"></Breadcrumb>
@@ -374,11 +380,13 @@ const MainContent = () => {
 }
 
 const MobileSocialbar = () => {
-  const { loading ,pageData } = useDataProvider();
+  const { loading, pageData } = useDataProvider();
   const articleData = useMemo(() => {
     const target = _.find(pageData, { name: 'article' });
     return target?.data
   }, [pageData])
+  console.log(`articleData`)
+  console.log(articleData)
   return (
     !loading && <SocialBar articleId={articleData?.id} isMobileType={true} />
   )
