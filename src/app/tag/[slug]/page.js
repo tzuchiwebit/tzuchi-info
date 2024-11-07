@@ -16,7 +16,7 @@ export async function generateMetadata({ params }, parent) {
   if (tag?.attributes?.images?.image_intro) images.push(tag?.attributes?.images?.image_intro)
   return {
     metadataBase: new URL(`${process.env.NEXT_PUBLIC_URL}/daily-reminder`),
-    title: tag?.attributes?.title,
+    title: `${tag?.attributes?.title} - 慈濟資訊網`,
     description: tag?.attributes?.metadesc,
     openGraph: { images },
   }

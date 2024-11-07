@@ -385,8 +385,6 @@ const MobileSocialbar = () => {
     const target = _.find(pageData, { name: 'article' });
     return target?.data
   }, [pageData])
-  console.log(`articleData`)
-  console.log(articleData)
   return (
     !loading && <SocialBar articleId={articleData?.id} isMobileType={true} />
   )
