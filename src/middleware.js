@@ -1,14 +1,27 @@
 import { NextResponse } from "next/server";
-import { getArticleById } from "@/api/routeApi";
 import { validateArticle } from "@/utils";
 
 export const config = {
   matcher: ["/article/:path*"],
 };
 
+const getArticleById = async (id) => {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_URL}/api/article?id=${id}`,
+    {
+      next: { revalidate: 60 * 60 }, // reset data cache, after 1h, for server-side only
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  return await res.json();
+};
+
 async function articleMiddleware(id) {
   const article = (await getArticleById(id)).data;
-  console.log("articleMiddleware", id)
+  console.log("articleMiddleware", id);
   if (
     !validateArticle({
       state: article?.attributes?.state,
