@@ -21,7 +21,6 @@ const getArticleById = async (id) => {
 
 async function articleMiddleware(id) {
   const article = (await getArticleById(id)).data;
-  console.log("articleMiddleware", id);
   if (
     !validateArticle({
       state: article?.attributes?.state,
@@ -29,7 +28,7 @@ async function articleMiddleware(id) {
       publishDown: article?.attributes?.publish_down,
     })
   ) {
-    console.log("invalidate article");
+    console.log("invalidate article", id);
     return Response.redirect(process.env.NEXT_PUBLIC_URL, 301);
   }
 }
@@ -41,7 +40,17 @@ export async function middleware(request) {
     const match = pathname.match(/\/article\/(\d+)/);
     if (match) {
       const id = match[1];
-      await articleMiddleware(id);
+      const article = (await getArticleById(id)).data;
+      if (
+        !validateArticle({
+          state: article?.attributes?.state,
+          publishUp: article?.attributes?.publish_up,
+          publishDown: article?.attributes?.publish_down,
+        })
+      ) {
+        console.log("invalidate article", id);
+        return Response.redirect(process.env.NEXT_PUBLIC_URL, 301);
+      }
     }
   }
 
