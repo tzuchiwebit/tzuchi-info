@@ -19,17 +19,24 @@ const getArticleById = async (id) => {
   return await res.json();
 };
 
-async function articleMiddleware(id) {
-  const article = (await getArticleById(id)).data;
-  if (
-    !validateArticle({
-      state: article?.attributes?.state,
-      publishUp: article?.attributes?.publish_up,
-      publishDown: article?.attributes?.publish_down,
-    })
-  ) {
-    console.log("invalidate article", id);
-    return Response.redirect(process.env.NEXT_PUBLIC_URL, 301);
+async function validateArticleMiddleware(id) {
+  let result = true;
+  try {
+    const article = (await getArticleById(id)).data;
+    if (
+      !validateArticle({
+        state: article?.attributes?.state,
+        publishUp: article?.attributes?.publish_up,
+        publishDown: article?.attributes?.publish_down,
+      })
+    ) {
+      console.log("invalidate article", id);
+      result = false;
+    }
+  } catch (err) {
+    console.error(err);
+  } finally {
+    return result;
   }
 }
 
@@ -38,19 +45,9 @@ export async function middleware(request) {
 
   if (pathname.startsWith("/article")) {
     const match = pathname.match(/\/article\/(\d+)/);
-    if (match) {
-      const id = match[1];
-      const article = (await getArticleById(id)).data;
-      if (
-        !validateArticle({
-          state: article?.attributes?.state,
-          publishUp: article?.attributes?.publish_up,
-          publishDown: article?.attributes?.publish_down,
-        })
-      ) {
-        console.log("invalidate article", id);
-        return Response.redirect(process.env.NEXT_PUBLIC_URL, 301);
-      }
+    if (!(match && (await validateArticleMiddleware(match[1])))) {
+      // FIXME: using 404
+      return Response.redirect(process.env.NEXT_PUBLIC_URL, 301);
     }
   }
 
