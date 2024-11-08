@@ -4,19 +4,18 @@ import joomlaContentCategory from './joomlaContentCategory'
 export const getArticleById = async (id) => {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/article?id=${id}`, {
+    next: { revalidate: 60*60*6 }, // reset data cache, after 6h, for server-side only
     headers: {
       'Content-Type': 'application/json',
-      // next: { revalidate: 2 }, // reset data cache
     },
   })
   return await res.json()
 }
 
 export const getTagById = async (id) => {
-  const { signal } = new AbortController()
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/tag?id=${id}`, {
-    signal,
+    cache: 'no-store',
     headers: {
       'Content-Type': 'application/json',
       // next: { revalidate: 2 }, // reset data cache
@@ -26,10 +25,9 @@ export const getTagById = async (id) => {
 }
 
 export const getRedirectJson = async () => {
-  const { signal } = new AbortController()
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
   const res = await fetch(`https://infobackend.tzuchi-org.tw/api/jcustom/v1/redirect.json`, {
-    signal,
+    cache: 'no-store',
     headers: {
       'Content-Type': 'application/json',
       // next: { revalidate: 2 }, // reset data cache
@@ -57,6 +55,7 @@ export const getArticlesByCategory = async ({label_name = '志工早會', limit 
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
   const url = `${process.env.NEXT_PUBLIC_URL}/api/articles?${new URLSearchParams(params).toString()}`
   const res = await fetch(url, {
+    cache: 'no-store',
     headers: {
       'Content-Type': 'application/json',
     },

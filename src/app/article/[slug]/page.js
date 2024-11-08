@@ -2,6 +2,8 @@ import Client from './client'
 import { Suspense } from "react";
 import Loading from "./loading";
 import { getArticleById } from "@/api/routeApi";
+import { notFound } from 'next/navigation'
+import { validateArticle } from '@/utils';
 
 // export const dynamic = 'force-dynamic'
 // export const dynamicParams = true
@@ -9,12 +11,7 @@ import { getArticleById } from "@/api/routeApi";
 // export const revalidate = 0
 
 export async function generateMetadata({ params }, parent) {
-  console.log('NODE_ENV', process.env.NODE_ENV)
-  console.log('NEXT_PUBLIC_ENV_NAME', process.env.NEXT_PUBLIC_ENV_NAME)
-  console.log('SITE_URL', process.env.SITE_URL)
-  console.log('NEXT_PUBLIC_URL', process.env.NEXT_PUBLIC_URL)
   const article = (await getArticleById(params.slug)).data
-  console.log('article', article?.attributes?.images?.image_intro)
   const imageUrl = article?.attributes?.images?.image_intro ? article?.attributes?.images?.image_intro : "https://imagedelivery.net/oK0RK5YvW3bVFXgaGP6foQ/032741ee-fac7-44b6-3cea-649da4b8ff00/2K";
   return {
     metadataBase: new URL(`${process.env.NEXT_PUBLIC_URL}/article/${params.slug}`),
@@ -39,6 +36,13 @@ const checkAudioExists = async (url) => {
 };
 
 export default async function Page({ params }) {
+  const article = (await getArticleById(params.slug)).data
+  if (!validateArticle({
+    state: article?.attributes?.state,
+    publishUp: article?.attributes?.publish_up,
+    publishDown: article?.attributes?.publish_down,
+  })) return notFound()
+
   let hasAudio = false
   if (process.env.NEXT_PUBLIC_ENV_NAME === 'development') {
     hasAudio = await checkAudioExists(`${process.env.NEXT_PUBLIC_AUDIO_BASE_URL}/${params?.slug}.mp3`)
