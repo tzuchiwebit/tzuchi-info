@@ -210,7 +210,7 @@ const Article = ({ setVisible }) => {
           })}>
             <Image
               src={articleData?.attributes?.images?.image_intro ? articleData?.attributes?.images?.image_intro : DefaultImage}
-              alt={articleData?.attributes?.images?.image_intro_alt}
+              alt={articleData?.attributes?.images?.image_intro_alt || ""}
               title={articleData?.attributes?.metadesc}
               width={0}
               height={0}
