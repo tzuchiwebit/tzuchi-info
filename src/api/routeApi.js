@@ -4,7 +4,7 @@ import joomlaContentCategory from './joomlaContentCategory'
 export const getArticleById = async (id) => {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
   const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/article?id=${id}`, {
-    next: { revalidate: 60*60*6 }, // reset data cache, after 6h, for server-side only
+    next: { revalidate: 60*60 }, // reset data cache, after 1h, for server-side only
     headers: {
       'Content-Type': 'application/json',
     },
