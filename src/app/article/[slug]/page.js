@@ -2,8 +2,6 @@ import Client from './client'
 import { Suspense } from "react";
 import Loading from "./loading";
 import { getArticleById } from "@/api/routeApi";
-import { notFound } from 'next/navigation'
-import { validateArticle } from '@/utils';
 
 // export const dynamic = 'force-dynamic'
 // export const dynamicParams = true
@@ -36,13 +34,6 @@ const checkAudioExists = async (url) => {
 };
 
 export default async function Page({ params }) {
-  const article = (await getArticleById(params.slug)).data
-  if (!validateArticle({
-    state: article?.attributes?.state,
-    publishUp: article?.attributes?.publish_up,
-    publishDown: article?.attributes?.publish_down,
-  })) return notFound()
-
   let hasAudio = false
   if (process.env.NEXT_PUBLIC_ENV_NAME === 'development') {
     hasAudio = await checkAudioExists(`${process.env.NEXT_PUBLIC_AUDIO_BASE_URL}/${params?.slug}.mp3`)

@@ -7,11 +7,6 @@ const nextConfig = {
     compiler: {
         styledComponents: true,
     },
-    logging: {
-      fetches: {
-        fullUrl: false,
-      },
-    },
     webpack(config) {
         config.module.rules.push({
             test: /\.svg$/i,
