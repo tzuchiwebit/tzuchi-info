@@ -25,9 +25,10 @@ export const getTagById = async (id) => {
 }
 
 export const getRedirectJson = async () => {
+  const { signal } = new AbortController()
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
   const res = await fetch(`https://infobackend.tzuchi-org.tw/api/jcustom/v1/redirect.json`, {
-    cache: 'no-store',
+    signal,
     headers: {
       'Content-Type': 'application/json',
       // next: { revalidate: 2 }, // reset data cache
