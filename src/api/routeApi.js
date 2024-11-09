@@ -1,4 +1,4 @@
-import _ from 'lodash'
+// import _ from 'lodash'
 import joomlaContentCategory from './joomlaContentCategory'
 
 export const getArticleById = async (id) => {
@@ -39,8 +39,8 @@ export const getRedirectJson = async () => {
 
 export const getArticlesByCategory = async ({label_name = '志工早會', limit = 10, offset = 0, state = 1, ordering = 'created', sort = 'desc'}) => {
   const _t = label_name.split('-')[0];
-  const targetCategory = _.find(joomlaContentCategory, (i) => i.label_name.indexOf(_t) > -1);
-
+  const targetCategory = joomlaContentCategory.find((i) => i.label_name.indexOf(_t) > -1);
+  
   if (!targetCategory) {
     throw new Error(`Invalid category : ${category}`);
   }

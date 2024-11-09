@@ -48,7 +48,7 @@ async function checkTagRedirect(id) {
   let result = false;
   try {
     const redirectList = await getRedirectJson();
-    const targetTag = _.find(redirectList, { tag_link: `tag/${id}` });
+    const targetTag = redirectList.find(i => i.tag_link === `tag/${id}`);
     if (targetTag) {
       result = targetTag;
     }
