@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
 import { validateArticle } from "@/utils";
+import { getRedirectJson } from "./api/routeApi";
 
 export const config = {
-  matcher: ["/article/:path*"],
+  matcher: [
+    "/article/:path*",
+    "/tag/:path*"
+  ],
 };
 
 const getArticleById = async (id) => {
@@ -40,8 +44,23 @@ async function validateArticleMiddleware(id) {
   }
 }
 
+async function checkTagRedirect(id) {
+  let result = false;
+  try {
+    const redirectList = await getRedirectJson();
+    const targetTag = _.find(redirectList, { tag_link: `tag/${id}` });
+    if (targetTag) {
+      result = targetTag;
+    }
+  } catch (err) {
+    console.error(err);
+  } finally {
+    return result;
+  }
+}
+
 export async function middleware(request) {
-  // const { pathname } = request.nextUrl;
+  const { pathname } = request.nextUrl;
 
   // if (pathname.startsWith("/article")) {
   //   const match = pathname.match(/\/article\/(\d+)/);
@@ -50,6 +69,14 @@ export async function middleware(request) {
   //     return Response.redirect(process.env.NEXT_PUBLIC_URL, 301);
   //   }
   // }
+  if (pathname.startsWith("/tag")) {
+    const match = pathname.match(/\/tag\/(\d+)/);
+    const redirectRef = await checkTagRedirect(match[1]);
+    if (match && redirectRef) {
+      // FIXME: using 404
+      return Response.redirect(`${process.env.NEXT_PUBLIC_URL}/${redirectRef?.redirect_link}`, redirectRef?.redirect_type);
+    }
+  }
 
   // Continue with the request
   return NextResponse.next();
