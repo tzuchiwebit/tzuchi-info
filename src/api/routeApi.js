@@ -24,6 +24,8 @@ export const getTagById = async (id) => {
   return await res.json()
 }
 
+<<<<<<< HEAD
+=======
 export const getRedirectJson = async () => {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
   const res = await fetch(`https://infobackend.tzuchi-org.tw/api/jcustom/v1/redirect.json`, {
@@ -36,6 +38,7 @@ export const getRedirectJson = async () => {
   return await res.json()
 }
 
+>>>>>>> eb8f1cd (feat: modify "article/[slug]/page" for cache)
 export const getArticlesByCategory = async ({label_name = '志工早會', limit = 10, offset = 0, state = 1, ordering = 'created', sort = 'desc'}) => {
   const _t = label_name.split('-')[0];
   const targetCategory = _.find(joomlaContentCategory, (i) => i.label_name.indexOf(_t) > -1);

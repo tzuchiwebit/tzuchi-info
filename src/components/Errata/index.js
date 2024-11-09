@@ -37,6 +37,7 @@ export default function Errata ({title, className}) {
   })
 
   const onSubmit = async (data, e) => {
+    console.log(data);
     await sendErrata(data)
     reset(defaultValue)
   };
