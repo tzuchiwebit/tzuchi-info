@@ -41,15 +41,15 @@ async function validateArticleMiddleware(id) {
 }
 
 export async function middleware(request) {
-  const { pathname } = request.nextUrl;
+  // const { pathname } = request.nextUrl;
 
-  if (pathname.startsWith("/article")) {
-    const match = pathname.match(/\/article\/(\d+)/);
-    if (!(match && (await validateArticleMiddleware(match[1])))) {
-      // FIXME: using 404
-      return Response.redirect(process.env.NEXT_PUBLIC_URL, 301);
-    }
-  }
+  // if (pathname.startsWith("/article")) {
+  //   const match = pathname.match(/\/article\/(\d+)/);
+  //   if (!(match && (await validateArticleMiddleware(match[1])))) {
+  //     // FIXME: using 404
+  //     return Response.redirect(process.env.NEXT_PUBLIC_URL, 301);
+  //   }
+  // }
 
   // Continue with the request
   return NextResponse.next();
