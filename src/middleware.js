@@ -65,15 +65,15 @@ export async function middleware(request) {
   // if (pathname.startsWith("/article")) {
   //   const match = pathname.match(/\/article\/(\d+)/);
   //   if (!(match && (await validateArticleMiddleware(match[1])))) {
-  //     // FIXME: using 404
+  //     // TODO: using 404
   //     return Response.redirect(process.env.NEXT_PUBLIC_URL, 301);
   //   }
   // }
+
   if (pathname.startsWith("/tag")) {
     const match = pathname.match(/\/tag\/(\d+)/);
     const redirectRef = await checkTagRedirect(match[1]);
     if (match && redirectRef) {
-      // FIXME: using 404
       return Response.redirect(`${process.env.NEXT_PUBLIC_URL}/${redirectRef?.redirect_link}`, redirectRef?.redirect_type);
     }
   }
