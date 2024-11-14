@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { createContext } from 'react';
-import { getArticlesByCategory, getUserById, getBookJingsiArticles } from "@/api/joomlaApi";
+import { getArticlesByCategory, getUserById, getBookJingsiArticles, getArticlesByCategories } from "@/api/joomlaApi";
 import { getBookSuggest, getBookJingsi, getWeeklyReport } from "@/api/api";
 import _ from 'lodash'
 import dayjs from "dayjs"
@@ -21,10 +21,6 @@ const requiredPageData = [
     count: 1,
   },
   {
-    name: '全球志業', // for homepage carousel
-    count: 7,
-  },
-  {
     name: '基金會公告',
     count: 3,
   },
@@ -32,10 +28,6 @@ const requiredPageData = [
     name: '社區故事',
     count: 3,
   },
-  // {
-  //   name: '好書推薦',
-  //   count: 4,
-  // },
   {
     name: '專欄文章-領航慈濟',
     count: 2,
@@ -68,33 +60,14 @@ export default function DataProvider({ children }) {
         data: (await getArticlesByCategory({ label_name: i.name, limit: i.count, tag: i.tag })).data
       }))))
 
+      res.push({
+        name: '全球志業', // for homepage carousel
+        count: 7,
+        data: (await getArticlesByCategories({ label_names: ['全球志業', '基金會公告'], limit: 7 })).data
+      })
+
       // console.log(`res`)
       // console.log(res)
-
-      // fetch creator info
-      const creatorPool = {}
-
-      const targetLeadings = _.find(res, { name: '專欄文章-領航慈濟' });
-      const targetViews = _.find(res, { name: '專欄文章-名人視角' });
-
-      for (let article of targetLeadings.data) {
-        if (creatorPool[article?.attributes?.created_by]) {
-          article.attributes.creator = creatorPool[article?.attributes?.created_by]
-        } else {
-          const creator = (await getUserById(article?.attributes?.created_by))
-          creatorPool[article?.attributes?.created_by] = creator
-          article.attributes.creator = creator
-        }
-      }
-
-      for (let article of targetViews.data) {
-        if (creatorPool[article?.attributes?.created_by]) {
-          article.attributes.creator = creatorPool[article?.attributes?.created_by]
-        } else {
-          const creator = (await getUserById(article?.attributes?.created_by))
-          creatorPool[article?.attributes?.created_by] = creator
-        }
-      }
 
       setPageData(res);
 

@@ -148,6 +148,42 @@ const getArticlesByCategory = async ({ label_name = '志工早會', limit = 10, 
   }
 }
 
+const getArticlesByCategories = async ({ label_names = ['志工早會'], limit = 10, offset = 0, state = 1, tag = '', ordering = 'created', sort = 'desc' }) => {
+  try {
+    const categoryIds = []
+    label_names.map((label_name) => {
+      const _t = label_name.split('-')[0];
+      const targetCategory = _.find(joomlaContentCategory, (i) => i.label_name.indexOf(_t) > -1);
+      if (!targetCategory) {
+        throw new Error(`Invalid category : ${category}`);
+      }
+      categoryIds.push(targetCategory.id)
+    })
+
+    const params = {
+      'filter[category][]': categoryIds,
+      'page[limit]': limit,
+      'page[offset]': offset,
+      'filter[state]': state,
+    }
+
+    if (tag) params['filter[tag]'] = tag
+    if (ordering) params['list[ordering]']= ordering
+    if (sort) params['list[direction]']= sort // asc|desc
+
+    const res = await axios.get(`${API_ENDPOINT}/content/articles`, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      },
+      params
+    })
+    return res?.data
+
+  } catch (err) {
+    throw err
+  }
+}
+
 const getArticles = async ({ limit = 10, offset = 0, state = 1, ordering = 'created', sort = 'desc', tag = '', tags = [] }) => {
   try {
     const params = {
@@ -246,4 +282,5 @@ export {
   getBookJingsiArticles,
   getArticles,
   getTags4All,
+  getArticlesByCategories,
 }
