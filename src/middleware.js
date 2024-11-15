@@ -63,6 +63,7 @@ export async function middleware(request) {
   const { pathname } = request.nextUrl;
 
   if (pathname.startsWith("/article")) {
+    console.log("validateArticleMiddleware invoke..")
     const match = pathname.match(/\/article\/(\d+)/);
     if (!(match && (await validateArticleMiddleware(match[1])))) {
       // TODO: using 404
