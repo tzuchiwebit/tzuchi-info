@@ -12,11 +12,9 @@ export const config = {
 const getArticleById = async (id) => {
   console.log('middleware.getArticleById invoke')
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
-  const { signal } = new AbortController()
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_URL}/api/article?id=${id}`,
     {
-      signal,
       headers: {
         "Content-Type": "application/json",
       },
