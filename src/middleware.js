@@ -62,13 +62,13 @@ async function checkTagRedirect(id) {
 export async function middleware(request) {
   const { pathname } = request.nextUrl;
 
-  // if (pathname.startsWith("/article")) {
-  //   const match = pathname.match(/\/article\/(\d+)/);
-  //   if (!(match && (await validateArticleMiddleware(match[1])))) {
-  //     // TODO: using 404
-  //     return Response.redirect(process.env.NEXT_PUBLIC_URL, 301);
-  //   }
-  // }
+  if (pathname.startsWith("/article")) {
+    const match = pathname.match(/\/article\/(\d+)/);
+    if (!(match && (await validateArticleMiddleware(match[1])))) {
+      // TODO: using 404
+      return Response.redirect(process.env.NEXT_PUBLIC_URL, 301);
+    }
+  }
 
   if (pathname.startsWith("/tag")) {
     const match = pathname.match(/\/tag\/(\d+)/);

@@ -13,8 +13,8 @@ export const scrollToSection = (id) => {
 
 export const validateArticle = ({ state, publishUp, publishDown }) => {
   if (state === 1) {
-    if (!!publishUp && dayjs().isBefore(dayjs(publishUp))) return false
-    if (!!publishDown && dayjs().isAfter(dayjs(publishDown))) return false
+    // if (!!publishUp && dayjs().isBefore(dayjs(publishUp))) return false
+    // if (!!publishDown && dayjs().isAfter(dayjs(publishDown))) return false
     return true
   }
   return false
