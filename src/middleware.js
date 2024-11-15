@@ -14,7 +14,6 @@ const getArticleById = async (id) => {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_URL}/api/article?id=${id}`,
     {
-      next: { revalidate: 60 * 60 }, // reset data cache, after 1h, for server-side only
       headers: {
         "Content-Type": "application/json",
       },
