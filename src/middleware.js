@@ -12,6 +12,7 @@ export const config = {
 const getArticleById = async (id) => {
   console.log('middleware.getArticleById invoke')
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+  // FIXME: call cms api directly
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_URL}/api/article?id=${id}`,
     {
