@@ -71,7 +71,7 @@ export default function Page() {
               link: '/'
             },
             {
-              label: '志工早會',
+              label: '上人開示',
               link: ''
             },
           ]} />
