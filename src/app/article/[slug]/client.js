@@ -244,7 +244,17 @@ const Article = ({ setVisible }) => {
             <span className="flex gap-2">活動地點：{articleData?.attributes?.['act-place']} <Icon.LocationPin style={{ width: selectedFontSize + 'px', color: color.primary.blue2 }} /></span>
           </div>
         }
-        <div className={styles.content} id={'content-holder'} style={{ wordBreak: 'break-all', fontSize: selectedFontSize + 'px' }} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
+        <style>
+          {`
+            .dynamic-style {
+              font-size: ${selectedFontSize}px !important;
+            }
+            .dynamic-style span {
+              font-size: ${selectedFontSize}px !important;
+            }
+          `}
+        </style>
+        <div className={classnames(styles.content, 'dynamic-style')} id={'content-holder'} style={{wordBreak: "break-all"}} dangerouslySetInnerHTML={{ __html: transformHtmlContent(articleData?.attributes?.text) }} />
 
         <div className="laptop:flex hidden flex-row items-center gap-x-2 desktop:mt-8 mt-6">
           <div className="flex flex-1 text-lg border-solid border-b-2 border-gray-gray7" />
