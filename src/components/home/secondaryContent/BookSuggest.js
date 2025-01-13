@@ -115,7 +115,7 @@ const NewItem = ({ item = {}, loading = false }) => {
       }
       </div>
       <div className="px-0 flex flex-col items-center pt-4 pb-2 w-full gap-y-1 gap-x-4">
-        <div className="text-xl h-[3.5rem] font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">
+        <div className="px-2 text-xl h-[3.5rem] font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">
           {
             loading ?
             <Skeleton count={2}/> :
@@ -143,6 +143,8 @@ const CarouselSection = ({ data, loading }) => {
   useEffect(() => {
     if (screenSize.width >= 1600) {
       setSlidePercentage(75)
+    } else if (screenSize.width >= 1440) {
+      setSlidePercentage(70)
     } else if (screenSize.width >= 1024) {
       setSlidePercentage(65)
     } else if (screenSize.width >= 768) {
