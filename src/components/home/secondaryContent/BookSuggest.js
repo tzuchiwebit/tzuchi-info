@@ -218,7 +218,7 @@ export default function BookSuggest() {
   const screenSize = useScreenSize();
   const [isTabletOnly, setIsTabletOnly] = useState(screenSize.width >= 768 && screenSize.width < 1024)
 
-  const { loadingBooks, suggestBooks: booksData, loadingJingsi, jingsiBooks: jingsiData } = useDataProvider();
+  const { loadingBooks, suggestBooks: booksData, loadingJingsi, newJingsiBooks } = useDataProvider();
 
   const sliderBookData = useMemo(() => {
     if (booksData.length === 1) {
@@ -230,11 +230,11 @@ export default function BookSuggest() {
   }, [booksData])
 
   const sliderJingsiData = useMemo(() => {
-    const formatedData = jingsiData.map((item) => {
+    const formatedData = newJingsiBooks.map((item) => {
       return {
-        title: item?.attributes?.title,
-        url: item?.attributes?.images?.image_intro_alt,
-        cover_image: item?.attributes?.images?.image_intro,
+        title: item?.title,
+        url: item?.link,
+        cover_image: item?.image?.src,
       }
     })
     if (formatedData.length === 1) {
@@ -244,7 +244,7 @@ export default function BookSuggest() {
     }
     return formatedData.slice(0, 4)
     // return Array(4).fill({})
-  }, [jingsiData])
+  }, [newJingsiBooks])
 
   useEffect(() => {
     setIsTabletOnly(screenSize.width >= 768 && screenSize.width < 1024)

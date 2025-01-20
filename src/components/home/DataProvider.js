@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react"
 import { createContext } from 'react';
-import { getArticlesByCategory, getUserById, getBookJingsiArticles, getArticlesByCategories } from "@/api/joomlaApi";
-import { getBookSuggest, getBookJingsi, getWeeklyReport } from "@/api/api";
+import { getArticlesByCategory, getArticlesByCategories } from "@/api/joomlaApi";
+import { getBookSuggest, getWeeklyReport } from "@/api/api";
+import jsonApi from '@/api/jsonApi'
 import _ from 'lodash'
 import dayjs from "dayjs"
 
@@ -44,7 +45,7 @@ export default function DataProvider({ children }) {
   const [pageData, setPageData] = useState([]);
   const [suggestBooks, setSuggestBooks] = useState(Array(4).fill({}));
   const [weeklyReports, setWeeklyReports] = useState([]);
-  const [jingsiBooks, setJingsiBooks] = useState(Array(4).fill({}));
+  const [newJingsiBooks, setNewJinsiBooks] = useState(Array(4). fill({}))
   const [floatLinkArticles, setFloatLinkArticles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingBooks, setLoadingBooks] = useState(true);
@@ -108,9 +109,9 @@ export default function DataProvider({ children }) {
   const getBooksJingsi = async () => {
     setLoadingJingsi(true);
     try {
-      // const res = await getBookJingsi();
-      const res = await getBookJingsiArticles();
-      setJingsiBooks(res);
+      const ttt = await jsonApi.getJingsiBooks()
+      const result = ttt.data?.products.slice(0, 4);
+      setNewJinsiBooks(result)
 
     } catch (err) {
       console.error(err);
@@ -144,7 +145,7 @@ export default function DataProvider({ children }) {
 
 
   return (
-    <DataContext.Provider value={{ pageData, loading, loadingBooks, suggestBooks, loadingJingsi, jingsiBooks, weeklyReports, loadingWeeklyReports, loadingFloatLinks, floatLinkArticles }}>
+    <DataContext.Provider value={{ pageData, loading, loadingBooks, suggestBooks, loadingJingsi, weeklyReports, loadingWeeklyReports, loadingFloatLinks, floatLinkArticles, newJingsiBooks }}>
       {children}
     </DataContext.Provider>
   );
