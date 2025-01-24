@@ -5,7 +5,8 @@ import { getRedirectJson } from "./api/routeApi";
 export const config = {
   matcher: [
     "/article/:path*",
-    "/tag/:path*"
+    "/tag/:path*",
+    "/volunteer-morning"
   ],
 };
 
@@ -78,6 +79,10 @@ export async function middleware(request) {
     if (match && redirectRef) {
       return Response.redirect(`${process.env.NEXT_PUBLIC_URL}/${redirectRef?.redirect_link}`, redirectRef?.redirect_type);
     }
+  }
+
+  if (pathname.startsWith("/volunteer-morning")) {
+    return Response.redirect(`${process.env.NEXT_PUBLIC_URL}/master-talk`, 301);
   }
 
   // Continue with the request

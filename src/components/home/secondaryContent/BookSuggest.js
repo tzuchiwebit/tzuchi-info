@@ -115,7 +115,7 @@ const NewItem = ({ item = {}, loading = false }) => {
       }
       </div>
       <div className="px-0 flex flex-col items-center pt-4 pb-2 w-full gap-y-1 gap-x-4">
-        <div className="text-xl h-[3.5rem] font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">
+        <div className="px-2 text-xl h-[3.5rem] font-bold w-full text-primary-blue1 text-left flex-1 line-clamp-2">
           {
             loading ?
             <Skeleton count={2}/> :
@@ -143,6 +143,8 @@ const CarouselSection = ({ data, loading }) => {
   useEffect(() => {
     if (screenSize.width >= 1600) {
       setSlidePercentage(75)
+    } else if (screenSize.width >= 1440) {
+      setSlidePercentage(70)
     } else if (screenSize.width >= 1024) {
       setSlidePercentage(65)
     } else if (screenSize.width >= 768) {
@@ -216,7 +218,7 @@ export default function BookSuggest() {
   const screenSize = useScreenSize();
   const [isTabletOnly, setIsTabletOnly] = useState(screenSize.width >= 768 && screenSize.width < 1024)
 
-  const { loadingBooks, suggestBooks: booksData, loadingJingsi, jingsiBooks: jingsiData } = useDataProvider();
+  const { loadingBooks, suggestBooks: booksData, loadingJingsi, newJingsiBooks } = useDataProvider();
 
   const sliderBookData = useMemo(() => {
     if (booksData.length === 1) {
@@ -228,11 +230,11 @@ export default function BookSuggest() {
   }, [booksData])
 
   const sliderJingsiData = useMemo(() => {
-    const formatedData = jingsiData.map((item) => {
+    const formatedData = newJingsiBooks.map((item) => {
       return {
-        title: item?.attributes?.title,
-        url: item?.attributes?.images?.image_intro_alt,
-        cover_image: item?.attributes?.images?.image_intro,
+        title: item?.title,
+        url: item?.link,
+        cover_image: item?.image?.src,
       }
     })
     if (formatedData.length === 1) {
@@ -242,7 +244,7 @@ export default function BookSuggest() {
     }
     return formatedData.slice(0, 4)
     // return Array(4).fill({})
-  }, [jingsiData])
+  }, [newJingsiBooks])
 
   useEffect(() => {
     setIsTabletOnly(screenSize.width >= 768 && screenSize.width < 1024)

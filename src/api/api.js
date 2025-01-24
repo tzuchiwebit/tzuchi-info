@@ -2,7 +2,6 @@ import axios from 'axios'
 import _ from 'lodash'
 const API_ENDPOINT = `${process.env.NEXT_PUBLIC_CMS_URL}/api`
 const EBOOK_ENDPOINT_NEW = `${process.env.NEXT_PUBLIC_CMS_URL_DEPRECATED}/batch_images_upload/tzuchi_library/api/findnew.php`
-const JINGSI_ENDPOINT = `${API_ENDPOINT}/book.php`
 
 const addHits = async (id) => {
   try {
@@ -110,17 +109,6 @@ const getWeeklyReportNew = async ({limit, offset}) => {
   }
 }
 
-const getBookJingsi = async () => {
-  try {
-
-    const res = await axios.get(JINGSI_ENDPOINT)
-    return res?.data
-
-  } catch (err) {
-    throw err
-  }
-}
-
 export {
   addHits,
   addShares,
@@ -128,6 +116,5 @@ export {
   getBookSuggest,
   getWeeklyReport,
   getWeeklyReportNew,
-  getBookJingsi,
   pushNotify,
 }

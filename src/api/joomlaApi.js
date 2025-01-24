@@ -36,6 +36,9 @@ const getUserById = async (id) => {
   }
 }
 
+/**
+ * @deprecated using jsonApi.getJingsiBooks() instead
+ */
 const getBookJingsiArticles = async (categoryId = 19, limit = 4, ordering = 'created', sort = 'desc') => {
   try {
     const res = await axios.get(`${API_ENDPOINT}/content/articles`, {

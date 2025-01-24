@@ -18,7 +18,7 @@ export async function GET(request) {
       changefreq: "daily",
     },
     {
-      loc: `${process.env.NEXT_PUBLIC_URL}/volunteer-morning`,
+      loc: `${process.env.NEXT_PUBLIC_URL}/master-talk`,
       lastmod: new Date().toISOString(),
       priority: 0.8,
       changefreq: "daily",
