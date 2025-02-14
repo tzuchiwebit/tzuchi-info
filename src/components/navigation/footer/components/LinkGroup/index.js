@@ -142,35 +142,43 @@ export default function LinkGroup() {
 
   return (
     <Wrapper>
-      <LinkCard type="one" list={footerList['公益慈善']}></LinkCard>
-      <LinkCard type="two" list={footerList['生活倡議']}></LinkCard>
-      <LinkCard type="three" list={footerList['全球聯絡點']}></LinkCard>
-      <LinkCard type="four" list={footerList['其他連結']}></LinkCard>
+      <div className='flex flex-col laptop:gap-y-6 tablet:gap-y-12 gap-y-5'>
+        <LinkCard type="one" list={footerList['公益慈善']}></LinkCard>
+        <LinkCard type="two" list={footerList['生活倡議']}></LinkCard>
+      </div>
       <LinkCard type="five" list={footerList['醫療志業']}></LinkCard>
       <LinkCard type="six" list={footerList['教育志業']}></LinkCard>
+      <div className='desktop:hidden tablet-down:hidden  block'></div>
       <LinkCard type="seven" list={footerList['人文志業']}></LinkCard>
+      {/* <LinkCard type="three" list={footerList['全球聯絡點']}></LinkCard> */}
+      <div className='block desktop-down:hidden'></div>
+      <div className='block desktop-down:hidden'></div>
+      <div className='block desktop-down:hidden'></div>
+      <LinkCard type="four" list={footerList['其他連結']}></LinkCard>
     </Wrapper>
   )
 }
 
 const Wrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, 170px);
-  column-gap: 20px;
-  row-gap: 40px;
+  grid-template-columns: repeat(1, 1fr);
+  row-gap: 20px;
+
+  @media(min-width: ${screens.tablet}) {
+    grid-template-columns: repeat(3, 170px);
+    column-gap: 16px;
+    row-gap: 48px;
+  }
 
   @media(min-width: ${screens.laptop}) {
     grid-template-columns: repeat(3, 220px);
-    column-gap: 20px;
+    column-gap: 16px;
+    row-gap: 48px;
   }
 
   @media(min-width: ${screens.desktop}) {
     grid-template-columns: repeat(4, 180px);
+    column-gap: 48px;
     row-gap: 48px;
-  }
-
-  @media(max-width: ${screens["tablet-down"].max}) {
-    grid-template-columns: repeat(1, 1fr);
-    row-gap: 20px;
   }
 `
