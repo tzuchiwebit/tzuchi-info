@@ -93,3 +93,5 @@ export { default as SocialFacebook } from "./icon/social/facebook.svg";
 export { default as SocialLine } from "./icon/social/line.svg";
 
 export { default as Quotation } from "./icon/main/quotation.svg";
+export { default as RSS } from "./icon/main/rss.svg";
+export { default as RSSDark } from "./icon/footer/rss.svg";

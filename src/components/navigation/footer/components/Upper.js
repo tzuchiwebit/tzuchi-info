@@ -1,7 +1,9 @@
 'use client'
 import Icon from '@/shared/Icon'
+import { useRouter } from "next/navigation"
 
 export default function Upper({ data }) {
+  const router = useRouter();
   const scrollToTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
   };
@@ -30,9 +32,12 @@ export default function Upper({ data }) {
         <div className='bg-primary-blue1 w-10 h-10 flex items-center justify-center rounded-[5px] cursor-pointer' onClick={() => openSocial('社群TT')}>
           <Icon.Tictok></Icon.Tictok>
         </div>
+        <div className='cursor-pointer' onClick={() => router.push("/rss")}>
+          <Icon.RSSDark></Icon.RSSDark>
+        </div>
       </div>
       <div className='flex flex-row items-center gap-x-2' onClick={scrollToTop}>
-        <span className='text-xl text-primary-blue1 font-bold'>回最上面</span>
+        <span className='text-xl text-primary-blue1 font-bold tablet:block hidden'>回最上面</span>
         <div className='bg-white rounded-full shadow-lg shadow-gray-300 p-2 cursor-pointer'>
           <Icon.ArrowUp></Icon.ArrowUp>
         </div>
