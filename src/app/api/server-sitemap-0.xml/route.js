@@ -95,6 +95,12 @@ export async function GET(request) {
       priority: 0.6,
       changefreq: "daily",
     },
+    {
+      loc: `${process.env.NEXT_PUBLIC_URL}/rss`,
+      lastmod: new Date().toISOString(),
+      priority: 0.5,
+      changefreq: "daily",
+    },
   ]
 
   return getServerSideSitemap(fields)

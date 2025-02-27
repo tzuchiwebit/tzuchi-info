@@ -8,7 +8,6 @@ import BannerImage from '@/asset/image/the-base-messages.png'
 import Image from 'next/image'
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
 import dayjs from "dayjs"
-import Icon from "@/shared/Icon"
 import { BannerTitle } from "@/components/home/components"
 import color from "@/shared/styles/color"
 import styled from "styled-components"
@@ -64,26 +63,39 @@ export default function Page() {
 
   const baseData = useMemo(() => {
     return {
-      taiwan: baseDataList?.[0].data || [],
-      asia: baseDataList?.[1].data || [],
-      america: baseDataList?.[2].data || [],
-      europe: baseDataList?.[3].data || [],
-      africa: baseDataList?.[4].data || [],
-      oceania: baseDataList?.[5].data || [],
+      taiwan: {
+        list: baseDataList?.[0].data || [],
+        rss: `${process.env.NEXT_PUBLIC_CMS_URL}/api/jcustom/v1/rss.php?place=臺灣全球`,
+      },
+      asia: {
+        list: baseDataList?.[1].data || [],
+        rss: `${process.env.NEXT_PUBLIC_CMS_URL}/api/jcustom/v1/rss.php?place=亞洲`,
+      },
+      america: {
+        list: baseDataList?.[2].data || [],
+        rss: `${process.env.NEXT_PUBLIC_CMS_URL}/api/jcustom/v1/rss.php?place=美洲`,
+      },
+      europe: {
+        list: baseDataList?.[3].data || [],
+        rss: `${process.env.NEXT_PUBLIC_CMS_URL}/api/jcustom/v1/rss.php?place=歐洲`,
+      },
+      africa: {
+        list: baseDataList?.[4].data || [],
+        rss: `${process.env.NEXT_PUBLIC_CMS_URL}/api/jcustom/v1/rss.php?place=非洲`,
+      },
+      oceania: {
+        list: baseDataList?.[5].data || [],
+        rss: `${process.env.NEXT_PUBLIC_CMS_URL}/api/jcustom/v1/rss.php?place=大洋洲`,
+      },
     }
   }, [baseDataList])
 
-  // console.log(`baseData`)
-  // console.log(baseData)
-
-  const SiteCard = ({ items, place }) => {
-
+  const SiteCard = ({ items, place, rss }) => {
     const router = useRouter();
-    // console.log(items)
 
     return <div className="w-full tablet:w-1/2 laptop:w-1/3 px-3 mb-6">
       <div className="bg-white border rounded-[4px] p-5 shadow-elevation-3 flex flex-col gap-2">
-        <BannerTitle title={joomlaGlobal[place]?.label} link={joomlaGlobal[place]?.link} />
+        <BannerTitle title={joomlaGlobal[place]?.label} link={joomlaGlobal[place]?.link} rss={rss} />
         <div className="text-primary-blue1 font-bold text-xl">
           {items.title}
         </div>
@@ -146,7 +158,7 @@ export default function Page() {
       {/* result cards */}
       <div className="w-auto flex flex-wrap -mx-3">
         {
-          Object.keys(baseData).map((key, index) => <SiteCard place={key} items={baseData[key]} key={index} />)
+          Object.keys(baseData).map((key, index) => <SiteCard place={key} items={baseData[key].list} rss={baseData[key].rss} key={index} />)
         }
       </div>
     </div>

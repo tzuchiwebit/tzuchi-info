@@ -14,7 +14,7 @@ export { default as UpArrow } from "./icon/main/up-arrow.svg";
 export { default as Like } from "./icon/main/like.svg";
 export { default as LikeFull } from "./icon/main/like-full.svg";
 export { default as File } from "./icon/main/file.svg";
-export { default as Link } from "./icon/main/link.svg";
+export { default as LinkOut } from "./icon/main/link-out.svg";
 export { default as PaginationDoubleLeftArrow } from "./icon/main/pagination-double-left-arrow.svg";
 export { default as PaginationDoubleRightArrow } from "./icon/main/pagination-double-right-arrow.svg";
 export { default as PaginationLeftArrow } from "./icon/main/pagination-left-arrow.svg";
@@ -93,3 +93,5 @@ export { default as SocialFacebook } from "./icon/social/facebook.svg";
 export { default as SocialLine } from "./icon/social/line.svg";
 
 export { default as Quotation } from "./icon/main/quotation.svg";
+export { default as RSS } from "./icon/main/rss.svg";
+export { default as RSSDark } from "./icon/footer/rss.svg";
