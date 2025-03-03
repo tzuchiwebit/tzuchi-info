@@ -4,6 +4,8 @@ import Spinner from "@/components/Spinner";
 import dynamic from "next/dynamic";
 const Client = dynamic(() => import("./client"), { ssr: false });
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata({ params }, parent) {
   return {
     metadataBase: new URL(`${process.env.NEXT_PUBLIC_URL}/volunteer-morning`),
