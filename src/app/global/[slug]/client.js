@@ -66,6 +66,15 @@ export default function Page() {
     }))
   }, [currentPage])
 
+  useEffect(() => {
+    const originalScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = originalScrollRestoration;
+    };
+  }, []);
+
   const { data: listDataRef, loading, run } = useRequest(() => getArticlesByCategory({ label_name: "全球志業", tag: joomlaGlobal[params?.slug?.toString()]?.tag, limit: pageLimit, offset: pageOffset, ordering: 'created', sort: 'desc' }), {
     refreshDeps: [pageOffset, params?.slug],
     manual: true,

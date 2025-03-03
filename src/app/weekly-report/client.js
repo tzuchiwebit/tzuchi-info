@@ -51,6 +51,15 @@ export default function Page() {
     }))
   }, [currentPage])
 
+  useEffect(() => {
+    const originalScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = originalScrollRestoration;
+    };
+  }, []);
+
   const { data: listDataRef, loading, run } = useRequest(() => getWeeklyReportNew({ limit: pageLimit, offset: pageOffset }), {
     refreshDeps: [pageOffset, currentPage],
     manual: false,

@@ -37,6 +37,15 @@ export default function Page() {
     }))
   }, [currentPage])
 
+  useEffect(() => {
+    const originalScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = originalScrollRestoration;
+    };
+  }, []);
+
   // 吉祥月api,
   const { data: auspiciousMonthData, loading: loadingAuspiciousData } = useRequest(() => {
     return axios.get(`https://raw.githubusercontent.com/KaelLim/JSONFile/main/%E4%B8%83%E6%9C%88%E5%90%89%E7%A5%A5%E6%9C%88/api.json`);

@@ -36,14 +36,10 @@ export default function Page() {
   }, [currentPage])
 
   useEffect(() => {
-    // 只對這個頁面禁用滾動位置記憶
     const originalScrollRestoration = window.history.scrollRestoration;
-    console.log("originalScrollRestoration", originalScrollRestoration)
     window.history.scrollRestoration = "manual";
 
     return () => {
-      // 當離開此頁面時，恢復原本的滾動行為
-      console.log("restore")
       window.history.scrollRestoration = originalScrollRestoration;
     };
   }, []);

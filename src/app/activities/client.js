@@ -36,6 +36,15 @@ export default function Page() {
     }))
   }, [currentPage])
 
+  useEffect(() => {
+    const originalScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = originalScrollRestoration;
+    };
+  }, []);
+
   const { data: listDataRef, loading } = useRequest(() => getArticlesByCategory({ label_name: "熱門活動", limit: pageLimit, offset: pageOffset }), {
     refreshDeps: [pageOffset],
     onSuccess: async (res) => {

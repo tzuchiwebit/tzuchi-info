@@ -34,6 +34,15 @@ export default function Page() {
     }))
   }, [currentPage])
 
+  useEffect(() => {
+    const originalScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = originalScrollRestoration;
+    };
+  }, []);
+
   const { loading } = useRequest(() => getArticlesByCategory({ label_name: categoryName, limit: pageLimit, offset: pageOffset }), {
     refreshDeps: [pageOffset],
     onSuccess: async (res) => {

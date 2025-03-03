@@ -35,6 +35,15 @@ export default function Page({ tagInfo }) {
     }))
   }, [currentPage])
 
+  useEffect(() => {
+    const originalScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = originalScrollRestoration;
+    };
+  }, []);
+
   const imageIntro = useMemo(()=> {
     if (!!tagInfo?.images?.image_intro) {
       if (tagInfo?.images?.image_intro?.indexOf("images") > -1) {

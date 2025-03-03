@@ -81,6 +81,15 @@ export default function Page() {
     }))
   }, [currentPage])
 
+  useEffect(() => {
+    const originalScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = originalScrollRestoration;
+    };
+  }, []);
+
   const { data, loading, run } = useRequest(() => getArticlesByKeyword({ keyword: keyword, limit: pageLimit, offset: pageOffset, sorting:  listOrder}), {
     manual: true,
     refreshDeps: [pageOffset],

@@ -48,6 +48,15 @@ export default function Page() {
     }))
   }, [currentPage, activeTab])
 
+  useEffect(() => {
+    const originalScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = originalScrollRestoration;
+    };
+  }, []);
+
   const { data: columnArticlesData, loading } = useRequest(() => getArticlesByCategory({
     label_name: `專欄文章-${tabs[activeTab].label}`,
     limit: pageLimit,
