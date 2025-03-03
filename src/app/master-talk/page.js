@@ -1,6 +1,8 @@
-import Client from './client'
+// import Client from './client'
 import { Suspense } from "react";
 import Spinner from "@/components/Spinner";
+import dynamic from "next/dynamic";
+const Client = dynamic(() => import("./client"), { ssr: false });
 
 export async function generateMetadata({ params }, parent) {
   return {
