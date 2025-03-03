@@ -35,6 +35,17 @@ export default function Page() {
     }))
   }, [currentPage])
 
+  useEffect(() => {
+    // 只對這個頁面禁用滾動位置記憶
+    const originalScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      // 當離開此頁面時，恢復原本的滾動行為
+      window.history.scrollRestoration = originalScrollRestoration;
+    };
+  }, []);
+
   const { data: listDataRef, loading } = useRequest(() => getArticlesByCategory({ label_name: "志工早會", limit: pageLimit, offset: pageOffset }), {
     refreshDeps: [pageOffset],
     onSuccess: async (res) => {
