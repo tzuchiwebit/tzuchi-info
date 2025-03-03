@@ -2,8 +2,6 @@ import Client from './client'
 import { Suspense } from "react";
 import Spinner from "@/components/Spinner";
 
-export const dynamic = 'force-dynamic';
-
 export async function generateMetadata({ params }, parent) {
   return {
     metadataBase: new URL(`${process.env.NEXT_PUBLIC_URL}/volunteer-morning`),

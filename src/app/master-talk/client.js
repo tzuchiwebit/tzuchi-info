@@ -8,7 +8,7 @@ import Image from 'next/image'
 import PrimaryCard from "@/shared/card/PrimaryCard"
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
 import { getArticlesByCategory } from "@/api/joomlaApi"
-import { useRouter, useSearchParams, usePathname } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import routes from "@/config/routes"
 import { addHits } from "@/api/api"
 import { useRequest } from 'ahooks';
@@ -23,7 +23,6 @@ export default function Page() {
 
   const router = useRouter();
   const searchParams = useSearchParams()
-  const pathname = usePathname()
   
   const currentPage = useMemo(() => (searchParams.get('p') === null || isNaN(searchParams.get('p'))) ? 1 : parseInt(searchParams.get('p')))
   const [totalPage, setTotalPage] = useState(1);
@@ -34,7 +33,7 @@ export default function Page() {
     setListData(Array(pageLimit).fill({
       loading: true
     }))
-  }, [currentPage, pathname])
+  }, [currentPage])
 
   const { data: listDataRef, loading } = useRequest(() => getArticlesByCategory({ label_name: "志工早會", limit: pageLimit, offset: pageOffset }), {
     refreshDeps: [pageOffset],
