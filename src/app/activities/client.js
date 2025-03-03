@@ -1,7 +1,6 @@
 "use client"
 import Container from "@/shared/layout/Container"
-// import { RadioGroup } from '@headlessui/react'
-import { useEffect, useState, useMemo } from "react"
+import { useState, useMemo, useEffect, Fragment } from "react"
 import Pagination from "@/shared/pagination/Pagination"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import BannerImage from '@/asset/image/activities-banner.jpeg'
@@ -10,28 +9,34 @@ import Image from 'next/image'
 import PrimaryActivityCard from "@/shared/card/PrimaryActivityCard"
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
 import { getArticlesByCategory, getUserById } from "@/api/joomlaApi"
-// import Skeleton from "react-loading-skeleton"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import routes from "@/config/routes"
 import { addHits } from "@/api/api"
 import Icon from "@/shared/Icon"
-
-const { useRequest } = require('ahooks')
-
-const loadingData = Array(12).fill({
-  loading: true
-});
-
+import { useRequest } from 'ahooks';
+import Spinner from "@/components/Spinner"
 
 export default function Page() {
-  const [listData, setListData] = useState(loadingData)
-  const [totalPage, setTotalPage] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageOffset = useMemo(() => (currentPage - 1) * 9, [currentPage]);
+  const pageLimit = 9
+  const [listData, setListData] = useState(Array(pageLimit).fill({
+    loading: true
+  }))
 
   const router = useRouter();
+  const searchParams = useSearchParams()
 
-  const { data: listDataRef, loading } = useRequest(() => getArticlesByCategory({ label_name: "熱門活動", limit: 9, offset: pageOffset }), {
+  const currentPage = useMemo(() => (searchParams.get('p') === null || isNaN(searchParams.get('p'))) ? 1 : parseInt(searchParams.get('p')))
+  const [totalPage, setTotalPage] = useState(1);
+  const pageOffset = useMemo(() => (currentPage - 1) * pageLimit, [currentPage]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setListData(Array(pageLimit).fill({
+      loading: true
+    }))
+  }, [currentPage])
+
+  const { data: listDataRef, loading } = useRequest(() => getArticlesByCategory({ label_name: "熱門活動", limit: pageLimit, offset: pageOffset }), {
     refreshDeps: [pageOffset],
     onSuccess: async (res) => {
       setListData(res.data)
@@ -87,6 +92,7 @@ export default function Page() {
       <div className="w-full">
         <Image
           src={BannerImage}
+          priority={true}
           alt=""
           sizes="100vw"
           // Make the image display full width
@@ -98,24 +104,28 @@ export default function Page() {
       {/* result cards */}
       {/* <BannerTitle title="活動點位地圖" /> */}
       <BannerTitle title="活動資訊" />
-      <div className="grid laptop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-x-5 gap-y-6">
-        {
-          listData.map((item, index) => <PrimaryActivityCard
-            item={item?.attributes}
-            key={index}
-            index={index}
-            onClick={() => {
-              onPageHit(item.id)
-            }}
-          />)
-        }
-      </div>
-      <div className="w-full">
-        <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={(index) => {
-          setCurrentPage(index);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }} />
-      </div>
+      {
+        loading ? <div className="h-[240px] flex justify-center items-center"><Spinner></Spinner></div> :
+        <Fragment>
+          <div className="grid laptop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-x-5 gap-y-6">
+            {
+              listData.map((item, index) => <PrimaryActivityCard
+                item={item?.attributes}
+                key={index}
+                index={index}
+                onClick={() => {
+                  onPageHit(item.id)
+                }}
+              />)
+            }
+          </div>
+          <div className="w-full">
+            <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={(index) => {
+              router.push(`/activities?p=${index}`)
+            }} />
+          </div>
+        </Fragment>
+      }
     </div>
 
   </Container>

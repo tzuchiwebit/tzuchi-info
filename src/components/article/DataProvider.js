@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { createContext } from 'react';
-import { getArticleById, getRecommandArticles, getExtendArticles, getTags4All } from "@/api/joomlaApi";
+import { getArticleById, getTags4All } from "@/api/joomlaApi";
 import { useParams } from 'next/navigation'
 const { useLocalStorageState } = require('ahooks')
 

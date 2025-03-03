@@ -105,7 +105,7 @@ const StyledPeriod = styled.span`
 const Badge = ({isHappy, data}) => {
   const period = (input) => {
     const regex = /第(\d+)期/;
-    const match = input.match(regex);
+    const match = input?.match(regex);
     if (match) return match[0]
     return ''
   }

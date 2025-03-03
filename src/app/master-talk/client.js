@@ -1,50 +1,43 @@
 "use client"
 import Container from "@/shared/layout/Container"
-// import { RadioGroup } from '@headlessui/react'
-import { useEffect, useState, useMemo } from "react"
+import { useState, useMemo, useEffect, Fragment } from "react"
 import Pagination from "@/shared/pagination/Pagination"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import BannerImage from '@/asset/image/volunteer-morning-meeting.jpeg'
 import Image from 'next/image'
 import PrimaryCard from "@/shared/card/PrimaryCard"
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
-import { getArticlesByCategory, getUserById } from "@/api/joomlaApi"
-// import Skeleton from "react-loading-skeleton"
-import { useRouter } from "next/navigation"
+import { getArticlesByCategory } from "@/api/joomlaApi"
+import { useRouter, useSearchParams } from "next/navigation"
 import routes from "@/config/routes"
 import { addHits } from "@/api/api"
-const { useRequest } = require('ahooks')
+import { useRequest } from 'ahooks';
+import Spinner from "@/components/Spinner"
 
-const loadingData = Array(12).fill({
-  loading: true
-});
-
+const pageLimit = 9
 
 export default function Page() {
-  const [listData, setListData] = useState(loadingData)
-  const [totalPage, setTotalPage] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageOffset = useMemo(() => (currentPage - 1) * 9, [currentPage]);
+  const [listData, setListData] = useState(Array(pageLimit).fill({
+    loading: true
+  }))
 
   const router = useRouter();
+  const searchParams = useSearchParams()
+  
+  const currentPage = useMemo(() => (searchParams.get('p') === null || isNaN(searchParams.get('p'))) ? 1 : parseInt(searchParams.get('p')))
+  const [totalPage, setTotalPage] = useState(1);
+  const pageOffset = useMemo(() => (currentPage - 1) * pageLimit, [currentPage]);
 
-  const { data: listDataRef, loading } = useRequest(() => getArticlesByCategory({ label_name: "志工早會", limit: 9, offset: pageOffset }), {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setListData(Array(pageLimit).fill({
+      loading: true
+    }))
+  }, [currentPage])
+
+  const { data: listDataRef, loading } = useRequest(() => getArticlesByCategory({ label_name: "志工早會", limit: pageLimit, offset: pageOffset }), {
     refreshDeps: [pageOffset],
     onSuccess: async (res) => {
-      // console.log(`res.meta`)
-      // console.log(res.meta)
-
-      const creatorPool = {}
-      for (let article of res.data) {
-        if (creatorPool[article?.attributes?.created_by]) {
-          article.attributes.creator = creatorPool[article?.attributes?.created_by]
-        } else {
-          const creator = (await getUserById(article?.attributes?.created_by))
-          creatorPool[article?.attributes?.created_by] = creator
-          article.attributes.creator = creator
-        }
-      }
-
       setListData(res.data)
       setTotalPage(res.meta['total-pages']);
     },
@@ -80,6 +73,7 @@ export default function Page() {
       <div className="w-full">
         <Image
           src={BannerImage}
+          priority={true}
           alt=""
           sizes="100vw"
           // Make the image display full width
@@ -89,24 +83,28 @@ export default function Page() {
           }} />
       </div>
       {/* result cards */}
-      <div className="grid laptop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-x-5 gap-y-6">
-        {
-          listData.map((item, index) => <PrimaryCard
-            item={item?.attributes}
-            key={index}
-            index={index}
-            onClick={() => {
-              onPageHit(item.id)
-            }}
-          />)
-        }
-      </div>
-      <div className="w-full">
-        <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={(index) => {
-          setCurrentPage(index);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }} />
-      </div>
+      {
+        loading ? <div className="h-[480px] flex justify-center items-center"><Spinner></Spinner></div> :
+        <Fragment>
+          <div className="grid laptop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-x-5 gap-y-6">
+            {
+              listData.map((item, index) => <PrimaryCard
+                item={item?.attributes}
+                key={index}
+                index={index}
+                onClick={() => {
+                  onPageHit(item.id)
+                }}
+              />)
+            }
+          </div>
+          <div className="w-full">
+            <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={(index) => {
+              router.push(`/master-talk?p=${index}`)
+            }} />
+          </div>
+        </Fragment>
+      }
     </div>
 
   </Container>
