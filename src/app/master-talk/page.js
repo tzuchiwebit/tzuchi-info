@@ -1,8 +1,6 @@
-// import Client from './client'
+import Client from './client'
 import { Suspense } from "react";
 import Spinner from "@/components/Spinner";
-import dynamicImport from "next/dynamic"
-const Client = dynamicImport(() => import("./client"), { ssr: false });
 
 export const dynamic = 'force-dynamic';
 
@@ -17,7 +15,7 @@ export async function generateMetadata({ params }, parent) {
   }
 }
 
-export default function Page({ params }) {
+export default async function Page({ params }) {
   return (
     <section>
       <Suspense fallback={<div className="h-screen flex justify-center items-center"><Spinner /></div>}>
