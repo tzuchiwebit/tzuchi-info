@@ -43,6 +43,7 @@ export default function Page() {
 
     return () => {
       // 當離開此頁面時，恢復原本的滾動行為
+      console.log("restore")
       window.history.scrollRestoration = originalScrollRestoration;
     };
   }, []);
