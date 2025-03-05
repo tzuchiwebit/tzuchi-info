@@ -11,6 +11,9 @@ const defaultOption = [
     { label: '--- 請選擇 ---', value: '--- 請選擇 ---' },
 ]
 
+/**
+ * notice: usage for "search" page only
+ */
 export default function SearchSelect({ label, options = [], sm = false, onChange = () => { }, ...props }) {
 
     const [value, setValue] = useState('--- 請選擇 ---')

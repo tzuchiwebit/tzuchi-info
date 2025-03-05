@@ -1,5 +1,6 @@
 import Client from './client'
 import { Suspense } from "react";
+import Spinner from "@/components/Spinner"
 
 export async function generateMetadata({ params }, parent) {
   return {
@@ -15,7 +16,7 @@ export async function generateMetadata({ params }, parent) {
 export default async function Page({ params }) {
   return (
     <section>
-      <Suspense>
+      <Suspense fallback={<div className="h-screen flex justify-center items-center"><Spinner /></div>}>
         <Client></Client>
       </Suspense>
     </section>

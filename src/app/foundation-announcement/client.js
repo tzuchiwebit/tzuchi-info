@@ -1,30 +1,47 @@
 "use client"
 import Container from "@/shared/layout/Container"
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect, Fragment } from "react"
 import Pagination from "@/shared/pagination/Pagination"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { getArticlesByCategory } from "@/api/joomlaApi"
 import routes from "@/config/routes"
 import dayjs from "dayjs"
 import Spinner from "@/components/Spinner"
 import { addHits } from "@/api/api";
-const { useRequest } = require('ahooks')
+import { useRequest } from 'ahooks';
 
 const categoryName = '基金會公告'
-const pageLimit = 10
-const loadingData = Array(pageLimit).fill({
-  loading: true
-});
 
 export default function Page() {
-  const [listData, setListData] = useState(loadingData)
-  const [totalPage, setTotalPage] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageOffset = useMemo(() => (currentPage - 1) * pageLimit, [currentPage]);
+  const pageLimit = 10
+  const [listData, setListData] = useState(Array(pageLimit).fill({
+    loading: true
+  }))
 
   const router = useRouter();
+  const searchParams = useSearchParams()
+
+  const currentPage = useMemo(() => (searchParams.get('p') === null || isNaN(searchParams.get('p'))) ? 1 : parseInt(searchParams.get('p')))
+  const [totalPage, setTotalPage] = useState(0);
+  const pageOffset = useMemo(() => (currentPage - 1) * pageLimit, [currentPage]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setListData(Array(pageLimit).fill({
+      loading: true
+    }))
+  }, [currentPage])
+
+  useEffect(() => {
+    const originalScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = originalScrollRestoration;
+    };
+  }, []);
 
   const { loading } = useRequest(() => getArticlesByCategory({ label_name: categoryName, limit: pageLimit, offset: pageOffset }), {
     refreshDeps: [pageOffset],
@@ -97,12 +114,14 @@ export default function Page() {
           </tbody>
         </table>
       </div>
-      <div className="w-full">
-      <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={(index) => {
-          setCurrentPage(index);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }} />
-      </div>
+      {
+        totalPage > 0 &&
+        <div className="w-full">
+          <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={(index) => {
+            router.push(`/foundation-announcement?p=${index}`)
+          }} />
+        </div>
+      }
     </div>
 
   </Container>

@@ -1,20 +1,21 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { styled } from "styled-components";
 import color from "../styles/color";
 import Icon from "../Icon";
-import screens from "../styles/screens";
 
-// const totalPage = 8;
+/**
+ * page button為：<-2, -1, <當前頁數>, +1, +2>
+ * <<：為 -5
+ * <：為 -1
+ * >：為 +1
+ * >>：為 +5
+ */
 const supportPage = 5;
 
 export default function Pagination({ totalPage, currentPage, onPageChange = (page) => { } }) {
   const onPageModified = (page) => {
     onPageChange(page);
   };
-
-  const startPageNumber = useMemo(() => {
-    return Math.floor((currentPage - 1) / supportPage) * supportPage + 1;
-  }, [currentPage]);
 
   const hadnlePageClick = (page) => {
     onPageModified(page);
@@ -24,15 +25,32 @@ export default function Pagination({ totalPage, currentPage, onPageChange = (pag
     if (currentPage === 1) return;
     onPageModified(currentPage - 1);
   };
+
   const handleBackSupportPageClick = () => {
-    // TODO : check button behavior
+    if (currentPage === 1) return;
     if (currentPage <= supportPage) {
       onPageModified(1);
       return;
     }
-    // setPage(startPageNumber - supportPage);
-    onPageModified(startPageNumber - supportPage);
+    onPageModified(currentPage - supportPage);
   };
+  
+  const displayPages = useMemo(() => {
+    if (totalPage <= 5) {
+      return Array.from({ length: totalPage }, (_, i) => i + 1);
+    }
+  
+    if (currentPage <= 3) {
+      return [1, 2, 3, 4, 5];
+    }
+  
+    if (currentPage >= totalPage - 2) {
+      return [totalPage - 4, totalPage - 3, totalPage - 2, totalPage - 1, totalPage];
+    }
+  
+    return [currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2];
+  }, [currentPage, totalPage]);
+  
 
   const handleNextPageClick = () => {
     if (currentPage === totalPage) return;
@@ -40,14 +58,12 @@ export default function Pagination({ totalPage, currentPage, onPageChange = (pag
   };
 
   const handleNextSupportPageClick = () => {
-    // TODO : check button behavior
-    if (startPageNumber + supportPage >= totalPage) {
-      // setPage(totalPage);
+    if (currentPage === totalPage) return;
+    if (currentPage + supportPage >= totalPage) {
       onPageModified(totalPage);
       return;
     }
-    // setPage(startPageNumber + supportPage);
-    onPageModified(startPageNumber + supportPage);
+    onPageModified(currentPage + supportPage);
   };
 
   return (
@@ -61,22 +77,16 @@ export default function Pagination({ totalPage, currentPage, onPageChange = (pag
             <Icon.PageArrowLeft />
           </StyledPaginationIconButton>
         </StyledPaginationIconButtonContainer>
-        {Array(supportPage)
-          .fill(0)
-          .map((_, index) => {
-            const pageIndex = startPageNumber + index;
-            return pageIndex;
-          })
-          .filter((pageIndex) => pageIndex <= totalPage) // Filter out elements greater than totalPage
-          .map((pageIndex, index) => (
-            <StyledPaginationText
-              key={index}
-              $active={pageIndex === currentPage}
-              onClick={() => hadnlePageClick(pageIndex)}
-            >
-              {pageIndex}
-            </StyledPaginationText>
-          ))}
+        {displayPages.map((pageIndex) => (
+          <StyledPaginationText
+            key={pageIndex}
+            $active={pageIndex === currentPage}
+            onClick={() => hadnlePageClick(pageIndex)}
+          >
+            {pageIndex}
+          </StyledPaginationText>
+        ))}
+
         <StyledPaginationIconButtonContainer>
           <StyledPaginationIconButton onClick={handleNextPageClick}>
             <Icon.PageArrowRight />

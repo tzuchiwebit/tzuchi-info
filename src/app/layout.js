@@ -8,7 +8,7 @@ import DataProvider from "@/components/navigation/navbar/DataProvider"
 import NewsEmergency from '@/components/navigation/navbar/components/NewsEmergency'
 import NewsMarquee from '@/components/navigation/navbar/components/NewsMarquee'
 import Script from "next/script";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import './globals.css'
 import 'react-loading-skeleton/dist/skeleton.css'
 
@@ -23,6 +23,12 @@ import 'react-loading-skeleton/dist/skeleton.css'
 // }
 
 export default function RootLayout({ children }) {
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "auto";
+    }
+  }, []);
+
   return (
     <html lang="en">
       <link rel="icon" href="/favicon.svg" sizes="any" />

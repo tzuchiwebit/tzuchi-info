@@ -95,11 +95,12 @@ const getRecommandArticles = async (categoryId, limit = 3) => {
   }
 }
 
-const getExtendArticles = async (tags = [], limit = 3) => {
+const getExtendArticles = async (tags = [], limit = 3, offset = 0) => {
   // 抓取 相同文章標籤(or)、點擊最高的3篇文章
   try {
     const params = {
       'page[limit]': limit,
+      'page[offset]': offset,
       'filter[state]': 1,
       'list[ordering]': 'hits',
       'list[direction]': 'desc',
@@ -218,7 +219,7 @@ const getArticlesByKeyword = async ({ keyword = '', limit = 12, offset = 0, stat
 
   try {
     // 為了讓button disable style明顯，故意做延遲
-    await sleep(500)
+    // await sleep(500)
     const params = {
       'filter[search]': `content:${keyword}`,
       'filter[state]': state,

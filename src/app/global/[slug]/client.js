@@ -6,17 +6,13 @@ import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import Image from 'next/image'
 import PrimaryCard from "@/shared/card/PrimaryCard"
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
-import { useParams } from 'next/navigation'
 import Skeleton from "react-loading-skeleton"
 import joomlaGlobal from '@/api/joomlaGlobal'
-import { getArticlesByCategory, getUserById } from "@/api/joomlaApi"
-import { useRouter } from "next/navigation"
+import { getArticlesByCategory } from "@/api/joomlaApi"
+import { useRouter, useSearchParams, useParams } from "next/navigation"
 import routes from "@/config/routes"
-const { useRequest } = require('ahooks')
-
-const loadingData = Array(9).fill({
-  loading: true
-});
+import { useRequest } from 'ahooks';
+import Spinner from "@/components/Spinner"
 
 const Breadcrumb = ({className}) => {
   const params = useParams();
@@ -45,61 +41,61 @@ const Breadcrumb = ({className}) => {
 }
 
 export default function Page() {
-  const [listData, setListData] = useState(loadingData)
+  const pageLimit = 9
+  const [listData, setListData] = useState(Array(0).fill({
+    loading: true
+  }))
+
   const params = useParams();
   const router = useRouter();
-  const [totalPage, setTotalPage] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageOffset = useMemo(() => (currentPage - 1) * 9, [currentPage]);
+  const searchParams = useSearchParams()
+
   const prevSlug = useRef(params?.slug);
+  const currentPage = useMemo(() => (searchParams.get('p') === null || isNaN(searchParams.get('p'))) ? 1 : parseInt(searchParams.get('p')))
+  const [totalPage, setTotalPage] = useState(0);
+  const pageOffset = useMemo(() => (currentPage - 1) * pageLimit, [currentPage]);
 
   const banner = useMemo(() => {
     if (params?.slug) return require(`@/asset/image/place-${params?.slug}.jpeg`)
-}, [params?.slug])
+  }, [params?.slug])
 
-const { data: listDataRef, loading, run } = useRequest(() => getArticlesByCategory({ label_name: "全球志業", tag: joomlaGlobal[params?.slug?.toString()]?.tag, limit: 9, offset: pageOffset, ordering: 'created', sort: 'desc' }), {
-  refreshDeps: [pageOffset, params?.slug],
-  manual: true,
-  onSuccess: async (res) => {
-    const creatorPool = {}
-    for (let article of res.data) {
-      if (creatorPool[article?.attributes?.created_by]) {
-        article.attributes.creator = creatorPool[article?.attributes?.created_by]
-      } else {
-        const creator = (await getUserById(article?.attributes?.created_by))
-        creatorPool[article?.attributes?.created_by] = creator
-        article.attributes.creator = creator
-      }
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setListData(Array(0).fill({
+      loading: true
+    }))
+  }, [currentPage])
+
+  useEffect(() => {
+    const originalScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = originalScrollRestoration;
+    };
+  }, []);
+
+  const { data: listDataRef, loading, run } = useRequest(() => getArticlesByCategory({ label_name: "全球志業", tag: joomlaGlobal[params?.slug?.toString()]?.tag, limit: pageLimit, offset: pageOffset, ordering: 'created', sort: 'desc' }), {
+    refreshDeps: [pageOffset, params?.slug],
+    manual: true,
+    onSuccess: async (res) => {
+      setListData(res.data)
+      setTotalPage(res.meta['total-pages']);
+    },
+    onError: (err) => {
+      console.error(err);
     }
+  })
 
-    setListData(res.data)
-    setTotalPage(res.meta['total-pages']);
-  },
-  onError: (err) => {
-    console.error(err);
-  }
-})
-
-useEffect(()=> {
-  console.log('prevSlug.current', prevSlug.current)
-  console.log('params?.slug', params?.slug)
-  console.log('setCurrentPage', params?.slug !== prevSlug.current)
-  if (params?.slug && params?.slug !== prevSlug.current) {
-    setCurrentPage(1)
-  }
-  if (params?.slug) {
-    run()
-  }
-  prevSlug.current = params?.slug
-}, [pageOffset, params?.slug])
-
-// useEffect(()=> {
-//   if (params?.slug) {
-//     setCurrentPage(1)
-//     run()
-//   }
-// }, [params?.slug])
-
+  useEffect(()=> {
+    if (params?.slug && params?.slug !== prevSlug.current) {
+      router.push(`/global/${params.slug}`)
+    }
+    if (params?.slug) {
+      run()
+    }
+    prevSlug.current = params?.slug
+  }, [pageOffset, params?.slug])
 
   return <Container>
     <FloatScrollTopButton />
@@ -114,6 +110,7 @@ useEffect(()=> {
           banner ?
           <Image
           src={banner}
+          priority={true}
           alt=""
           sizes="100vw"
           style={{
@@ -125,26 +122,31 @@ useEffect(()=> {
       </div>
 
       {/* result cards */}
-      <div className="grid laptop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-x-5 gap-y-6">
-        {
-          listData.map((item, index) => <PrimaryCard
-            item={item?.attributes}
-            key={index}
-            index={index}
-            onClick={()=> {
-              router.push(`${routes.ARITCLE}/${item.id}`);
-            }}
-          />)
-        }
-      </div>
+      {
+        loading ? <div className="h-[480px] flex justify-center items-center"><Spinner></Spinner></div> :
+          <div className="grid laptop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-x-5 gap-y-6">
+            {
+              listData.map((item, index) => <PrimaryCard
+                item={item?.attributes}
+                key={index}
+                index={index}
+                onClick={()=> {
+                  router.push(`${routes.ARITCLE}/${item.id}`);
+                }}
+              />)
+            }
+          </div>
+      }
 
       {/* pagination */}
-      <div className="w-full">
-        <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={(index) => {
-          setCurrentPage(index);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }} />
-      </div>
+      {
+        totalPage > 0 &&
+        <div className="w-full">
+          <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={(index) => {
+            router.push(`/global/${params.slug}?p=${index}`)
+          }} />
+        </div>
+      }
     </div>
 
   </Container>

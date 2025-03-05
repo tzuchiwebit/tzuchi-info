@@ -1,32 +1,50 @@
 "use client"
 import Container from "@/shared/layout/Container"
-// import { RadioGroup } from '@headlessui/react'
-import { useEffect, useState, useMemo } from "react"
+import { useState, useMemo, useEffect, Fragment } from "react"
 import Pagination from "@/shared/pagination/Pagination"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import Image from 'next/image'
 import PrimaryCard from "@/shared/card/PrimaryCard"
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
-import { getUserById, getExtendArticles } from "@/api/joomlaApi"
-import { useRouter } from "next/navigation"
+import { getExtendArticles } from "@/api/joomlaApi"
+import { useRouter, useSearchParams } from "next/navigation"
 import routes from "@/config/routes"
 import { addHits } from "@/api/api"
 import axios from "axios"
 import Skeleton from "react-loading-skeleton"
-const { useRequest, useResponsive } = require('ahooks')
-
-const loadingData = Array(12).fill({
-  loading: true
-});
-
+import { useRequest } from 'ahooks';
+import Spinner from "@/components/Spinner"
+import useScreenSize from '@/shared/hook/useScreenSize';
 
 export default function Page() {
-  const [listData, setListData] = useState(loadingData)
-  const [totalPage, setTotalPage] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageOffset = useMemo(() => (currentPage - 1) * 9, [currentPage]);
-  const responsive = useResponsive();
+  const pageLimit = 9
+  const [listData, setListData] = useState(Array(pageLimit).fill({
+    loading: true
+  }))
+
   const router = useRouter();
+  const searchParams = useSearchParams()
+  
+  const currentPage = useMemo(() => (searchParams.get('p') === null || isNaN(searchParams.get('p'))) ? 1 : parseInt(searchParams.get('p')))
+  const [totalPage, setTotalPage] = useState(1);
+  const pageOffset = useMemo(() => (currentPage - 1) * pageLimit, [currentPage]);
+  const screenSize = useScreenSize();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setListData(Array(pageLimit).fill({
+      loading: true
+    }))
+  }, [currentPage])
+
+  useEffect(() => {
+    const originalScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = originalScrollRestoration;
+    };
+  }, []);
 
   // 吉祥月api,
   const { data: auspiciousMonthData, loading: loadingAuspiciousData } = useRequest(() => {
@@ -37,22 +55,10 @@ export default function Page() {
   const bannerImage = useMemo(() => auspiciousMonthData?.data?.banner?.[0]?.img_bg_desktop, [auspiciousMonthData]);
   const bannerImageMobile = useMemo(() => auspiciousMonthData?.data?.banner?.[0]?.img_bg_mobile, [auspiciousMonthData]);
 
-  const { data: listDataRef, loading } = useRequest(() => getExtendArticles([articleTagId], ""), {
-    // refreshDeps: [pageOffset],
+  const { data: listDataRef, loading } = useRequest(() => getExtendArticles([articleTagId], pageLimit, pageOffset), {
+    refreshDeps: [pageOffset],
     ready: !!(articleTagId),
     onSuccess: async (res) => {
-
-      const creatorPool = {}
-      for (let article of res.data) {
-        if (creatorPool[article?.attributes?.created_by]) {
-          article.attributes.creator = creatorPool[article?.attributes?.created_by]
-        } else {
-          const creator = (await getUserById(article?.attributes?.created_by))
-          creatorPool[article?.attributes?.created_by] = creator
-          article.attributes.creator = creator
-        }
-      }
-
       setListData(res.data)
       setTotalPage(res.meta['total-pages']);
     },
@@ -88,8 +94,8 @@ export default function Page() {
       <div className="w-full">
         {
           !!(bannerImage || bannerImageMobile) ? <Image
-            src={responsive?.sm ? bannerImage : bannerImageMobile}
-            priority
+            src={screenSize?.width >= 768 ? bannerImage : bannerImageMobile}
+            priority={true}
             alt=""
             sizes="100vw"
             width="1200"
@@ -102,25 +108,28 @@ export default function Page() {
         }
 
       </div>
-      {/* result cards */}
-      <div className="grid laptop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-x-5 gap-y-6">
-        {
-          (loading || loadingAuspiciousData) ? <Skeleton /> : listData.map((item, index) => <PrimaryCard
-            item={item?.attributes}
-            key={index}
-            index={index}
-            onClick={() => {
-              onPageHit(item.id)
-            }}
-          />)
-        }
-      </div>
-      <div className="w-full">
-        <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={(index) => {
-          setCurrentPage(index);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }} />
-      </div>
+      {
+        (loading || loadingAuspiciousData) ? <div className="h-[240px] flex justify-center items-center"><Spinner></Spinner></div> :
+        <Fragment>
+          <div className="grid laptop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-x-5 gap-y-6">
+            {
+              (loading || loadingAuspiciousData) ? <Skeleton /> : listData.map((item, index) => <PrimaryCard
+                item={item?.attributes}
+                key={index}
+                index={index}
+                onClick={() => {
+                  onPageHit(item.id)
+                }}
+              />)
+            }
+          </div>
+          <div className="w-full">
+            <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={(index) => {
+              router.push(`/auspicious-month?p=${index}`)
+            }} />
+          </div>
+        </Fragment>
+      }
     </div>
 
   </Container>

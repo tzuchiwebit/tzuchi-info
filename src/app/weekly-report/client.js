@@ -1,5 +1,5 @@
 "use client"
-import { useState, useMemo, useEffect} from "react"
+import { useState, useMemo, useEffect, Fragment } from "react"
 import Container from "@/shared/layout/Container"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
@@ -9,7 +9,9 @@ import Pagination from "@/shared/pagination/Pagination"
 import { ReportCard, SocialBar } from "@/components/weeklyReport"
 import { getWeeklyReportNew } from "@/api/api";
 import _ from 'lodash'
-const { useRequest } = require('ahooks')
+import { useRequest } from 'ahooks';
+import Spinner from "@/components/Spinner"
+import { useRouter, useSearchParams } from "next/navigation"
 
 const Breadcrumb = ({className}) => {
   return (
@@ -34,9 +36,29 @@ const Breadcrumb = ({className}) => {
 export default function Page() {
   const pageLimit = 12
   const [listData, setListData] = useState([])
+
+  const router = useRouter();
+  const searchParams = useSearchParams()
+
+  const currentPage = useMemo(() => (searchParams.get('p') === null || isNaN(searchParams.get('p'))) ? 1 : parseInt(searchParams.get('p')))
   const [totalPage, setTotalPage] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
   const pageOffset = useMemo(() => (currentPage - 1) * pageLimit, [currentPage]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setListData(Array(pageLimit).fill({
+      loading: true
+    }))
+  }, [currentPage])
+
+  useEffect(() => {
+    const originalScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = originalScrollRestoration;
+    };
+  }, []);
 
   const { data: listDataRef, loading, run } = useRequest(() => getWeeklyReportNew({ limit: pageLimit, offset: pageOffset }), {
     refreshDeps: [pageOffset, currentPage],
@@ -81,6 +103,7 @@ export default function Page() {
       {/* banner image */}
       <Image
         className="tablet:mt-6 mt-4"
+        priority={true}
         src={BannerImage}
         alt=""
         sizes="100vw"
@@ -91,21 +114,25 @@ export default function Page() {
       />
 
       {/* card list */}
-      <div className="tablet:mt-6 mt-4 grid desktop:grid-cols-4 laptop:grid-cols-3 grid-cols-2 tablet:gap-x-5 gap-x-4 tablet:gap-y-6 gap-y-4">
-        {
-          listData.map((item, index) => (
-            <ReportCard isHappy={index === 0 && currentPage === 1} key={index} data={item}></ReportCard>
-          ))
-        }
-      </div>
+      {
+        loading ? <div className="h-[240px] flex justify-center items-center"><Spinner></Spinner></div> :
+        <Fragment>
+          <div className="tablet:mt-6 mt-4 grid desktop:grid-cols-4 laptop:grid-cols-3 grid-cols-2 tablet:gap-x-5 gap-x-4 tablet:gap-y-6 gap-y-4">
+            {
+              listData.map((item, index) => (
+                <ReportCard isHappy={index === 0 && currentPage === 1} key={index} data={item}></ReportCard>
+              ))
+            }
+          </div>
 
-      {/* pagination */}
-      <div className="mt-10">
-        <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={(index) => {
-          setCurrentPage(index);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }} />
-      </div>
+          {/* pagination */}
+          <div className="mt-10">
+            <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={(index) => {
+              router.push(`/weekly-report?p=${index}`)
+            }} />
+          </div>
+        </Fragment>
+      }
     </Container>
     {/* <SocialBar isMobileType={true}></SocialBar> */}
   </>

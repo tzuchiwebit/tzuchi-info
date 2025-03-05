@@ -1,30 +1,48 @@
 "use client"
 import Container from "@/shared/layout/Container"
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect, Fragment } from "react"
 import Pagination from "@/shared/pagination/Pagination"
 import PrimaryBreadcrumb from "@/shared/breadcrumb/PrimaryBreadcrumb"
 import Image from 'next/image'
 import PrimaryCard from "@/shared/card/PrimaryCard"
 import FloatScrollTopButton from "@/shared/scrollTop/FloatScrollTopButton"
 import { getArticlesByCategory } from "@/api/joomlaApi"
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import routes from "@/config/routes"
 import { addHits } from "@/api/api"
 import Icon from "@/shared/Icon"
 import DefaultImage from '@/asset/image/default-article-intro.png'
-const { useRequest } = require('ahooks')
-
-const loadingData = Array(9).fill({
-  loading: true
-});
+import Spinner from "@/components/Spinner"
+import { useRequest } from 'ahooks';
 
 export default function Page({ tagInfo }) {
-  const [listData, setListData] = useState(loadingData)
-  const [totalPage, setTotalPage] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
-  const pageOffset = useMemo(() => (currentPage - 1) * 9, [currentPage]);
+  const pageLimit = 9
+  const [listData, setListData] = useState(Array(pageLimit).fill({
+    loading: true
+  }))
 
   const router = useRouter();
+  const searchParams = useSearchParams()
+
+  const currentPage = useMemo(() => (searchParams.get('p') === null || isNaN(searchParams.get('p'))) ? 1 : parseInt(searchParams.get('p')))
+  const [totalPage, setTotalPage] = useState(1);
+  const pageOffset = useMemo(() => (currentPage - 1) * pageLimit, [currentPage]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setListData(Array(pageLimit).fill({
+      loading: true
+    }))
+  }, [currentPage])
+
+  useEffect(() => {
+    const originalScrollRestoration = window.history.scrollRestoration;
+    window.history.scrollRestoration = "manual";
+
+    return () => {
+      window.history.scrollRestoration = originalScrollRestoration;
+    };
+  }, []);
 
   const imageIntro = useMemo(()=> {
     if (!!tagInfo?.images?.image_intro) {
@@ -36,7 +54,7 @@ export default function Page({ tagInfo }) {
     return null
   }, [tagInfo?.images?.image_intro])
 
-  const { data: listDataRef, loading } = useRequest(() => getArticlesByCategory({ label_name: "證嚴上人每日一叮嚀", limit: 9, offset: pageOffset }), {
+  const { data: listDataRef, loading } = useRequest(() => getArticlesByCategory({ label_name: "證嚴上人每日一叮嚀", limit: pageLimit, offset: pageOffset }), {
     refreshDeps: [pageOffset],
     onSuccess: async (res) => {
       setListData(res.data)
@@ -76,6 +94,7 @@ export default function Page({ tagInfo }) {
         <div className="relative tablet-only:w-auto tablet-only:h-[350px] tablet-down:w-auto tablet-down:h-[165px]">
           <Image
             src={imageIntro ? imageIntro : DefaultImage}
+            priority={true}
             alt=""
             fill
             sizes="100vw"
@@ -101,26 +120,30 @@ export default function Page({ tagInfo }) {
       </div>
 
       {/* result cards */}
-      <div className="grid laptop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-x-5 gap-y-6">
-        {
-          listData.map((item, index) => <PrimaryCard
-            item={item?.attributes}
-            key={index}
-            index={index}
-            onClick={() => {
-              onPageHit(item.id)
-            }}
-          />)
-        }
-      </div>
+      {
+        loading ? <div className="h-[480px] flex justify-center items-center"><Spinner></Spinner></div> :
+        <Fragment>
+          <div className="grid laptop:grid-cols-3 tablet:grid-cols-2 grid-cols-1 gap-x-5 gap-y-6">
+            {
+              listData.map((item, index) => <PrimaryCard
+                item={item?.attributes}
+                key={index}
+                index={index}
+                onClick={() => {
+                  onPageHit(item.id)
+                }}
+              />)
+            }
+          </div>
 
-      {/* pagination */}
-      <div className="w-full">
-        <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={(index) => {
-          setCurrentPage(index);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }} />
-      </div>
+          {/* pagination */}
+          <div className="w-full">
+            <Pagination currentPage={currentPage} totalPage={totalPage} onPageChange={(index) => {
+              router.push(`/daily-reminder?p=${index}`)
+            }} />
+          </div>
+        </Fragment>
+      }
     </div>
 
   </Container>
