@@ -1,16 +1,16 @@
-"use client"
+"use client";
 // These styles apply to every route in the application
-import StyledComponentsRegistry from '@/lib/registry'
-import Navbar from '@/components/navigation/navbar/Navbar'
-import Footer from '@/components/navigation/footer/Footer'
+import StyledComponentsRegistry from "@/lib/registry";
+import Navbar from "@/components/navigation/navbar/Navbar";
+import Footer from "@/components/navigation/footer/Footer";
 // import Chat from '@/components/navigation/chat/Chat'
-import DataProvider from "@/components/navigation/navbar/DataProvider"
-import NewsEmergency from '@/components/navigation/navbar/components/NewsEmergency'
-import NewsMarquee from '@/components/navigation/navbar/components/NewsMarquee'
+import DataProvider from "@/components/navigation/navbar/DataProvider";
+import NewsEmergency from "@/components/navigation/navbar/components/NewsEmergency";
+import NewsMarquee from "@/components/navigation/navbar/components/NewsMarquee";
 import Script from "next/script";
 import { Suspense, useEffect } from "react";
-import './globals.css'
-import 'react-loading-skeleton/dist/skeleton.css'
+import "./globals.css";
+import "react-loading-skeleton/dist/skeleton.css";
 
 // export const viewport = {
 //   // width: 1600,
@@ -29,13 +29,19 @@ export default function RootLayout({ children }) {
     }
   }, []);
 
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://chat.maiagent.ai/js/embed.min.js";
+    script.defer = true;
+    document.body.appendChild(script);
+  }, []);
+
   return (
     <html lang="en">
       <link rel="icon" href="/favicon.svg" sizes="any" />
-      {
-        process.env.NEXT_PUBLIC_ENV_NAME !== 'production' &&
+      {process.env.NEXT_PUBLIC_ENV_NAME !== "production" && (
         <meta name="robots" content="noindex, nofollow" />
-      }
+      )}
       <head>
         {/* <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta> */}
         <Script id="gtm-script" strategy="beforeInteractive">
@@ -47,6 +53,16 @@ export default function RootLayout({ children }) {
             })(window,document,'script','dataLayer','GTM-KD3PM6KH');
           `}
         </Script>
+        <Script id="maiagent-chatbot-config" strategy="beforeInteractive">
+          {`
+            window.maiagentChatbotConfig = {
+              webChatId: '0f157c71-a550-46f1-8874-f6c09b3c1010',
+              baseUrl: 'https://chat.maiagent.ai/web-chats',
+              primaryColor: '#3854d8',
+              allowDrag: true,
+            }
+          `}
+        </Script>
       </head>
       <body>
         <noscript>
@@ -54,14 +70,14 @@ export default function RootLayout({ children }) {
             src="https://www.googletagmanager.com/ns.html?id=GTM-KD3PM6KH"
             height="0"
             width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
+            style={{ display: "none", visibility: "hidden" }}
           ></iframe>
         </noscript>
         <Suspense>
           <DataProvider>
             <StyledComponentsRegistry>
               <Navbar />
-              <div className='tablet-down:h-[62px]' />
+              <div className="tablet-down:h-[62px]" />
               <NewsEmergency></NewsEmergency>
               <NewsMarquee></NewsMarquee>
               {children}
