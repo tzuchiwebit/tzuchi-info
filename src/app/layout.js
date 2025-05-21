@@ -29,13 +29,6 @@ export default function RootLayout({ children }) {
     }
   }, []);
 
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://chat.maiagent.ai/js/embed.min.js";
-    script.defer = true;
-    document.body.appendChild(script);
-  }, []);
-
   return (
     <html lang="en">
       <link rel="icon" href="/favicon.svg" sizes="any" />
@@ -51,16 +44,6 @@ export default function RootLayout({ children }) {
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','GTM-KD3PM6KH');
-          `}
-        </Script>
-        <Script id="maiagent-chatbot-config" strategy="beforeInteractive">
-          {`
-            window.maiagentChatbotConfig = {
-              webChatId: '0f157c71-a550-46f1-8874-f6c09b3c1010',
-              baseUrl: 'https://chat.maiagent.ai/web-chats',
-              primaryColor: '#3854d8',
-              allowDrag: true,
-            }
           `}
         </Script>
       </head>
