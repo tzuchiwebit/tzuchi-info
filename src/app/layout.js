@@ -30,7 +30,8 @@ export default function RootLayout({ children }) {
   }, []);
 
   return (
-    <html lang="en">
+    <html translate="no">
+      <meta name="google" content="notranslate" />
       <link rel="icon" href="/favicon.svg" sizes="any" />
       {process.env.NEXT_PUBLIC_ENV_NAME !== "production" && (
         <meta name="robots" content="noindex, nofollow" />
