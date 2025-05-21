@@ -11,7 +11,8 @@ import Script from "next/script";
 import { Suspense, useEffect } from "react";
 import "./globals.css";
 import "react-loading-skeleton/dist/skeleton.css";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // export const viewport = {
 //   // width: 1600,
 //   // width: 'device-wdith',
@@ -70,6 +71,7 @@ export default function RootLayout({ children }) {
             </StyledComponentsRegistry>
           </DataProvider>
         </Suspense>
+        <ToastContainer />
       </body>
     </html>
   );

@@ -2,7 +2,7 @@ import { Fragment, useState } from "react"
 import styles from './Errata.module.css'
 import * as classnames from "classnames"
 import { v4 as uuidv4 } from 'uuid';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { pushNotify } from "@/api/api"
 import { addErrata } from "@/api/joomlaApi";
@@ -38,7 +38,7 @@ export default function Errata ({title, className}) {
 
   const onSubmit = async (data, e) => {
     await sendErrata(data)
-    reset(defaultValue)
+    // reset(defaultValue)
   };
 
   const sendErrata = async (errataData) => {
@@ -55,7 +55,7 @@ export default function Errata ({title, className}) {
         articleId,
         reportUuid: tempUuid,
         ...errataData,
-      })
+      }, window.location.href)
       toast.success('已成功送出', {
         position: "top-right",
         autoClose: 5000,
@@ -94,7 +94,7 @@ export default function Errata ({title, className}) {
               <button className={styles.secondaryBtn} onClick={() => {setIsOpen(true);}}>勘誤回報</button>
             </div>
         }
-          <Fragment>
+        <Fragment>
           {
           isOpen &&
             <button className={classnames('w-full', styles.secondaryBtn)} onClick={() => {setIsOpen(false);}}>取消勘誤</button>
@@ -171,10 +171,9 @@ export default function Errata ({title, className}) {
                   <div className="h-[46.5px] w-24 flex justify-center items-center"><Spinner></Spinner></div> :
                   <button type="submit" className="bg-primary-blue2 text-white rounded text-lg py-3 px-4 leading-[22.5px] font-bold">送出</button>
                 }
-                <ToastContainer />
             </div>
           </form>
-          </Fragment>
+        </Fragment>
       </div>
     </div>
   )
