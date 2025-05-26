@@ -102,7 +102,7 @@ const getWeeklyReportNew = async ({limit, offset}) => {
     let params = '?cat_id=4'
     if (limit) params = params + `&limit=${limit}`
     if (offset) params = params + `&offset=${offset}`
-    const res = await axios.get(EBOOK_ENDPOINT_NEW + params)
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_LIBRARY_API}/books` + params)
     return res?.data
 
   } catch (err) {

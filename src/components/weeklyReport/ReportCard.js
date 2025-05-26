@@ -157,7 +157,7 @@ export default function ReportCard({isHappy, data}) {
             <Icon.Download style={{ width: (isTablet ? 24 : 18) }} />
           </div>
           <div className="tablet:w-8 tablet:h-8 w-6 h-6 bg-secondary-light-blueGreen3 rounded-full flex justify-center items-center cursor-pointer"
-            onClick={() => window.open(data.base_book, '_blank', 'noopener=yes')}
+            onClick={() => window.open(data.bookUrl, '_blank', 'noopener=yes')}
           >
             <Icon.BookBlue style={{ width: isTablet ? 24 : 18 }} />
           </div>

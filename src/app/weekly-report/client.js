@@ -64,8 +64,8 @@ export default function Page() {
     refreshDeps: [pageOffset, currentPage],
     manual: false,
     onSuccess: async (res) => {
-      setListData(res?.results || [])
-      setTotalPage((res.total && res.total > pageLimit) ? Math.ceil((res.total) / pageLimit) : 1)
+      setListData(res?.data || [])
+      setTotalPage((res.pagination && res.pagination.total > pageLimit) ? Math.ceil((res.pagination.total) / pageLimit) : 1)
     },
     onError: (err) => {
       console.error(err);
