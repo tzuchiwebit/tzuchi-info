@@ -97,11 +97,12 @@ const getWeeklyReport = async ({limit, offset}) => {
   }
 }
 
-const getWeeklyReportNew = async ({limit, offset}) => {
+const getWeeklyReportNew = async ({limit, offset, page}) => {
   try {
-    let params = '?cat_id=4'
+    let params = '?cat_id=2&sort=publish_desc'
     if (limit) params = params + `&limit=${limit}`
     if (offset) params = params + `&offset=${offset}`
+    if (page) params = params + `&page=${page}`
     const res = await axios.get(`${process.env.NEXT_PUBLIC_LIBRARY_API}/books` + params)
     return res?.data
 
