@@ -135,7 +135,7 @@ export default function ReportCard({isHappy, data}) {
 
   return (
     <div className="border border-solid border-gray-gray7 rounded p-3">
-      <div className="cursor-pointer" onClick={() => window.open(data.base_book, '_blank', 'noopener=yes')}>
+      <div className="cursor-pointer" onClick={() => window.open(data.bookUrl, '_blank', 'noopener=yes')}>
         <div className=" bg-gray-gray9 rounded flex items-center justify-center p-3 cursor-pointer">
           <StyledImage style={{backgroundImage: `url(${data['cover_image']})`}}>
             <Badge isHappy={isHappy} data={data}></Badge>
