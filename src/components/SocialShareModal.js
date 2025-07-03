@@ -33,6 +33,7 @@ const ModalContainer = styled.div`
     @media(min-width: ${screens.laptop}) {
       width: 375px;
       position: absolute;
+      z-index: 1000;
       top: -4px;
       right: -2px;
       border-radius: 4px;
@@ -163,6 +164,6 @@ export default function SocailShareModal({ isOpen, toggleOpen, articleId })  {
         </div>
       </div>
     </ModalContainer>
-    <ToastContainer />
+    {/* <ToastContainer /> */}
   </>)
 }

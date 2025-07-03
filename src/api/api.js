@@ -51,18 +51,19 @@ const addShares = async (id) => {
   }
 }
 
-const pushNotify = async ({articleId, reportUuid, name, honorific, title, phone, email, text}) => {
+const pushNotify = async ({articleId, reportUuid, name, honorific, title, phone, email, text}, ariticleUrl) => {
   try {
     const payload = {
-      "message": `
-回報者：${name}${honorific}
-電話：${phone}
-Email：${email}
-勘誤文章名稱：${title}
-勘誤意見：${text}
-勘誤ID：${articleId}-${reportUuid}`,
+      "message": `【勘誤回報系統】
+👤 回報者：${name} ${honorific}
+📞 電話：${phone}
+✉️ Email：${email}
+📗 勘誤文章名稱：${title}
+📝 勘誤意見：${text}
+🆔 勘誤ID：${articleId}-${reportUuid}
+🔗 勘誤連結：${ariticleUrl}`,
     }
-    const res = await axios.post(`${API_ENDPOINT}/notify.php`, payload, {
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/notify`, payload, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -96,12 +97,13 @@ const getWeeklyReport = async ({limit, offset}) => {
   }
 }
 
-const getWeeklyReportNew = async ({limit, offset}) => {
+const getWeeklyReportNew = async ({limit, offset, page}) => {
   try {
-    let params = '?cat_id=4'
+    let params = '?cat_id=2&sort=publish_desc'
     if (limit) params = params + `&limit=${limit}`
     if (offset) params = params + `&offset=${offset}`
-    const res = await axios.get(EBOOK_ENDPOINT_NEW + params)
+    if (page) params = params + `&page=${page}`
+    const res = await axios.get(`${process.env.NEXT_PUBLIC_LIBRARY_API}/books` + params)
     return res?.data
 
   } catch (err) {

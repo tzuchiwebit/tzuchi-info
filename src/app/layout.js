@@ -1,17 +1,18 @@
-"use client"
+"use client";
 // These styles apply to every route in the application
-import StyledComponentsRegistry from '@/lib/registry'
-import Navbar from '@/components/navigation/navbar/Navbar'
-import Footer from '@/components/navigation/footer/Footer'
+import StyledComponentsRegistry from "@/lib/registry";
+import Navbar from "@/components/navigation/navbar/Navbar";
+import Footer from "@/components/navigation/footer/Footer";
 // import Chat from '@/components/navigation/chat/Chat'
-import DataProvider from "@/components/navigation/navbar/DataProvider"
-import NewsEmergency from '@/components/navigation/navbar/components/NewsEmergency'
-import NewsMarquee from '@/components/navigation/navbar/components/NewsMarquee'
+import DataProvider from "@/components/navigation/navbar/DataProvider";
+import NewsEmergency from "@/components/navigation/navbar/components/NewsEmergency";
+import NewsMarquee from "@/components/navigation/navbar/components/NewsMarquee";
 import Script from "next/script";
 import { Suspense, useEffect } from "react";
-import './globals.css'
-import 'react-loading-skeleton/dist/skeleton.css'
-
+import "./globals.css";
+import "react-loading-skeleton/dist/skeleton.css";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 // export const viewport = {
 //   // width: 1600,
 //   // width: 'device-wdith',
@@ -30,12 +31,12 @@ export default function RootLayout({ children }) {
   }, []);
 
   return (
-    <html lang="en">
+    <html translate="no">
+      <meta name="google" content="notranslate" />
       <link rel="icon" href="/favicon.svg" sizes="any" />
-      {
-        process.env.NEXT_PUBLIC_ENV_NAME !== 'production' &&
+      {process.env.NEXT_PUBLIC_ENV_NAME !== "production" && (
         <meta name="robots" content="noindex, nofollow" />
-      }
+      )}
       <head>
         {/* <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"></meta> */}
         <Script id="gtm-script" strategy="beforeInteractive">
@@ -54,14 +55,14 @@ export default function RootLayout({ children }) {
             src="https://www.googletagmanager.com/ns.html?id=GTM-KD3PM6KH"
             height="0"
             width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
+            style={{ display: "none", visibility: "hidden" }}
           ></iframe>
         </noscript>
         <Suspense>
           <DataProvider>
             <StyledComponentsRegistry>
               <Navbar />
-              <div className='tablet-down:h-[62px]' />
+              <div className="tablet-down:h-[62px]" />
               <NewsEmergency></NewsEmergency>
               <NewsMarquee></NewsMarquee>
               {children}
@@ -70,6 +71,7 @@ export default function RootLayout({ children }) {
             </StyledComponentsRegistry>
           </DataProvider>
         </Suspense>
+        <ToastContainer />
       </body>
     </html>
   );

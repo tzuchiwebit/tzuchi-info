@@ -40,7 +40,7 @@ export default function Page() {
   const router = useRouter();
   const searchParams = useSearchParams()
 
-  const currentPage = useMemo(() => (searchParams.get('p') === null || isNaN(searchParams.get('p'))) ? 1 : parseInt(searchParams.get('p')))
+  const currentPage = useMemo(() => (searchParams.get('p') === null || isNaN(searchParams.get('p'))) ? 1 : parseInt(searchParams.get('p')), [searchParams])
   const [totalPage, setTotalPage] = useState(1);
   const pageOffset = useMemo(() => (currentPage - 1) * pageLimit, [currentPage]);
 
@@ -60,12 +60,12 @@ export default function Page() {
     };
   }, []);
 
-  const { data: listDataRef, loading, run } = useRequest(() => getWeeklyReportNew({ limit: pageLimit, offset: pageOffset }), {
+  const { data: listDataRef, loading, run } = useRequest(() => getWeeklyReportNew({ limit: pageLimit, page: currentPage }), {
     refreshDeps: [pageOffset, currentPage],
     manual: false,
     onSuccess: async (res) => {
-      setListData(res?.results || [])
-      setTotalPage((res.total && res.total > pageLimit) ? Math.ceil((res.total) / pageLimit) : 1)
+      setListData(res?.data || [])
+      setTotalPage((res.pagination && res.pagination.total > pageLimit) ? Math.ceil((res.pagination.total) / pageLimit) : 1)
     },
     onError: (err) => {
       console.error(err);
