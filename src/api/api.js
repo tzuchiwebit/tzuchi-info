@@ -84,6 +84,9 @@ const getBookSuggest = async () => {
   }
 }
 
+/**
+ * @deprecated use getWeeklyReportNew instead
+ */
 const getWeeklyReport = async ({limit, offset}) => {
   try {
     let params = '?cat_id=4'
