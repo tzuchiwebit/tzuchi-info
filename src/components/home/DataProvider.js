@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { createContext } from 'react';
 import { getArticlesByCategory, getArticlesByCategories } from "@/api/joomlaApi";
-import { getBookSuggest, getWeeklyReport } from "@/api/api";
+import { getBookSuggest, getWeeklyReportNew } from "@/api/api";
 import jsonApi from '@/api/jsonApi'
 import _ from 'lodash'
 import dayjs from "dayjs"
@@ -96,8 +96,8 @@ export default function DataProvider({ children }) {
   const getWeeklyReports = async () => {
     setLoadingWeeklyReports(true);
     try {
-      const res = await getWeeklyReport({limit: 1});
-      setWeeklyReports(res);
+      const res = await getWeeklyReportNew({limit: 1});
+      setWeeklyReports(res?.data || []);
 
     } catch (err) {
       console.error(err);
