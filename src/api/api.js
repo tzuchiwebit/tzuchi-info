@@ -102,7 +102,7 @@ const getWeeklyReport = async ({limit, offset}) => {
 
 const getWeeklyReportNew = async ({limit, offset, page}) => {
   try {
-    let params = '?cat_id=2&sort=publish_desc'
+    let params = '?books_catid=2&sort=publish_desc'
     if (limit) params = params + `&limit=${limit}`
     if (offset) params = params + `&offset=${offset}`
     if (page) params = params + `&page=${page}`

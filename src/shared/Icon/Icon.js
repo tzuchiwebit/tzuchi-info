@@ -95,3 +95,6 @@ export { default as SocialLine } from "./icon/social/line.svg";
 export { default as Quotation } from "./icon/main/quotation.svg";
 export { default as RSS } from "./icon/main/rss.svg";
 export { default as RSSDark } from "./icon/footer/rss.svg";
+
+export { default as Warning } from "./icon/famicons-warning.svg";
+export { default as ShareLink } from "./icon/share-link.svg";
