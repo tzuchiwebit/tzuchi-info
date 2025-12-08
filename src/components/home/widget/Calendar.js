@@ -3,18 +3,28 @@ import { useState, useEffect } from "react"
 import styled from "styled-components"
 import screens from "@/shared/styles/screens"
 import color from "@/shared/styles/color"
-import dayjs from "dayjs"
-import { OuterContainer } from "./container"
 import _ from 'lodash'
 
 export default function Calendar() {
   const [date, setDate] = useState({});
 
+  // Normalize date display to a fixed timezone to avoid server/client drift.
+  const formatDateParts = () => {
+    const formatter = new Intl.DateTimeFormat('zh-TW', {
+      timeZone: 'Asia/Taipei',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    const [year, month, day] = formatter.format(new Date()).split('/'); // 2025/01/06
+    return {
+      dateUpper: `${year}.${month}`,
+      dateLower: day,
+    };
+  };
+
   useEffect(() => {
-    setDate({
-        dateUpper: dayjs().format('YYYY.MM'),
-        dateLower: dayjs().format('DD'),
-    })
+    setDate(formatDateParts());
   }, []);
 
   return (
@@ -23,10 +33,10 @@ export default function Calendar() {
         <MessageContainer>
           <div className="flex flex-col px-2 gap-y-0 border-solid border-gray-gray8 border-r">
             <div className="font-bold text-base w-fit">
-              {date.dateUpper}
+              <span suppressHydrationWarning>{date.dateUpper || '--.--'}</span>
             </div>
             <div className="font-bold text-[40px] leading-none w-auto text-center">
-              {date.dateLower}
+              <span suppressHydrationWarning>{date.dateLower || '--'}</span>
             </div>
           </div>
           <div className="pl-2 pt-1 font-bold text-[19px] flex flex-col">
