@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { SitemapStream, streamToPromise } from 'sitemap';
-import { createGzip } from 'zlib';
+import { Gzip } from 'minizlib';
 const API_ENDPOINT = `${process.env.NEXT_PUBLIC_CMS_URL}/api/index.php/v1`
 const token = process.env.NEXT_PUBLIC_JOOMLA_API_TOKEN
 
@@ -9,7 +9,7 @@ export const revalidate = 0;
 
 export async function GET(request) {
   const smStream = new SitemapStream();
-  const gzip = createGzip(); // Create a Gzip stream
+  const gzip = new Gzip(); // Create a Gzip stream
 
   const params = {
     'page[limit]': 3000

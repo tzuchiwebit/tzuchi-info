@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { SitemapStream, streamToPromise } from 'sitemap';
-import { createGzip } from 'zlib';
+import { Gzip } from 'minizlib';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -8,7 +8,7 @@ export const revalidate = 0;
 export async function GET() {
   // Create a stream to write to
   const smStream = new SitemapStream();
-  const gzip = createGzip(); // Create a Gzip stream
+  const gzip = new Gzip(); // Create a Gzip stream
 
   const url =`${process.env.NEXT_PUBLIC_CMS_URL}/api/jcustom/v1/lightarticles.php?state=1&ordering=created&direction=desc`
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;

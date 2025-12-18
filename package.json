@@ -21,7 +21,8 @@
     "feed": "^4.2.2",
     "firebase": "^10.13.0",
     "lodash": "^4.17.21",
-    "next": "^14.2.33",
+    "minizlib": "^3.1.0",
+    "next": "14.2.35",
     "next-sitemap": "^4.2.3",
     "next-themes": "^0.2.1",
     "next-video": "^0.9.1",
@@ -43,8 +44,7 @@
     "swiper": "^11.0.5",
     "tailwind-datepicker-react": "^1.4.3",
     "uuid": "^10.0.0",
-    "video-react": "^0.16.0",
-    "zlib": "^1.0.5"
+    "video-react": "^0.16.0"
   },
   "devDependencies": {
     "@svgr/webpack": "^8.1.0",
