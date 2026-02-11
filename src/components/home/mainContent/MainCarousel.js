@@ -7,7 +7,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel"
 import BlurBGImage from "@/shared/image/BlurBGImage";
 import SeBtn from "@/shared/button/SeBtn";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useDataProvider from "../useDataProvider";
 import _ from 'lodash'
 import Skeleton from 'react-loading-skeleton'
@@ -80,6 +80,19 @@ const Item = ({ item = {}, loading = false }) => {
 const CarouselSection = () => {
 
     const { pageData, loading } = useDataProvider();
+    const [isWideDesktop, setIsWideDesktop] = useState(false);
+
+    useEffect(() => {
+        const mediaQuery = window.matchMedia("(min-width: 1024px)");
+        const updateMatch = () => setIsWideDesktop(mediaQuery.matches);
+        updateMatch();
+        if (mediaQuery.addEventListener) {
+            mediaQuery.addEventListener("change", updateMatch);
+            return () => mediaQuery.removeEventListener("change", updateMatch);
+        }
+        mediaQuery.addListener(updateMatch);
+        return () => mediaQuery.removeListener(updateMatch);
+    }, []);
 
     const baseInfos = useMemo(() => {
         const target = _.find(pageData, { name: '全球志業' });
@@ -92,9 +105,9 @@ const CarouselSection = () => {
     return <CarouselContainer>
         <Carousel
             showArrows={true}
-            swipeable
+            swipeable={!isWideDesktop}
             infiniteLoop
-            emulateTouch
+            emulateTouch={!isWideDesktop}
             showThumbs={false}
             statusFormatter={() => { }}
             renderArrowPrev={(clickHandler) => (<button

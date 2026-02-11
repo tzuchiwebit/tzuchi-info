@@ -11,10 +11,10 @@ export const HeaderLinkItems = [
         label: '捐款網',
         link: 'https://tcit3.tzuchi.net/OCCD/',
     },
-    {
-      label: '舊資訊網',
-      link: 'https://tw.tzuchi.org/',
-    },
+    // {
+    //   label: '舊資訊網',
+    //   link: 'https://tw.tzuchi.org/',
+    // },
     // {
     //     label: 'RSS',
     //     link: '/feed',
