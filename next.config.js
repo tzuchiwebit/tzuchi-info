@@ -26,6 +26,13 @@ const nextConfig = {
       },
     ],
   },
+  redirects: async () => [
+    {
+      source: "/community/:path*",
+      destination: "https://www.tzuchi.org.tw/community",
+      permanent: true,
+    },
+  ],
   rewrites: async () => [
     {
       source: "/server-sitemap-0.xml",
