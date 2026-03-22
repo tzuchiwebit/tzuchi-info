@@ -13,7 +13,11 @@ import "./globals.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import LineBrowserGuard from "@/components/common/LineBrowserGuard";
+import dynamic from "next/dynamic";
+const LineBrowserGuard = dynamic(
+  () => import("@/components/common/LineBrowserGuard"),
+  { ssr: false }
+);
 // export const viewport = {
 //   // width: 1600,
 //   // width: 'device-wdith',
