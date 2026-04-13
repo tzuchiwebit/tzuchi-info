@@ -2,6 +2,7 @@ import axios from 'axios'
 import _ from 'lodash'
 const API_ENDPOINT = `${process.env.NEXT_PUBLIC_CMS_URL}/api`
 const EBOOK_ENDPOINT_NEW = `${process.env.NEXT_PUBLIC_CMS_URL_DEPRECATED}/batch_images_upload/tzuchi_library/api/findnew.php`
+const LIBRARY_PUBLIC_API = process.env.NEXT_PUBLIC_LIBRARY_API || 'https://librarypj.tzuchi-org.tw/api/v1'
 
 const addHits = async (id) => {
   try {
@@ -76,8 +77,34 @@ const pushNotify = async ({articleId, reportUuid, name, honorific, title, phone,
 
 const getBookSuggest = async () => {
   try {
-    const res = await axios.get(EBOOK_ENDPOINT_NEW + '?cat_id=5&limit=4&ebook=Y')
-    return res?.data?.results
+    const params = {
+      category_id: 1, // 書籍
+      limit: 4,
+      offset: 0,
+    }
+
+    if (process.env.NODE_ENV !== 'production') {
+      const requestUrl = `${LIBRARY_PUBLIC_API}/books?${new URLSearchParams(
+        Object.entries(params).reduce((acc, [key, value]) => {
+          acc[key] = String(value)
+          return acc
+        }, {})
+      ).toString()}`
+      console.log('[BookSuggest][API] request:', requestUrl)
+    }
+
+    const res = await axios.get(`${LIBRARY_PUBLIC_API}/books`, {
+      params,
+    })
+
+    const items = res?.data?.data || res?.data?.results || []
+    const mapped = items.map((item) => ({
+      ...item,
+      // Normalize fields for existing UI components
+      cover_image: item?.thumbnail_url,
+      url: item?.reader_url,
+    }))
+    return mapped
 
   } catch (err) {
     throw err
