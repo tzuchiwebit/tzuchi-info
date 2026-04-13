@@ -24,13 +24,18 @@ function classNames(...classes) {
 
 const Item = ({ item = {}, loading = false }) => {
   const getImage = () => {
+    if (item?.thumbnail_url) return item.thumbnail_url
     if (item?.cover_image) return item.cover_image
     if (item?.image) return item.image
     return DefaultImage
   }
 
   const clickOpen = () => {
-    if (item?.id) {
+    if (item?.reader_url) {
+      window.open(item.reader_url, '_blank');
+    } else if (item?.url) {
+      window.open(item.url, '_blank');
+    } else if (item?.id) {
       window.open(`${process.env.NEXT_PUBLIC_EBOOK_URL}/book/${item.id}`, '_blank');
     } else if (item?.link) {
       window.open(`${jingsiEndpoint}${item.link}`, '_blank');
@@ -80,18 +85,21 @@ const NewItem = ({ item = {}, loading = false }) => {
   }, [screenSize.width])
 
   const getImage = () => {
+    if (item?.thumbnail_url) return item.thumbnail_url
     if (item?.cover_image) return item.cover_image
     if (item?.image) return item.image
     return DefaultImage
   }
 
   const clickOpen = () => {
-    if (item?.id) {
+    if (item?.reader_url) {
+      window.open(item.reader_url, '_blank');
+    } else if (item?.url) {
+      window.open(item.url, '_blank');
+    } else if (item?.id) {
       window.open(`${process.env.NEXT_PUBLIC_EBOOK_URL}/book/${item.id}`, '_blank');
     } else if (item?.link) {
       window.open(`${jingsiEndpoint}${item.link}`, '_blank');
-    } else if (item?.url) {
-      window.open(item.url, '_blank');
     }
   }
 
@@ -207,7 +215,7 @@ const CarouselSection = ({ data, loading }) => {
 }
 
 const onReadMoreBook = () => {
-  window.open(process.env.NEXT_PUBLIC_EBOOK_URL, '_blank');
+  window.open(`https://tcbooks.tzuchi.org/`, '_blank');
 }
 
 const onReadMoreJingSi = () => {
