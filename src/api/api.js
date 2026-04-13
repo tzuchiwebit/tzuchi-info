@@ -83,16 +83,6 @@ const getBookSuggest = async () => {
       offset: 0,
     }
 
-    if (process.env.NODE_ENV !== 'production') {
-      const requestUrl = `${LIBRARY_PUBLIC_API}/books?${new URLSearchParams(
-        Object.entries(params).reduce((acc, [key, value]) => {
-          acc[key] = String(value)
-          return acc
-        }, {})
-      ).toString()}`
-      console.log('[BookSuggest][API] request:', requestUrl)
-    }
-
     const res = await axios.get(`${LIBRARY_PUBLIC_API}/books`, {
       params,
     })
