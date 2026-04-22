@@ -119,12 +119,72 @@ const getWeeklyReport = async ({limit, offset}) => {
 
 const getWeeklyReportNew = async ({limit, offset, page}) => {
   try {
-    let params = '?books_catid=2&sort=publish_desc'
-    if (limit) params = params + `&limit=${limit}`
-    if (offset) params = params + `&offset=${offset}`
-    if (page) params = params + `&page=${page}`
-    const res = await axios.get(`${process.env.NEXT_PUBLIC_LIBRARY_API}/books` + params)
-    return res?.data
+    // New Library API (2026): https://librarypj.tzuchi-org.tw/api/v1/docs/#/電子書
+    // 1) GET /books/categories -> weekly report category id (expected: 2)
+    // 2) GET /books?category_id=<id> -> list weekly report books
+
+    const libraryBase = process.env.NEXT_PUBLIC_LIBRARY_API || LIBRARY_PUBLIC_API
+    let libraryOrigin = ''
+    try {
+      libraryOrigin = new URL(libraryBase).origin
+    } catch (err) {}
+
+    const resolveUrl = (input) => {
+      if (!input) return input
+      if (typeof input !== 'string') return input
+      if (input.startsWith('http://') || input.startsWith('https://')) return input
+      if (input.startsWith('//')) return `https:${input}`
+      if (input.startsWith('/') && libraryOrigin) return `${libraryOrigin}${input}`
+      return input
+    }
+
+    let weeklyReportCategoryId = 2
+    try {
+      const catRes = await axios.get(`${libraryBase}/books/categories`)
+      const categories = catRes?.data?.data || catRes?.data?.results || catRes?.data || []
+      const list = Array.isArray(categories) ? categories : []
+      const getId = (c) => {
+        const raw = c?.id ?? c?.category_id ?? c?.attributes?.id ?? c?.attributes?.category_id
+        const n = parseInt(raw, 10)
+        return Number.isFinite(n) ? n : null
+      }
+      const getName = (c) => c?.name || c?.title || c?.attributes?.name || c?.attributes?.title || ''
+
+      const matched =
+        list.find((c) => getId(c) === 2) ||
+        list.find((c) => getName(c).includes('慈濟週報'))
+
+      const matchedId = matched ? getId(matched) : null
+      if (matchedId) weeklyReportCategoryId = matchedId
+    } catch (err) {
+      // fallback to known id=2
+    }
+
+    const res = await axios.get(`${libraryBase}/books`, {
+      params: {
+        category_id: weeklyReportCategoryId,
+        ...(limit ? { limit } : {}),
+        ...(offset ? { offset } : {}),
+        ...(page ? { page } : {}),
+      }
+    })
+
+    const payload = res?.data || {}
+    const items = payload?.data || payload?.results || []
+
+    const mapped = (Array.isArray(items) ? items : []).map((item) => ({
+      ...item,
+      // Normalize fields for existing UI components
+      bookUrl: resolveUrl(item?.reader_url || item?.bookUrl || item?.url),
+      base_pdf: resolveUrl(item?.pdf_path || item?.base_pdf),
+      cover_image: resolveUrl(item?.thumbnail_url || item?.cover_image),
+      book_date: item?.book_date || item?.publish_date || item?.published_at || item?.created_at,
+    }))
+
+    return {
+      ...payload,
+      data: mapped,
+    }
 
   } catch (err) {
     throw err
