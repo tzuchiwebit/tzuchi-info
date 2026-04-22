@@ -10,25 +10,23 @@ export const config = {
   ],
 };
 
-const getArticleById = async (id) => {
+const getArticleById = async (origin, id) => {
   console.log('middleware.getArticleById invoke')
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
   // FIXME: call cms api directly
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_URL}/api/article?id=${id}`,
+    `${origin}/api/article?id=${id}`,
     {
       headers: {
-        "Content-Type": "application/json",
       },
     }
   );
   return await res.json();
 };
 
-async function validateArticleMiddleware(id) {
+async function validateArticleMiddleware(origin, id) {
   let result = true;
   try {
-    const article = (await getArticleById(id)).data;
+    const article = (await getArticleById(origin, id)).data;
     if (
       !validateArticle({
         state: article?.attributes?.state,
@@ -63,13 +61,14 @@ async function checkTagRedirect(id) {
 
 export async function middleware(request) {
   const { pathname } = request.nextUrl;
+  const origin = request.nextUrl.origin;
 
   if (pathname.startsWith("/article")) {
     console.log("validateArticleMiddleware invoke..")
     const match = pathname.match(/\/article\/(\d+)/);
-    if (!(match && (await validateArticleMiddleware(match[1])))) {
+    if (!(match && (await validateArticleMiddleware(origin, match[1])))) {
       // TODO: using 404
-      return Response.redirect(process.env.NEXT_PUBLIC_URL, 301);
+      return Response.redirect(origin, 301);
     }
   }
 
@@ -77,12 +76,12 @@ export async function middleware(request) {
     const match = pathname.match(/\/tag\/(\d+)/);
     const redirectRef = await checkTagRedirect(match[1]);
     if (match && redirectRef) {
-      return Response.redirect(`${process.env.NEXT_PUBLIC_URL}/${redirectRef?.redirect_link}`, redirectRef?.redirect_type);
+      return Response.redirect(`${origin}/${redirectRef?.redirect_link}`, redirectRef?.redirect_type);
     }
   }
 
   if (pathname.startsWith("/volunteer-morning")) {
-    return Response.redirect(`${process.env.NEXT_PUBLIC_URL}/master-talk`, 301);
+    return Response.redirect(`${origin}/master-talk`, 301);
   }
 
   // Continue with the request

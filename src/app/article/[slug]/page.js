@@ -2,6 +2,7 @@ import Client from './client'
 import { Suspense } from "react";
 import Loading from "./loading";
 import { getArticleById } from "@/api/routeApi";
+import { headers } from "next/headers";
 
 // export const dynamic = 'force-dynamic'
 // export const dynamicParams = true
@@ -9,7 +10,15 @@ import { getArticleById } from "@/api/routeApi";
 // export const revalidate = 0
 
 export async function generateMetadata({ params }, parent) {
-  const article = (await getArticleById(params.slug)).data
+  let origin = process.env.NEXT_PUBLIC_URL
+  try {
+    const h = headers()
+    const proto = h.get('x-forwarded-proto') || 'http'
+    const host = h.get('x-forwarded-host') || h.get('host')
+    if (host) origin = `${proto}://${host}`
+  } catch {}
+
+  const article = (await getArticleById(params.slug, { baseUrl: origin })).data
   const imageUrl = article?.attributes?.images?.image_intro ? article?.attributes?.images?.image_intro : "https://imagedelivery.net/oK0RK5YvW3bVFXgaGP6foQ/032741ee-fac7-44b6-3cea-649da4b8ff00/2K";
   return {
     metadataBase: new URL(`${process.env.NEXT_PUBLIC_URL}/article/${params.slug}`),
