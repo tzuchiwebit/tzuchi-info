@@ -44,6 +44,34 @@ export default function Page() {
   const [totalPage, setTotalPage] = useState(1);
   const pageOffset = useMemo(() => (currentPage - 1) * pageLimit, [currentPage]);
 
+  const toInt = (value) => {
+    const n = parseInt(value, 10)
+    return Number.isFinite(n) ? n : null
+  }
+
+  const extractTotalPages = (res) => {
+    return (
+      toInt(res?.pagination?.total_pages) ||
+      toInt(res?.pagination?.totalPages) ||
+      toInt(res?.pagination?.last_page) ||
+      toInt(res?.pagination?.pages) ||
+      toInt(res?.meta?.total_pages) ||
+      toInt(res?.meta?.last_page) ||
+      null
+    )
+  }
+
+  const extractTotalItems = (res) => {
+    return (
+      toInt(res?.pagination?.total) ||
+      toInt(res?.pagination?.total_count) ||
+      toInt(res?.meta?.total) ||
+      toInt(res?.total) ||
+      toInt(res?.count) ||
+      null
+    )
+  }
+
   useEffect(() => {
     window.scrollTo(0, 0);
     setListData(Array(pageLimit).fill({
@@ -60,12 +88,19 @@ export default function Page() {
     };
   }, []);
 
-  const { data: listDataRef, loading, run } = useRequest(() => getWeeklyReportNew({ limit: pageLimit, page: currentPage }), {
+  const { data: listDataRef, loading, run } = useRequest(() => getWeeklyReportNew({ limit: pageLimit, offset: pageOffset }), {
     refreshDeps: [pageOffset, currentPage],
     manual: false,
     onSuccess: async (res) => {
-      setListData(res?.data || [])
-      setTotalPage((res.pagination && res.pagination.total > pageLimit) ? Math.ceil((res.pagination.total) / pageLimit) : 1)
+      const items = res?.data || res?.results || []
+      setListData(items)
+
+      let pages = extractTotalPages(res)
+      if (!pages) {
+        const total = extractTotalItems(res)
+        pages = total ? Math.max(1, Math.ceil(total / pageLimit)) : 1
+      }
+      setTotalPage(pages)
     },
     onError: (err) => {
       console.error(err);

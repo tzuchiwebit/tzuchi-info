@@ -117,7 +117,7 @@ const getWeeklyReport = async ({limit, offset}) => {
   }
 }
 
-const getWeeklyReportNew = async ({limit, offset, page}) => {
+const getWeeklyReportNew = async ({ limit, offset, q }) => {
   try {
     // New Library API (2026): https://librarypj.tzuchi-org.tw/api/v1/docs/#/電子書
     // 1) GET /books/categories -> weekly report category id (expected: 2)
@@ -140,7 +140,9 @@ const getWeeklyReportNew = async ({limit, offset, page}) => {
 
     let weeklyReportCategoryId = 2
     try {
-      const catRes = await axios.get(`${libraryBase}/books/categories`)
+      const catRes = await axios.get(`${libraryBase}/books/categories`, {
+        headers: { accept: '*/*' },
+      })
       const categories = catRes?.data?.data || catRes?.data?.results || catRes?.data || []
       const list = Array.isArray(categories) ? categories : []
       const getId = (c) => {
@@ -161,12 +163,13 @@ const getWeeklyReportNew = async ({limit, offset, page}) => {
     }
 
     const res = await axios.get(`${libraryBase}/books`, {
+      headers: { accept: '*/*' },
       params: {
         category_id: weeklyReportCategoryId,
         ...(limit ? { limit } : {}),
         ...(offset ? { offset } : {}),
-        ...(page ? { page } : {}),
-      }
+        ...(q ? { q } : {}),
+      },
     })
 
     const payload = res?.data || {}
