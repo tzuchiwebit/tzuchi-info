@@ -24,9 +24,49 @@ const src = [
     "/test-straight.mp4",
 ]
 
+const extractYouTubeId = (input) => {
+    if (!input) return ''
+    const raw = String(input).trim()
+
+    // Already an id
+    if (/^[a-zA-Z0-9_-]{11}$/.test(raw)) return raw
+
+    try {
+        const u = new URL(raw)
+
+        // youtu.be/<id>
+        if (u.hostname === 'youtu.be') {
+            const id = u.pathname.split('/').filter(Boolean)[0]
+            if (id) return id
+        }
+
+        // youtube.com/watch?v=<id>
+        const v = u.searchParams.get('v')
+        if (v) return v
+
+        // youtube.com/embed/<id> or youtube.com/shorts/<id>
+        const parts = u.pathname.split('/').filter(Boolean)
+        const idx = parts.findIndex((p) => p === 'embed' || p === 'shorts')
+        if (idx !== -1 && parts[idx + 1]) return parts[idx + 1]
+    } catch (err) {
+        // ignore URL parse errors
+    }
+
+    // Fallback regexes
+    const vMatch = raw.match(/[?&]v=([a-zA-Z0-9_-]{11})/)
+    if (vMatch?.[1]) return vMatch[1]
+    const shortMatch = raw.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/)
+    if (shortMatch?.[1]) return shortMatch[1]
+    const embedMatch = raw.match(/\/(embed|shorts)\/([a-zA-Z0-9_-]{11})/)
+    if (embedMatch?.[2]) return embedMatch[2]
+
+    return ''
+}
+
 const YoutubeSection = () => {
 
     const [youtubeData, setYoutubeData] = useState({});
+    const [thumbIndex, setThumbIndex] = useState(0);
 
     const [youtubeDetail, setYoutubeDetail] = useState({ width: 0, height: 0 });
 
@@ -44,21 +84,43 @@ const YoutubeSection = () => {
             const _data = res?.data?.[0].attributes || false
             if (_data) {
                 const _ytString = _data['yt-url']
-                const splitArray = _ytString.split("v=");
-                const YTId = splitArray[1];
+                const YTId = extractYouTubeId(_ytString);
                 // const YTId = `e4HluMzNNXQ`;
+                if (!YTId) return
 
                 const ytInfo = await getYoutubeInfo(YTId);
 
                 setYoutubeDetail(ytInfo.data);
+                setThumbIndex(0);
                 setYoutubeData({
                     youtubeId: YTId,
-                    bgImage: `https://img.youtube.com/vi/${YTId}/hqdefault.jpg`,
                     ..._data,
                 })
             }
         }
     })
+
+    // Thumbnail ladder: level 3 -> 2 -> 1
+    // hqdefault (3) -> mqdefault (2) -> default (1)
+    const thumbCandidates = useMemo(() => {
+        if (!youtubeData?.youtubeId) return [];
+        return [
+            `https://img.youtube.com/vi/${youtubeData.youtubeId}/hqdefault.jpg`,
+            `https://img.youtube.com/vi/${youtubeData.youtubeId}/mqdefault.jpg`,
+            `https://img.youtube.com/vi/${youtubeData.youtubeId}/default.jpg`,
+        ];
+    }, [youtubeData?.youtubeId]);
+
+    const currentThumbUrl = useMemo(() => {
+        return thumbCandidates[thumbIndex] || '';
+    }, [thumbCandidates, thumbIndex]);
+
+    const handleThumbError = () => {
+        setThumbIndex((idx) => {
+            const next = idx + 1;
+            return next < thumbCandidates.length ? next : idx;
+        });
+    }
 
     // console.log(data)
     const [onPlay, setOnPlay] = useState(false);
@@ -81,8 +143,19 @@ const YoutubeSection = () => {
                         className={classNames(
                             "relative flex justify-center items-center w-full bg-contain bg-no-repeat aspect-4/3 bg-center"
                         )}
-                        style={{ backgroundImage: `url(${youtubeData.bgImage ? youtubeData.bgImage : ''})` }}
                         onClick={() => setOnPlay(true)}>
+                        {
+                            currentThumbUrl ? (
+                                <img
+                                    className="absolute inset-0 w-full h-full object-contain"
+                                    src={currentThumbUrl}
+                                    onError={handleThumbError}
+                                    alt=""
+                                    loading="lazy"
+                                    referrerPolicy="no-referrer"
+                                />
+                            ) : null
+                        }
                         <div className="w-[60px] h-[45px] z-100 flex justify-center items-center cursor-pointer">
                             <div className="w-[30px] h-[30px] bg-white z-5 absolute" />
                             <Icon.PlayButton position="center" className="w-full z-10" />
